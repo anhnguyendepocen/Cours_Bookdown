@@ -24,6 +24,33 @@
             "type": "book"
         },
         {
+            "author": [
+                {
+                    "family": "Dungey",
+                    "given": "Mardi"
+                },
+                {
+                    "family": "Pagan",
+                    "given": "Adrian"
+                }
+            ],
+            "container-title": "Economic Record",
+            "id": "dungey2009extending",
+            "issue": "268",
+            "issued": {
+                "date-parts": [
+                    [
+                        2009
+                    ]
+                ]
+            },
+            "page": "1-20",
+            "publisher": "Wiley Online Library",
+            "title": "Extending a SVAR model of the australian economy",
+            "type": "article-journal",
+            "volume": "85"
+        },
+        {
             "URL": "https://www.R-project.org/",
             "author": [
                 {

@@ -1,19 +1,19 @@
-h1:specification-and-standard-assumptions Specification and standard assumptions
+h1:linear-regressions Linear Regressions
 h2:specification Specification
 fig:heteroskedasticity This is the caption
 fig:sillydog The new SSA logo, which is actually a scatterplot, which is super neat!
 fig:exmpSalarayPhD Salary versus years after PhD
 h2:least-square-estimation Least square estimation
-h2:bivariate-case Bivariate case
-h2:gauss-markow-theorem Gauss Markow Theorem
-h2:frish-waugh Frish-Waugh
-h2:goodness-of-fit Goodness of fit
-h2:inference-and-prediction Inference and Prediction
+h3:bivariate-case Bivariate case
+h3:gauss-markow-theorem Gauss Markow Theorem
+h3:frish-waugh Frish-Waugh
+h3:goodness-of-fit Goodness of fit
+h3:inference-and-prediction Inference and Prediction
 fig:chartStudent The chart shows that the higher the degree of freedom, the closer the distribution of $t(\nu)$ gets to the normal distribution.
-h2:confidence-interval-of-beta_k Confidence interval of 
+h3:confidence-interval-of-beta_k Confidence interval of 
 h3:example Example
-h2:set-of-linear-restrictions Set of linear restrictions
-h2:common-pitfalls Common pitfalls
+h3:set-of-linear-restrictions Set of linear restrictions
+h3:common-pitfalls Common pitfalls
 h3:multicollinearity Multicollinearity
 h3:omitted-variables Omitted variables
 h3:irrelevant-variable Irrelevant variable
@@ -22,19 +22,4 @@ h2:instrumental-variables Instrumental Variables
 fig:figureIV This figure illustrates the situation prevailing when estimating a price-elasticity (and the price is endogenous).
 h2:general-regression-model General Regression Model
 h3:generalized-least-squares Generalized Least Squares
-h1:appendix Appendix
-h2:statitical-tables Statitical Tables
-tab:Normal Quantiles of the $\\mathcal{N}(0,1)$ distribution. If $a$ and $b$ are respectively the row and column number; then the corresponding cell gives $\\mathbb{P}(0<X\\le a+b)$, where $X \\sim \\mathcal{N}(0,1)$.
-tab:Student Quantiles of the Student-$t$ distribution. The rows correspond to different degrees of freedom ($\\nu$, say); the columns correspond to different probabilities ($z$, say). The cell gives $q$ that is s.t. $\\mathbb{P}(-q<X<q)=z$, with $X \\sim t(\\nu)$.
-tab:Chi2 Quantiles of the $\\chi^2$ distribution. The rows correspond to different degrees of freedom; the columns correspond to different probabilities.
-tab:Fstat Quantiles of the $\\mathcal{F}$ distribution. The columns and rows correspond to different degrees of freedom (resp. $n_1$ and $n_2$). The different panels correspond to different probabilities ($\\alpha$) The corresponding cell gives $z$ that is s.t. $\\mathbb{P}(X \\le z)=\\alpha$, with $X \\sim \\mathcal{F}(n_1,n_2)$.
-h1:macro-data Macro data
-h2:blabla Blabla
-h1:loading-the-dataset Loading the dataset
-h1:question-7 Question 7
-h1:section:plots Including Plots
-fig:pressure This is the caption
-h1:question-7-1 Question 7
-h1:appendix-1 Appendix
-h1:references References
 

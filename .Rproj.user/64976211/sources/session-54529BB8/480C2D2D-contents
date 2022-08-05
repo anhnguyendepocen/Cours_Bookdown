@@ -1,0 +1,26 @@
+n <- 200
+N <- 1000
+XX <- matrix(rt(n*N,df=5),n,N)
+YY <- matrix(XX + XX*rnorm(n),n,N)
+all_b       <- NULL
+all_V_OLS   <- NULL
+all_V_White <- NULL
+for(j in 1:N){
+  Y <- matrix(YY[,j],ncol=1)
+  X <- matrix(XX[,j],ncol=1)
+  b <- solve(t(X)%*%X) %*% t(X)%*%Y
+  e <- Y - X %*% b
+  S <- 1/n * t(X) %*% diag(c(e^2)) %*% X
+  V_OLS   <- solve(t(X)%*%X) * var(e)
+  V_White <- 1/n * (solve(1/n*t(X)%*%X)) %*% S %*% (solve(1/n*t(X)%*%X))
+  
+  all_b       <- c(all_b,b)
+  all_V_OLS   <- c(all_V_OLS,V_OLS)
+  all_V_White <- c(all_V_White,V_White)
+}
+plot(density(all_b))
+abline(v=mean(all_b),lty=2)
+abline(v=1)
+x <- seq(0,2,by=.01)
+lines(x,dnorm(x,mean = 1,sd = mean(sqrt(all_V_OLS))),col="blue")
+lines(x,dnorm(x,mean = 1,sd = mean(sqrt(all_V_White))),col="red")

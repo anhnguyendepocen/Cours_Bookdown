@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 3 Linear Regressions | Advanced Econometrics</title>
+<meta name="author" content="Jean-Paul Renne">
+<meta name="description" content="3.1 Specification  Definition 3.1 A linear regression is a model defined through: \[ y_i = \boldsymbol\beta'{\bf x}_{i} + \varepsilon_i, \] where \({\bf x}_{i}=[x_{i,1},\dots,x_{i,K}]'\) is a...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 3 Linear Regressions | Advanced Econometrics">
+<meta property="og:type" content="book">
+<meta property="og:description" content="3.1 Specification  Definition 3.1 A linear regression is a model defined through: \[ y_i = \boldsymbol\beta'{\bf x}_{i} + \varepsilon_i, \] where \({\bf x}_{i}=[x_{i,1},\dots,x_{i,K}]'\) is a...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 3 Linear Regressions | Advanced Econometrics">
+<meta name="twitter:description" content="3.1 Specification  Definition 3.1 A linear regression is a model defined through: \[ y_i = \boldsymbol\beta'{\bf x}_{i} + \varepsilon_i, \] where \({\bf x}_{i}=[x_{i,1},\dots,x_{i,K}]'\) is a...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Advanced Econometrics</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Prerequisites</a></li>
+<li><a class="" href="intro.html"><span class="header-section-number">2</span> Introduction</a></li>
+<li><a class="active" href="linear-regressions.html"><span class="header-section-number">3</span> Linear Regressions</a></li>
+<li><a class="" href="methods.html"><span class="header-section-number">4</span> Methods</a></li>
+<li><a class="" href="methods-1.html"><span class="header-section-number">5</span> Methods</a></li>
+<li><a class="" href="applications.html"><span class="header-section-number">6</span> Applications</a></li>
+<li><a class="" href="time-series.html"><span class="header-section-number">7</span> Time Series</a></li>
+<li><a class="" href="appendix.html"><span class="header-section-number">8</span> Appendix</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="linear-regressions" class="section level1" number="3">
+<h1>
+<span class="header-section-number">3</span> Linear Regressions<a class="anchor" aria-label="anchor" href="#linear-regressions"><i class="fas fa-link"></i></a>
+</h1>
+<div id="specification" class="section level2" number="3.1">
+<h2>
+<span class="header-section-number">3.1</span> Specification<a class="anchor" aria-label="anchor" href="#specification"><i class="fas fa-link"></i></a>
+</h2>
+<hr>
+<div class="definition">
+<p><span id="def:essai" class="definition"><strong>Definition 3.1  </strong></span>A linear regression is a model defined through:
+<span class="math display">\[
+y_i = \boldsymbol\beta'{\bf x}_{i} + \varepsilon_i,
+\]</span>
+where <span class="math inline">\({\bf x}_{i}=[x_{i,1},\dots,x_{i,K}]'\)</span> is a vector of dimension <span class="math inline">\(K \times 1\)</span>.</p>
+</div>
+<hr>
+<p>For entity <span class="math inline">\(i\)</span>, the <span class="math inline">\(x_{i,k}\)</span>’s, for <span class="math inline">\(k \in \{1,\dots,K\}\)</span>, are explanatory variables. If one wants to have an intercept in the specification, then set <span class="math inline">\(x_{i,1}=1\)</span> for all <span class="math inline">\(i\)</span>, and <span class="math inline">\(\beta_1\)</span> then corresponds to the intercept.</p>
+<hr>
+<div class="hypothesis">
+<p><span id="hyp:fullrank" class="hypothesis"><strong>Hypothesis 3.1  (Full rank) </strong></span>There is no exact linear relationship among the independent variables (the <span class="math inline">\(x_{i,k}\)</span>s, for a given <span class="math inline">\(i \in \{1,\dots,n\}\)</span>).</p>
+</div>
+<hr>
+<hr>
+<div class="hypothesis">
+<p><span id="hyp:exogeneity" class="hypothesis"><strong>Hypothesis 3.2  (Conditional mean-zero assumption) </strong></span><span class="math display">\[\begin{equation}
+\mathbb{E}(\boldsymbol\varepsilon|\mathbf{X}) = 0.
+\end{equation}\]</span></p>
+</div>
+<hr>
+<p>Note that, in Hypothesis <a href="linear-regressions.html#hyp:exogeneity">3.2</a>, <span class="math inline">\(\boldsymbol\varepsilon\)</span> is a <span class="math inline">\(n\)</span>-dimensional vector (where <span class="math inline">\(n\)</span> is the sample size), and <span class="math inline">\(\mathbf{X}\)</span> is the matrix containing all explanatory variables, of dimension <span class="math inline">\(n \times K\)</span>.</p>
+<hr>
+<div class="proposition">
+<p><span id="prp:implicationExog" class="proposition"><strong>Proposition 3.1  </strong></span>Under Hypothesis <a href="linear-regressions.html#hyp:exogeneity">3.2</a>:</p>
+<ol style="list-style-type: lower-roman">
+<li><p><span class="math inline">\(\mathbb{E}(\varepsilon_{i})=0\)</span>;</p></li>
+<li><p>the <span class="math inline">\(x_{ij}\)</span>s and the <span class="math inline">\(\varepsilon_{i}\)</span>s are uncorrelated, i.e. <span class="math inline">\(\forall i,\,j \quad \mathbb{C}orr(x_{ij},\varepsilon_{i})=0\)</span>.</p></li>
+</ol>
+</div>
+<hr>
+<div class="proof">
+<p><span id="unlabeled-div-1" class="proof"><em>Proof</em>. </span>Let us prove (i) and (ii):</p>
+<ol style="list-style-type: lower-roman">
+<li>By the law of iterated expectations:
+<span class="math display">\[
+\mathbb{E}(\boldsymbol\varepsilon)=\mathbb{E}(\mathbb{E}(\boldsymbol\varepsilon|\mathbf{X}))=\mathbb{E}(0)=0.
+\]</span>
+</li>
+<li>
+<span class="math inline">\(\mathbb{E}(x_{ij}\varepsilon_i)=\mathbb{E}(\mathbb{E}(x_{ij}\varepsilon_i|\mathbf{X}))=\mathbb{E}(x_{ij}\underbrace{\mathbb{E}(\varepsilon_i|\mathbf{X})}_{=0})=0\)</span>.<span class="math inline">\(\square\)</span>
+</li>
+</ol>
+</div>
+<hr>
+<div class="hypothesis">
+<p><span id="hyp:homoskedasticity" class="hypothesis"><strong>Hypothesis 3.3  (Homoskedasticity) </strong></span><span class="math display">\[
+\forall i, \quad \mathbb{V}ar(\varepsilon_i|\mathbf{X}) = \sigma^2.
+\]</span></p>
+</div>
+<hr>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:heteroskedasticity"></span>
+<img src="AdvECTS_files/figure-html/heteroskedasticity-1.png" alt="This is the caption" width="90%"><p class="caption">
+Figure 3.1: This is the caption
+</p>
+</div>
+<p>Panel (b) of Figure <a href="linear-regressions.html#fig:heteroskedasticity">3.1</a> corresponds to a situation of heteroskedasticity. Let us be more specific. In the two plots, we have <span class="math inline">\(X_i \sim \mathcal{N}(0,1)\)</span> and <span class="math inline">\(\varepsilon^*_i \sim \mathcal{N}(0,1)\)</span>. In Panel (a) (homoskedasticity): <span class="math inline">\(Y_i = 2 + 2X_i + \varepsilon^*_i\)</span>. In Panel (b) (heteroskedasticity): <span class="math inline">\(Y_i = 2 + 2X_i + \left(2\mathbb{1}_{\{X_i&lt;0\}}+0.2\mathbb{1}_{\{X_i\ge0\}}\right)\varepsilon^*_i\)</span>.</p>
+<!-- Figure \@ref(fig:sillydog) is great. -->
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># load data into R</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">Salaries</span>, package <span class="op">=</span> <span class="st">"carData"</span><span class="op">)</span></span>
+<span><span class="co"># first six rows of the data</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">Salaries</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##        rank discipline yrs.since.phd yrs.service  sex salary
+## 1      Prof          B            19          18 Male 139750
+## 2      Prof          B            20          16 Male 173200
+## 3  AsstProf          B             4           3 Male  79750
+## 4      Prof          B            45          39 Male 115000
+## 5      Prof          B            40          41 Male 141500
+## 6 AssocProf          B             6           6 Male  97000</code></pre>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Regression:</span></span>
+<span><span class="va">eq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">salary</span><span class="op">~</span><span class="va">.</span>,data<span class="op">=</span><span class="va">Salaries</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">eq</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = salary ~ ., data = Salaries)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -65248 -13211  -1775  10384  99592 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)    65955.2     4588.6  14.374  &lt; 2e-16 ***
+## rankAssocProf  12907.6     4145.3   3.114  0.00198 ** 
+## rankProf       45066.0     4237.5  10.635  &lt; 2e-16 ***
+## disciplineB    14417.6     2342.9   6.154 1.88e-09 ***
+## yrs.since.phd    535.1      241.0   2.220  0.02698 *  
+## yrs.service     -489.5      211.9  -2.310  0.02143 *  
+## sexMale         4783.5     3858.7   1.240  0.21584    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 22540 on 390 degrees of freedom
+## Multiple R-squared:  0.4547, Adjusted R-squared:  0.4463 
+## F-statistic:  54.2 on 6 and 390 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>plt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.2</span>,<span class="fl">.95</span>,<span class="fl">.2</span>,<span class="fl">.95</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">salary</span><span class="op">/</span><span class="fl">1000</span><span class="op">~</span><span class="va">yrs.since.phd</span>,pch<span class="op">=</span><span class="fl">19</span>,xlab<span class="op">=</span><span class="st">"years since PhD"</span>,ylab<span class="op">=</span><span class="st">"Salary"</span>,data<span class="op">=</span><span class="va">Salaries</span>,las<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">salary</span><span class="op">/</span><span class="fl">1000</span><span class="op">~</span><span class="va">yrs.since.phd</span>,data<span class="op">=</span><span class="va">Salaries</span><span class="op">)</span>,col<span class="op">=</span><span class="st">"red"</span>,lwd<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:exmpSalarayPhD"></span>
+<img src="AdvECTS_files/figure-html/exmpSalarayPhD-1.png" alt="Salary versus years after PhD" width="90%"><p class="caption">
+Figure 3.2: Salary versus years after PhD
+</p>
+</div>
+<hr>
+<div class="hypothesis">
+<p><span id="hyp:noncorrelResid" class="hypothesis"><strong>Hypothesis 3.4  (Uncorrelated residuals) </strong></span><span class="math display">\[
+\forall i \ne j, \quad \mathbb{C}ov(\varepsilon_i,\varepsilon_j|\mathbf{X})=0.
+\]</span></p>
+</div>
+<hr>
+<hr>
+<div class="proposition">
+<p><span id="prp:Sigma" class="proposition"><strong>Proposition 3.2  </strong></span>If <a href="linear-regressions.html#hyp:homoskedasticity">3.3</a> and <a href="linear-regressions.html#hyp:noncorrelResid">3.4</a> hold, then:
+<span class="math display">\[
+\mathbb{V}ar(\boldsymbol\varepsilon|\mathbf{X})= \sigma^2 Id,
+\]</span>
+where <span class="math inline">\(Id\)</span> is the <span class="math inline">\(n \times n\)</span> identity matrix.</p>
+</div>
+<hr>
+<hr>
+<div class="hypothesis">
+<p><span id="hyp:normality" class="hypothesis"><strong>Hypothesis 3.5  (Normal distribution) </strong></span><span class="math display">\[
+\forall i, \quad \varepsilon_i \sim \mathcal{N}(0,\sigma^2).
+\]</span></p>
+</div>
+<hr>
+</div>
+<div id="least-square-estimation" class="section level2" number="3.2">
+<h2>
+<span class="header-section-number">3.2</span> Least square estimation<a class="anchor" aria-label="anchor" href="#least-square-estimation"><i class="fas fa-link"></i></a>
+</h2>
+<p>For a given vector of coefficients <span class="math inline">\(\mathbf{b}=[b_1,\dots,b_K]'\)</span>, the sum of square residuals is:
+<span class="math display">\[
+f(\mathbf{b}) =\sum_{i=1}^n \left(y_i - \sum_{j=1}^K x_{i,j} b_j \right)^2 = \sum_{i=1}^n (y_i - \mathbf{x}_i' \mathbf{b})^2.
+\]</span>
+Minimizing the sum of squared residuals amounts to minimizing:
+<span class="math display">\[
+f(\mathbf{b}) = (\mathbf{y} - \mathbf{X}\mathbf{b})'(\mathbf{y} - \mathbf{X}\mathbf{b}).
+\]</span></p>
+<p>We have:
+<span class="math display">\[
+\frac{\partial f}{\partial \mathbf{b}}(\mathbf{b}) = - 2 \mathbf{X}'\mathbf{y} + 2 \mathbf{X}'\mathbf{X}\mathbf{b}.
+\]</span>
+Necessary first-order condition (FOC):
+<span class="math display" id="eq:OLSFOC">\[\begin{equation}
+\mathbf{X}'\mathbf{X}\mathbf{b} = \mathbf{X}'\mathbf{y}.\tag{3.1}
+\end{equation}\]</span>
+Under Assumption <a href="linear-regressions.html#hyp:fullrank">3.1</a>, <span class="math inline">\(\mathbf{X}'\mathbf{X}\)</span> is invertible. Hence:
+<span class="math display">\[
+\boxed{\mathbf{b} = (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\mathbf{y}.}
+\]</span>
+Vector <span class="math inline">\(\mathbf{b}\)</span> minimises the sum of squared residuals. (<span class="math inline">\(f\)</span> is a non-negative quadratic function, it admits a minimum.)</p>
+<p>The estimated residuals are:
+<span class="math display" id="eq:Mres">\[\begin{equation}
+\mathbf{e} = \mathbf{y} - \mathbf{X} (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbf{y} = \mathbf{M} \mathbf{y}\tag{3.2}
+\end{equation}\]</span>
+where <span class="math inline">\(\mathbf{M} := \mathbf{I} - \mathbf{X} (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\)</span> is called the <strong>residual maker</strong> matrix. Let us further define a <strong>projection matrix</strong> by <span class="math inline">\(\mathbf{P}=\mathbf{X} (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\)</span>. These matrices <span class="math inline">\(\mathbf{M}\)</span> and <span class="math inline">\(\mathbf{P}\)</span> are such that:</p>
+<ul>
+<li>
+<span class="math inline">\(\mathbf{M} \mathbf{X} = \mathbf{0}\)</span>: if one regresses one of the explanatory variables on <span class="math inline">\(\mathbf{X}\)</span>, the residuals are null.</li>
+<li>
+<span class="math inline">\(\mathbf{M}\mathbf{y}=\mathbf{M}\boldsymbol\varepsilon\)</span> (because <span class="math inline">\(\mathbf{y} = \mathbf{X}\boldsymbol\beta + \boldsymbol\varepsilon\)</span> and <span class="math inline">\(\mathbf{M} \mathbf{X} = \mathbf{0}\)</span>).</li>
+<li>The fitted values are:
+<span class="math display" id="eq:Proj">\[\begin{equation}
+\hat{\mathbf{y}}=\mathbf{X} (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbf{y} = \mathbf{P} \mathbf{y},\tag{3.3}
+\end{equation}\]</span>
+i.e., <span class="math inline">\(\hat{\mathbf{y}}\)</span> is the projection of the vector <span class="math inline">\(\mathbf{y}\)</span> onto the vectorial space spanned by the columns of <span class="math inline">\(\mathbf{X}\)</span>.</li>
+<li>It can be shown that each column <span class="math inline">\(\tilde{\mathbf{x}}_k\)</span> of <span class="math inline">\(\mathbf{X}\)</span> is orthogonal to <span class="math inline">\(\mathbf{e}\)</span>. <span class="math inline">\(\Rightarrow\)</span> If intercepts are included in the regression (<span class="math inline">\(x_{i,1} \equiv 1\)</span>), the average of the residuals is null.</li>
+</ul>
+<p>Here are some properties of <span class="math inline">\(\mathbf{M}\)</span> and <span class="math inline">\(\mathbf{P}\)</span>:</p>
+<ul>
+<li>
+<span class="math inline">\(\mathbf{M}\)</span> is symmetric (<span class="math inline">\(\mathbf{M} = \mathbf{M}'\)</span>) and <strong>idempotent</strong> (<span class="math inline">\(\mathbf{M} = \mathbf{M}^2 = \mathbf{M}^k\)</span> for <span class="math inline">\(k&gt;0\)</span>).</li>
+<li>
+<span class="math inline">\(\mathbf{P}\)</span> is symmetric and idempotent.</li>
+<li>
+<span class="math inline">\(\mathbf{P}\mathbf{X} = \mathbf{X}\)</span>.</li>
+<li>
+<span class="math inline">\(\mathbf{P} \mathbf{M} = \mathbf{M} \mathbf{P} = 0\)</span>.</li>
+<li>
+<span class="math inline">\(\mathbf{y} = \mathbf{P}\mathbf{y} + \mathbf{M}\mathbf{y}\)</span> (decomposition of <span class="math inline">\(\mathbf{y}\)</span> into two orthogonal parts).</li>
+</ul>
+<hr>
+<div class="proposition">
+<p><span id="prp:propOLS" class="proposition"><strong>Proposition 3.3  (Properties of the OLS estimator) </strong></span>We have:</p>
+<ol style="list-style-type: lower-roman">
+<li><p>Under Assumptions <a href="linear-regressions.html#hyp:fullrank">3.1</a> and <a href="linear-regressions.html#hyp:exogeneity">3.2</a>, the OLS estimator is linear and unbiased.</p></li>
+<li><p>Under Hypotheses <a href="linear-regressions.html#hyp:fullrank">3.1</a> to <a href="linear-regressions.html#hyp:noncorrelResid">3.4</a>, the conditional covariance matrix of <span class="math inline">\(\mathbf{b}\)</span> is: <span class="math inline">\(\mathbb{V}ar(\mathbf{b}|\mathbf{X}) = \sigma^2 (\mathbf{X}'\mathbf{X})^{-1}\)</span>.</p></li>
+</ol>
+</div>
+<hr>
+<div class="proof">
+<p><span id="unlabeled-div-2" class="proof"><em>Proof</em>. </span>Under Hypothesis <a href="linear-regressions.html#hyp:fullrank">3.1</a>, <span class="math inline">\(\mathbf{X}'\mathbf{X}\)</span> can be inverted. We have:
+<span class="math display">\[
+\mathbf{b} = (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\mathbf{y} = \boldsymbol\beta + (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbf{\varepsilon}.
+\]</span></p>
+<ol style="list-style-type: lower-roman">
+<li>Let us consider the expectation of the last term, i.e. <span class="math inline">\(\mathbb{E}((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbf{\varepsilon})\)</span>. Using the law of iterated expectations, we obtain:
+<span class="math display">\[
+\mathbb{E}((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbf{\varepsilon}) = \mathbb{E}(\mathbb{E}[(\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbf{\varepsilon}|\mathbf{X}]) = \mathbb{E}((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\mathbb{E}[\mathbf{\varepsilon}|\mathbf{X}]).
+\]</span>
+By Hypothesis <a href="linear-regressions.html#hyp:exogeneity">3.2</a>, we have <span class="math inline">\(\mathbb{E}[\mathbf{\varepsilon}|\mathbf{X}]=0\)</span>. Hence <span class="math inline">\(\mathbb{E}((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbf{\varepsilon}) =0\)</span> and result (i) follows.</li>
+<li>
+<span class="math inline">\(\mathbb{V}ar(\mathbf{b}|\mathbf{X}) = (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbb{E}(\boldsymbol\varepsilon\boldsymbol\varepsilon'|\mathbf{X}) \mathbf{X} (\mathbf{X}'\mathbf{X})^{-1}\)</span>.
+By Prop. <a href="linear-regressions.html#prp:Sigma">3.2</a>, if <a href="linear-regressions.html#hyp:homoskedasticity">3.3</a> and <a href="linear-regressions.html#hyp:noncorrelResid">3.4</a> hold, then we have <span class="math inline">\(\mathbb{E}(\boldsymbol\varepsilon\boldsymbol\varepsilon'|\mathbf{X})=\mathbb{V}ar(\boldsymbol\varepsilon|\mathbf{X})=\sigma^2 Id\)</span>. The result follows. <span class="math inline">\(\square\)</span>
+</li>
+</ol>
+</div>
+<div id="bivariate-case" class="section level3" number="3.2.1">
+<h3>
+<span class="header-section-number">3.2.1</span> Bivariate case<a class="anchor" aria-label="anchor" href="#bivariate-case"><i class="fas fa-link"></i></a>
+</h3>
+<p>Consider a bivariate situation, where we regress<span class="math inline">\(y_i\)</span> on a constant and an explanatory variable <span class="math inline">\(w_i\)</span>. We have <span class="math inline">\(K=2\)</span>, and <span class="math inline">\(\mathbf{X}\)</span> is a <span class="math inline">\(n \times 2\)</span> matrix whose <span class="math inline">\(i^{th}\)</span> row is <span class="math inline">\([x_{i,1},x_{i,2}]\)</span>, with <span class="math inline">\(x_{i,1}=1\)</span> (to account for the intercept) and with <span class="math inline">\(w_i = x_{i,2}\)</span> (say).</p>
+<p>We have:
+<span class="math display">\[\begin{eqnarray*}
+\mathbf{X}'\mathbf{X} &amp;=&amp;
+\left[\begin{array}{cc}
+n &amp; \sum_i w_i \\
+\sum_i w_i &amp; \sum_i w_i^2
+\end{array}
+\right],\\
+(\mathbf{X}'\mathbf{X})^{-1} &amp;=&amp;
+\frac{1}{n\sum_i w_i^2-(\sum_i w_i)^2}
+\left[\begin{array}{cc}
+\sum_i w_i^2 &amp; -\sum_i w_i \\
+-\sum_i w_i &amp; n
+\end{array}
+\right],\\
+(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y} &amp;=&amp;
+\frac{1}{n\sum_i w_i^2-(\sum_i w_i)^2}
+\left[\begin{array}{c}
+\sum_i w_i^2\sum_i y_i -\sum_i w_i \sum_i w_iy_i \\
+-\sum_i w_i \sum_i y_i + n \sum_i w_i y_i
+\end{array}
+\right]\\
+&amp;=&amp; \frac{1}{\frac{1}{n}\sum_i(w_i - \bar{w})^2}
+\left[\begin{array}{c}
+\frac{\bar{y}}{n}\sum_i w_i^2 -\frac{\bar{w}}{n}\sum_i w_iy_i \\
+\frac{1}{n}\sum_i (w_i-\bar{w})(y_i-\bar{y})
+\end{array}
+\right].
+\end{eqnarray*}\]</span></p>
+<p>It can be seen that the second element of <span class="math inline">\(\mathbf{b}=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}\)</span> is:
+<span class="math display">\[
+b_2 = \frac{\overline{\mathbb{C}ov(W,Y)}}{\overline{\mathbb{V}ar(W)}},
+\]</span>
+where <span class="math inline">\(\overline{\mathbb{C}ov(W,Y)}\)</span> and <span class="math inline">\(\overline{\mathbb{V}ar(W)}\)</span> are sample estimates.</p>
+<p>Since there is a constant in the regression, we have <span class="math inline">\(b_1 = \bar{y} - b_2 \bar{w}\)</span>.</p>
+</div>
+<div id="gauss-markow-theorem" class="section level3" number="3.2.2">
+<h3>
+<span class="header-section-number">3.2.2</span> Gauss Markow Theorem<a class="anchor" aria-label="anchor" href="#gauss-markow-theorem"><i class="fas fa-link"></i></a>
+</h3>
+<hr>
+<div class="theorem">
+<p><span id="thm:GaussMarkov" class="theorem"><strong>Theorem 3.1  (Gauss-Markov Theorem) </strong></span>Under Assumptions <a href="linear-regressions.html#hyp:fullrank">3.1</a> to <a href="linear-regressions.html#hyp:noncorrelResid">3.4</a>, for any vector <span class="math inline">\(w\)</span>, the minimum-variance linear unbiased estimator of <span class="math inline">\(w' \boldsymbol\beta\)</span> is <span class="math inline">\(w' \mathbf{b}\)</span>, where <span class="math inline">\(\mathbf{b}\)</span> is the least squares estimator. (BLUE: Best Linear Unbiased Estimator.)</p>
+</div>
+<hr>
+<div class="proof">
+<p><span id="unlabeled-div-3" class="proof"><em>Proof</em>. </span>Consider <span class="math inline">\(\mathbf{b}^* = C \mathbf{y}\)</span>, another linear unbiased estimator of <span class="math inline">\(\boldsymbol\beta\)</span>. Since it is unbiased, we must have <span class="math inline">\(\mathbb{E}(C\mathbf{y}|\mathbf{X}) = \mathbb{E}(C\mathbf{X}\boldsymbol\beta + C\boldsymbol\varepsilon|\mathbf{X}) = \boldsymbol\beta\)</span>. We have <span class="math inline">\(\mathbb{E}(C\boldsymbol\varepsilon|\mathbf{X})=C\mathbb{E}(\boldsymbol\varepsilon|\mathbf{X})=0\)</span> (by <a href="linear-regressions.html#hyp:exogeneity">3.2</a>).</p>
+<p>Therefore <span class="math inline">\(\mathbf{b}^*\)</span> is unbiased if <span class="math inline">\(\mathbb{E}(C\mathbf{X})\boldsymbol\beta=\boldsymbol\beta\)</span>. This has to be the case for any <span class="math inline">\(\boldsymbol\beta\)</span>, which implies that we must have <span class="math inline">\(C\mathbf{X}=\mathbf{I}\)</span>.\</p>
+<p>Let us compute <span class="math inline">\(\mathbb{V}ar(\mathbf{b^*}|\mathbf{X})\)</span>. For this, we introduce <span class="math inline">\(D = C - (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\)</span>, which is such that <span class="math inline">\(D\mathbf{y}=\mathbf{b}^*-\mathbf{b}\)</span>. The fact that <span class="math inline">\(C\mathbf{X}=\mathbf{I}\)</span> implies that <span class="math inline">\(D\mathbf{X} = \mathbf{0}\)</span>.</p>
+<p>We have <span class="math inline">\(\mathbb{V}ar(\mathbf{b^*}|\mathbf{X}) = \mathbb{V}ar(C \mathbf{y}|\mathbf{X}) =\mathbb{V}ar(C \boldsymbol\varepsilon|\mathbf{X}) = \sigma^2CC'\)</span> (by Assumptions <a href="linear-regressions.html#hyp:homoskedasticity">3.3</a> and <a href="linear-regressions.html#hyp:noncorrelResid">3.4</a>, see Prop. <a href="linear-regressions.html#prp:Sigma">3.2</a>). Using <span class="math inline">\(C=D+(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\)</span> and exploiting the fact that <span class="math inline">\(D\mathbf{X} = \mathbf{0}\)</span> leads to:
+<span class="math display">\[
+\mathbb{V}ar(\mathbf{b^*}|\mathbf{X}) =\sigma^2\left[(D+(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}')(D+(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}')'\right] = \mathbb{V}ar(\mathbf{b}|\mathbf{X}) + \sigma^2 \mathbf{D}\mathbf{D}'.
+\]</span>
+Therefore, we have <span class="math inline">\(\mathbb{V}ar(w'\mathbf{b^*}|\mathbf{X})=w'\mathbb{V}ar(\mathbf{b}|\mathbf{X})w + \sigma^2 w'\mathbf{D}\mathbf{D}'w\ge w'\mathbb{V}ar(\mathbf{b}|\mathbf{X})w=\mathbb{V}ar(w'\mathbf{b}|\mathbf{X})\)</span>. <span class="math inline">\(\square\)</span></p>
+</div>
+</div>
+<div id="frish-waugh" class="section level3" number="3.2.3">
+<h3>
+<span class="header-section-number">3.2.3</span> Frish-Waugh<a class="anchor" aria-label="anchor" href="#frish-waugh"><i class="fas fa-link"></i></a>
+</h3>
+<p>Consider the linear least square regression of <span class="math inline">\(\mathbf{y}\)</span> on <span class="math inline">\(\mathbf{X}\)</span>. We introduce the notations:</p>
+<ul>
+<li>
+<span class="math inline">\(\mathbf{b}^{\mathbf{y}/\mathbf{X}}\)</span>: OLS estimates of <span class="math inline">\(\boldsymbol\beta\)</span>,</li>
+<li>
+<span class="math inline">\(\mathbf{M}^{\mathbf{X}}\)</span>: residual-maker matrix of any regression on <span class="math inline">\(\mathbf{X}\)</span>,</li>
+<li>
+<span class="math inline">\(\mathbf{P}^{\mathbf{X}}\)</span>: projection matrix of any regression on <span class="math inline">\(\mathbf{X}\)</span>.</li>
+</ul>
+<p>Consider the case where we have two sets of explanatory variables: <span class="math inline">\(\mathbf{X} = [\mathbf{X}_1,\mathbf{X}_2]\)</span>. With obvious notations: <span class="math inline">\(\mathbf{b}^{\mathbf{y}/\mathbf{X}}=[\mathbf{b}_1',\mathbf{b}_2']'\)</span>.</p>
+<hr>
+<div class="theorem">
+<p><span id="thm:FW" class="theorem"><strong>Theorem 3.2  (Frisch-Waugh Theorem) </strong></span>We have:
+<span class="math display">\[
+\mathbf{b}_2 = \mathbf{b}^{\mathbf{M^{\mathbf{X}_1}y}/\mathbf{M^{\mathbf{X}_1}\mathbf{X}_2}}.
+\]</span></p>
+</div>
+<hr>
+<div class="proof">
+<p><span id="unlabeled-div-4" class="proof"><em>Proof</em>. </span>The minimization of the least squares leads to (these are first-order conditions, see Eq. <a href="linear-regressions.html#eq:OLSFOC">(3.1)</a>):
+<span class="math display">\[
+\left[ \begin{array}{cc} \mathbf{X}_1'\mathbf{X}_1 &amp; \mathbf{X}_1'\mathbf{X}_2 \\ \mathbf{X}_2'\mathbf{X}_1 &amp; \mathbf{X}_2'\mathbf{X}_2\end{array}\right]
+\left[ \begin{array}{c} \mathbf{b}_1 \\ \mathbf{b}_2\end{array}\right] =
+\left[ \begin{array}{c} \mathbf{X}_1' \mathbf{y} \\ \mathbf{X}_2' \mathbf{y} \end{array}\right].
+\]</span>
+Use the first-row block of equations to solve for <span class="math inline">\(\mathbf{b}_1\)</span> first; it comes as a function of <span class="math inline">\(\mathbf{b}_2\)</span>. Then use the second set of equations to solve for <span class="math inline">\(\mathbf{b}_2\)</span>, which leads to:
+<span class="math display">\[
+\mathbf{b}_2 = [\mathbf{X}_2'\mathbf{X}_2 - \mathbf{X}_2'\mathbf{X}_1(\mathbf{X}_1'\mathbf{X}_1)\mathbf{X}_1'\mathbf{X}_2]^{-1}\mathbf{X}_2'(Id - \mathbf{X}_1(\mathbf{X}_1'\mathbf{X}_1)\mathbf{X}_1')\mathbf{y}=[\mathbf{X}_2' \mathbf{M}^{\mathbf{X}_1}\mathbf{X}_2]^{-1}\mathbf{X}_2'\mathbf{M}^{\mathbf{X}_1}\mathbf{y}.
+\]</span>
+Using the fact that <span class="math inline">\(\mathbf{M}^{\mathbf{X}_1}\)</span> is idempotent and symmetric leads to the result.</p>
+</div>
+<p>This suggests a second way of estimating <span class="math inline">\(\mathbf{b}_2\)</span>:</p>
+<ol style="list-style-type: decimal">
+<li>Regress <span class="math inline">\(Y\)</span> on <span class="math inline">\(X_1\)</span>, regress <span class="math inline">\(X_2\)</span> on <span class="math inline">\(X_1\)</span>.</li>
+<li>Regress the former residuals on the latter.</li>
+</ol>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/jrenne/Data4courses/master/parapluie/data4parapluie.csv"</span><span class="op">)</span></span>
+<span><span class="va">dummies</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">Data</span><span class="op">[</span>,<span class="fl">4</span><span class="op">:</span><span class="fl">14</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">eq_all</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">parapluie</span><span class="op">~</span><span class="va">precip</span><span class="op">+</span><span class="va">dummies</span>,data<span class="op">=</span><span class="va">Data</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">eq_all</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span></span></code></pre></div>
+<pre><code>##                Estimate Std. Error    t value     Pr(&gt;|t|)
+## (Intercept)  -2.9534478 3.40601605 -0.8671268 0.3893855798
+## precip        0.1300055 0.03594492  3.6167985 0.0006192876
+## dummiesX1    -8.5990682 3.30046623 -2.6054101 0.0115966151
+## dummiesX2   -13.3290386 3.30657128 -4.0310755 0.0001613897
+## dummiesX3    -7.9829582 3.25949898 -2.4491366 0.0173091333
+## dummiesX4    -3.3923533 3.27605582 -1.0354992 0.3046614769
+## dummiesX5    -3.7038158 3.25710094 -1.1371511 0.2600724511
+## dummiesX6    -3.3606412 3.27334327 -1.0266694 0.3087670632
+## dummiesX7    -7.3158812 3.28491529 -2.2271141 0.0297682836
+## dummiesX8    -7.7172773 3.26128164 -2.3663327 0.0212677987
+## dummiesX9    -4.6491997 3.26005024 -1.4261129 0.1591057652
+## dummiesX10   -5.1091987 3.25143961 -1.5713651 0.1214457733
+## dummiesX11    1.9807700 3.25942144  0.6077060 0.5457145714</code></pre>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">deseas_parapluie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">parapluie</span><span class="op">~</span><span class="va">dummies</span>,data<span class="op">=</span><span class="va">Data</span><span class="op">)</span><span class="op">$</span><span class="va">residuals</span></span>
+<span><span class="va">deseas_precip</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">precip</span><span class="op">~</span><span class="va">dummies</span>,data<span class="op">=</span><span class="va">Data</span><span class="op">)</span><span class="op">$</span><span class="va">residuals</span></span>
+<span><span class="va">eq_frac</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">deseas_parapluie</span><span class="op">~</span><span class="va">deseas_precip</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">eq_frac</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span></span></code></pre></div>
+<pre><code>##                    Estimate Std. Error       t value     Pr(&gt;|t|)
+## (Intercept)   -3.265931e-16 0.60898084 -5.362946e-16 1.0000000000
+## deseas_precip  1.300055e-01 0.03300004  3.939557e+00 0.0001907741</code></pre>
+<p>When <span class="math inline">\(b_2\)</span> is scalar (and then <span class="math inline">\(\mathbf{X}_2\)</span> is of dimension <span class="math inline">\(n \times 1\)</span>), Theorem <a href="linear-regressions.html#thm:FW">3.2</a> leads to:
+<span class="math display">\[
+b_2 = \frac{\mathbf{X}_2'M^{\mathbf{X}_1}\mathbf{y}}{\mathbf{X}_2'M^{\mathbf{X}_1}\mathbf{X}_2} \quad \text{(partial regression coefficient)}.
+\]</span></p>
+</div>
+<div id="goodness-of-fit" class="section level3" number="3.2.4">
+<h3>
+<span class="header-section-number">3.2.4</span> Goodness of fit<a class="anchor" aria-label="anchor" href="#goodness-of-fit"><i class="fas fa-link"></i></a>
+</h3>
+<p>Define the total variation in <span class="math inline">\(y\)</span> as the sum of squared deviations:
+<span class="math display">\[
+TSS = \sum_{i=1}^{n} (y_i - \bar{y})^2.
+\]</span>
+We have:
+<span class="math display">\[
+\mathbf{y} = \mathbf{X}\mathbf{b} + \mathbf{e} = \hat{\mathbf{y}} + \mathbf{e}
+\]</span>
+In the following, we assume that the regression includes a constant (i.e. for all <span class="math inline">\(i\)</span>, <span class="math inline">\(x_{i,1}=1\)</span>). Denote by <span class="math inline">\(\mathbf{M}^0\)</span> the matrix that transforms observations into deviations from sample means. Using that <span class="math inline">\(\mathbf{M}^0 \mathbf{e} = \mathbf{e}\)</span> and that <span class="math inline">\(\mathbf{X}' \mathbf{e}=0\)</span>, we have:
+<span class="math display">\[\begin{eqnarray*}
+\underbrace{\mathbf{y}'\mathbf{M}^0\mathbf{y}}_{\mbox{Total sum of sq.}} &amp;=&amp; (\mathbf{X}\mathbf{b} + \mathbf{e})' \mathbf{M}^0 (\mathbf{X}\mathbf{b} + \mathbf{e})\\
+&amp;=&amp; \underbrace{\mathbf{b}' \mathbf{X}' \mathbf{M}^0 \mathbf{X}\mathbf{b}}_{\mbox{"Explained" sum of sq.}} + \underbrace{\mathbf{e}'\mathbf{e}}_{\mbox{Sum of sq. residuals}}\\
+TSS &amp;=&amp; Expl.SS + SSR.
+\end{eqnarray*}\]</span></p>
+<p><span class="math display" id="eq:RR2">\[\begin{equation}
+\boxed{\mbox{Coefficient of determination} = \frac{Expl.SS}{TSS} = 1 - \frac{SSR}{TSS} = 1 - \frac{\mathbf{e}'\mathbf{e}}{\mathbf{y}'\mathbf{M}^0\mathbf{y}}.}\tag{3.4}
+\end{equation}\]</span></p>
+<p>It can be shown [Greene, 2012, Section 3.5] that:
+<span class="math display">\[
+\mbox{Coefficient of determination} = \frac{[\sum_{i=1}^n(y_i - \bar{y})(\hat{y_i} - \bar{y})]^2}{\sum_{i=1}^n(y_i - \bar{y})^2 \sum_{i=1}^n(\hat{y_i} - \bar{y})^2}.
+\]</span>
+<span class="math inline">\(\Rightarrow\)</span> <span class="math inline">\(R^2\)</span> is the sample squared correlation between <span class="math inline">\(y\)</span> and the (regression-implied) <span class="math inline">\(y\)</span>’s predictions.</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>plt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.3</span>,<span class="fl">.95</span>,<span class="fl">.2</span>,<span class="fl">.85</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
+<span><span class="va">eps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span></span>
+<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span></span>
+<span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">+</span> <span class="va">X</span> <span class="op">+</span> <span class="va">eps</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">X</span>,<span class="va">Y</span>,pch<span class="op">=</span><span class="fl">19</span>,main<span class="op">=</span><span class="st">"(a) Low R2"</span><span class="op">)</span></span>
+<span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">+</span> <span class="va">X</span> <span class="op">+</span> <span class="fl">.1</span><span class="op">*</span><span class="va">eps</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">X</span>,<span class="va">Y</span>,pch<span class="op">=</span><span class="fl">19</span>,main<span class="op">=</span><span class="st">"(b) High R2"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="AdvECTS_files/figure-html/R2-1.png" width="672"></div>
+<p>The <strong>partial correlation</strong> between <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span>, controlling for some variables <span class="math inline">\(\mathbf{X}\)</span> is the sample correlation between <span class="math inline">\(y^*\)</span> and <span class="math inline">\(z^*\)</span>, where the latter two variables are the residuals in regressions of <span class="math inline">\(y\)</span> on <span class="math inline">\(\mathbf{X}\)</span> and of <span class="math inline">\(z\)</span> on <span class="math inline">\(\mathbf{X}\)</span>, respectively.</p>
+<p>This correlation is denoted by <span class="math inline">\(r_{yz}^\mathbf{X}\)</span>. By definition, we have:
+<span class="math display" id="eq:pc">\[\begin{equation}
+r_{yz}^\mathbf{X} = \frac{\mathbf{z^*}'\mathbf{y^*}}{\sqrt{(\mathbf{z^*}'\mathbf{z^*})(\mathbf{y^*}'\mathbf{y^*})}}.\tag{3.5}
+\end{equation}\]</span></p>
+<hr>
+<div class="proposition">
+<p><span id="prp:chgeR2" class="proposition"><strong>Proposition 3.4  (Change in SSR when a variable is added) </strong></span>We have:
+<span class="math display" id="eq:uu">\[\begin{equation}
+\mathbf{u}'\mathbf{u} = \mathbf{e}'\mathbf{e} - c^2(\mathbf{z^*}'\mathbf{z^*}) \qquad (\le \mathbf{e}'\mathbf{e}) \tag{3.6}
+\end{equation}\]</span>
+where (i) <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{e}\)</span> are the residuals in the regressions of <span class="math inline">\(\mathbf{y}\)</span> on <span class="math inline">\([\mathbf{X},\mathbf{z}]\)</span> and of <span class="math inline">\(\mathbf{y}\)</span> on <span class="math inline">\(\mathbf{X}\)</span>, respectively, (ii) <span class="math inline">\(c\)</span> is the regression coefficient on <span class="math inline">\(\mathbf{z}\)</span> in the former regression and where <span class="math inline">\(\mathbf{z}^*\)</span> are the residuals in the regression of <span class="math inline">\(\mathbf{z}\)</span> on <span class="math inline">\(\mathbf{X}\)</span>.</p>
+</div>
+<hr>
+<div class="proof">
+<p><span id="unlabeled-div-5" class="proof"><em>Proof</em>. </span>The OLS estimates <span class="math inline">\([\mathbf{d}',\mathbf{c}]'\)</span> in the regression of <span class="math inline">\(\mathbf{y}\)</span> on <span class="math inline">\([\mathbf{X},\mathbf{z}]\)</span> satisfies (first-order cond., Eq. <a href="linear-regressions.html#eq:OLSFOC">(3.1)</a>)
+<span class="math display">\[
+\left[ \begin{array}{cc} \mathbf{X}'\mathbf{X} &amp; \mathbf{X}'\mathbf{z} \\ \mathbf{z}'\mathbf{X} &amp; \mathbf{z}'\mathbf{z}\end{array}\right]
+\left[ \begin{array}{c} \mathbf{d} \\ \mathbf{c}\end{array}\right] =
+\left[ \begin{array}{c} \mathbf{X}' \mathbf{y} \\ \mathbf{z}' \mathbf{y} \end{array}\right].
+\]</span>
+Hence, in particular <span class="math inline">\(\mathbf{d} = \mathbf{b} - (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{z}\mathbf{c}\)</span>, where <span class="math inline">\(\mathbf{b}\)</span> is the OLS of <span class="math inline">\(\mathbf{y}\)</span> on <span class="math inline">\(\mathbf{X}\)</span>. Substituting in <span class="math inline">\(\mathbf{u} = \mathbf{y} - \mathbf{X}\mathbf{d} - \mathbf{z}c\)</span>, we get <span class="math inline">\(\mathbf{u} = \mathbf{e} - \mathbf{z}^*c\)</span>. We therefore have:
+<span class="math display" id="eq:uuu">\[\begin{equation}
+\mathbf{u}'\mathbf{u} = (\mathbf{e} - \mathbf{z}^*c)(\mathbf{e} - \mathbf{z}^*c)= \mathbf{e}'\mathbf{e} + c^2(\mathbf{z^*}'\mathbf{z^*}) - 2 c\mathbf{z^*}'\mathbf{e}.\tag{3.7}
+\end{equation}\]</span>
+Now <span class="math inline">\(\mathbf{z^*}'\mathbf{e} = \mathbf{z^*}'(\mathbf{y} - \mathbf{X}\mathbf{b}) = \mathbf{z^*}'\mathbf{y}\)</span> because <span class="math inline">\(\mathbf{z}^*\)</span> are the residuals in an OLS regression on <span class="math inline">\(\mathbf{X}\)</span>. Since <span class="math inline">\(c = (\mathbf{z^*}'\mathbf{z^*})^{-1}\mathbf{z^*}'\mathbf{y^*}\)</span> (by an application of Theorem <a href="linear-regressions.html#thm:FW">3.2</a>), we have <span class="math inline">\((\mathbf{z^*}'\mathbf{z^*})c = \mathbf{z^*}'\mathbf{y^*}\)</span> and, therefore, <span class="math inline">\(\mathbf{z^*}'\mathbf{e} = (\mathbf{z^*}'\mathbf{z^*})c\)</span>. Inserting this in Eq. <a href="linear-regressions.html#eq:uuu">(3.7)</a> leads to the results. <span class="math inline">\(\square\)</span></p>
+</div>
+<hr>
+<div class="proposition">
+<p><span id="prp:chgeInR2" class="proposition"><strong>Proposition 3.5  (Change in the coefficient of determination when a variable is added) </strong></span>Denoting by <span class="math inline">\(R_W^2\)</span> the coefficient of determination in the regression of <span class="math inline">\(\mathbf{y}\)</span> on some variable <span class="math inline">\(\mathbf{W}\)</span>, we have:
+<span class="math display">\[
+R_{\mathbf{X},\mathbf{z}}^2 = R_{\mathbf{X}}^2 + (1-R_{\mathbf{X}}^2)(r_{yz}^\mathbf{X})^2,
+\]</span>
+where <span class="math inline">\(r_{yz}^\mathbf{X}\)</span> is the coefficient of partial correlation.</p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-6" class="proof"><em>Proof</em>. </span>Let’s use the same notations as in Prop. @ref{prp:chgeR2}. Theorem <a href="linear-regressions.html#thm:FW">3.2</a> implies that <span class="math inline">\(c = (\mathbf{z^*}'\mathbf{z^*})^{-1}\mathbf{z^*}'\mathbf{y^*}\)</span>. Using this in Eq. <a href="linear-regressions.html#eq:uu">(3.6)</a> gives <span class="math inline">\(\mathbf{u}'\mathbf{u} = \mathbf{e}'\mathbf{e} - (\mathbf{z^*}'\mathbf{y^*})^2/(\mathbf{z^*}'\mathbf{z^*})\)</span>. Using the definition of the partial correlation (Eq. <a href="linear-regressions.html#eq:pc">(3.5)</a>), we get <span class="math inline">\(\mathbf{u}'\mathbf{u} = \mathbf{e}'\mathbf{e}\left(1 - (r_{yz}^\mathbf{X})^2\right)\)</span>. The results is obtained by dividing both sides of the previous equation by <span class="math inline">\(\mathbf{y}'\mathbf{M}_0\mathbf{y}\)</span>. <span class="math inline">\(\square\)</span></p>
+</div>
+<p>The previous theorem shows that we necessarily increase the <span class="math inline">\(R^2\)</span> if we add variables, <strong>even if they are irrelevant</strong>.</p>
+<p>The <strong>adjusted <span class="math inline">\(R^2\)</span></strong>, denoted by <span class="math inline">\(\bar{R}^2\)</span>, is a fit measure that penalizes large numbers of regressors:
+<span class="math display">\[\begin{equation*}
+\boxed{\bar{R}^2 = 1 - \frac{\mathbf{e}'\mathbf{e}/(n-K)}{\mathbf{y}'\mathbf{M}^0\mathbf{y}/(n-1)} = 1 - \frac{n-1}{n-K}(1-R^2).}
+\end{equation*}\]</span></p>
+</div>
+<div id="inference-and-prediction" class="section level3" number="3.2.5">
+<h3>
+<span class="header-section-number">3.2.5</span> Inference and Prediction<a class="anchor" aria-label="anchor" href="#inference-and-prediction"><i class="fas fa-link"></i></a>
+</h3>
+<p>Under the normality assumption (Assumption <a href="linear-regressions.html#hyp:normality">3.5</a>), we know the distribution of <span class="math inline">\(\mathbf{b}\)</span> (conditional on <span class="math inline">\(\mathbf{X}\)</span>). Indeed, <span class="math inline">\((\mathbf{b}|\mathbf{X}) \equiv (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\mathbf{y}\)</span> is multivariate Gaussian:
+<span class="math display" id="eq:distriBcondi">\[\begin{equation}
+\mathbf{b}|\mathbf{X} \sim \mathcal{N}(\beta,\sigma^2(\mathbf{X}'\mathbf{X})^{-1}).\tag{3.8}
+\end{equation}\]</span></p>
+<p>Problem: In practice, we do not know <span class="math inline">\(\sigma^2\)</span> (<strong>population parameter</strong>).</p>
+<hr>
+<div class="proposition">
+<p><span id="prp:expects2" class="proposition"><strong>Proposition 3.6  </strong></span>Under <a href="linear-regressions.html#hyp:fullrank">3.1</a> to <a href="linear-regressions.html#hyp:noncorrelResid">3.4</a>, an unbiased estimate of <span class="math inline">\(\sigma^2\)</span> is given by:
+<span class="math display" id="eq:s2">\[\begin{equation}
+s^2 = \frac{\mathbf{e}'\mathbf{e}}{n-K}.\tag{3.9}
+\end{equation}\]</span>
+(It is sometimes denoted by <span class="math inline">\(\sigma^2_{OLS}\)</span>.)</p>
+</div>
+<hr>
+<div class="proof">
+<p><span id="unlabeled-div-7" class="proof"><em>Proof</em>. </span><span class="math inline">\(\mathbb{E}(\mathbf{e}'\mathbf{e}|\mathbf{X})=\mathbb{E}(\boldsymbol{\varepsilon}'\mathbf{M}\boldsymbol{\varepsilon}|\mathbf{X})=\mathbb{E}(\mbox{Tr}(\boldsymbol{\varepsilon}'\mathbf{M}\boldsymbol{\varepsilon})|\mathbf{X})) =\mbox{Tr}(\mathbf{M}\mathbb{E}(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}'|\mathbf{X}))=\sigma^2 \mbox{Tr}(\mathbf{M})\)</span>. (Note that we have <span class="math inline">\(\mathbb{E}(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}'|\mathbf{X})=\sigma^2Id\)</span> by Assumptions <a href="linear-regressions.html#hyp:homoskedasticity">3.3</a> and <a href="linear-regressions.html#hyp:noncorrelResid">3.4</a>, see Prop. <a href="linear-regressions.html#prp:Sigma">3.2</a>.) Finally: <span class="math inline">\(\mbox{Tr}(\mathbf{M})=n-\mbox{Tr}(\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}')=n-\mbox{Tr}((\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{X})=n-\mbox{Tr}(Id_{K\times K})\)</span>. <span class="math inline">\(\square\)</span></p>
+</div>
+<p>Two results will prove important to perform hypothesis testing:</p>
+<ol style="list-style-type: lower-roman">
+<li>We know the distribution of <span class="math inline">\(s^2\)</span> (Prop. <a href="linear-regressions.html#prp:s2distri">3.7</a>).</li>
+<li>
+<span class="math inline">\(s^2\)</span> and <span class="math inline">\(\mathbf{b}\)</span> are independent random variables (Prop. <a href="linear-regressions.html#prp:indeps2b">3.8</a>).</li>
+</ol>
+<hr>
+<div class="proposition">
+<p><span id="prp:s2distri" class="proposition"><strong>Proposition 3.7  </strong></span>Under <a href="linear-regressions.html#hyp:fullrank">3.1</a> to <a href="linear-regressions.html#hyp:normality">3.5</a>, we have: <span class="math inline">\(\dfrac{s^2}{\sigma^2} | \mathbf{X} \sim \chi^2(n-K)/(n-K)\)</span>.</p>
+</div>
+<hr>
+<div class="proof">
+<p><span id="unlabeled-div-8" class="proof"><em>Proof</em>. </span>We have <span class="math inline">\(\mathbf{e}'\mathbf{e}=\boldsymbol\varepsilon'\mathbf{M}\boldsymbol\varepsilon\)</span>. <span class="math inline">\(\mathbf{M}\)</span> is an idempotent symmetric matrix. Therefore it can be decomposed as <span class="math inline">\(PDP'\)</span> where <span class="math inline">\(D\)</span> is a diagonal matrix and <span class="math inline">\(P\)</span> is an orthogonal matrix. As a result <span class="math inline">\(\mathbf{e}'\mathbf{e} = (P'\boldsymbol\varepsilon)'D(P'\boldsymbol\varepsilon)\)</span>, i.e. <span class="math inline">\(\mathbf{e}'\mathbf{e}\)</span> is a weighted sum of independent squared Gaussian variables (the entries of <span class="math inline">\(P'\boldsymbol\varepsilon\)</span> are independent because they are Gaussian – under <a href="linear-regressions.html#hyp:normality">3.5</a> – and uncorrelated). The variance of each of these i.i.d. Gaussian variable is <span class="math inline">\(\sigma^2\)</span>. Because <span class="math inline">\(\mathbf{M}\)</span> is an idempotent symmetric matrix, its eigenvalues are either 0 or 1, and its rank equals its trace. Further, its trace is equal to <span class="math inline">\(n-K\)</span> (see proof of Eq. <a href="linear-regressions.html#eq:s2">(3.9)</a>). Therefore <span class="math inline">\(D\)</span> has <span class="math inline">\(n-K\)</span> entries equal to 1 and <span class="math inline">\(K\)</span> equal to 0.Hence, <span class="math inline">\(\mathbf{e}'\mathbf{e} = (P'\boldsymbol\varepsilon)'D(P'\boldsymbol\varepsilon)\)</span> is a sum of <span class="math inline">\(n-K\)</span> squared independent Gaussian variables of variance <span class="math inline">\(\sigma^2\)</span>. Therefore <span class="math inline">\(\frac{\mathbf{e}'\mathbf{e}}{\sigma^2} = (n-K)\frac{s^2}{\sigma^2}\)</span> is a sum of <span class="math inline">\(n-k\)</span> squared i.i.d. standard normal variables. <span class="math inline">\(\square\)</span></p>
+</div>
+<hr>
+<div class="proposition">
+<p><span id="prp:indeps2b" class="proposition"><strong>Proposition 3.8  </strong></span>Under Hypotheses <a href="linear-regressions.html#hyp:fullrank">3.1</a> to <a href="linear-regressions.html#hyp:normality">3.5</a>, <span class="math inline">\(\mathbf{b}\)</span> and <span class="math inline">\(s^2\)</span> are independent.</p>
+</div>
+<hr>
+<div class="proof">
+<p><span id="unlabeled-div-9" class="proof"><em>Proof</em>. </span>We have <span class="math inline">\(\mathbf{b}=\boldsymbol\beta + [\mathbf{X}'{\mathbf{X}}]^{-1}\mathbf{X}\boldsymbol\varepsilon\)</span> and <span class="math inline">\(s^2 = \boldsymbol\varepsilon' \mathbf{M} \boldsymbol\varepsilon/(n-K)\)</span>. Hence <span class="math inline">\(\mathbf{b}\)</span> is an affine combination of <span class="math inline">\(\boldsymbol\varepsilon\)</span> and <span class="math inline">\(s^2\)</span> is a quadratic combination of the same Gaussian shocks. One can write <span class="math inline">\(s^2\)</span> as <span class="math inline">\(s^2 = (\mathbf{M}\boldsymbol\varepsilon)' \mathbf{M} \boldsymbol\varepsilon/(n-K)\)</span> and <span class="math inline">\(\mathbf{b}\)</span> as <span class="math inline">\(\boldsymbol\beta + \mathbf{T}\boldsymbol\varepsilon\)</span>. Since <span class="math inline">\(\mathbf{T}\mathbf{M}=0\)</span>, <span class="math inline">\(\mathbf{T}\boldsymbol\varepsilon\)</span> and <span class="math inline">\(\mathbf{M}\boldsymbol\varepsilon\)</span> are independent (because two uncorrelated Gaussian variables are independent), therefore <span class="math inline">\(\mathbf{b}\)</span> and <span class="math inline">\(s^2\)</span>, which are functions of respective independent variables, are independent. <span class="math inline">\(\square\)</span></p>
+</div>
+<p>Under Hypotheses <a href="linear-regressions.html#hyp:fullrank">3.1</a> to <a href="linear-regressions.html#hyp:normality">3.5</a>, let us consider <span class="math inline">\(b_k\)</span>, the <span class="math inline">\(k^{th}\)</span> entry of <span class="math inline">\(\mathbf{b}\)</span>:
+<span class="math display">\[
+b_k | \mathbf{X} \sim \mathcal{N}(\beta_k,\sigma^2 v_k),
+\]</span>
+where <span class="math inline">\(v_k\)</span> is the k<span class="math inline">\(^{th}\)</span> component of the diagonal of <span class="math inline">\((\mathbf{X}'\mathbf{X})^{-1}\)</span>.</p>
+<p>Besides, we have (Prop. <a href="linear-regressions.html#prp:s2distri">3.7</a>):
+<span class="math display">\[
+\frac{(n-K)s^2}{\sigma^2} | \mathbf{X} \sim \chi ^2 (n-K).
+\]</span></p>
+<p>As a result (using Props. <a href="linear-regressions.html#prp:s2distri">3.7</a> and <a href="linear-regressions.html#prp:indeps2b">3.8</a>), we have:
+<span class="math display" id="eq:resultstudentt">\[\begin{equation}
+\boxed{t_k = \frac{\frac{b_k - \beta_k}{\sqrt{\sigma^2 v_k}}}{\sqrt{\frac{(n-K)s^2}{\sigma^2(n-K)}}} = \frac{b_k - \beta_k}{\sqrt{s^2v_k}} \sim t(n-K),}\tag{3.10}
+\end{equation}\]</span>
+where <span class="math inline">\(t(n-K)\)</span> denotes a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n-K\)</span> degrees of freedom.</p>
+<p>Remark: <span class="math inline">\(\frac{b_k - \beta_k}{\sqrt{\sigma^2 v_k}} | \mathbf{X} \sim \mathcal{N}(0,1)\)</span> and <span class="math inline">\(\frac{(n-K)s^2}{\sigma^2} | \mathbf{X} \sim \chi ^2 (n-K)\)</span>. These two distributions do not depend on <span class="math inline">\(\mathbf{X}\)</span> <span class="math inline">\(\Rightarrow\)</span> the <em>marginal distribution</em> of <span class="math inline">\(t_k\)</span> is also <span class="math inline">\(t\)</span>.</p>
+<p>Note that <span class="math inline">\(s^2 v_k\)</span> is not exactly the conditional variance of <span class="math inline">\(b_k\)</span>: The variance of <span class="math inline">\(b_k\)</span> conditional on <span class="math inline">\(\mathbf{X}\)</span> is <span class="math inline">\(\sigma^2 v_k\)</span>. However <span class="math inline">\(s^2 v_k\)</span> is an unbiased estimate of <span class="math inline">\(\sigma^2 v_k\)</span> (by Prop. <a href="linear-regressions.html#prp:expects2">3.6</a>).</p>
+<p>The previous result (Eq. <a href="linear-regressions.html#eq:resultstudentt">(3.10)</a>) can be extended to any linear combinations of elements of <span class="math inline">\(\mathbf{b}\)</span> (Eq. <a href="linear-regressions.html#eq:resultstudentt">(3.10)</a> is for its <span class="math inline">\(k^{th}\)</span> component only).</p>
+<p>Let us consider <span class="math inline">\(\boldsymbol\alpha'\mathbf{b}\)</span>, the OLS estimate of <span class="math inline">\(\boldsymbol\alpha'\boldsymbol\beta\)</span>. From Eq. <a href="linear-regressions.html#eq:distriBcondi">(3.8)</a>, we have:
+<span class="math display">\[
+\boldsymbol\alpha'\mathbf{b} | \mathbf{X} \sim \mathcal{N}(\boldsymbol\alpha'\boldsymbol\beta,\sigma^2 \boldsymbol\alpha'(\mathbf{X}'\mathbf{X})^{-1}\boldsymbol\alpha).
+\]</span>
+Therefore:
+<span class="math display">\[
+\frac{\boldsymbol\alpha'\mathbf{b} - \boldsymbol\alpha'\boldsymbol\beta}{\sqrt{\sigma^2 \boldsymbol\alpha'(\mathbf{X}'\mathbf{X})^{-1}\boldsymbol\alpha}} | \mathbf{X} \sim \mathcal{N}(0,1).
+\]</span>
+Using the same approach as the one used to derive Eq. <a href="linear-regressions.html#eq:resultstudentt">(3.10)</a>, one can show that Props. <a href="linear-regressions.html#prp:s2distri">3.7</a> and <a href="linear-regressions.html#prp:indeps2b">3.8</a> imply that:
+<span class="math display" id="eq:resultstudentt2">\[\begin{equation}
+\boxed{\frac{\boldsymbol\alpha'\mathbf{b} - \boldsymbol\alpha'\boldsymbol\beta}{\sqrt{s^2\boldsymbol\alpha'(\mathbf{X}'\mathbf{X})^{-1}\boldsymbol\alpha}} \sim t(n-K).}\tag{3.11}
+\end{equation}\]</span></p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>plt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.2</span>,<span class="fl">.95</span>,<span class="fl">.2</span>,<span class="fl">.95</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">xx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3.5</span>,<span class="fl">3.5</span>,by<span class="op">=</span><span class="fl">.01</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">xx</span>,<span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">xx</span><span class="op">)</span>,xlab<span class="op">=</span><span class="st">"X"</span>,ylab<span class="op">=</span><span class="st">""</span>,type<span class="op">=</span><span class="st">"l"</span>,lwd<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">xx</span>,<span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">dt</a></span><span class="op">(</span><span class="va">xx</span>,df<span class="op">=</span><span class="fl">3</span><span class="op">)</span>,col<span class="op">=</span><span class="st">"red"</span>,lwd<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">xx</span>,<span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">dt</a></span><span class="op">(</span><span class="va">xx</span>,df<span class="op">=</span><span class="fl">7</span><span class="op">)</span>,col<span class="op">=</span><span class="st">"red"</span>,lwd<span class="op">=</span><span class="fl">2</span>,lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">xx</span>,<span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">dt</a></span><span class="op">(</span><span class="va">xx</span>,df<span class="op">=</span><span class="fl">20</span><span class="op">)</span>,col<span class="op">=</span><span class="st">"blue"</span>,lwd<span class="op">=</span><span class="fl">3</span>,lty<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span><span class="st">"topright"</span>,</span>
+<span>       <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"N(0,1)"</span>,<span class="st">"t(3)"</span>,<span class="st">"t(7)"</span>,<span class="st">"t(20)"</span><span class="op">)</span>,</span>
+<span>       lty<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>, <span class="co"># gives the legend appropriate symbols (lines)       </span></span>
+<span>       lwd<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>, <span class="co"># line width</span></span>
+<span>       col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"black"</span>,<span class="st">"red"</span>,<span class="st">"red"</span>,<span class="st">"blue"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:chartStudent"></span>
+<img src="AdvECTS_files/figure-html/chartStudent-1.png" alt="The chart shows that the higher the degree of freedom, the closer the distribution of $t(
+u)$ gets to the normal distribution." width="672"><p class="caption">
+Figure 3.3: The chart shows that the higher the degree of freedom, the closer the distribution of <span class="math inline">\(t( u)\)</span> gets to the normal distribution.
+</p>
+</div>
+</div>
+<div id="confidence-interval-of-beta_k" class="section level3" number="3.2.6">
+<h3>
+<span class="header-section-number">3.2.6</span> Confidence interval of <span class="math inline">\(\beta_k\)</span><a class="anchor" aria-label="anchor" href="#confidence-interval-of-beta_k"><i class="fas fa-link"></i></a>
+</h3>
+<p>Assume we want to compute a (symmetrical) confidence interval <span class="math inline">\([I_{d,1-\alpha},I_{u,1-\alpha}]\)</span> that is such that <span class="math inline">\(\mathbb{P}(\beta_k \in [I_{d,1-\alpha},I_{u,1-\alpha}])=1-\alpha\)</span>. In particular, we want to have: <span class="math inline">\(\mathbb{P}(\beta_k &lt; I_{d,1-\alpha})=\frac{\alpha}{2}\)</span>.</p>
+<p>For this purpose, we make use of <span class="math inline">\(t_k = \frac{b_k - \beta_k}{\sqrt{s^2v_k}} \sim t(n-K)\)</span> (Eq. <a href="linear-regressions.html#eq:resultstudentt">(3.10)</a>).</p>
+<p>We have:
+<span class="math display">\[
+\mathbb{P}(\beta_k &lt; I_{d,1-\alpha})=\frac{\alpha}{2} \Leftrightarrow
+\]</span>
+<span class="math display">\[\begin{eqnarray*}
+\mathbb{P}\left(\frac{b_k - \beta_k}{\sqrt{s^2v_k}} &gt; \frac{b_k - I_{d,1-\alpha}}{\sqrt{s^2v_k}}\right)=\frac{\alpha}{2} \Leftrightarrow \mathbb{P}\left(t_k &gt; \frac{b_k - I_{d,1-\alpha}}{\sqrt{s^2v_k}}\right)=\frac{\alpha}{2} \Leftrightarrow&amp;&amp;\\
+1 - \mathbb{P}\left(t_k \le \frac{b_k - I_{d,1-\alpha}}{\sqrt{s^2v_k}}\right)=\frac{\alpha}{2} \Leftrightarrow \frac{b_k - I_{d,1-\alpha}}{\sqrt{s^2v_k}} = \Phi^{-1}_{t(n-K)}\left(1-\frac{\alpha}{2}\right),&amp;&amp;
+\end{eqnarray*}\]</span>
+where <span class="math inline">\(\Phi_{t(n-K)}(\alpha)\)</span> is the c.d.f. of the <span class="math inline">\(t(n-K)\)</span> distribution (Table @ref{tab:Studenttable}).</p>
+<p>Doing the same for <span class="math inline">\(I_{u,1-\alpha}\)</span>, we obtain:
+<span class="math display">\[\begin{eqnarray*}
+&amp;&amp;[I_{d,1-\alpha},I_{u,1-\alpha}] =\\
+&amp;&amp;\left[b_k - \Phi^{-1}_{t(n-K)}\left(1-\frac{\alpha}{2}\right)\sqrt{s^2v_k},b_k + \Phi^{-1}_{t(n-K)}\left(1-\frac{\alpha}{2}\right)\sqrt{s^2v_k}\right].
+\end{eqnarray*}\]</span></p>
+</div>
+<div id="example" class="section level3" number="3.2.7">
+<h3>
+<span class="header-section-number">3.2.7</span> Example<a class="anchor" aria-label="anchor" href="#example"><i class="fas fa-link"></i></a>
+</h3>
+<p>The following example is based on the <a href="https://hrs.isr.umich.edu/about">HRS dataset (Health and Retirement Study)</a>. We only consider only a subset of this large dataset, focusing on a few variables, and for year 2018 (wave 14). This <a href="https://raw.githubusercontent.com/jrenne/Data4courses/master/HRS_RAND/reduced_version/prepare_small_HRS.R">R script</a> builds the reduced dataset.</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">reducedHRS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/jrenne/Data4courses/master/HRS_RAND/reduced_version/reducedHRS.csv"</span><span class="op">)</span></span>
+<span><span class="va">eq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">riearn</span><span class="op">~</span><span class="va">raedyrs</span><span class="op">+</span><span class="va">ragey_b</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">ragey_b</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">+</span><span class="va">rfemale</span>,data<span class="op">=</span><span class="va">reducedHRS</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">eq</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = riearn ~ raedyrs + ragey_b + I(ragey_b^2) + rfemale, 
+##     data = reducedHRS)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -82512 -29447  -8144  18083 394724 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  -1.336e+05  3.245e+04  -4.116 3.92e-05 ***
+## raedyrs       5.216e+03  2.384e+02  21.876  &lt; 2e-16 ***
+## ragey_b       4.758e+03  1.086e+03   4.382 1.20e-05 ***
+## I(ragey_b^2) -4.441e+01  9.097e+00  -4.882 1.09e-06 ***
+## rfemale      -1.499e+04  1.498e+03 -10.007  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 50130 on 4540 degrees of freedom
+## Multiple R-squared:  0.1173, Adjusted R-squared:  0.1165 
+## F-statistic: 150.8 on 4 and 4540 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>The last two columns give the test statistic and p-values associated to the test whose null hypothesis is:
+<span class="math display">\[
+H_0: \beta_k=0.
+\]</span>
+The <strong>t-statistics</strong>, that is <span class="math inline">\(b_k/\sqrt{s^2 v_k}\)</span>, is the test statistic of the test. Under <span class="math inline">\(H_0\)</span>, the t-statistic is <span class="math inline">\(t(n-K)\)</span> (see Eq. <a href="linear-regressions.html#eq:resultstudentt">(3.10)</a>). Hence, the <strong>critical region</strong> for the test of size <span class="math inline">\(\alpha\)</span> is:
+<span class="math display">\[
+\left]-\infty,-\Phi^{-1}_{t(n-K)}\left(1-\frac{\alpha}{2}\right)\right] \cup \left[\Phi^{-1}_{t(n-K)}\left(1-\frac{\alpha}{2}\right),+\infty\right[.
+\]</span>
+The <strong>p-value</strong> is defined as the probability that <span class="math inline">\(|Z| &gt; |t|\)</span>, where <span class="math inline">\(t\)</span> is the (computed) t statistics and where <span class="math inline">\(Z \sim t(n-K)\)</span>. That is, the p-value is given by <span class="math inline">\(2(1 - \Phi_{t(n-K)}(|t_k|))\)</span>.</p>
+<p>See <a href="https://jrenne.shinyapps.io/tests/">this webpage</a> for details regarding the link between critical regions, p-value, and test outcomes.</p>
+</div>
+<div id="set-of-linear-restrictions" class="section level3" number="3.2.8">
+<h3>
+<span class="header-section-number">3.2.8</span> Set of linear restrictions<a class="anchor" aria-label="anchor" href="#set-of-linear-restrictions"><i class="fas fa-link"></i></a>
+</h3>
+<p>We consider the following model:
+<span class="math display">\[
+\mathbf{y} = \mathbf{X}\boldsymbol\beta + \boldsymbol\varepsilon, \quad \varepsilon \sim i.i.d. \mathcal{N}(0,\sigma^2).
+\]</span>
+and we want to test for the <em>joint</em> validity of a set of restrictions involving the components of <span class="math inline">\(\boldsymbol\beta\)</span> in a linear way.</p>
+<p>Set of linear restrictions:
+<span class="math display">\[\begin{equation}\label{eq:restrictions}
+\begin{array}{ccc}
+r_{1,1} \beta_1 + \dots + r_{1,K} \beta_K &amp;=&amp; q_1\\
+\vdots &amp;&amp; \vdots\\
+r_{J,1} \beta_1 + \dots + r_{J,K} \beta_K &amp;=&amp; q_J,
+\end{array}
+\end{equation}\]</span>
+that can be written in matrix form:
+<span class="math display">\[\begin{equation}
+\mathbf{R}\boldsymbol\beta = \mathbf{q}.
+\end{equation}\]</span></p>
+<p>Defin the <strong>Discrepancy vector</strong> <span class="math inline">\(\mathbf{m} = \mathbf{R}\mathbf{b} - \mathbf{q}\)</span>. Under the null hypothesis:
+<span class="math display">\[\begin{eqnarray*}
+\mathbb{E}(\mathbf{m}|\mathbf{X}) &amp;=&amp; \mathbf{R}\boldsymbol\beta - \mathbf{q} = 0 \quad \mbox{and} \\
+\mathbb{V}ar(\mathbf{m}|\mathbf{X}) &amp;=&amp; \mathbf{R} \mathbb{V}ar(\mathbf{b}|\mathbf{X}) \mathbf{R}'.
+\end{eqnarray*}\]</span>
+Under Hypotheses <a href="linear-regressions.html#hyp:fullrank">3.1</a> to <a href="linear-regressions.html#hyp:noncorrelResid">3.4</a>, <span class="math inline">\(\mathbb{V}ar(\mathbf{m}|\mathbf{X}) = \sigma^2 \mathbf{R} (\mathbf{X}'\mathbf{X})^{-1} \mathbf{R}'\)</span> (see Prop. <a href="linear-regressions.html#prp:propOLS">3.3</a>).</p>
+<p>Consider the test:
+<span class="math display" id="eq:H0Ftest">\[\begin{equation}
+\boxed{H_0: \mathbf{R}\boldsymbol\beta - \mathbf{q} = 0 \mbox{ against } H_1: \mathbf{R}\boldsymbol\beta - \mathbf{q} \ne 0.}\tag{3.12}
+\end{equation}\]</span></p>
+<p>We could perform a <strong>Wald test</strong>. Under <a href="linear-regressions.html#hyp:fullrank">3.1</a> to <a href="linear-regressions.html#hyp:normality">3.5</a> –we need the normality assumption– and under <span class="math inline">\(H_0\)</span>, it can be shown that we have:
+<span class="math display" id="eq:W1">\[\begin{equation}
+W = \mathbf{m}'\mathbb{V}ar(\mathbf{m}|\mathbf{X})^{-1}\mathbf{m} \sim \chi^2(J). \tag{3.13}
+\end{equation}\]</span>
+However, <span class="math inline">\(\sigma^2\)</span> is unknown. Hence we cannot compute <span class="math inline">\(W\)</span>.</p>
+<p>We can however approximate it be replacing <span class="math inline">\(\sigma^2\)</span> by <span class="math inline">\(s^2\)</span>. The distribution of this new statistic is not <span class="math inline">\(\chi^2(J)\)</span> any more;
+it is an <strong><span class="math inline">\(\mathcal{F}\)</span> distribution</strong>, and the test is called <strong><span class="math inline">\(F\)</span> test</strong>.</p>
+<hr>
+<div class="proposition">
+<p><span id="prp:Ftest1" class="proposition"><strong>Proposition 3.9  </strong></span>Under Hypotheses <a href="linear-regressions.html#hyp:fullrank">3.1</a> to <a href="linear-regressions.html#hyp:normality">3.5</a> and if Eq. <a href="linear-regressions.html#eq:H0Ftest">(3.12)</a> holds, we have:
+<span class="math display" id="eq:defFstatistics">\[\begin{equation}
+F = \frac{W}{J}\frac{\sigma^2}{s^2} = \frac{\mathbf{m}'(\mathbf{R}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{R}')^{-1}\mathbf{m}}{s^2J} \sim \mathcal{F}(J,n-K),\tag{3.14}
+\end{equation}\]</span>
+where <span class="math inline">\(\mathcal{F}\)</span> is the distribution of the F-statistic.</p>
+</div>
+<hr>
+<div class="proof">
+<p><span id="unlabeled-div-10" class="proof"><em>Proof</em>. </span>According to Eq. <a href="linear-regressions.html#eq:W1">(3.13)</a>, <span class="math inline">\(W/J \sim \chi^2(J)/J\)</span>. Moreover, the denominator (<span class="math inline">\(s^2/\sigma^2\)</span>) is <span class="math inline">\(\sim \chi^2(n-K)\)</span>. Therefore, <span class="math inline">\(F\)</span> is the ratio of a r.v. distributed as <span class="math inline">\(\chi^2(J)/J\)</span> and another distributed as <span class="math inline">\(\chi^2(n-K)/(n-K)\)</span>. It remains to verify that these r.v. are independent.</p>
+<p>Under <span class="math inline">\(H_0\)</span>, we have <span class="math inline">\(\mathbf{m} = \mathbf{R}(\mathbf{b}-\boldsymbol\beta) = \mathbf{R}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol\varepsilon\)</span>.
+Therefore <span class="math inline">\(\mathbf{m}'(\mathbf{R}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{R}')^{-1}\mathbf{m}\)</span> is of the form <span class="math inline">\(\boldsymbol\varepsilon'\mathbf{T}\boldsymbol\varepsilon\)</span> with <span class="math inline">\(\mathbf{T}=\mathbf{D}'\mathbf{C}\mathbf{D}\)</span> where <span class="math inline">\(\mathbf{D}=\mathbf{R}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\)</span> and <span class="math inline">\(\mathbf{C}=(\mathbf{R}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{R}')^{-1}\)</span>. Under Hypotheses <a href="linear-regressions.html#hyp:fullrank">3.1</a> to <a href="linear-regressions.html#hyp:noncorrelResid">3.4</a>, the covariance between <span class="math inline">\(\mathbf{T}\boldsymbol\varepsilon\)</span> and <span class="math inline">\(\mathbf{M}\boldsymbol\varepsilon\)</span> is <span class="math inline">\(\sigma^2\mathbf{T}\mathbf{M} = \mathbf{0}\)</span>. Therefore, under <a href="linear-regressions.html#hyp:normality">3.5</a>, these variables are Gaussian variables with 0 covariance. Hence they are independent. <span class="math inline">\(\square\)</span></p>
+</div>
+<p>Remark: For large <span class="math inline">\(n-K\)</span>, the <span class="math inline">\(\mathcal{F}_{J,n-K}\)</span> distribution converges to <span class="math inline">\(\mathcal{F}_{J,\infty}=\chi^2(J)/J\)</span>.</p>
+<hr>
+<div class="proposition">
+<p><span id="prp:Ftest" class="proposition"><strong>Proposition 3.10  </strong></span>The F-statistic defined by Eq. <a href="linear-regressions.html#eq:defFstatistics">(3.14)</a> is also equal to:
+<span class="math display" id="eq:defFstatistics2">\[\begin{equation}
+F = \frac{(R^2-R_*^2)/J}{(1-R^2)/(n-K)} =  \frac{(SSR_{restr}-SSR_{unrestr})/J}{SSR_{unrestr}/(n-K)},\tag{3.15}
+\end{equation}\]</span>
+where <span class="math inline">\(R_*^2\)</span> is the coef. of determination (Eq. (eq:RR2)) of the ``restricted regression’’ <em>(SSR: sum of squared residuals.)</em></p>
+</div>
+<hr>
+<div class="proof">
+<p><span id="unlabeled-div-11" class="proof"><em>Proof</em>. </span>Let’s denote by <span class="math inline">\(\mathbf{e}_*=\mathbf{y}-\mathbf{X}\mathbf{b}_*\)</span> the vector of residuals associated to the <em>restricted regression</em> (i.e. <span class="math inline">\(\mathbf{R}\mathbf{b}_*=\mathbf{q}\)</span>).
+We have <span class="math inline">\(\mathbf{e}_*=\mathbf{e} - \mathbf{X}(\mathbf{b}_*-\mathbf{b})\)</span>. Using <span class="math inline">\(\mathbf{e}'\mathbf{X}=0\)</span>, we get <span class="math inline">\(\mathbf{e}_*'\mathbf{e}_*=\mathbf{e}'\mathbf{e} + (\mathbf{b}_*-\mathbf{b})'\mathbf{X}'\mathbf{X}(\mathbf{b}_*-\mathbf{b}) \ge \mathbf{e}'\mathbf{e}\)</span>.</p>
+<p>By Prop. @ref(prp:constrained_LS), we know that <span class="math inline">\(\mathbf{b}_*-\mathbf{b}=-(\mathbf{X}'\mathbf{X})^{-1} \mathbf{R}'\{\mathbf{R}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{R}'\}^{-1}(\mathbf{R}\mathbf{b} - \mathbf{q})\)</span>. Therefore:
+<span class="math display">\[
+\mathbf{e}_*'\mathbf{e}_* - \mathbf{e}'\mathbf{e} = (\mathbf{R}\mathbf{b} - \mathbf{q})'[\mathbf{R}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{R}']^{-1}(\mathbf{R}\mathbf{b} - \mathbf{q}).
+\]</span>
+This implies that the F statistic defined in Prop. <a href="linear-regressions.html#prp:Ftest1">3.9</a> is also equal to:
+<span class="math display">\[
+\frac{(\mathbf{e}_*'\mathbf{e}_* - \mathbf{e}'\mathbf{e})/J}{\mathbf{e}'\mathbf{e}/(n-K)}. \square
+\]</span></p>
+</div>
+<p>The null hypothesis <span class="math inline">\(H_0\)</span> (Eq. <a href="linear-regressions.html#eq:H0Ftest">(3.12)</a>) of the F-test is rejected if <span class="math inline">\(F\)</span> –defined by Eq. <a href="linear-regressions.html#eq:defFstatistics">(3.14)</a> or <a href="linear-regressions.html#eq:defFstatistics2">(3.15)</a>– is higher than <span class="math inline">\(\mathcal{F}_{1-\alpha}(J,n-K)\)</span>. (Hence, this test is a one-sided test.)</p>
+</div>
+<div id="common-pitfalls" class="section level3" number="3.2.9">
+<h3>
+<span class="header-section-number">3.2.9</span> Common pitfalls<a class="anchor" aria-label="anchor" href="#common-pitfalls"><i class="fas fa-link"></i></a>
+</h3>
+</div>
+<div id="multicollinearity" class="section level3" number="3.2.10">
+<h3>
+<span class="header-section-number">3.2.10</span> Multicollinearity<a class="anchor" aria-label="anchor" href="#multicollinearity"><i class="fas fa-link"></i></a>
+</h3>
+<p>Consider the model: <span class="math inline">\(y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2} + \varepsilon_i\)</span>, where all variables are zero-mean and <span class="math inline">\(\mathbb{V}ar(\varepsilon_i)=\sigma^2\)</span>. We have
+<span class="math display">\[
+\mathbf{X}'\mathbf{X} = \left[ \begin{array}{cc}
+\sum_i x_{i,1}^2 &amp; \sum_i x_{i,1} x_{i,2} \\
+\sum_i x_{i,1} x_{i,2} &amp; \sum_i x_{i,2}^2
+\end{array}\right],
+\]</span>
+therefore:
+<span class="math display">\[\begin{eqnarray*}
+(\mathbf{X}'\mathbf{X})^{-1} &amp;=&amp; \frac{1}{\sum_i x_{i,1}^2\sum_i x_{i,2}^2 - (\sum_i x_{i,1} x_{i,2})^2} \left[ \begin{array}{cc}
+\sum_i x_{i,2}^2 &amp; -\sum_i x_{i,1} x_{i,2} \\
+-\sum_i x_{i,1} x_{i,2} &amp; \sum_i x_{i,1}^2
+\end{array}\right].
+\end{eqnarray*}\]</span>
+The inverse of the upper-left parameter of <span class="math inline">\((\mathbf{X}'\mathbf{X})^{-1}\)</span> is:
+<span class="math display" id="eq:multicollin">\[\begin{equation}
+\sum_i x_{i,1}^2 - \frac{(\sum_i x_{i,1} x_{i,2})^2}{\sum_i x_{i,2}^2} = \sum_i x_{i,1}^2(1 - correl_{1,2}^2),\tag{3.16}
+\end{equation}\]</span>
+where <span class="math inline">\(correl_{1,2}\)</span> is the sample correlation between <span class="math inline">\(\mathbf{x}_{1}\)</span> and <span class="math inline">\(\mathbf{x}_{2}\)</span>.</p>
+<p>Hence, the closer to one <span class="math inline">\(correl_{1,2}\)</span>, the higher the variance of <span class="math inline">\(b_1\)</span> (recall that the variance of <span class="math inline">\(b_1\)</span> is the upper-left component of <span class="math inline">\(\sigma^2(\mathbf{X}'\mathbf{X})^{-1}\)</span>).</p>
+</div>
+<div id="omitted-variables" class="section level3" number="3.2.11">
+<h3>
+<span class="header-section-number">3.2.11</span> Omitted variables<a class="anchor" aria-label="anchor" href="#omitted-variables"><i class="fas fa-link"></i></a>
+</h3>
+<p>Consider the following model, called ``True model’’:
+<span class="math display">\[
+\mathbf{y} = \underbrace{\mathbf{X}_1}_{n \times K_1}\underbrace{\boldsymbol\beta_1}_{K_1 \times 1} + \underbrace{\mathbf{X}_2}_{n\times K_2}\underbrace{\boldsymbol\beta_2}_{K_2 \times 1} + \boldsymbol\varepsilon
+\]</span>
+Then, if one computes <span class="math inline">\(\mathbf{b}_1\)</span> by regressing <span class="math inline">\(\mathbf{y}\)</span> on <span class="math inline">\(\mathbf{X}_1\)</span> only, we get:
+<span class="math display">\[
+\mathbf{b}_1 = (\mathbf{X}_1'\mathbf{X}_1)^{-1}\mathbf{X}_1'\mathbf{y} = \boldsymbol\beta_1 + (\mathbf{X}_1'\mathbf{X}_1)^{-1}\mathbf{X}_1'\mathbf{X}_2\boldsymbol\beta_2 +
+(\mathbf{X}_1'\mathbf{X}_1)^{-1}\mathbf{X}_1'\boldsymbol\varepsilon.
+\]</span></p>
+<p>Hence, we obtain the omitted-variable formula:
+<span class="math display">\[
+\boxed{\mathbb{E}(\mathbf{b}_1|\mathbf{X}) = \boldsymbol\beta_1 + \underbrace{(\mathbf{X}_1'\mathbf{X}_1)^{-1}(\mathbf{X}_1'\mathbf{X}_2)}_{K_1 \times K_2}\boldsymbol\beta_2}
+\]</span>
+(each column of <span class="math inline">\((\mathbf{X}_1'\mathbf{X}_1)^{-1}(\mathbf{X}_1'\mathbf{X}_2)\)</span> are the OLS regressors obtained when regressing the columns of <span class="math inline">\(\mathbf{X}_2\)</span> on <span class="math inline">\(\mathbf{X}_1\)</span>).</p>
+<div class="example">
+<p><span id="exm:wageeduc" class="example"><strong>Example 3.1  </strong></span>Consider the ``true model’’:
+<span class="math display">\[\begin{equation}
+wage_i = \beta_0 +\beta_1 edu_i + \beta_2 ability_i + \varepsilon_i, \quad \varepsilon_i \sim i.i.d.\,\mathcal{N}(0,\sigma_\varepsilon^2)
+\end{equation}\]</span>
+Further, we assume that the <span class="math inline">\(edu\)</span> variable is correlated to the <span class="math inline">\(ability\)</span>. Specifically:
+<span class="math display">\[
+edu_i = \alpha_0 +\alpha_1 ability_i + \eta_i, \quad \eta_i \sim i.i.d.\,\mathcal{N}(0,\sigma_\eta^2).
+\]</span>
+Assume we mistakingly run the regression omitting the <span class="math inline">\(ability\)</span> variable:
+<span class="math display">\[\begin{equation}
+wage_i = \gamma_0 +\gamma_1 edu_i + \xi_i.
+\end{equation}\]</span>
+It can be seen that <span class="math inline">\(\xi_i = \varepsilon_i - (\beta_2/\alpha_1) \eta_i \sim i.i.d.\,\mathcal{N}(0,\sigma_\varepsilon^2+(\beta_2/\alpha_1)^2\sigma_\eta^2)\)</span> and that the population regression coefficient is <span class="math inline">\(\gamma_1 = \beta_1 + \beta_2/\alpha_1 \ne \beta_1\)</span>.</p>
+</div>
+<div class="example">
+<p><span id="exm:CASchools" class="example"><strong>Example 3.2  </strong></span>Let us use the <a href="https://rdrr.io/cran/AER/man/CASchools.html">California Test Score dataset</a> (in the package <code>AER</code>). Assume we want to measure the effect of the students-to-teacher ratio (`<code>str</code>) on student test scores (<code>testscr</code>). The folowing regressions show that the effect is lower when controls are added.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AER</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"CASchools"</span><span class="op">)</span></span>
+<span><span class="va">CASchools</span><span class="op">$</span><span class="va">str</span> <span class="op">&lt;-</span> <span class="va">CASchools</span><span class="op">$</span><span class="va">students</span><span class="op">/</span><span class="va">CASchools</span><span class="op">$</span><span class="va">teachers</span></span>
+<span><span class="va">CASchools</span><span class="op">$</span><span class="va">testscr</span> <span class="op">&lt;-</span> <span class="fl">.5</span> <span class="op">*</span> <span class="op">(</span><span class="va">CASchools</span><span class="op">$</span><span class="va">math</span> <span class="op">+</span> <span class="va">CASchools</span><span class="op">$</span><span class="va">read</span><span class="op">)</span></span>
+<span><span class="va">eq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">testscr</span><span class="op">~</span><span class="va">str</span>,data<span class="op">=</span><span class="va">CASchools</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">eq</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span></span></code></pre></div>
+<pre><code>##               Estimate Std. Error   t value      Pr(&gt;|t|)
+## (Intercept) 698.932949  9.4674911 73.824516 6.569846e-242
+## str          -2.279808  0.4798255 -4.751327  2.783308e-06</code></pre>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">eq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">testscr</span><span class="op">~</span><span class="va">str</span><span class="op">+</span><span class="va">lunch</span>,data<span class="op">=</span><span class="va">CASchools</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">eq</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span></span></code></pre></div>
+<pre><code>##                Estimate Std. Error    t value      Pr(&gt;|t|)
+## (Intercept) 702.9113020 4.70024626 149.547760  0.000000e+00
+## str          -1.1172255 0.24035528  -4.648225  4.498554e-06
+## lunch        -0.5997501 0.01676439 -35.775242 3.709097e-129</code></pre>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">eq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">testscr</span><span class="op">~</span><span class="va">str</span><span class="op">+</span><span class="va">lunch</span><span class="op">+</span><span class="va">english</span>,data<span class="op">=</span><span class="va">CASchools</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">eq</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span></span></code></pre></div>
+<pre><code>##                Estimate Std. Error    t value     Pr(&gt;|t|)
+## (Intercept) 700.1499572 4.68568672 149.423126 0.000000e+00
+## str          -0.9983090 0.23875428  -4.181324 3.535873e-05
+## lunch        -0.5473454 0.02159885 -25.341418 2.303048e-86
+## english      -0.1215735 0.03231728  -3.761872 1.928369e-04</code></pre>
+</div>
+</div>
+<div id="irrelevant-variable" class="section level3" number="3.2.12">
+<h3>
+<span class="header-section-number">3.2.12</span> Irrelevant variable<a class="anchor" aria-label="anchor" href="#irrelevant-variable"><i class="fas fa-link"></i></a>
+</h3>
+<p>Consider the <em>True model</em>:
+<span class="math display">\[
+\mathbf{y} = \mathbf{X}_1\boldsymbol\beta_1 + \boldsymbol\varepsilon,
+\]</span>
+while the <em>Estimated model</em> is:
+<span class="math display">\[
+\mathbf{y} = \mathbf{X}_1\boldsymbol\beta_1 + \mathbf{X}_2\boldsymbol\beta_2 + \boldsymbol\varepsilon
+\]</span></p>
+<p>The estimates are unbiased. However, adding irrelevant explanatory variables increases the variance of the estimate of <span class="math inline">\(\boldsymbol\beta_1\)</span> (compared to the case where one uses the correct explanatory variables). This is the case unless the correlation between <span class="math inline">\(\mathbf{X}_1\)</span> and <span class="math inline">\(\mathbf{X}_2\)</span> is null, see Eq. <a href="linear-regressions.html#eq:multicollin">(3.16)</a>.</p>
+<p>In other words, the estimator is <em>inefficient</em>, i.e., there exists an alternative consistent estimator whose variance is lower. The inefficiency problem can have serious consequences when testing hypotheses of type <span class="math inline">\(H_0: \beta_1 = 0\)</span> due to the loss of power, so we might infer that they are no relevant variables when they truly are (Type-II error; False Negative).</p>
+</div>
+</div>
+<div id="large-sample-properties" class="section level2" number="3.3">
+<h2>
+<span class="header-section-number">3.3</span> Large Sample Properties<a class="anchor" aria-label="anchor" href="#large-sample-properties"><i class="fas fa-link"></i></a>
+</h2>
+<p>Even if we relax the normality assumption (Hypothesis <a href="linear-regressions.html#hyp:normality">3.5</a>), we can approximate the finite-sample behavior of the estimators by using <em>large-sample</em> or <em>asymptotic properties</em>.</p>
+<p>To begin with, we proceed under Hypothesis <a href="linear-regressions.html#hyp:fullrank">3.1</a> to <a href="linear-regressions.html#hyp:noncorrelResid">3.4</a>. (We will see later how to deal with –partial– relaxations of Hypothesis <a href="linear-regressions.html#hyp:homoskedasticity">3.3</a> and <a href="linear-regressions.html#hyp:noncorrelResid">3.4</a>.)</p>
+<p>Under regularity assumptions, under <a href="linear-regressions.html#hyp:fullrank">3.1</a> to <a href="linear-regressions.html#hyp:noncorrelResid">3.4</a>, even if the residuals are not normally-distributed, the least square estimators can be <em>asymptotically normal</em> and inference can be performed as in small samples when <a href="linear-regressions.html#hyp:fullrank">3.1</a> to <a href="linear-regressions.html#hyp:normality">3.5</a> hold. This derives from Prop. <a href="linear-regressions.html#prp:asymptOLS">3.11</a> (below). The F-test (Prop. (prp:Ftest)) and the t-test can then be performed.</p>
+<hr>
+<div class="proposition">
+<p><span id="prp:asymptOLS" class="proposition"><strong>Proposition 3.11  </strong></span>Under Assumptions <a href="linear-regressions.html#hyp:fullrank">3.1</a> to <a href="linear-regressions.html#hyp:noncorrelResid">3.4</a>, and assuming further that:
+<span class="math display" id="eq:Qasympt">\[\begin{equation}
+Q = \mbox{plim}_{n \rightarrow \infty} \frac{\mathbf{X}'\mathbf{X}}{n},\tag{3.17}
+\end{equation}\]</span>
+and that the <span class="math inline">\((\mathbf{x}_i,\varepsilon_i)\)</span>s are independent (across entities <span class="math inline">\(i\)</span>), we have:
+<span class="math display" id="eq:convgceOLS">\[\begin{equation}
+\sqrt{n}(\mathbf{b} - \boldsymbol\beta)\overset{d} {\rightarrow} \mathcal{N}\left(0,\sigma^2Q^{-1}\right).\tag{3.18}
+\end{equation}\]</span></p>
+</div>
+<hr>
+<div class="proof">
+<p><span id="unlabeled-div-12" class="proof"><em>Proof</em>. </span>Since <span class="math inline">\(\mathbf{b} = \boldsymbol\beta + \left( \frac{\mathbf{X}'\mathbf{X}}{n}\right)^{-1}\left(\frac{\mathbf{X}'\boldsymbol\varepsilon}{n}\right)\)</span>, we have: <span class="math inline">\(\sqrt{n}(\mathbf{b} - \boldsymbol\beta) = \left( \frac{\mathbf{X}'\mathbf{X}}{n}\right)^{-1} \left(\frac{1}{\sqrt{n}}\right)\mathbf{X}'\boldsymbol\varepsilon\)</span>. Since <span class="math inline">\(f:A \rightarrow A^{-1}\)</span> is a continuous function (for <span class="math inline">\(A \ne \mathbf{0}\)</span>), <span class="math inline">\(\mbox{plim}_{n \rightarrow \infty} \left(\frac{\mathbf{X}'\mathbf{X}}{n}\right)^{-1} = \mathbf{Q}^{-1}\)</span>. Let us denote by <span class="math inline">\(V_i\)</span> the vector <span class="math inline">\(\mathbf{x}_i \varepsilon_i\)</span>. Because the <span class="math inline">\((\mathbf{x}_i,\varepsilon_i)\)</span>s are independent, the <span class="math inline">\(V_i\)</span>s are independent as well. Their covariance matrix is <span class="math inline">\(\sigma^2\mathbb{E}(\mathbf{x}_i \mathbf{x}_i')=\sigma^2Q\)</span>. Applying the multivariate central limit theorem on the <span class="math inline">\(V_i\)</span>s gives <span class="math inline">\(\sqrt{n}\left(\frac{1}{n}\sum_{i=1}^n \mathbf{x}_i \varepsilon_i\right) = \left(\frac{1}{\sqrt{n}}\right)\mathbf{X}'\boldsymbol\varepsilon \overset{d}{\rightarrow} \mathcal{N}(0,\sigma^2Q)\)</span>. An application of Slutsky’s theorem then leads to the results. <span class="math inline">\(\square\)</span></p>
+</div>
+<p>In practice, <span class="math inline">\(\sigma^2\)</span> is estimated with <span class="math inline">\(\frac{\mathbf{e}'\mathbf{e}}{n-K}\)</span> (Eq. <a href="linear-regressions.html#eq:s2">(3.9)</a>) and <span class="math inline">\(\mathbf{Q}^{-1}\)</span> with <span class="math inline">\(\left(\frac{\mathbf{X}'\mathbf{X}}{n}\right)^{-1}\)</span>.</p>
+<p>Eqs. <a href="linear-regressions.html#eq:Qasympt">(3.17)</a> and <a href="linear-regressions.html#eq:convgceOLS">(3.18)</a> respectively correspond to convergences in probability and in distribution.</p>
+</div>
+<div id="instrumental-variables" class="section level2" number="3.4">
+<h2>
+<span class="header-section-number">3.4</span> Instrumental Variables<a class="anchor" aria-label="anchor" href="#instrumental-variables"><i class="fas fa-link"></i></a>
+</h2>
+<p>Here, we want to relax Hypothesis <a href="linear-regressions.html#hyp:exogeneity">3.2</a> –conditional mean zero assumption, implying in particular that <span class="math inline">\(\mathbf{x}_i\)</span> and <span class="math inline">\(\varepsilon_i\)</span> are uncorrelated.</p>
+<p>We consider the following model:
+<span class="math display" id="eq:modelIV">\[\begin{equation}
+y_i = \mathbf{x_i}'\boldsymbol\beta + \varepsilon_i, \quad \mbox{where } \mathbb{E}(\varepsilon_i)=0  \mbox{ and } \mathbf{x_i}\not\perp \varepsilon_i.\tag{3.19}
+\end{equation}\]</span></p>
+<hr>
+<div class="definition">
+<p><span id="def:instruments" class="definition"><strong>Definition 3.2  </strong></span>The <span class="math inline">\(L\)</span>-dimensional random variable <span class="math inline">\(\mathbf{z}_i\)</span> is a <strong>valid set of instruments</strong> if:</p>
+<ol style="list-style-type: lower-alpha">
+<li>
+<span class="math inline">\(\mathbf{z}_i\)</span> is correlated to <span class="math inline">\(\mathbf{x}_i\)</span>;</li>
+<li>we have <span class="math inline">\(\mathbb{E}(\boldsymbol\varepsilon|\mathbf{Z})=0\)</span> and</li>
+<li>the orthogonal projections of the <span class="math inline">\(\mathbf{x}_i\)</span>s on the <span class="math inline">\(\mathbf{z}_i\)</span>s are not multicollinear.</li>
+</ol>
+</div>
+<hr>
+<p>Example. Let us make the assumption <span class="math inline">\(\mathbf{x}_i\not\perp \varepsilon_i\)</span> (in <a href="linear-regressions.html#eq:modelIV">(3.19)</a>) more precise:
+<span class="math display" id="eq:exmIV">\[\begin{equation}
+\mathbb{E}(\varepsilon_i)=0 \quad \mbox{and} \quad \mathbb{E}(\varepsilon_i \mathbf{x_i})=\boldsymbol\gamma.\tag{3.20}
+\end{equation}\]</span>
+By the law of large numbers, <span class="math inline">\(\mbox{plim}_{n \rightarrow \infty} \mathbf{X}'\boldsymbol\varepsilon / n = \boldsymbol\gamma\)</span>. If <span class="math inline">\(\mathbf{Q}_{xx} := \mbox{plim } \mathbf{X}'\mathbf{X}/n\)</span>, the OLS estimator is not consistent because
+<span class="math display">\[
+\mathbf{b} = \boldsymbol\beta + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol\varepsilon \overset{p}{\rightarrow} \boldsymbol\beta + \mathbf{Q}_{xx}^{-1}\boldsymbol\gamma \ne \boldsymbol\beta.
+\]</span></p>
+<p>If <span class="math inline">\(\mathbf{z}_i\)</span> is a valid set of instruments, we have:
+<span class="math display">\[
+\mbox{plim}\left( \frac{\mathbf{Z}'\mathbf{y}}{n} \right) =\mbox{plim}\left( \frac{\mathbf{Z}'(\mathbf{X}\boldsymbol\beta + \boldsymbol\varepsilon)}{n} \right) = \mbox{plim}\left( \frac{\mathbf{Z}'\mathbf{X}}{n} \right)\boldsymbol\beta
+\]</span>
+Indeed, by the law of large numbers, <span class="math inline">\(\frac{\mathbf{Z}'\boldsymbol\varepsilon}{n} \overset{p}{\rightarrow}\mathbb{E}(\mathbf{z}_i\varepsilon_i)=0\)</span>.</p>
+<p>If <span class="math inline">\(L = K\)</span>, the matrix <span class="math inline">\(\frac{\mathbf{Z}'\mathbf{X}}{n}\)</span> is of dimension <span class="math inline">\(K \times K\)</span> and we have:
+<span class="math display">\[
+\left[\mbox{plim }\left( \frac{\mathbf{Z}'\mathbf{X}}{n} \right)\right]^{-1}\mbox{plim }\left( \frac{\mathbf{Z}'\mathbf{y}}{n} \right) = \boldsymbol\beta.
+\]</span>
+By continuity of the inverse funct.: <span class="math inline">\(\left[\mbox{plim }\left( \frac{\mathbf{Z}'\mathbf{X}}{n} \right)\right]^{-1}=\mbox{plim }\left( \frac{\mathbf{Z}'\mathbf{X}}{n} \right)^{-1}\)</span>.
+The Slutsky Theorem further implies that
+<span class="math display">\[
+\mbox{plim }\left( \frac{\mathbf{Z}'\mathbf{X}}{n} \right)^{-1} \mbox{plim }\left( \frac{\mathbf{Z}'\mathbf{y}}{n} \right)  = \mbox{plim }\left( \left( \frac{\mathbf{Z}'\mathbf{X}}{n} \right)^{-1} \frac{\mathbf{Z}'\mathbf{y}}{n} \right).
+\]</span>
+Hence <span class="math inline">\(\mathbf{b}_{iv}\)</span> is consistent if it is defined by:
+<span class="math display">\[
+\boxed{\mathbf{b}_{iv} = (\mathbf{Z}'\mathbf{X})^{-1}\mathbf{Z}'\mathbf{y}.}
+\]</span></p>
+<hr>
+<div class="proposition">
+<p><span id="prp:IV" class="proposition"><strong>Proposition 3.12  </strong></span>If <span class="math inline">\(\mathbf{z}_i\)</span> is a <span class="math inline">\(L\)</span>-dimensional random variable that constitutes a valid set of instruments (see Def. <a href="linear-regressions.html#def:instruments">3.2</a>) and if <span class="math inline">\(L=K\)</span>, then the asymptotic distribution of <span class="math inline">\(\mathbf{b}_{iv}\)</span> is:
+<span class="math display">\[
+\mathbf{b}_{iv} \overset{d}{\rightarrow} \mathcal{N}\left(\boldsymbol\beta,\frac{\sigma^2}{n}\left[Q_{xz}Q_{zz}^{-1}Q_{zx}\right]^{-1}\right)
+\]</span>
+where <span class="math inline">\(\mbox{plim } \mathbf{Z}'\mathbf{Z}/n =: \mathbf{Q}_{zz}\)</span>, <span class="math inline">\(\mbox{plim } \mathbf{Z}'\mathbf{X}/n =: \mathbf{Q}_{zx}\)</span>, <span class="math inline">\(\mbox{plim } \mathbf{X}'\mathbf{Z}/n =: \mathbf{Q}_{xz}\)</span>.</p>
+</div>
+<hr>
+<div class="proof">
+<p><span id="unlabeled-div-13" class="proof"><em>Proof</em>. </span>The proof is very similar to that of Prop. <a href="linear-regressions.html#prp:asymptOLS">3.11</a>, the starting point being that <span class="math inline">\(\mathbf{b}_{iv} = \boldsymbol\beta + (\mathbf{Z}'\mathbf{X})^{-1}\mathbf{Z}'\boldsymbol\varepsilon\)</span>. </p>
+</div>
+<p>When <span class="math inline">\(L=K\)</span>, we have:
+<span class="math display">\[
+\left[Q_{xz}Q_{zz}^{-1}Q_{zx}\right]^{-1}=Q_{zx}^{-1}Q_{zz}Q_{xz}^{-1}
+\]</span>
+In practice, to estimate <span class="math inline">\(\mathbb{V}ar(\mathbf{b}_{iv}) = \frac{\sigma^2}{n}Q_{zx}^{-1}Q_{zz}Q_{xz}^{-1}\)</span>, we replace <span class="math inline">\(\sigma^2\)</span> by:
+<span class="math display">\[
+s_{iv}^2 = \frac{1}{n}\sum_{i=1}^{n} (y_i - \mathbf{x}_i'\mathbf{b}_{iv})^2
+\]</span></p>
+<p>And when <span class="math inline">\(L &gt; K\)</span>? Idea: First regress <span class="math inline">\(\mathbf{X}\)</span> on the space spanned by <span class="math inline">\(\mathbf{Z}\)</span> and then regress <span class="math inline">\(\mathbf{y}\)</span> on the fitted values <span class="math inline">\(\hat{\mathbf{X}}:=\mathbf{Z}(\mathbf{Z}'\mathbf{Z})^{-1}\mathbf{Z}'\mathbf{X}\)</span>. That is <span class="math inline">\(\mathbf{b}_{iv} = (\hat{\mathbf{X}}'\hat{\mathbf{X}})^{-1}\hat{\mathbf{X}}'\mathbf{y}\)</span>:
+<span class="math display" id="eq:IV">\[\begin{equation}
+\boxed{\mathbf{b}_{iv} = [\mathbf{X}'\mathbf{Z}(\mathbf{Z}'\mathbf{Z})^{-1}\mathbf{Z}'\mathbf{X}]^{-1}\mathbf{X}'\mathbf{Z}(\mathbf{Z}'\mathbf{Z})^{-1}\mathbf{Z}'\mathbf{Y}.} \tag{3.21}
+\end{equation}\]</span></p>
+<p>In this case, Prop. <a href="linear-regressions.html#prp:IV">3.12</a> still holds, with <span class="math inline">\(\mathbf{b}_{iv}\)</span> given by Eq. <a href="linear-regressions.html#eq:IV">(3.21)</a>.</p>
+<p><span class="math inline">\(\mathbf{b}_{iv}\)</span> is also the result of the regression of <span class="math inline">\(\mathbf{y}\)</span> on <span class="math inline">\(\mathbf{X^*}\)</span>, where the columns of <span class="math inline">\(\mathbf{X}^*\)</span> are the (othogonal) projections of those of <span class="math inline">\(\mathbf{X}\)</span> on <span class="math inline">\(\mathbf{Z}\)</span>, i.e. <span class="math inline">\(\mathbf{X^*} = \mathbf{P^{Z}X}\)</span> (using the notations introduced in Eq. <a href="linear-regressions.html#eq:Proj">(3.3)</a>). Hence the other names of this estimator: <strong>Two-Stage Least Squares (TSLS)</strong>.</p>
+<p>If the instruments do not properly satisfy Condition (a) in Def. <a href="linear-regressions.html#def:instruments">3.2</a> (i.e. if <span class="math inline">\(\mathbf{x}_i\)</span> and <span class="math inline">\(\mathbf{z}_i\)</span> are only loosely related), the instruments are said to be <strong>weak</strong>.</p>
+<p>This problem is for instance discussed in <a href="http://scholar.harvard.edu/files/stock/files/testing_for_weak_instruments_in_linear_iv_regression.pdf">Stock and Yogo (2003)</a>. See also <a href="https://www.pearson.com/us/higher-education/product/Stock-Introduction-to-Econometrics-3rd-Edition/9780138009007.html">Stock and Watson</a> pp.,489-490.</p>
+<p>The Hausman test can be used to test if IV necessary. IV techniques are required if <span class="math inline">\(\mbox{plim}_{n \rightarrow \infty} \mathbf{X}'\boldsymbol\varepsilon / n \ne 0\)</span>. <a href="http://www.jstor.org/stable/1913827?seq=1#page_scan_tab_contents">Hausman (1978)</a> proposes a test of the efficiency of estimators. Under the null hypothesis two estimators, <span class="math inline">\(\mathbf{b}_0\)</span> and <span class="math inline">\(\mathbf{b}_1\)</span>, are consistent but <span class="math inline">\(\mathbf{b}_0\)</span> is (asymptotically) efficient relative to <span class="math inline">\(\mathbf{b}_1\)</span>. Under the alternative hypothesis, <span class="math inline">\(\mathbf{b}_1\)</span> (IV in the present case) remains consistent but not <span class="math inline">\(\mathbf{b}_0\)</span> (OLS in the present case).</p>
+<p>The test statistic is:
+<span class="math display">\[
+H = (\mathbf{b}_1 - \mathbf{b}_0)' MPI(\mathbb{V}ar(\mathbf{b}_1) - \mathbb{V}ar(\mathbf{b}_0))(\mathbf{b}_1 - \mathbf{b}_0),
+\]</span>
+where <span class="math inline">\(MPI\)</span> is the Moore-Penrose pseudo-inverse. Under the null hypothesis, <span class="math inline">\(H \sim \chi^2(q)\)</span>, where <span class="math inline">\(q\)</span> is the rank of <span class="math inline">\(\mathbb{V}ar(\mathbf{b}_1) - \mathbb{V}ar(\mathbf{b}_0)\)</span>.</p>
+<div class="example">
+<p><span id="exm:priceElasticity" class="example"><strong>Example 3.3  </strong></span><strong>Estimation of price elasticity</strong></p>
+<p>See e.g. <a href="http://www.who.int/tobacco/economics/2_2estimatingpriceincomeelasticities.pdf?ua=1">WHO and estimation of tobacco price elasticity of demand</a>.</p>
+<p>We want to estimate what is the effect on demand of an <em>exogenous increase</em> in prices of cigarettes (say).</p>
+<p>The model is:
+<span class="math display">\[\begin{eqnarray*}
+\underbrace{q^d_t}_{\mbox{log(demand)}} &amp;=&amp; \alpha_0 + \alpha_1 \underbrace{\times p_t}_{\mbox{log(price)}} + \alpha_2 \underbrace{\times w_t}_{\mbox{income}} + \varepsilon_t^d\\
+\underbrace{q^s_t}_{\mbox{log(supply)}} &amp;=&amp; \gamma_0 + \gamma_1 \times p_t + \gamma_2 \underbrace{\times \mathbf{y}_t}_{\mbox{cost factors}} + \varepsilon_t^s,
+\end{eqnarray*}\]</span>
+where <span class="math inline">\(\mathbf{y}_t\)</span>, <span class="math inline">\(w_t\)</span>, <span class="math inline">\(\varepsilon_t^s \sim \mathcal{N}(0,\sigma^2_s)\)</span> and <span class="math inline">\(\varepsilon_t^d \sim \mathcal{N}(0,\sigma^2_d)\)</span> are independent.</p>
+<p>Equilibrium: <span class="math inline">\(q^d_t = q^s_t\)</span>. This implies that prices are <strong>endogenous</strong>:
+<span class="math display">\[
+p_t = \frac{\alpha_0 + \alpha_2 w_t + \varepsilon_t^d - \gamma_0 - \gamma_2 \mathbf{y}_t - \varepsilon_t^s}{\gamma_1 - \alpha_1}.
+\]</span>
+In particular we have <span class="math inline">\(\mathbb{E}(p_t \varepsilon_t^d) = \frac{\sigma^2_d}{\gamma_1 - \alpha_1} \ne 0\)</span> <span class="math inline">\(\Rightarrow\)</span> Regressing by OLS <span class="math inline">\(q_t^d\)</span> on <span class="math inline">\(p_t\)</span> gives biased estimates (see Eq. <a href="linear-regressions.html#eq:exmIV">(3.20)</a>).</p>
+</div>
+<div class="figure">
+<span style="display:block;" id="fig:figureIV"></span>
+<img src="AdvECTS_files/figure-html/figureIV-1.png" alt="This figure illustrates the situation prevailing when estimating a price-elasticity (and the price is endogenous)." width="672"><p class="caption">
+Figure 3.4: This figure illustrates the situation prevailing when estimating a price-elasticity (and the price is endogenous).
+</p>
+</div>
+<p><a href="https://rpubs.com/wsundstrom/t_ivreg">Estimation of the price elasticity of cigarette demand</a>. Instrument: real tax on cigarettes arising from the state’s general sales tax. Presumption: in states with a larger general sales tax, cigarette prices are higher, but the general tax is not determined by other forces affecting <span class="math inline">\(\varepsilon_t^d\)</span>.</p>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"CigarettesSW"</span>, package <span class="op">=</span> <span class="st">"AER"</span><span class="op">)</span></span>
+<span><span class="va">CigarettesSW</span><span class="op">$</span><span class="va">rprice</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">CigarettesSW</span>, <span class="va">price</span><span class="op">/</span><span class="va">cpi</span><span class="op">)</span></span>
+<span><span class="va">CigarettesSW</span><span class="op">$</span><span class="va">rincome</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">CigarettesSW</span>, <span class="va">income</span><span class="op">/</span><span class="va">population</span><span class="op">/</span><span class="va">cpi</span><span class="op">)</span></span>
+<span><span class="va">CigarettesSW</span><span class="op">$</span><span class="va">tdiff</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">CigarettesSW</span>, <span class="op">(</span><span class="va">taxs</span> <span class="op">-</span> <span class="va">tax</span><span class="op">)</span><span class="op">/</span><span class="va">cpi</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## model </span></span>
+<span><span class="va">fm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/AER/man/ivreg.html">ivreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">packs</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">rprice</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">rincome</span><span class="op">)</span> <span class="op">|</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">rincome</span><span class="op">)</span> <span class="op">+</span> <span class="va">tdiff</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">tax</span><span class="op">/</span><span class="va">cpi</span><span class="op">)</span>,</span>
+<span>            data <span class="op">=</span> <span class="va">CigarettesSW</span>, subset <span class="op">=</span> <span class="va">year</span> <span class="op">==</span> <span class="st">"1995"</span><span class="op">)</span></span>
+<span><span class="va">eq.no.IV</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">packs</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">rprice</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">rincome</span><span class="op">)</span>,</span>
+<span>               data <span class="op">=</span> <span class="va">CigarettesSW</span>, subset <span class="op">=</span> <span class="va">year</span> <span class="op">==</span> <span class="st">"1995"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fm</span>, vcov <span class="op">=</span> <span class="va">sandwich</span>, diagnostics <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## ivreg(formula = log(packs) ~ log(rprice) + log(rincome) | log(rincome) + 
+##     tdiff + I(tax/cpi), data = CigarettesSW, subset = year == 
+##     "1995")
+## 
+## Residuals:
+##        Min         1Q     Median         3Q        Max 
+## -0.6006931 -0.0862222 -0.0009999  0.1164699  0.3734227 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)    9.8950     0.9288  10.654 6.89e-14 ***
+## log(rprice)   -1.2774     0.2417  -5.286 3.54e-06 ***
+## log(rincome)   0.2804     0.2458   1.141     0.26    
+## 
+## Diagnostic tests:
+##                  df1 df2 statistic p-value    
+## Weak instruments   2  44   228.738  &lt;2e-16 ***
+## Wu-Hausman         1  44     3.823  0.0569 .  
+## Sargan             1  NA     0.333  0.5641    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.1879 on 45 degrees of freedom
+## Multiple R-Squared: 0.4294,  Adjusted R-squared: 0.4041 
+## Wald test: 17.25 on 2 and 45 DF,  p-value: 2.743e-06</code></pre>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">eq.no.IV</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = log(packs) ~ log(rprice) + log(rincome), data = CigarettesSW, 
+##     subset = year == "1995")
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.59077 -0.07856 -0.00149  0.11860  0.35442 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   10.3420     1.0227  10.113 3.66e-13 ***
+## log(rprice)   -1.4065     0.2514  -5.595 1.24e-06 ***
+## log(rincome)   0.3439     0.2350   1.463     0.15    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.1873 on 45 degrees of freedom
+## Multiple R-squared:  0.4327, Adjusted R-squared:  0.4075 
+## F-statistic: 17.16 on 2 and 45 DF,  p-value: 2.884e-06</code></pre>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/AER/man/ivreg.html">ivreg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">packs</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">rprice</span><span class="op">)</span> <span class="op">|</span> <span class="va">tdiff</span>, data <span class="op">=</span> <span class="va">CigarettesSW</span>, subset <span class="op">=</span> <span class="va">year</span> <span class="op">==</span> <span class="st">"1995"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">fm</span>, <span class="va">fm2</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: log(packs) ~ log(rprice) + log(rincome) | log(rincome) + tdiff + 
+##     I(tax/cpi)
+## Model 2: log(packs) ~ log(rprice) | tdiff
+##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+## 1     45 1.5880                           
+## 2     46 1.6668 -1 -0.078748 1.3815  0.246</code></pre>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.r-project.org">sem</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"CollegeDistance"</span>, package <span class="op">=</span> <span class="st">"AER"</span><span class="op">)</span></span>
+<span><span class="va">simple.ed.1s</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">education</span> <span class="op">~</span> <span class="va">urban</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">ethnicity</span> <span class="op">+</span> <span class="va">unemp</span> <span class="op">+</span> <span class="va">distance</span>,</span>
+<span>                  data <span class="op">=</span> <span class="va">CollegeDistance</span><span class="op">)</span></span>
+<span><span class="va">CollegeDistance</span><span class="op">$</span><span class="va">ed.pred</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">simple.ed.1s</span><span class="op">)</span></span>
+<span><span class="va">simple.ed.2s</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">wage</span> <span class="op">~</span> <span class="va">urban</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">ethnicity</span> <span class="op">+</span> <span class="va">unemp</span> <span class="op">+</span> <span class="va">ed.pred</span> ,</span>
+<span>                  data <span class="op">=</span> <span class="va">CollegeDistance</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">simple.comp</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/encomptest.html">encomptest</a></span><span class="op">(</span><span class="va">wage</span> <span class="op">~</span> <span class="va">urban</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">ethnicity</span> <span class="op">+</span> <span class="va">unemp</span> <span class="op">+</span> <span class="va">ed.pred</span> ,</span>
+<span>                         <span class="va">wage</span> <span class="op">~</span> <span class="va">urban</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">ethnicity</span> <span class="op">+</span> <span class="va">unemp</span> <span class="op">+</span> <span class="va">education</span> ,</span>
+<span>                         data <span class="op">=</span> <span class="va">CollegeDistance</span><span class="op">)</span></span>
+<span><span class="va">fsttest</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/encomptest.html">encomptest</a></span><span class="op">(</span><span class="va">education</span> <span class="op">~</span> <span class="va">tuition</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">ethnicity</span> <span class="op">+</span> <span class="va">urban</span> ,</span>
+<span>                     <span class="va">education</span> <span class="op">~</span> <span class="va">distance</span> ,</span>
+<span>                     data <span class="op">=</span> <span class="va">CollegeDistance</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">eqOLS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">wage</span> <span class="op">~</span> <span class="va">urban</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">ethnicity</span> <span class="op">+</span> <span class="va">unemp</span> <span class="op">+</span> <span class="va">education</span>,</span>
+<span>            data<span class="op">=</span><span class="va">CollegeDistance</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">eqOLS</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = wage ~ urban + gender + ethnicity + unemp + education, 
+##     data = CollegeDistance)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.3484 -0.8408  0.1808  0.8119  3.9875 
+## 
+## Coefficients:
+##                    Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)        8.641490   0.157008  55.039   &lt;2e-16 ***
+## urbanyes           0.070117   0.044727   1.568   0.1170    
+## genderfemale      -0.085242   0.037069  -2.300   0.0215 *  
+## ethnicityafam     -0.556056   0.052167 -10.659   &lt;2e-16 ***
+## ethnicityhispanic -0.544007   0.048670 -11.177   &lt;2e-16 ***
+## unemp              0.133101   0.006711  19.834   &lt;2e-16 ***
+## education          0.005369   0.010362   0.518   0.6044    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.268 on 4732 degrees of freedom
+## Multiple R-squared:  0.1098, Adjusted R-squared:  0.1087 
+## F-statistic: 97.27 on 6 and 4732 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">simple.ed.2s</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = wage ~ urban + gender + ethnicity + unemp + ed.pred, 
+##     data = CollegeDistance)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.1692 -0.8294  0.1502  0.8482  3.9537 
+## 
+## Coefficients:
+##                    Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       -0.359032   1.412087  -0.254  0.79931    
+## urbanyes           0.046144   0.044691   1.033  0.30188    
+## genderfemale      -0.070753   0.036978  -1.913  0.05576 .  
+## ethnicityafam     -0.227240   0.072984  -3.114  0.00186 ** 
+## ethnicityhispanic -0.351291   0.057021  -6.161 7.84e-10 ***
+## unemp              0.139163   0.006748  20.622  &lt; 2e-16 ***
+## ed.pred            0.647099   0.100592   6.433 1.38e-10 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.263 on 4732 degrees of freedom
+## Multiple R-squared:  0.1175, Adjusted R-squared:  0.1163 
+## F-statistic:   105 on 6 and 4732 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">eqTSLS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sem/man/tsls.html">tsls</a></span><span class="op">(</span><span class="va">wage</span> <span class="op">~</span> <span class="va">urban</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">ethnicity</span> <span class="op">+</span> <span class="va">unemp</span> <span class="op">+</span> <span class="va">education</span>,</span>
+<span>               <span class="op">~</span> <span class="va">urban</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">ethnicity</span> <span class="op">+</span> <span class="va">unemp</span> <span class="op">+</span> <span class="va">distance</span>,</span>
+<span>               data<span class="op">=</span><span class="va">CollegeDistance</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">eqTSLS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/AER/man/ivreg.html">ivreg</a></span><span class="op">(</span><span class="va">wage</span> <span class="op">~</span> <span class="va">urban</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">ethnicity</span> <span class="op">+</span> <span class="va">unemp</span> <span class="op">+</span> <span class="va">education</span><span class="op">|</span></span>
+<span>                  <span class="va">urban</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">ethnicity</span> <span class="op">+</span> <span class="va">unemp</span> <span class="op">+</span> <span class="va">distance</span>,</span>
+<span>                data<span class="op">=</span><span class="va">CollegeDistance</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">eqTSLS</span>, vcov <span class="op">=</span> <span class="va">sandwich</span>, diagnostics <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## ivreg(formula = wage ~ urban + gender + ethnicity + unemp + education | 
+##     urban + gender + ethnicity + unemp + distance, data = CollegeDistance)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -5.20896 -1.14578 -0.02361  1.33303  4.77571 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       -0.35903    1.91755  -0.187   0.8515    
+## urbanyes           0.04614    0.05926   0.779   0.4362    
+## genderfemale      -0.07075    0.04974  -1.422   0.1550    
+## ethnicityafam     -0.22724    0.09539  -2.382   0.0172 *  
+## ethnicityhispanic -0.35129    0.07577  -4.636 3.64e-06 ***
+## unemp              0.13916    0.00934  14.899  &lt; 2e-16 ***
+## education          0.64710    0.13691   4.727 2.35e-06 ***
+## 
+## Diagnostic tests:
+##                   df1  df2 statistic  p-value    
+## Weak instruments    1 4732     50.19 1.60e-12 ***
+## Wu-Hausman          1 4731     40.30 2.38e-10 ***
+## Sargan              0   NA        NA       NA    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.706 on 4732 degrees of freedom
+## Multiple R-Squared: -0.6118, Adjusted R-squared: -0.6138 
+## Wald test: 57.08 on 6 and 4732 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div id="general-regression-model" class="section level2" number="3.5">
+<h2>
+<span class="header-section-number">3.5</span> General Regression Model<a class="anchor" aria-label="anchor" href="#general-regression-model"><i class="fas fa-link"></i></a>
+</h2>
+<p>We want to relax the assumption according to which the disturbances are uncorrelated with each other (Hypothesis @ref(hyp:noncorrel_resid)) or the homoskedasticity Hypothesis <a href="linear-regressions.html#hyp:homoskedasticity">3.3</a>.</p>
+<p>We replace the latter two assumptions by the general formulation:
+<span class="math display" id="eq:assumGLS2">\[\begin{eqnarray}
+\mathbb{E}(\boldsymbol\varepsilon \boldsymbol\varepsilon'| \mathbf{X}) &amp;=&amp; \boldsymbol\Sigma. \tag{3.22}
+\end{eqnarray}\]</span></p>
+<p>Note that Eq. (<a href="linear-regressions.html#eq:assumGLS2">(3.22)</a>) is more general than Hypothesis <a href="linear-regressions.html#hyp:homoskedasticity">3.3</a> and @ref(hyp:noncorrel_resid) because the diagonal entries of <span class="math inline">\(\boldsymbol\Sigma\)</span> may be different (not the case under Hypothesis <a href="linear-regressions.html#hyp:homoskedasticity">3.3</a>), and the non-diagonal entries of <span class="math inline">\(\boldsymbol\Sigma\)</span> can be <span class="math inline">\(\ne 0\)</span> (contrary to Hypothesis <a href="linear-regressions.html#hyp:noncorrelResid">3.4</a>).</p>
+<div class="definition">
+<p><span id="def:GRM" class="definition"><strong>Definition 3.3  </strong></span>Hypothesis <a href="linear-regressions.html#hyp:fullrank">3.1</a> and <a href="linear-regressions.html#hyp:exogeneity">3.2</a>, together with Eq. <a href="linear-regressions.html#eq:assumGLS2">(3.22)</a>, form the <strong>General Regression Model</strong> (GRM) framework.</p>
+</div>
+<p>Note that a regression model where Hypotheses <a href="linear-regressions.html#hyp:fullrank">3.1</a> to <a href="linear-regressions.html#hyp:noncorrelResid">3.4</a> hold is a specific case of the GRM framework.</p>
+<p>The GRM context notably allows to model <strong>heteroskedasticity</strong> and <strong>autocorrelation</strong>.</p>
+<ul>
+<li>Heteroskedasticity:
+<span class="math display" id="eq:heteroskedasticity">\[\begin{equation}
+\boldsymbol\Sigma = \left[  \begin{array}{cccc}
+\sigma_1^2 &amp; 0 &amp; \dots &amp; 0 \\
+0 &amp; \sigma_2^2 &amp;  &amp; 0 \\
+\vdots &amp;&amp; \ddots&amp; \vdots \\
+0 &amp; \dots &amp; 0 &amp; \sigma_n^2
+\end{array} \right]. \tag{3.23}
+\end{equation}\]</span>
+</li>
+<li>Autocorrelation:
+<span class="math display" id="eq:autocorrelation">\[\begin{equation}
+\boldsymbol\Sigma = \sigma^2 \left[ \begin{array}{cccc}
+1 &amp; \rho_{2,1} &amp; \dots &amp; \rho_{n,1} \\
+\rho_{2,1} &amp; 1 &amp;  &amp; \vdots \\
+\vdots &amp;&amp; \ddots&amp; \rho_{n,n-1} \\
+\rho_{n,1} &amp; \rho_{n,2} &amp; \dots &amp; 1
+\end{array} \right]. \tag{3.24}
+\end{equation}\]</span>
+</li>
+</ul>
+<div class="example">
+<p><span id="exm:autocorrelaaa" class="example"><strong>Example 3.4  </strong></span>Autocorrelation is, in particular, a recurrent problem when time-series data are used (see Section <span class="math inline">\(\ref{section:TS}\)</span>).</p>
+<p>In a time-series context, subscript <span class="math inline">\(i\)</span> refers to a date. Assume for instance that:
+<span class="math display">\[\begin{equation}\label{eq:usual}
+y_i = \mathbf{x}_i' \boldsymbol\beta + \varepsilon_i
+\end{equation}\]</span>
+with
+<span class="math display">\[\begin{equation}\label{eq:usual2}
+\varepsilon_i = \rho \varepsilon_{i-1} + v_i, \quad v_i \sim \mathcal{N}(0,\sigma_v^2).
+\end{equation}\]</span>
+In this case, we are in the GRM context, with:
+<span class="math display" id="eq:SigmaAutoco\tag{3.25}on}(#eq:SigmaAutocorrel)
+\boldsymbol\Sigma =\frac{ \sigma_v^2}{1 - \rho^2} \left[    \begin{array}{cccc}
+1 &amp; \rho &amp; \dots &amp; \rho^{n-1} \\
+\rho &amp; 1 &amp;  &amp; \vdots \\
+\vdots &amp;&amp; \ddots&amp; \rho \\
+\rho^{n-1} &amp; \rho^{n-2} &amp; \dots &amp; 1
+\end{array} \right].
+\end{equation}\]&lt;/span&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=" generalized-least-squares number="3.5.1">
+<h3>
+<span class="header-section-number">3.5.1</span> Generalized Least Squares</h3>
+<p>Assume <span class="math inline">\(\boldsymbol\Sigma\)</span> is known (``feasible GLS’’). Because <span class="math inline">\(\boldsymbol\Sigma\)</span> is symmetric positive, it admits a spectral decomposition of the form <span class="math inline">\(\boldsymbol\Sigma = \mathbf{C} \boldsymbol\Lambda \mathbf{C}'\)</span>, where <span class="math inline">\(\mathbf{C}\)</span> is an orthogonal matrix (i.e. <span class="math inline">\(\mathbf{C}\mathbf{C}'=Id\)</span>) and <span class="math inline">\(\boldsymbol\Lambda\)</span> is a diagonal matrix (the diagonal entries are the eigenvalues of <span class="math inline">\(\boldsymbol\Sigma\)</span>).</p>
+<p>We have <span class="math inline">\(\boldsymbol\Sigma = (\mathbf{P}\mathbf{P}')^{-1}\)</span> with <span class="math inline">\(\mathbf{P} = \mathbf{C}\boldsymbol\Lambda^{-1/2}\)</span>.</p>
+<p>Consider the transformed model:
+<span class="math display">\[
+\mathbf{P}'\mathbf{y} = \mathbf{P}'\mathbf{X}\boldsymbol\beta + \mathbf{P}'\boldsymbol\varepsilon \quad \mbox{or} \quad \mathbf{y}^* = \mathbf{X}^*\boldsymbol\beta + \boldsymbol\varepsilon^*.
+\]</span>
+The variance of <span class="math inline">\(\boldsymbol\varepsilon^*\)</span> is <span class="math inline">\(\mathbf{I}\)</span>. In the transformed model, OLS is BLUE (Gauss-Markow Theorem <a href="linear-regressions.html#thm:GaussMarkov">3.1</a>).</p>
+<p>The <strong>Generalized least squares</strong> estimator of <span class="math inline">\(\boldsymbol\beta\)</span> is:
+<span class="math display" id="eq:betaGLS">\[\begin{equation}
+\boxed{\mathbf{b}_{GLS} = (\mathbf{X}'\boldsymbol\Sigma^{-1}\mathbf{X})^{-1}\mathbf{X}'\boldsymbol\Sigma^{-1}\mathbf{y}}.\tag{3.26}
+\end{equation}\]</span>
+We have:
+<span class="math display">\[
+\mathbb{V}ar(\mathbf{b}_{GLS}|\mathbf{X}) = (\mathbf{X}'\boldsymbol\Sigma^{-1}\mathbf{X})^{-1}.
+\]</span></p>
+<p>When <span class="math inline">\(\boldsymbol\Sigma\)</span> is unknown, the GLS estimator is said to be <em>infeasible</em>. Some structure is required. Assume <span class="math inline">\(\boldsymbol\Sigma\)</span> admits a parametric form <span class="math inline">\(\boldsymbol\Sigma(\theta)\)</span>. The estimation becomes <em>feasible</em> (FGLS) if one replaces <span class="math inline">\(\boldsymbol\Sigma(\theta)\)</span> by <span class="math inline">\(\boldsymbol\Sigma(\hat\theta)\)</span>.</p>
+<p>If <span class="math inline">\(\hat\theta\)</span> is a consistent estimator of <span class="math inline">\(\theta\)</span>, then the FGLS is asymptotically efficient (see Example <a href="#exm:autocorrelaa"><strong>??</strong></a>).</p>
+<p>By contrast, when <span class="math inline">\(\boldsymbol\Sigma\)</span> has no obvious structure: the OLS (or IV) is the only estimator available. It remains unbiased, consistent, and asymptotically normally distributed, but not efficient. Standard inference procedures are not appropriate any longer.</p>
+<p>Autocorrelation in the time-series context. Consider the case presented in Example <a href="linear-regressions.html#exm:autocorrelaaa">3.4</a>. Because the OLS estimate <span class="math inline">\(\mathbf{b}\)</span> of <span class="math inline">\(\boldsymbol\beta\)</span> is consistent, the estimates <span class="math inline">\(e_i\)</span>s of the <span class="math inline">\(\varepsilon_i\)</span>s also are. Consistent estimators of <span class="math inline">\(\rho\)</span> and <span class="math inline">\(\sigma_v\)</span> are then obtained by regressing the <span class="math inline">\(e_i\)</span>s on the <span class="math inline">\(e_{i-1}\)</span>s. Using these estimates in Eq. <a href="#eq:SigmaAutocorrel">(3.25)</a> provides a consistent estimate of <span class="math inline">\(\boldsymbol\Sigma\)</span>.</p>
+<p>See <a href="https://www.tandfonline.com/doi/abs/10.1080/01621459.1949.10483290">Cochrane and Orcutt (2012)</a>.</p>
+<hr>
+<div class="proposition">
+<p><span id="prp:AsymptOLSGRM" class="proposition"><strong>Proposition 3.13  </strong></span>Conditionally on <span class="math inline">\(\mathbf{X}\)</span>, we have:
+<span class="math display" id="eq:xsx">\[\begin{equation}
+\mathbb{V}ar(\mathbf{b}|\mathbf{X}) = \frac{1}{n}\left(\frac{1}{n}\mathbf{X}'\mathbf{X}\right)^{-1}\left(\frac{1}{n}\mathbf{X}'\boldsymbol\Sigma\mathbf{X}\right)\left(\frac{1}{n}\mathbf{X}'\mathbf{X}\right)^{-1}.\tag{3.27}
+\end{equation}\]</span>
+Under Hypothesis <a href="linear-regressions.html#hyp:normality">3.5</a>, since <span class="math inline">\(\mathbf{b}\)</span> is linear in <span class="math inline">\(\boldsymbol\varepsilon\)</span>, we have:
+<span class="math display">\[\begin{equation}
+\mathbf{b}|\mathbf{X} \sim \mathcal{N}\left(\boldsymbol\beta,\left(\mathbf{X}'\mathbf{X}\right)^{-1}\left(\mathbf{X}'\boldsymbol\Sigma\mathbf{X}\right)\left(\mathbf{X}'\mathbf{X}\right)^{-1}\right).
+\end{equation}\]</span></p>
+</div>
+<hr>
+<p>Note that the variance of the estimator is not <span class="math inline">\(\sigma^2 (\mathbf{X}'\mathbf{X})^{-1}\)</span> any more, so using <span class="math inline">\(s^2 (\mathbf{X}'\mathbf{X})^{-1}\)</span> for inference may be misleading.</p>
+<hr>
+<div class="proposition">
+<p><span id="prp:XXX" class="proposition"><strong>Proposition 3.14  </strong></span>If <span class="math inline">\(\mbox{plim }(\mathbf{X}'\mathbf{X}/n)\)</span> and <span class="math inline">\(\mbox{plim }(\mathbf{X}'\boldsymbol\Sigma\mathbf{X}/n)\)</span> are finite positive definite matrices, then <span class="math inline">\(\mbox{plim }(\mathbf{b})=\boldsymbol\beta\)</span>.</p>
+</div>
+<hr>
+<div class="proof">
+<p><span id="unlabeled-div-14" class="proof"><em>Proof</em>. </span>We have <span class="math inline">\(\mathbb{V}ar(\mathbf{b})=\mathbb{E}[\mathbb{V}ar(\mathbf{b}|\mathbf{X})]+\mathbb{V}ar[\mathbb{E}(\mathbf{b}|\mathbf{X})]\)</span>. Since <span class="math inline">\(\mathbb{E}(\mathbf{b}|\mathbf{X})=\boldsymbol\beta\)</span>, <span class="math inline">\(\mathbb{V}ar[\mathbb{E}(\mathbf{b}|\mathbf{X})]=0\)</span>. Eq. <a href="linear-regressions.html#eq:xsx">(3.27)</a> implies that <span class="math inline">\(\mathbb{V}ar(\mathbf{b}|\mathbf{X}) \rightarrow 0\)</span>. Hence <span class="math inline">\(\mathbf{b}\)</span> converges in mean square and therefore in probability. <span class="math inline">\(\square\)</span></p>
+</div>
+<hr>
+<div class="proposition">
+<p><span id="prp:AsymptGRM" class="proposition"><strong>Proposition 3.15  </strong></span>If <span class="math inline">\(Q_{xx}=\mbox{plim }(\mathbf{X}'\mathbf{X}/n)\)</span> and <span class="math inline">\(Q_{x\boldsymbol\Sigma x}=\mbox{plim }(\mathbf{X}'\boldsymbol\Sigma\mathbf{X}/n)\)</span> are finite positive definite matrices, then:
+<span class="math display">\[
+\sqrt{n}(\mathbf{b}-\boldsymbol\beta) \overset{d}{\rightarrow} \mathcal{N}(0,Q_{xx}^{-1}Q_{x\boldsymbol\Sigma x}Q_{xx}^{-1}).
+\]</span></p>
+</div>
+<hr>
+<hr>
+<div class="proposition">
+<p><span id="prp:AsymptIVGRM" class="proposition"><strong>Proposition 3.16  </strong></span>If regressors and IV variables are ``well-behaved’’, then:
+<span class="math display">\[
+\mathbf{b}_{iv} \overset{a}{\sim} \mathcal{N}(\boldsymbol\beta,\mathbf{V}_{iv}),
+\]</span>
+where
+<span class="math display">\[
+\mathbf{V}_{iv} = \frac{1}{n}(\mathbf{Q}^*)\mbox{ plim }\left( \frac{1}{n} \mathbf{Z}'\boldsymbol\Sigma \mathbf{Z}\right)(\mathbf{Q}^*)',
+\]</span>
+with
+<span class="math display">\[
+\mathbf{Q}^* = [\mathbf{Q}_{xz}\mathbf{Q}_{zz}^{-1}\mathbf{Q}_{zx}]^{-1}\mathbf{Q}_{xz}\mathbf{Q}_{zz}^{-1}.
+\]</span></p>
+</div>
+<hr>
+<p>For practical purposes, one needs to have estimates of <span class="math inline">\(\boldsymbol\Sigma\)</span> in Props. <a href="linear-regressions.html#prp:AsymptOLSGRM">3.13</a>, <a href="linear-regressions.html#prp:AsymptGRM">3.15</a> or <a href="linear-regressions.html#prp:AsymptIVGRM">3.16</a>.</p>
+<p>Idea: instead of estimating <span class="math inline">\(\boldsymbol\Sigma\)</span> (dimension <span class="math inline">\(n \times n\)</span>) directly, one can estimate <span class="math inline">\(\frac{1}{n}\mathbf{X}'\boldsymbol\Sigma\mathbf{X}\)</span>, of dimension <span class="math inline">\(K \times K\)</span> (or <span class="math inline">\(\frac{1}{n}\mathbf{Z}'\boldsymbol\Sigma\mathbf{Z}\)</span> in the IV case). Indeed, this is this expression (<span class="math inline">\(\mathbf{X}'\boldsymbol\Sigma\mathbf{X}\)</span>) that eventually appears in the formulas – for instance in Eq. <a href="linear-regressions.html#eq:xsx">(3.27)</a>.</p>
+<p>We have:
+<span class="math display" id="eq:GeneralXSigmaX">\[\begin{equation}
+\frac{1}{n}\mathbf{X}'\boldsymbol\Sigma\mathbf{X} = \frac{1}{n}\sum_{i=1}^{n}\sum_{j=1}^{n}\sigma_{i,j}\mathbf{x}_i\mathbf{x}'_j. \tag{3.28}
+\end{equation}\]</span></p>
+<p><strong>Robust estimation of asymptotic covariance matrices</strong> look for estimates of the previous matrix. Their computation is based on the fact that if <span class="math inline">\(\mathbf{b}\)</span> is consistent, then the <span class="math inline">\(e_i\)</span>s are consistent (pointwise) estimators of the <span class="math inline">\(\varepsilon_i\)</span>s.</p>
+<div class="example">
+<p><span id="exm:heteroskedasticity" class="example"><strong>Example 3.5  </strong></span><strong>Heteroskedasticity</strong>.</p>
+<p>This is the case of Eq. <a href="linear-regressions.html#eq:heteroskedasticity">(3.23)</a>.</p>
+<p>We then need to estimate <span class="math inline">\(\frac{1}{n}\sum_{i=1}^{n}\sigma_{i}^2\mathbf{x}_i\mathbf{x}'_i\)</span>. <a href="http://www.jstor.org/stable/1912934">White (1980)</a>: Under general conditions:
+<span class="math display" id="eq:white">\[\begin{equation}
+\mbox{plim}\left( \frac{1}{n}\sum_{i=1}^{n}\sigma_{i}^2\mathbf{x}_i\mathbf{x}'_i \right) =
+\mbox{plim}\left( \frac{1}{n}\sum_{i=1}^{n}e_{i}^2\mathbf{x}_i\mathbf{x}'_i \right). \tag{3.29}
+\end{equation}\]</span>
+The estimator of <span class="math inline">\(\frac{1}{n}\mathbf{X}'\boldsymbol\Sigma\mathbf{X}\)</span> therefore is:
+<span class="math display">\[
+\frac{1}{n}\mathbf{X}'\mathbf{E}^2\mathbf{X},
+\]</span>
+where <span class="math inline">\(\mathbf{E}\)</span> is an <span class="math inline">\(n \times n\)</span> diagonal matrix whose diagonal elements are the estimated residuals <span class="math inline">\(e_i\)</span>.</p>
+<p>Illustration: Figure <a href="linear-regressions.html#fig:exmpSalarayPhD">3.2</a>.</p>
+</div>
+<p>Let us illustrate the influence of heteroskedasticity using simulations.</p>
+<p>We consider the following model:
+<span class="math display">\[
+y_i = x_i + \varepsilon_i, \quad \varepsilon_i \sim \mathcal{N}(0,x_i^2).
+\]</span>
+where the <span class="math inline">\(x_i\)</span>s are i.i.d. <span class="math inline">\(t(4)\)</span>.</p>
+<p>Here is a simulated sample (<span class="math inline">\(n=200\)</span>) of this model:</p>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">200</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">rt</a></span><span class="op">(</span><span class="va">n</span>,df<span class="op">=</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">+</span> <span class="va">x</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span>,pch<span class="op">=</span><span class="fl">19</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="AdvECTS_files/figure-html/simulHeterosk-1.png" width="672"></div>
+<p>We simulate 1000 samples of the same model with <span class="math inline">\(n=200\)</span>. For each sample, we compute the OLS estimate of <span class="math inline">\(\beta\)</span> (=1). Using these 1000 estimates of <span class="math inline">\(b\)</span>, we construct an approximated <em>(kernel-based) distribution of this OLS estimator</em> (in red on the figure).</p>
+<p>For each of the 1000 OLS estimations, we employ <em>the standard OLS variance formula (<span class="math inline">\(s^2 (\mathbf{X}'\mathbf{X})^{-1}\)</span>)</em> to estimate the variance of <span class="math inline">\(b\)</span>. The blue curve is a normal distribution centred on 1 and whose variance is the average of the 1000 previous variance estimates.</p>
+<p>The variance of the simulated <span class="math inline">\(b\)</span> is of 0.040 (that is the <em>true</em> one); the average of the estimated variances based on the standard OLS formula is of 0.005 (<em>bad</em> estimate); the average of the estimated variances based on the White robust covariance matrix is of 0.030 (better estimate).</p>
+<p>The standard OLS formula for the variance of <span class="math inline">\(b\)</span> overestimates the precision of this estimator.</p>
+<p>For almost 50% of the simulations, 1 is not included in the 95% confidence interval of <span class="math inline">\(\beta\)</span> when the computation of the interval is based on the standard OLS formula for the variance of <span class="math inline">\(b\)</span>.</p>
+<p>When the White robust covariance matrix is used, 1 is not in the 95% confidence interval of <span class="math inline">\(\beta\)</span> for less than 10% of the simulations.</p>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">200</span></span>
+<span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">1000</span></span>
+<span><span class="va">XX</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">rt</a></span><span class="op">(</span><span class="va">n</span><span class="op">*</span><span class="va">N</span>,df<span class="op">=</span><span class="fl">5</span><span class="op">)</span>,<span class="va">n</span>,<span class="va">N</span><span class="op">)</span></span>
+<span><span class="va">YY</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">XX</span> <span class="op">+</span> <span class="va">XX</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>,<span class="va">n</span>,<span class="va">N</span><span class="op">)</span></span>
+<span><span class="va">all_b</span>       <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span><span class="va">all_V_OLS</span>   <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span><span class="va">all_V_White</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">Y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">YY</span><span class="op">[</span>,<span class="va">j</span><span class="op">]</span>,ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">XX</span><span class="op">[</span>,<span class="va">j</span><span class="op">]</span>,ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/solve.html">solve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span><span class="va">X</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span><span class="va">Y</span></span>
+<span>  <span class="va">e</span> <span class="op">&lt;-</span> <span class="va">Y</span> <span class="op">-</span> <span class="va">X</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">b</span></span>
+<span>  <span class="va">S</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="va">n</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">e</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">X</span></span>
+<span>  <span class="va">V_OLS</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/solve.html">solve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span><span class="va">X</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
+<span>  <span class="va">V_White</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="va">n</span> <span class="op">*</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/solve.html">solve</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">n</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span><span class="va">X</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">S</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/solve.html">solve</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">n</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span><span class="va">X</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">all_b</span>       <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">all_b</span>,<span class="va">b</span><span class="op">)</span></span>
+<span>  <span class="va">all_V_OLS</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">all_V_OLS</span>,<span class="va">V_OLS</span><span class="op">)</span></span>
+<span>  <span class="va">all_V_White</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">all_V_White</span>,<span class="va">V_White</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/density.html">density</a></span><span class="op">(</span><span class="va">all_b</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">all_b</span><span class="op">)</span>,lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">2</span>,by<span class="op">=</span><span class="fl">.01</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">x</span>,<span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">x</span>,mean <span class="op">=</span> <span class="fl">1</span>,sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">all_V_OLS</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,col<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">x</span>,<span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">x</span>,mean <span class="op">=</span> <span class="fl">1</span>,sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">all_V_White</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="AdvECTS_files/figure-html/simulHeterosk2-1.png" width="672"></div>
+
+</span></p>
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="intro.html"><span class="header-section-number">2</span> Introduction</a></div>
+<div class="next"><a href="methods.html"><span class="header-section-number">4</span> Methods</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#linear-regressions"><span class="header-section-number">3</span> Linear Regressions</a></li>
+<li><a class="nav-link" href="#specification"><span class="header-section-number">3.1</span> Specification</a></li>
+<li>
+<a class="nav-link" href="#least-square-estimation"><span class="header-section-number">3.2</span> Least square estimation</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#bivariate-case"><span class="header-section-number">3.2.1</span> Bivariate case</a></li>
+<li><a class="nav-link" href="#gauss-markow-theorem"><span class="header-section-number">3.2.2</span> Gauss Markow Theorem</a></li>
+<li><a class="nav-link" href="#frish-waugh"><span class="header-section-number">3.2.3</span> Frish-Waugh</a></li>
+<li><a class="nav-link" href="#goodness-of-fit"><span class="header-section-number">3.2.4</span> Goodness of fit</a></li>
+<li><a class="nav-link" href="#inference-and-prediction"><span class="header-section-number">3.2.5</span> Inference and Prediction</a></li>
+<li><a class="nav-link" href="#confidence-interval-of-beta_k"><span class="header-section-number">3.2.6</span> Confidence interval of \(\beta_k\)</a></li>
+<li><a class="nav-link" href="#example"><span class="header-section-number">3.2.7</span> Example</a></li>
+<li><a class="nav-link" href="#set-of-linear-restrictions"><span class="header-section-number">3.2.8</span> Set of linear restrictions</a></li>
+<li><a class="nav-link" href="#common-pitfalls"><span class="header-section-number">3.2.9</span> Common pitfalls</a></li>
+<li><a class="nav-link" href="#multicollinearity"><span class="header-section-number">3.2.10</span> Multicollinearity</a></li>
+<li><a class="nav-link" href="#omitted-variables"><span class="header-section-number">3.2.11</span> Omitted variables</a></li>
+<li><a class="nav-link" href="#irrelevant-variable"><span class="header-section-number">3.2.12</span> Irrelevant variable</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#large-sample-properties"><span class="header-section-number">3.3</span> Large Sample Properties</a></li>
+<li><a class="nav-link" href="#instrumental-variables"><span class="header-section-number">3.4</span> Instrumental Variables</a></li>
+<li>
+<a class="nav-link" href="#general-regression-model"><span class="header-section-number">3.5</span> General Regression Model</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#generalized-least-squares"><span class="header-section-number">3.5.1</span> Generalized Least Squares</a></li></ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Advanced Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-08-05.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

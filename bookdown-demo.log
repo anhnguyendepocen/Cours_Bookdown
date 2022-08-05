@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.7.23)  4 AUG 2022 16:32
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.7.23)  5 AUG 2022 08:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -755,23 +755,23 @@ File: bookdown-demo_files/figure-latex/nice-fig-1.pdf Graphic file (type pdf)
 [7] [8]
 Chapter 3.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 10.0pt on input line 256.
+(Font)              scaled to size 10.0pt on input line 262.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 7.0pt on input line 256.
+(Font)              scaled to size 7.0pt on input line 262.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 5.0pt on input line 256.
+(Font)              scaled to size 5.0pt on input line 262.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 10.00092pt on input line 256.
+(Font)              scaled to size 10.00092pt on input line 262.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 7.00064pt on input line 256.
+(Font)              scaled to size 7.00064pt on input line 262.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 5.00046pt on input line 256.
+(Font)              scaled to size 5.00046pt on input line 262.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 9.99893pt on input line 256.
+(Font)              scaled to size 9.99893pt on input line 262.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 6.99925pt on input line 256.
+(Font)              scaled to size 6.99925pt on input line 262.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 4.99947pt on input line 256.
+(Font)              scaled to size 4.99947pt on input line 262.
 [9
 
 ]
@@ -789,32 +789,32 @@ Missing character: There is no 𝜀 (U+1D700) in font [lmroman10-bold]:mapping=t
 Missing character: There is no 𝜀 (U+1D700) in font [lmroman10-bold]:mapping=tex-text;!
 Missing character: There is no 𝜀 (U+1D700) in font [lmroman10-bold]:mapping=tex-text;!
 [14] [15]
-Overfull \hbox (6.9601pt too wide) in paragraph at lines 616--618
+Overfull \hbox (6.9601pt too wide) in paragraph at lines 622--624
 \TU/lmr/m/n/10 Therefore, we have $[][][][][][][][][][] [] [][][][][][][][][][][] [] [][][][][][][][] [] [][][][][][][][][][][] []
  []
 
 
-Underfull \hbox (badness 3118) in paragraph at lines 635--636
+Underfull \hbox (badness 3118) in paragraph at lines 641--642
 []\TU/lmr/m/n/10 Consider the case where we have two sets of explanatory variables:
  []
 
 [16]
-Overfull \hbox (43.12312pt too wide) detected at line 658
+Overfull \hbox (43.12312pt too wide) detected at line 664
 [][] [] [][][][][] [] [][][][][][][][][][][][][][][][][][][][][] [] [][][][][][][][][][][][] [] [][][][][][][][][][][][][][][]
  []
 
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 712--712
+Overfull \hbox (12.0pt too wide) in paragraph at lines 718--718
 []\TU/lmtt/m/n/10 ##                    Estimate Std. Error       t value     Pr(>|t|)[] 
  []
 
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 712--712
+Overfull \hbox (12.0pt too wide) in paragraph at lines 718--718
 []\TU/lmtt/m/n/10 ## (Intercept)   -3.265931e-16 0.60898084 -5.362946e-16 1.0000000000[] 
  []
 
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 712--712
+Overfull \hbox (12.0pt too wide) in paragraph at lines 718--718
 []\TU/lmtt/m/n/10 ## deseas_precip  1.300055e-01 0.03300004  3.939557e+00 0.0001907741[] 
  []
 
@@ -825,108 +825,108 @@ File: bookdown-demo_files/figure-latex/R2-1.pdf Graphic file (type pdf)
 File: bookdown-demo_files/figure-latex/chartStudent-1.pdf Graphic file (type pdf)
 <use bookdown-demo_files/figure-latex/chartStudent-1.pdf>
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 14.4pt on input line 937.
+(Font)              scaled to size 14.4pt on input line 943.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 14.4013pt on input line 937.
+(Font)              scaled to size 14.4013pt on input line 943.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 14.39845pt on input line 937.
+(Font)              scaled to size 14.39845pt on input line 943.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [23]
-Underfull \hbox (badness 2310) in paragraph at lines 950--952
+Underfull \hbox (badness 2310) in paragraph at lines 956--958
 \TU/lmr/m/n/10 where $[][][][][]$ is the c.d.f. of the $[][][] [] [][]$ distribution (Table
  []
 
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 995--995
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1001--1001
 []\TU/lmtt/m/n/10 ## lm(formula = riearn ~ raedyrs + ragey_b + I(ragey_b^2) + rfemale,[] 
  []
 
 [24] [25]
-Underfull \hbox (badness 1888) in paragraph at lines 1067--1069
+Underfull \hbox (badness 1888) in paragraph at lines 1073--1075
 []\TU/lmr/m/n/10 Under $[][]$, we have $[] [] [][][] [] [][] [] [][][][][][][][][][]$. Therefore
  []
 
 
-Underfull \hbox (badness 2310) in paragraph at lines 1067--1069
+Underfull \hbox (badness 2310) in paragraph at lines 1073--1075
 [][][][][][][][][][][][][][][]$ \TU/lmr/m/n/10 is of the form $[][][][]$ with $[] [] [][][][]$ where
  []
 
 [26]
 
-LaTeX Warning: Reference `(' on page 27 undefined on input line 1080.
+LaTeX Warning: Reference `(' on page 27 undefined on input line 1086.
 
 
-Overfull \hbox (77.83908pt too wide) in paragraph at lines 1089--1090
+Overfull \hbox (77.83908pt too wide) in paragraph at lines 1095--1096
 []\TU/lmr/m/n/10 By Prop. @ref(prp:constrained_LS), we know that $[][] [] [] [] [][][][][][][][][][][][][][][][][][][][][][][][] []
  []
 
 
-Overfull \hbox (6.346pt too wide) in alignment at lines 1115--1120
+Overfull \hbox (6.346pt too wide) in alignment at lines 1121--1126
  [][][] []
  []
 
 [27] [28] [29]
 
-LaTeX Warning: Reference `(' on page 30 undefined on input line 1239.
+LaTeX Warning: Reference `(' on page 30 undefined on input line 1245.
 
 [30] [31] [32]
 File: bookdown-demo_files/figure-latex/figureIV-1.pdf Graphic file (type pdf)
 <use bookdown-demo_files/figure-latex/figureIV-1.pdf>
 [33] [34]
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 1407.
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 1413.
 
 LaTeX Font Warning: Font shape `TU/lmtt/bx/it' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/sl' tried instead on input line 1407.
+(Font)              Font shape `TU/lmtt/b/sl' tried instead on input line 1413.
 
 
-Overfull \hbox (48.75pt too wide) in paragraph at lines 1444--1444
+Overfull \hbox (48.75pt too wide) in paragraph at lines 1450--1450
 []\TU/lmtt/m/n/10 ## ivreg(formula = log(packs) ~ log(rprice) + log(rincome) | log(rincome) +[] 
  []
 
 
-Overfull \hbox (59.25pt too wide) in paragraph at lines 1473--1473
+Overfull \hbox (59.25pt too wide) in paragraph at lines 1479--1479
 []\TU/lmtt/m/n/10 ## lm(formula = log(packs) ~ log(rprice) + log(rincome), data = CigarettesSW,[] 
  []
 
 [35]
-Overfull \hbox (54.0pt too wide) in paragraph at lines 1491--1491
+Overfull \hbox (54.0pt too wide) in paragraph at lines 1497--1497
 []\TU/lmtt/m/n/10 ## Model 1: log(packs) ~ log(rprice) + log(rincome) | log(rincome) + tdiff +[] 
  []
 
 [36]
-Overfull \hbox (22.5pt too wide) in paragraph at lines 1542--1542
+Overfull \hbox (22.5pt too wide) in paragraph at lines 1548--1548
 []\TU/lmtt/m/n/10 ## lm(formula = wage ~ urban + gender + ethnicity + unemp + education,[] 
  []
 
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 1575--1575
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1581--1581
 []\TU/lmtt/m/n/10 ## lm(formula = wage ~ urban + gender + ethnicity + unemp + ed.pred,[] 
  []
 
 [37]
-Overfull \hbox (43.5pt too wide) in paragraph at lines 1622--1622
+Overfull \hbox (43.5pt too wide) in paragraph at lines 1628--1628
 []\TU/lmtt/m/n/10 ## ivreg(formula = wage ~ urban + gender + ethnicity + unemp + education |[] 
  []
 
 
-Overfull \hbox (59.25pt too wide) in paragraph at lines 1622--1622
+Overfull \hbox (59.25pt too wide) in paragraph at lines 1628--1628
 []\TU/lmtt/m/n/10 ##     urban + gender + ethnicity + unemp + distance, data = CollegeDistance)[] 
  []
 
 [38]
-Overfull \hbox (39.92pt too wide) in paragraph at lines 1634--1635
+Overfull \hbox (39.92pt too wide) in paragraph at lines 1640--1641
 []\TU/lmr/m/n/10 Note that Eq. ([]) is more general than Hypothesis []3.3[] and @ref(hyp:noncorrel_resid)
  []
 
 
-LaTeX Warning: Reference `section:TS' on page 39 undefined on input line 1669.
+LaTeX Warning: Reference `section:TS' on page 39 undefined on input line 1675.
 
 [39]
 
-LaTeX Warning: Reference `exm:autocorrelaa' on page 40 undefined on input line 1714.
+LaTeX Warning: Reference `exm:autocorrelaa' on page 40 undefined on input line 1720.
 
 [40] [41] [42]
 File: bookdown-demo_files/figure-latex/simulHeterosk-1.pdf Graphic file (type pdf)
@@ -942,17 +942,17 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 ]
 Chapter 4.
 
-Overfull \hbox (81.5801pt too wide) in paragraph at lines 1887--1952
+Overfull \hbox (81.5801pt too wide) in paragraph at lines 1893--1958
  [][] 
  []
 
 
-Overfull \hbox (43.44008pt too wide) in paragraph at lines 2011--2058
+Overfull \hbox (43.44008pt too wide) in paragraph at lines 2017--2064
  [][] 
  []
 
 
-Overfull \hbox (124.92009pt too wide) in paragraph at lines 2064--2117
+Overfull \hbox (124.92009pt too wide) in paragraph at lines 2070--2123
  [][] 
  []
 
@@ -962,74 +962,36 @@ Overfull \hbox (124.92009pt too wide) in paragraph at lines 2064--2117
 Chapter 5.
 [53] [54]
 Chapter 6.
-File: bookdown-demo_files/figure-latex/loaddataset-1.pdf Graphic file (type pdf)
-<use bookdown-demo_files/figure-latex/loaddataset-1.pdf>
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
 [55
 
-] [56]
-Chapter 7.
-[57
+] [56
 
-] [58
+]
+Chapter 7.
+[57] [58
 
 ]
 Chapter 8.
-File: bookdown-demo_files/figure-latex/pressure-1.pdf Graphic file (type pdf)
-<use bookdown-demo_files/figure-latex/pressure-1.pdf>
+[59] [60
 
-Underfull \vbox (badness 3601) has occurred while \output is active []
-
-[59]
-
-Package natbib Warning: Citation `dungey2009extending' on page 60 undefined on input line 2299.
-
-[60]
+]
 Chapter 9.
-[61
+(./bookdown-demo.bbl [61] [62
 
-] [62
-
-]
-Chapter 10.
-[63] [64
-
-]
-Chapter 11.
-[65] [66
-
-]
-Chapter 12.
-[67] [68
-
-]
-Chapter 13.
-[69] [70
-
-]
-Chapter 14.
-(./bookdown-demo.bbl [71] [72
-
-])
-
-Package natbib Warning: There were undefined citations.
-
-[73] (./bookdown-demo.aux)
+]) [63] (./bookdown-demo.aux)
 
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `bookdown-demo.out' has not changed.
-(rerunfilecheck)             Checksum: 0A037B8DA2BCB86B30F1E03A057D1DB5;4223.
+(rerunfilecheck)             Checksum: 4758CD610A59F75C069FCAFCC3F4163F;3675.
  ) 
 Here is how much of TeX's memory you used:
- 17816 strings out of 477864
- 328923 string characters out of 5846125
- 853801 words of memory out of 5000000
- 38464 multiletter control sequences out of 15000+600000
- 478228 words of font info for 109 fonts, out of 8000000 for 9000
+ 17791 strings out of 477864
+ 327975 string characters out of 5846125
+ 853485 words of memory out of 5000000
+ 38443 multiletter control sequences out of 15000+600000
+ 478220 words of font info for 108 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  86i,13n,121p,1297b,540s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on bookdown-demo.pdf (73 pages).
+Output written on bookdown-demo.pdf (63 pages).

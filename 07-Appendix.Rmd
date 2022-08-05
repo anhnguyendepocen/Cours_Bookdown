@@ -1,0 +1,77 @@
+# Appendix
+
+## Statitical Tables
+
+```{r Normal,echo=FALSE}
+columns <- (0:9)/100
+rows    <- (0:30)/10
+
+max <- 3
+table_N01 <- pnorm(seq(0,max-.01,by=.01))
+table_N01 <- matrix(table_N01,ncol=10)
+colnames(table_N01) <- (0:9)/100
+rownames(table_N01) <- seq(0,max-.01,by=.1)
+knitr::kable(table_N01, caption = "Quantiles of the $\\mathcal{N}(0,1)$ distribution. If $a$ and $b$ are respectively the row and column number; then the corresponding cell gives $\\mathbb{P}(0<X\\le a+b)$, where $X \\sim \\mathcal{N}(0,1)$.", digits=4)
+```
+
+
+```{r Student,echo=FALSE}
+all.alpha <- c(.05,.1,.75,.90,.95,.975,.99,.999)
+all.df <- c(1:10,10*(2:10),200,500)
+
+table_Student <- NULL
+i <- 0
+for(df in all.df){
+  i <- i + 1
+  table_Student <- rbind(table_Student,qt(1-(1-all.alpha)/2,df=all.df[i]))
+}
+colnames(table_Student) <- all.alpha
+rownames(table_Student) <- all.df
+knitr::kable(table_Student, caption = "Quantiles of the Student-$t$ distribution. The rows correspond to different degrees of freedom ($\\nu$, say); the columns correspond to different probabilities ($z$, say). The cell gives $q$ that is s.t. $\\mathbb{P}(-q<X<q)=z$, with $X \\sim t(\\nu)$.", digits=3)
+```
+
+
+```{r Chi2,echo=FALSE}
+all.alpha <- c(.05,.1,.75,.90,.95,.975,.99,.999)
+all.df <- c(1:10,10*(2:10),200,500)
+
+table_chi2 <- NULL
+i <- 0
+for(df in all.df){
+  i <- i + 1
+  table_chi2 <- rbind(table_chi2,qchisq(all.alpha,df=all.df[i]))
+}
+colnames(table_chi2) <- all.alpha
+rownames(table_chi2) <- all.df
+knitr::kable(table_chi2, caption = "Quantiles of the $\\chi^2$ distribution. The rows correspond to different degrees of freedom; the columns correspond to different probabilities.", digits=3)
+```
+
+
+```{r Fstat,echo=FALSE}
+all.alpha <- c(.90,.95,.99)
+max.n1 <- 10
+all.n2 <- c(seq(5,20,by=5),50,100,500)
+
+table_F <- matrix(NaN,(length(all.n2)+1)*length(all.alpha),max.n1)
+
+opts <- options(knitr.kable.NA = "") # set options s.t. missing values are not shown
+
+RowNames <- NULL
+i <- 0
+for(alpha in all.alpha){
+  #  table_F[i*(length(all.n2)+1)+1,1] <- alpha
+  table_aux <- NULL
+  for(n1 in 1:max.n1){
+    table_aux <- cbind(table_aux,qf(alpha,df1=n1,df2=all.n2))
+  }
+  table_F[(i*(length(all.n2)+1)+2):((i+1)*(length(all.n2)+1)),] <- table_aux
+  i <- i+1
+  RowNames <- c(RowNames,
+                paste("alpha = ",alpha,sep=""),all.n2)
+}
+colnames(table_F) <- 1:max.n1
+rownames(table_F) <- RowNames
+knitr::kable(table_F, caption = "Quantiles of the $\\mathcal{F}$ distribution. The columns and rows correspond to different degrees of freedom (resp. $n_1$ and $n_2$). The different panels correspond to different probabilities ($\\alpha$) The corresponding cell gives $z$ that is s.t. $\\mathbb{P}(X \\le z)=\\alpha$, with $X \\sim \\mathcal{F}(n_1,n_2)$.", digits=3)
+```
+
+

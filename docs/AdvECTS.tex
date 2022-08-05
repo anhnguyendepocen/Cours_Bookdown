@@ -242,8 +242,79 @@ Sepal.Length & Sepal.Width & Petal.Length & Petal.Width & Species\\
 
 You can write citations, too. For example, we are using the \textbf{bookdown} package \citep{R-bookdown} in this sample book, which was built on top of R Markdown and \textbf{knitr} \citep{xie2015}.
 
-\hypertarget{specification-and-standard-assumptions}{%
-\chapter{Specification and standard assumptions}\label{specification-and-standard-assumptions}}
+Below is an example borrowed from \href{https://www.kellogg.northwestern.edu/faculty/petersen/htm/papers/se/test_data.htm}{Petersen}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(sandwich)}
+\DocumentationTok{\#\# Petersen\textquotesingle{}s data}
+\FunctionTok{data}\NormalTok{(}\StringTok{"PetersenCL"}\NormalTok{, }\AttributeTok{package =} \StringTok{"sandwich"}\NormalTok{)}
+\NormalTok{m }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x, }\AttributeTok{data =}\NormalTok{ PetersenCL)}
+
+\DocumentationTok{\#\# clustered covariances}
+\DocumentationTok{\#\# one{-}way}
+\FunctionTok{vcovCL}\NormalTok{(m, }\AttributeTok{cluster =} \SpecialCharTok{\textasciitilde{}}\NormalTok{ firm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##               (Intercept)             x
+## (Intercept)  4.490702e-03 -6.473517e-05
+## x           -6.473517e-05  2.559927e-03
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{vcovCL}\NormalTok{(m, }\AttributeTok{cluster =}\NormalTok{ PetersenCL}\SpecialCharTok{$}\NormalTok{firm) }\DocumentationTok{\#\# same}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##               (Intercept)             x
+## (Intercept)  4.490702e-03 -6.473517e-05
+## x           -6.473517e-05  2.559927e-03
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# one{-}way with HC2}
+\FunctionTok{vcovCL}\NormalTok{(m, }\AttributeTok{cluster =} \SpecialCharTok{\textasciitilde{}}\NormalTok{ firm, }\AttributeTok{type =} \StringTok{"HC2"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##               (Intercept)             x
+## (Intercept)  4.494487e-03 -6.592912e-05
+## x           -6.592912e-05  2.568236e-03
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# two{-}way}
+\FunctionTok{vcovCL}\NormalTok{(m, }\AttributeTok{cluster =} \SpecialCharTok{\textasciitilde{}}\NormalTok{ firm }\SpecialCharTok{+}\NormalTok{ year)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##               (Intercept)             x
+## (Intercept)  4.233313e-03 -2.845344e-05
+## x           -2.845344e-05  2.868462e-03
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{vcovCL}\NormalTok{(m, }\AttributeTok{cluster =}\NormalTok{ PetersenCL[, }\FunctionTok{c}\NormalTok{(}\StringTok{"firm"}\NormalTok{, }\StringTok{"year"}\NormalTok{)]) }\DocumentationTok{\#\# same}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##               (Intercept)             x
+## (Intercept)  4.233313e-03 -2.845344e-05
+## x           -2.845344e-05  2.868462e-03
+\end{verbatim}
+
+\hypertarget{linear-regressions}{%
+\chapter{Linear Regressions}\label{linear-regressions}}
 
 \hypertarget{specification}{%
 \section{Specification}\label{specification}}
@@ -344,7 +415,7 @@ Panel (b) of Figure \ref{fig:heteroskedasticity} corresponds to a situation of h
 \begin{Highlighting}[]
 \CommentTok{\# load data into R}
 \FunctionTok{data}\NormalTok{(Salaries, }\AttributeTok{package =} \StringTok{"carData"}\NormalTok{)}
-\CommentTok{\# six first rows of the data}
+\CommentTok{\# first six rows of the data}
 \FunctionTok{head}\NormalTok{(Salaries)}
 \end{Highlighting}
 \end{Shaded}
@@ -550,7 +621,7 @@ Under Hypothesis \ref{hyp:fullrank}, \(\mathbf{X}'\mathbf{X}\) can be inverted. 
 \end{proof}
 
 \hypertarget{bivariate-case}{%
-\section{Bivariate case}\label{bivariate-case}}
+\subsection{Bivariate case}\label{bivariate-case}}
 
 Consider a bivariate situation, where we regress\(y_i\) on a constant and an explanatory variable \(w_i\). We have \(K=2\), and \(\mathbf{X}\) is a \(n \times 2\) matrix whose \(i^{th}\) row is \([x_{i,1},x_{i,2}]\), with \(x_{i,1}=1\) (to account for the intercept) and with \(w_i = x_{i,2}\) (say).
 
@@ -593,7 +664,7 @@ where \(\overline{\mathbb{C}ov(W,Y)}\) and \(\overline{\mathbb{V}ar(W)}\) are sa
 Since there is a constant in the regression, we have \(b_1 = \bar{y} - b_2 \bar{w}\).
 
 \hypertarget{gauss-markow-theorem}{%
-\section{Gauss Markow Theorem}\label{gauss-markow-theorem}}
+\subsection{Gauss Markow Theorem}\label{gauss-markow-theorem}}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -618,7 +689,7 @@ Therefore, we have \(\mathbb{V}ar(w'\mathbf{b^*}|\mathbf{X})=w'\mathbb{V}ar(\mat
 \end{proof}
 
 \hypertarget{frish-waugh}{%
-\section{Frish-Waugh}\label{frish-waugh}}
+\subsection{Frish-Waugh}\label{frish-waugh}}
 
 Consider the linear least square regression of \(\mathbf{y}\) on \(\mathbf{X}\). We introduce the notations:
 
@@ -717,7 +788,7 @@ b_2 = \frac{\mathbf{X}_2'M^{\mathbf{X}_1}\mathbf{y}}{\mathbf{X}_2'M^{\mathbf{X}_
 \]
 
 \hypertarget{goodness-of-fit}{%
-\section{Goodness of fit}\label{goodness-of-fit}}
+\subsection{Goodness of fit}\label{goodness-of-fit}}
 
 Define the total variation in \(y\) as the sum of squared deviations:
 \[
@@ -815,7 +886,7 @@ The \textbf{adjusted \(R^2\)}, denoted by \(\bar{R}^2\), is a fit measure that p
 \end{equation*}
 
 \hypertarget{inference-and-prediction}{%
-\section{Inference and Prediction}\label{inference-and-prediction}}
+\subsection{Inference and Prediction}\label{inference-and-prediction}}
 
 Under the normality assumption (Assumption \ref{hyp:normality}), we know the distribution of \(\mathbf{b}\) (conditional on \(\mathbf{X}\)). Indeed, \((\mathbf{b}|\mathbf{X}) \equiv (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\mathbf{y}\) is multivariate Gaussian:
 \begin{equation}
@@ -934,7 +1005,7 @@ Using the same approach as the one used to derive Eq. \eqref{eq:resultstudentt},
 \end{figure}
 
 \hypertarget{confidence-interval-of-beta_k}{%
-\section{\texorpdfstring{Confidence interval of \(\beta_k\)}{Confidence interval of \textbackslash beta\_k}}\label{confidence-interval-of-beta_k}}
+\subsection{\texorpdfstring{Confidence interval of \(\beta_k\)}{Confidence interval of \textbackslash beta\_k}}\label{confidence-interval-of-beta_k}}
 
 Assume we want to compute a (symmetrical) confidence interval \([I_{d,1-\alpha},I_{u,1-\alpha}]\) that is such that \(\mathbb{P}(\beta_k \in [I_{d,1-\alpha},I_{u,1-\alpha}])=1-\alpha\). In particular, we want to have: \(\mathbb{P}(\beta_k < I_{d,1-\alpha})=\frac{\alpha}{2}\).
 
@@ -1007,7 +1078,7 @@ The \textbf{p-value} is defined as the probability that \(|Z| > |t|\), where \(t
 See \href{https://jrenne.shinyapps.io/tests/}{this webpage} for details regarding the link between critical regions, p-value, and test outcomes.
 
 \hypertarget{set-of-linear-restrictions}{%
-\section{Set of linear restrictions}\label{set-of-linear-restrictions}}
+\subsection{Set of linear restrictions}\label{set-of-linear-restrictions}}
 
 We consider the following model:
 \[
@@ -1099,7 +1170,7 @@ This implies that the F statistic defined in Prop. \ref{prp:Ftest1} is also equa
 The null hypothesis \(H_0\) (Eq. \eqref{eq:H0Ftest}) of the F-test is rejected if \(F\) --defined by Eq. \eqref{eq:defFstatistics} or \eqref{eq:defFstatistics2}-- is higher than \(\mathcal{F}_{1-\alpha}(J,n-K)\). (Hence, this test is a one-sided test.)
 
 \hypertarget{common-pitfalls}{%
-\section{Common pitfalls}\label{common-pitfalls}}
+\subsection{Common pitfalls}\label{common-pitfalls}}
 
 \hypertarget{multicollinearity}{%
 \subsection{Multicollinearity}\label{multicollinearity}}
@@ -1874,6 +1945,70 @@ When the White robust covariance matrix is used, 1 is not in the 95\% confidence
 
 \includegraphics{AdvECTS_files/figure-latex/simulHeterosk2-1.pdf}
 
+\hypertarget{methods}{%
+\chapter{Methods}\label{methods}}
+
+We describe our methods in this chapter.
+
+Math can be added in body using usual syntax like this
+
+\hypertarget{math-example}{%
+\section{math example}\label{math-example}}
+
+\(p\) is unknown but expected to be around 1/3. Standard error will be approximated
+
+\[
+SE = \sqrt(\frac{p(1-p)}{n}) \approx \sqrt{\frac{1/3 (1 - 1/3)} {300}} = 0.027
+\]
+
+You can also use math in footnotes like this\footnote{where we mention \(p = \frac{a}{b}\)}.
+
+We will approximate standard error to 0.027\footnote{\(p\) is unknown but expected to be around 1/3. Standard error will be approximated
+
+  \[
+  SE = \sqrt(\frac{p(1-p)}{n}) \approx \sqrt{\frac{1/3 (1 - 1/3)} {300}} = 0.027
+  \]}
+
+\hypertarget{methods-1}{%
+\chapter{Methods}\label{methods-1}}
+
+We describe our methods in this chapter.
+
+Math can be added in body using usual syntax like this
+
+\hypertarget{math-example-1}{%
+\section{math example}\label{math-example-1}}
+
+\(p\) is unknown but expected to be around 1/3. Standard error will be approximated
+
+\[
+SE = \sqrt(\frac{p(1-p)}{n}) \approx \sqrt{\frac{1/3 (1 - 1/3)} {300}} = 0.027
+\]
+
+You can also use math in footnotes like this\footnote{where we mention \(p = \frac{a}{b}\)}.
+
+We will approximate standard error to 0.027\footnote{\(p\) is unknown but expected to be around 1/3. Standard error will be approximated
+
+  \[
+  SE = \sqrt(\frac{p(1-p)}{n}) \approx \sqrt{\frac{1/3 (1 - 1/3)} {300}} = 0.027
+  \]}
+
+\hypertarget{applications}{%
+\chapter{Applications}\label{applications}}
+
+Some \emph{significant} applications are demonstrated in this chapter.
+
+\hypertarget{example-one}{%
+\section{Example one}\label{example-one}}
+
+\hypertarget{example-two}{%
+\section{Example two}\label{example-two}}
+
+\hypertarget{time-series}{%
+\chapter{Time Series}\label{time-series}}
+
+blabla
+
 \hypertarget{appendix}{%
 \chapter{Appendix}\label{appendix}}
 
@@ -2115,292 +2250,6 @@ alpha = 0.99 &  &  &  &  &  &  &  &  &  & \\
 \hline
 \end{tabular}
 \end{table}
-
-\hypertarget{macro-data}{%
-\chapter{Macro data}\label{macro-data}}
-
-Use \texttt{haven} package to read dta data.
-
-\hypertarget{blabla}{%
-\section{Blabla}\label{blabla}}
-
-Below is an example borrowed from \href{https://www.kellogg.northwestern.edu/faculty/petersen/htm/papers/se/test_data.htm}{Petersen}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\DocumentationTok{\#\# Petersen\textquotesingle{}s data}
-\FunctionTok{data}\NormalTok{(}\StringTok{"PetersenCL"}\NormalTok{, }\AttributeTok{package =} \StringTok{"sandwich"}\NormalTok{)}
-\NormalTok{m }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x, }\AttributeTok{data =}\NormalTok{ PetersenCL)}
-
-\DocumentationTok{\#\# clustered covariances}
-\DocumentationTok{\#\# one{-}way}
-\FunctionTok{vcovCL}\NormalTok{(m, }\AttributeTok{cluster =} \SpecialCharTok{\textasciitilde{}}\NormalTok{ firm)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##               (Intercept)             x
-## (Intercept)  4.490702e-03 -6.473517e-05
-## x           -6.473517e-05  2.559927e-03
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{vcovCL}\NormalTok{(m, }\AttributeTok{cluster =}\NormalTok{ PetersenCL}\SpecialCharTok{$}\NormalTok{firm) }\DocumentationTok{\#\# same}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##               (Intercept)             x
-## (Intercept)  4.490702e-03 -6.473517e-05
-## x           -6.473517e-05  2.559927e-03
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\DocumentationTok{\#\# one{-}way with HC2}
-\FunctionTok{vcovCL}\NormalTok{(m, }\AttributeTok{cluster =} \SpecialCharTok{\textasciitilde{}}\NormalTok{ firm, }\AttributeTok{type =} \StringTok{"HC2"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##               (Intercept)             x
-## (Intercept)  4.494487e-03 -6.592912e-05
-## x           -6.592912e-05  2.568236e-03
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\DocumentationTok{\#\# two{-}way}
-\FunctionTok{vcovCL}\NormalTok{(m, }\AttributeTok{cluster =} \SpecialCharTok{\textasciitilde{}}\NormalTok{ firm }\SpecialCharTok{+}\NormalTok{ year)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##               (Intercept)             x
-## (Intercept)  4.233313e-03 -2.845344e-05
-## x           -2.845344e-05  2.868462e-03
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{vcovCL}\NormalTok{(m, }\AttributeTok{cluster =}\NormalTok{ PetersenCL[, }\FunctionTok{c}\NormalTok{(}\StringTok{"firm"}\NormalTok{, }\StringTok{"year"}\NormalTok{)]) }\DocumentationTok{\#\# same}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##               (Intercept)             x
-## (Intercept)  4.233313e-03 -2.845344e-05
-## x           -2.845344e-05  2.868462e-03
-\end{verbatim}
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see \url{http://rmarkdown.rstudio.com}.
-
-When you click the \textbf{Knit} button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-\hypertarget{loading-the-dataset}{%
-\chapter{Loading the dataset}\label{loading-the-dataset}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\DecValTok{1}\SpecialCharTok{+}\DecValTok{1}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 2
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{f }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x)\{}
-  \DecValTok{2}\SpecialCharTok{*}\NormalTok{x }\SpecialCharTok{+} \DecValTok{2}
-\NormalTok{\}}
-\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{)}
-\FunctionTok{plot}\NormalTok{(y)}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{AdvECTS_files/figure-latex/loaddataset-1.pdf}
-
-\hypertarget{question-7}{%
-\chapter{Question 7}\label{question-7}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{summary}\NormalTok{(cars)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00
-\end{verbatim}
-
-\begin{theorem}
-\protect\hypertarget{thm:essai}{}\label{thm:essai}This is a \texttt{theorem} environment that can contain \textbf{any}
-\emph{Markdown} syntax.
-\end{theorem}
-
-\begin{proof}
-Nice proof.
-\end{proof}
-
-How is Theorem \ref{thm:essai}?
-
-\hypertarget{section:plots}{%
-\chapter{Including Plots}\label{section:plots}}
-
-You can also embed plots, for example:
-
-\begin{figure}
-\centering
-\includegraphics{AdvECTS_files/figure-latex/pressure-1.pdf}
-\caption{\label{fig:pressure}This is the caption}
-\end{figure}
-
-Note that the \texttt{echo\ =\ FALSE} parameter was added to the code chunk to prevent printing of the R code that generated the plot. Figure \ref{fig:pressure} is nice!
-
-\begin{eqnarray}
-F(x) &=& 1 \\
-f(y) &=& 2 \\
-\int_{x=0}^\infty f(x) dx &=& 0
-\end{eqnarray}
-
-This was equation \eqref{eq:essaiRef}. See also Section \ref{section:plots}.
-
-\begin{equation}
-F(x) = 1 \label{eq:essaiRef}
-\end{equation}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{f }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x)\{}\DecValTok{3}\SpecialCharTok{*}\NormalTok{x\}}
-\FunctionTok{f}\NormalTok{(}\DecValTok{3}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 9
-\end{verbatim}
-
-\begin{itemize}
-\tightlist
-\item
-  This is a list.
-\item
-  This \href{https://www.google.com}{website} is useful.
-\item
-  The analysis builds on \citet{dungey2009extending}
-\end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{a }\OtherTok{\textless{}{-}} \DecValTok{3}
-\FunctionTok{print}\NormalTok{(a)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 3
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\DecValTok{2}\SpecialCharTok{*}\NormalTok{a}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 6
-\end{verbatim}
-
-\hypertarget{question-7-1}{%
-\chapter{Question 7}\label{question-7-1}}
-
-Create some important variables for the reference person such as dummy variables for female (\(female\), 1 if female, 0 otherwise); race (\(black\), 1 if black); retired (\(retired\), 1 if labour force participation \(=\) 5); disabled (1 if labour force participation \(=\) 6); not married (\(notmar\), 1 if marital status is different from being married); full-time work (\(workft\), 1 if works full time); pat-time work (\(workpt\), 1 if works part time).
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\DecValTok{1}\SpecialCharTok{+}\DecValTok{1}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 2
-\end{verbatim}
-
-\hypertarget{appendix-1}{%
-\chapter{Appendix}\label{appendix-1}}
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-\begin{proposition}
-\protect\hypertarget{prp:essai}{}\label{prp:essai}We have:
-\[
-f_{X|Y}(x,y)=\frac{f_{XY}(x,y)}{f_Y(y)}.
-\]
-\end{proposition}
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-\begin{proof}
-We have:
-\begin{eqnarray*}
-f_{X|Y}(x,y)&=&\lim_{\varepsilon \rightarrow 0} \frac{\mathbb{P}(x < X \le x + \varepsilon|Y=y)}{\varepsilon}\\
-&=&\lim_{\varepsilon \rightarrow 0} \frac{1}{\varepsilon}\mathbb{P}(x < X \le x + \varepsilon|y<Y\le y+\varepsilon)\\
-&=&\lim_{\varepsilon \rightarrow 0} \frac{1}{\varepsilon}\frac{\mathbb{P}(x < X \le x + \varepsilon,y<Y\le y+\varepsilon)}{\mathbb{P}(y<Y\le y+\varepsilon)}\\
-&=&\lim_{\varepsilon \rightarrow 0} \frac{1}{\varepsilon} \frac{\varepsilon^2f_{XY}(x,y)}{\varepsilon f_{Y}(y)}.\square
-\end{eqnarray*}
-\end{proof}
-
-\hypertarget{references}{%
-\chapter{References}\label{references}}
-
-\hypertarget{methods}{%
-\chapter{Methods}\label{methods}}
-
-We describe our methods in this chapter.
-
-Math can be added in body using usual syntax like this
-
-\hypertarget{math-example}{%
-\section{math example}\label{math-example}}
-
-\(p\) is unknown but expected to be around 1/3. Standard error will be approximated
-
-\[
-SE = \sqrt(\frac{p(1-p)}{n}) \approx \sqrt{\frac{1/3 (1 - 1/3)} {300}} = 0.027
-\]
-
-You can also use math in footnotes like this\footnote{where we mention \(p = \frac{a}{b}\)}.
-
-We will approximate standard error to 0.027\footnote{\(p\) is unknown but expected to be around 1/3. Standard error will be approximated
-
-  \[
-  SE = \sqrt(\frac{p(1-p)}{n}) \approx \sqrt{\frac{1/3 (1 - 1/3)} {300}} = 0.027
-  \]}
-
-\hypertarget{applications}{%
-\chapter{Applications}\label{applications}}
-
-Some \emph{significant} applications are demonstrated in this chapter.
-
-\hypertarget{example-one}{%
-\section{Example one}\label{example-one}}
-
-\hypertarget{example-two}{%
-\section{Example two}\label{example-two}}
-
-\hypertarget{final-words}{%
-\chapter{Final Words}\label{final-words}}
-
-We have finished a nice book.
 
   \bibliography{book.bib,packages.bib}
 
