@@ -1206,15 +1206,15 @@ Figure 3.4: This figure illustrates the situation prevailing when estimating a p
 <div class="example">
 <p><span id="exm:autocorrelaaa" class="example"><strong>Example 3.4  </strong></span>Autocorrelation is, in particular, a recurrent problem when time-series data are used (see Section <span class="math inline">\(\ref{section:TS}\)</span>).</p>
 <p>In a time-series context, subscript <span class="math inline">\(i\)</span> refers to a date. Assume for instance that:
-<span class="math display">\[\begin{equation}\label{eq:usual}
-y_i = \mathbf{x}_i' \boldsymbol\beta + \varepsilon_i
+<span class="math display" id="eq:usual">\[\begin{equation}
+y_i = \mathbf{x}_i' \boldsymbol\beta + \varepsilon_i \tag{3.25}
 \end{equation}\]</span>
 with
-<span class="math display">\[\begin{equation}\label{eq:usual2}
-\varepsilon_i = \rho \varepsilon_{i-1} + v_i, \quad v_i \sim \mathcal{N}(0,\sigma_v^2).
+<span class="math display" id="eq:usual2">\[\begin{equation}
+\varepsilon_i = \rho \varepsilon_{i-1} + v_i, \quad v_i \sim \mathcal{N}(0,\sigma_v^2).\tag{3.26}
 \end{equation}\]</span>
 In this case, we are in the GRM context, with:
-<span class="math display" id="eq:SigmaAutoco\tag{3.25}on}(#eq:SigmaAutocorrel)
+<span class="math display" id="eq:SigmaAutoco\tag{3.27}on}(#eq:SigmaAutocorrel)
 \boldsymbol\Sigma =\frac{ \sigma_v^2}{1 - \rho^2} \left[    \begin{array}{cccc}
 1 &amp; \rho &amp; \dots &amp; \rho^{n-1} \\
 \rho &amp; 1 &amp;  &amp; \vdots \\
@@ -1235,7 +1235,7 @@ In this case, we are in the GRM context, with:
 The variance of <span class="math inline">\(\boldsymbol\varepsilon^*\)</span> is <span class="math inline">\(\mathbf{I}\)</span>. In the transformed model, OLS is BLUE (Gauss-Markow Theorem <a href="linear-regressions.html#thm:GaussMarkov">3.1</a>).</p>
 <p>The <strong>Generalized least squares</strong> estimator of <span class="math inline">\(\boldsymbol\beta\)</span> is:
 <span class="math display" id="eq:betaGLS">\[\begin{equation}
-\boxed{\mathbf{b}_{GLS} = (\mathbf{X}'\boldsymbol\Sigma^{-1}\mathbf{X})^{-1}\mathbf{X}'\boldsymbol\Sigma^{-1}\mathbf{y}}.\tag{3.26}
+\boxed{\mathbf{b}_{GLS} = (\mathbf{X}'\boldsymbol\Sigma^{-1}\mathbf{X})^{-1}\mathbf{X}'\boldsymbol\Sigma^{-1}\mathbf{y}}.\tag{3.28}
 \end{equation}\]</span>
 We have:
 <span class="math display">\[
@@ -1244,13 +1244,13 @@ We have:
 <p>When <span class="math inline">\(\boldsymbol\Sigma\)</span> is unknown, the GLS estimator is said to be <em>infeasible</em>. Some structure is required. Assume <span class="math inline">\(\boldsymbol\Sigma\)</span> admits a parametric form <span class="math inline">\(\boldsymbol\Sigma(\theta)\)</span>. The estimation becomes <em>feasible</em> (FGLS) if one replaces <span class="math inline">\(\boldsymbol\Sigma(\theta)\)</span> by <span class="math inline">\(\boldsymbol\Sigma(\hat\theta)\)</span>.</p>
 <p>If <span class="math inline">\(\hat\theta\)</span> is a consistent estimator of <span class="math inline">\(\theta\)</span>, then the FGLS is asymptotically efficient (see Example <a href="#exm:autocorrelaa"><strong>??</strong></a>).</p>
 <p>By contrast, when <span class="math inline">\(\boldsymbol\Sigma\)</span> has no obvious structure: the OLS (or IV) is the only estimator available. It remains unbiased, consistent, and asymptotically normally distributed, but not efficient. Standard inference procedures are not appropriate any longer.</p>
-<p>Autocorrelation in the time-series context. Consider the case presented in Example <a href="linear-regressions.html#exm:autocorrelaaa">3.4</a>. Because the OLS estimate <span class="math inline">\(\mathbf{b}\)</span> of <span class="math inline">\(\boldsymbol\beta\)</span> is consistent, the estimates <span class="math inline">\(e_i\)</span>s of the <span class="math inline">\(\varepsilon_i\)</span>s also are. Consistent estimators of <span class="math inline">\(\rho\)</span> and <span class="math inline">\(\sigma_v\)</span> are then obtained by regressing the <span class="math inline">\(e_i\)</span>s on the <span class="math inline">\(e_{i-1}\)</span>s. Using these estimates in Eq. <a href="#eq:SigmaAutocorrel">(3.25)</a> provides a consistent estimate of <span class="math inline">\(\boldsymbol\Sigma\)</span>.</p>
+<p>Autocorrelation in the time-series context. Consider the case presented in Example <a href="linear-regressions.html#exm:autocorrelaaa">3.4</a>. Because the OLS estimate <span class="math inline">\(\mathbf{b}\)</span> of <span class="math inline">\(\boldsymbol\beta\)</span> is consistent, the estimates <span class="math inline">\(e_i\)</span>s of the <span class="math inline">\(\varepsilon_i\)</span>s also are. Consistent estimators of <span class="math inline">\(\rho\)</span> and <span class="math inline">\(\sigma_v\)</span> are then obtained by regressing the <span class="math inline">\(e_i\)</span>s on the <span class="math inline">\(e_{i-1}\)</span>s. Using these estimates in Eq. <a href="#eq:SigmaAutocorrel">(3.27)</a> provides a consistent estimate of <span class="math inline">\(\boldsymbol\Sigma\)</span>.</p>
 <p>See <a href="https://www.tandfonline.com/doi/abs/10.1080/01621459.1949.10483290">Cochrane and Orcutt (2012)</a>.</p>
 <hr>
 <div class="proposition">
 <p><span id="prp:AsymptOLSGRM" class="proposition"><strong>Proposition 3.13  </strong></span>Conditionally on <span class="math inline">\(\mathbf{X}\)</span>, we have:
 <span class="math display" id="eq:xsx">\[\begin{equation}
-\mathbb{V}ar(\mathbf{b}|\mathbf{X}) = \frac{1}{n}\left(\frac{1}{n}\mathbf{X}'\mathbf{X}\right)^{-1}\left(\frac{1}{n}\mathbf{X}'\boldsymbol\Sigma\mathbf{X}\right)\left(\frac{1}{n}\mathbf{X}'\mathbf{X}\right)^{-1}.\tag{3.27}
+\mathbb{V}ar(\mathbf{b}|\mathbf{X}) = \frac{1}{n}\left(\frac{1}{n}\mathbf{X}'\mathbf{X}\right)^{-1}\left(\frac{1}{n}\mathbf{X}'\boldsymbol\Sigma\mathbf{X}\right)\left(\frac{1}{n}\mathbf{X}'\mathbf{X}\right)^{-1}.\tag{3.29}
 \end{equation}\]</span>
 Under Hypothesis <a href="linear-regressions.html#hyp:normality">3.5</a>, since <span class="math inline">\(\mathbf{b}\)</span> is linear in <span class="math inline">\(\boldsymbol\varepsilon\)</span>, we have:
 <span class="math display">\[\begin{equation}
@@ -1265,7 +1265,7 @@ Under Hypothesis <a href="linear-regressions.html#hyp:normality">3.5</a>, since 
 </div>
 <hr>
 <div class="proof">
-<p><span id="unlabeled-div-14" class="proof"><em>Proof</em>. </span>We have <span class="math inline">\(\mathbb{V}ar(\mathbf{b})=\mathbb{E}[\mathbb{V}ar(\mathbf{b}|\mathbf{X})]+\mathbb{V}ar[\mathbb{E}(\mathbf{b}|\mathbf{X})]\)</span>. Since <span class="math inline">\(\mathbb{E}(\mathbf{b}|\mathbf{X})=\boldsymbol\beta\)</span>, <span class="math inline">\(\mathbb{V}ar[\mathbb{E}(\mathbf{b}|\mathbf{X})]=0\)</span>. Eq. <a href="linear-regressions.html#eq:xsx">(3.27)</a> implies that <span class="math inline">\(\mathbb{V}ar(\mathbf{b}|\mathbf{X}) \rightarrow 0\)</span>. Hence <span class="math inline">\(\mathbf{b}\)</span> converges in mean square and therefore in probability. <span class="math inline">\(\square\)</span></p>
+<p><span id="unlabeled-div-14" class="proof"><em>Proof</em>. </span>We have <span class="math inline">\(\mathbb{V}ar(\mathbf{b})=\mathbb{E}[\mathbb{V}ar(\mathbf{b}|\mathbf{X})]+\mathbb{V}ar[\mathbb{E}(\mathbf{b}|\mathbf{X})]\)</span>. Since <span class="math inline">\(\mathbb{E}(\mathbf{b}|\mathbf{X})=\boldsymbol\beta\)</span>, <span class="math inline">\(\mathbb{V}ar[\mathbb{E}(\mathbf{b}|\mathbf{X})]=0\)</span>. Eq. <a href="linear-regressions.html#eq:xsx">(3.29)</a> implies that <span class="math inline">\(\mathbb{V}ar(\mathbf{b}|\mathbf{X}) \rightarrow 0\)</span>. Hence <span class="math inline">\(\mathbf{b}\)</span> converges in mean square and therefore in probability. <span class="math inline">\(\square\)</span></p>
 </div>
 <hr>
 <div class="proposition">
@@ -1292,10 +1292,10 @@ with
 </div>
 <hr>
 <p>For practical purposes, one needs to have estimates of <span class="math inline">\(\boldsymbol\Sigma\)</span> in Props. <a href="linear-regressions.html#prp:AsymptOLSGRM">3.13</a>, <a href="linear-regressions.html#prp:AsymptGRM">3.15</a> or <a href="linear-regressions.html#prp:AsymptIVGRM">3.16</a>.</p>
-<p>Idea: instead of estimating <span class="math inline">\(\boldsymbol\Sigma\)</span> (dimension <span class="math inline">\(n \times n\)</span>) directly, one can estimate <span class="math inline">\(\frac{1}{n}\mathbf{X}'\boldsymbol\Sigma\mathbf{X}\)</span>, of dimension <span class="math inline">\(K \times K\)</span> (or <span class="math inline">\(\frac{1}{n}\mathbf{Z}'\boldsymbol\Sigma\mathbf{Z}\)</span> in the IV case). Indeed, this is this expression (<span class="math inline">\(\mathbf{X}'\boldsymbol\Sigma\mathbf{X}\)</span>) that eventually appears in the formulas – for instance in Eq. <a href="linear-regressions.html#eq:xsx">(3.27)</a>.</p>
+<p>Idea: instead of estimating <span class="math inline">\(\boldsymbol\Sigma\)</span> (dimension <span class="math inline">\(n \times n\)</span>) directly, one can estimate <span class="math inline">\(\frac{1}{n}\mathbf{X}'\boldsymbol\Sigma\mathbf{X}\)</span>, of dimension <span class="math inline">\(K \times K\)</span> (or <span class="math inline">\(\frac{1}{n}\mathbf{Z}'\boldsymbol\Sigma\mathbf{Z}\)</span> in the IV case). Indeed, this is this expression (<span class="math inline">\(\mathbf{X}'\boldsymbol\Sigma\mathbf{X}\)</span>) that eventually appears in the formulas – for instance in Eq. <a href="linear-regressions.html#eq:xsx">(3.29)</a>.</p>
 <p>We have:
 <span class="math display" id="eq:GeneralXSigmaX">\[\begin{equation}
-\frac{1}{n}\mathbf{X}'\boldsymbol\Sigma\mathbf{X} = \frac{1}{n}\sum_{i=1}^{n}\sum_{j=1}^{n}\sigma_{i,j}\mathbf{x}_i\mathbf{x}'_j. \tag{3.28}
+\frac{1}{n}\mathbf{X}'\boldsymbol\Sigma\mathbf{X} = \frac{1}{n}\sum_{i=1}^{n}\sum_{j=1}^{n}\sigma_{i,j}\mathbf{x}_i\mathbf{x}'_j. \tag{3.30}
 \end{equation}\]</span></p>
 <p><strong>Robust estimation of asymptotic covariance matrices</strong> look for estimates of the previous matrix. Their computation is based on the fact that if <span class="math inline">\(\mathbf{b}\)</span> is consistent, then the <span class="math inline">\(e_i\)</span>s are consistent (pointwise) estimators of the <span class="math inline">\(\varepsilon_i\)</span>s.</p>
 <div class="example">
@@ -1304,7 +1304,7 @@ with
 <p>We then need to estimate <span class="math inline">\(\frac{1}{n}\sum_{i=1}^{n}\sigma_{i}^2\mathbf{x}_i\mathbf{x}'_i\)</span>. <a href="http://www.jstor.org/stable/1912934">White (1980)</a>: Under general conditions:
 <span class="math display" id="eq:white">\[\begin{equation}
 \mbox{plim}\left( \frac{1}{n}\sum_{i=1}^{n}\sigma_{i}^2\mathbf{x}_i\mathbf{x}'_i \right) =
-\mbox{plim}\left( \frac{1}{n}\sum_{i=1}^{n}e_{i}^2\mathbf{x}_i\mathbf{x}'_i \right). \tag{3.29}
+\mbox{plim}\left( \frac{1}{n}\sum_{i=1}^{n}e_{i}^2\mathbf{x}_i\mathbf{x}'_i \right). \tag{3.31}
 \end{equation}\]</span>
 The estimator of <span class="math inline">\(\frac{1}{n}\mathbf{X}'\boldsymbol\Sigma\mathbf{X}\)</span> therefore is:
 <span class="math display">\[
@@ -1360,8 +1360,75 @@ where the <span class="math inline">\(x_i\)</span>s are i.i.d. <span class="math
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">x</span>,<span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">x</span>,mean <span class="op">=</span> <span class="fl">1</span>,sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">all_V_OLS</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,col<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">x</span>,<span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">x</span>,mean <span class="op">=</span> <span class="fl">1</span>,sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">all_V_White</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="AdvECTS_files/figure-html/simulHeterosk2-1.png" width="672"></div>
-
 </span></p>
+</div>
+<div id="heteroskedasticity-and-autocorrelation-hac" class="section level3" number="3.5.2">
+<h3>
+<span class="header-section-number">3.5.2</span> Heteroskedasticity and Autocorrelation (HAC)<a class="anchor" aria-label="anchor" href="#heteroskedasticity-and-autocorrelation-hac"><i class="fas fa-link"></i></a>
+</h3>
+<p>This includes the cases of Eqs. @ref{eq:heteroskedasticity) and <a href="linear-regressions.html#eq:autocorrelation">(3.24)</a>.</p>
+<p><a href="http://www.jstor.org/stable/1913610">Newey and West (1987)</a>: If the correlation between terms <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> gets sufficiently small when <span class="math inline">\(|i-j|\)</span> increases:
+<span class="math display" id="eq:NW">\[\begin{eqnarray}
+&amp;&amp;\mbox{plim} \left( \frac{1}{n}\sum_{i=1}^{n}\sum_{j=1}^{n}\sigma_{i,j}\mathbf{x}_i\mathbf{x}'_j \right) =  \\
+&amp;&amp;\mbox{plim} \left( \frac{1}{n}\sum_{t=1}^{n}e_{t}^2\mathbf{x}_t\mathbf{x}'_t +
+\frac{1}{n}\sum_{\ell=1}^{L}\sum_{t=\ell+1}^{n}w_\ell e_{t}e_{t-\ell}(\mathbf{x}_t\mathbf{x}'_{t-\ell} + \mathbf{x}_{t-\ell}\mathbf{x}'_{t})
+\right) \nonumber \tag{3.32}
+\end{eqnarray}\]</span>
+where <span class="math inline">\(w_\ell = 1 - \ell/(L+1)\)</span>.</p>
+<p>Let us illustrate the influence of autocorrelation using simulations.</p>
+<p>We consider the following model:
+<span class="math display" id="eq:simul11">\[\begin{equation}
+y_i = x_i + \varepsilon_i, \quad \varepsilon_i \sim \mathcal{N}(0,x_i^2),\tag{3.33}
+\end{equation}\]</span>
+where the <span class="math inline">\(x_i\)</span>s and the <span class="math inline">\(\varepsilon_i\)</span>s are such that:
+<span class="math display" id="eq:simul22">\[\begin{equation}
+x_i = 0.8 x_{i-1} + u_i \quad and \quad \varepsilon_i = 0.8 \varepsilon_{i-1} + v_i, \tag{3.34}
+\end{equation}\]</span>
+where the <span class="math inline">\(u_i\)</span>s and the <span class="math inline">\(v_i\)</span>s are i.i.d. <span class="math inline">\(\mathcal{N}(0,1)\)</span>.</p>
+<p>Here is a simulated sample (<span class="math inline">\(n=200\)</span>) of this model:
+<!-- \end{itemize} -->
+<!-- \begin{figure} -->
+<!-- \caption{Simulation of Eqs.\,(\ref{eq:simul11}) and (\ref{eq:simul22}) on 200 periods} -->
+<!-- \includegraphics[width=\linewidth]{../../figures/Figure_OLS_GRM_autocorr1.pdf} -->
+<!-- \end{figure} -->
+<!-- \end{scriptsize} -->
+<!-- \end{frame} --></p>
+<p>We simulate 1000 samples of the same model with <span class="math inline">\(n=200\)</span>.</p>
+<p>For each sample, we compute the OLS estimate of <span class="math inline">\(\beta\)</span> (=1).</p>
+<p>Using these 1000 estimates of <span class="math inline">\(b\)</span>, we construct an approximated (kernel-based) distribution of this OLS estimator (in red on the figure).</p>
+<p>For each of the 1000 OLS estimations, we employ the standard OLS variance formula (<span class="math inline">\(s^2 (\mathbf{X}'\mathbf{X})^{-1}\)</span>) to estimate the variance of <span class="math inline">\(b\)</span>. The blue curve is a normal distribution centred on 1 and whose variance is the average of the 1000 previous variance estimates.</p>
+<p>The variance of the simulated <span class="math inline">\(b\)</span> is of 0.020 (that is the <em>true</em> one); the average of the estimated variances based on the standard OLS formula is of 0.005 (<em>bad</em> estimate); the average of the estimated variances based on the White robust covariance matrix is of 0.015 (<em>better</em> estimate).</p>
+<p>The standard OLS formula for the variance of <span class="math inline">\(b\)</span> overestimates the precision of this estimator.</p>
+<p>For about 35% of the simulations, 1 is not included in the 95% confidence interval of <span class="math inline">\(\beta\)</span> when the computation of the interval is based on the standard OLS formula for the variance of <span class="math inline">\(b\)</span>.</p>
+<p>When the Newey-West robust covariance matrix is used, 1 is not in the 95% confidence interval of <span class="math inline">\(\beta\)</span> for about 13% of the simulations.</p>
+<p>For the sake of comparison, let us consider a model with no auto-correlation (<span class="math inline">\(x_i \sim i.i.d. \mathcal{N}(0,2.8)\)</span> and <span class="math inline">\(\varepsilon_i \sim i.i.d. \mathcal{N}(0,2.8)\)</span>).</p>
+</div>
+<div id="how-to-detect-autocorrelation-in-residuals" class="section level3" number="3.5.3">
+<h3>
+<span class="header-section-number">3.5.3</span> How to detect autocorrelation in residuals?<a class="anchor" aria-label="anchor" href="#how-to-detect-autocorrelation-in-residuals"><i class="fas fa-link"></i></a>
+</h3>
+<p>Consider the usual regression (say Eq. <a href="linear-regressions.html#eq:usual">(3.25)</a>).</p>
+<p>The <strong>Durbin-Watson test</strong> is a typical autocorrelation test. Its test statistic is:
+<span class="math display">\[
+DW = \frac{\sum_{i=2}^{n}(e_i - e_{i-1})^2}{\sum_{i=1}^{n}e_i^2}= 2(1 - r) - \underbrace{\frac{e_1^2 + e_n^2}{\sum_{i=1}^{n}e_i^2}}_{\overset{p}{\rightarrow} 0},
+\]</span>
+where <span class="math inline">\(r\)</span> is the slope in the regression of the <span class="math inline">\(e_i\)</span>s on the <span class="math inline">\(e_{i-1}\)</span>s, i.e.:
+<span class="math display">\[
+r = \frac{\sum_{i=2}^{n}e_i e_{i-1}}{\sum_{i=1}^{n-1}e_i^2}.
+\]</span>
+(<span class="math inline">\(r\)</span> is a consistent estimator of <span class="math inline">\(\mathbb{C}or(\varepsilon_i,\varepsilon_{i-1})\)</span>, i.e. <span class="math inline">\(\rho\)</span> in Eq. <a href="linear-regressions.html#eq:usual2">(3.26)</a>.)</p>
+<p>Critical values depend only on T and K: see e.g. <a href="http://web.stanford.edu/~clint/bench/dwcrit.htm">tables</a> CHECK.</p>
+<p>The one-sided test for <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\rho=0\)</span> against <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\rho&gt;0\)</span> is carried out by comparing <span class="math inline">\(DW\)</span> to values <span class="math inline">\(d_L(T, K)\)</span> and <span class="math inline">\(d_U(T, K)\)</span>:
+<span class="math display">\[
+\left\{
+\begin{array}{ll}
+\mbox{If $DW &lt; d_L$,}&amp;\mbox{ the null hypothesis is rejected;}\\
+\mbox{if $DW &gt; d_U$,}&amp;\mbox{ the hypothesis is not rejected;}\\
+\mbox{If $d_L \le DW \le d_U$,} &amp;\mbox{ no conclusion is drawn.}
+\end{array}
+\right.
+\]</span></p>
+
 </div>
 </div>
 </div>
@@ -1392,7 +1459,11 @@ where the <span class="math inline">\(x_i\)</span>s are i.i.d. <span class="math
 <li><a class="nav-link" href="#large-sample-properties"><span class="header-section-number">3.3</span> Large Sample Properties</a></li>
 <li><a class="nav-link" href="#instrumental-variables"><span class="header-section-number">3.4</span> Instrumental Variables</a></li>
 <li>
-<a class="nav-link" href="#general-regression-model"><span class="header-section-number">3.5</span> General Regression Model</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#generalized-least-squares"><span class="header-section-number">3.5.1</span> Generalized Least Squares</a></li></ul>
+<a class="nav-link" href="#general-regression-model"><span class="header-section-number">3.5</span> General Regression Model</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#generalized-least-squares"><span class="header-section-number">3.5.1</span> Generalized Least Squares</a></li>
+<li><a class="nav-link" href="#heteroskedasticity-and-autocorrelation-hac"><span class="header-section-number">3.5.2</span> Heteroskedasticity and Autocorrelation (HAC)</a></li>
+<li><a class="nav-link" href="#how-to-detect-autocorrelation-in-residuals"><span class="header-section-number">3.5.3</span> How to detect autocorrelation in residuals?</a></li>
+</ul>
 </li>
 </ul>
 

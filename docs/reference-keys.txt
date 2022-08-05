@@ -54,6 +54,8 @@ def:GRM
 eq:heteroskedasticity
 eq:autocorrelation
 exm:autocorrelaaa
+eq:usual
+eq:usual2
 eq:SigmaAutocorrel
 eq:betaGLS
 prp:AsymptOLSGRM
@@ -64,6 +66,9 @@ prp:AsymptIVGRM
 eq:GeneralXSigmaX
 exm:heteroskedasticity
 eq:white
+eq:NW
+eq:simul11
+eq:simul22
 tab:Normal
 tab:Student
 tab:Chi2
@@ -89,6 +94,8 @@ large-sample-properties
 instrumental-variables
 general-regression-model
 generalized-least-squares
+heteroskedasticity-and-autocorrelation-hac
+how-to-detect-autocorrelation-in-residuals
 methods
 math-example
 methods-1

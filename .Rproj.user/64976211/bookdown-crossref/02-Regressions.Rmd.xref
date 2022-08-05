@@ -22,4 +22,6 @@ h2:instrumental-variables Instrumental Variables
 fig:figureIV This figure illustrates the situation prevailing when estimating a price-elasticity (and the price is endogenous).
 h2:general-regression-model General Regression Model
 h3:generalized-least-squares Generalized Least Squares
+h3:heteroskedasticity-and-autocorrelation-hac Heteroskedasticity and Autocorrelation (HAC)
+h3:how-to-detect-autocorrelation-in-residuals How to detect autocorrelation in residuals?
 

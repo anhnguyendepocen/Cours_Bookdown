@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.7.23)  5 AUG 2022 08:56
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.7.23)  5 AUG 2022 09:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -929,44 +929,47 @@ File: AdvECTS_files/figure-latex/simulHeterosk-1.pdf Graphic file (type pdf)
 [44] [45]
 File: AdvECTS_files/figure-latex/simulHeterosk2-1.pdf Graphic file (type pdf)
 <use AdvECTS_files/figure-latex/simulHeterosk2-1.pdf>
-[46]
-Chapter 4.
-[47
 
-] [48
+Underfull \vbox (badness 3417) has occurred while \output is active []
+
+[46] [47] [48]
+Chapter 4.
+[49
+
+] [50
 
 ]
 Chapter 5.
-[49] [50
-
-]
-Chapter 6.
 [51] [52
 
 ]
-Chapter 7.
+Chapter 6.
 [53] [54
+
+]
+Chapter 7.
+[55] [56
 
 ]
 Chapter 8.
 
-Overfull \hbox (81.5801pt too wide) in paragraph at lines 2022--2087
+Overfull \hbox (81.5801pt too wide) in paragraph at lines 2096--2161
  [][] 
  []
 
 
-Overfull \hbox (43.44008pt too wide) in paragraph at lines 2146--2193
+Overfull \hbox (43.44008pt too wide) in paragraph at lines 2220--2267
  [][] 
  []
 
 
-Overfull \hbox (124.92009pt too wide) in paragraph at lines 2199--2252
+Overfull \hbox (124.92009pt too wide) in paragraph at lines 2273--2326
  [][] 
  []
 
-(./AdvECTS.bbl [55] [56] [57] [58] [59] [60
+(./AdvECTS.bbl [57] [58] [59] [60] [61] [62
 
-]) [61] (./AdvECTS.aux)
+]) [63] (./AdvECTS.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -974,12 +977,12 @@ Package rerunfilecheck Info: File `AdvECTS.out' has not changed.
 (rerunfilecheck)             Checksum: A25BDFF612D8622B235CDF697E28F918;2215.
  ) 
 Here is how much of TeX's memory you used:
- 17778 strings out of 477864
- 327032 string characters out of 5846125
- 854414 words of memory out of 5000000
- 38433 multiletter control sequences out of 15000+600000
+ 17783 strings out of 477864
+ 327151 string characters out of 5846125
+ 854802 words of memory out of 5000000
+ 38438 multiletter control sequences out of 15000+600000
  477259 words of font info for 102 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  86i,13n,121p,1291b,558s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on AdvECTS.pdf (61 pages).
+Output written on AdvECTS.pdf (63 pages).

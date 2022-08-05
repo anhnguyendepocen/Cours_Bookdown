@@ -1066,12 +1066,12 @@ The GRM context notably allows to model **heteroskedasticity** and **autocorrela
 Autocorrelation is, in particular, a recurrent problem when time-series data are used (see Section \ref{section:TS}).
 
 In a time-series context, subscript $i$ refers to a date. Assume for instance that:
-\begin{equation}\label{eq:usual}
-y_i = \bv{x}_i' \boldsymbol\beta + \varepsilon_i
+\begin{equation}
+y_i = \bv{x}_i' \boldsymbol\beta + \varepsilon_i (\#eq:usual)
 \end{equation}
 with
-\begin{equation}\label{eq:usual2}
-\varepsilon_i = \rho \varepsilon_{i-1} + v_i, \quad v_i \sim \mathcal{N}(0,\sigma_v^2).
+\begin{equation}
+\varepsilon_i = \rho \varepsilon_{i-1} + v_i, \quad v_i \sim \mathcal{N}(0,\sigma_v^2).(\#eq:usual2)
 \end{equation}
 In this case, we are in the GRM context, with:
 \begin{equation}(\#eq:SigmaAutocorrel)
@@ -1268,5 +1268,87 @@ lines(x,dnorm(x,mean = 1,sd = mean(sqrt(all_V_OLS))),col="blue")
 lines(x,dnorm(x,mean = 1,sd = mean(sqrt(all_V_White))),col="red")
 ```
 
+
+
+### Heteroskedasticity and Autocorrelation (HAC)
+
+This includes the cases of Eqs. \@ref{eq:heteroskedasticity) and \@ref(eq:autocorrelation).
+
+[Newey and West (1987)](http://www.jstor.org/stable/1913610): If the correlation between terms $i$ and $j$ gets sufficiently small when $|i-j|$ increases:
+\begin{eqnarray}
+&&\mbox{plim} \left( \frac{1}{n}\sum_{i=1}^{n}\sum_{j=1}^{n}\sigma_{i,j}\bv{x}_i\bv{x}'_j \right) =  \\
+&&\mbox{plim} \left( \frac{1}{n}\sum_{t=1}^{n}e_{t}^2\bv{x}_t\bv{x}'_t +
+\frac{1}{n}\sum_{\ell=1}^{L}\sum_{t=\ell+1}^{n}w_\ell e_{t}e_{t-\ell}(\bv{x}_t\bv{x}'_{t-\ell} + \bv{x}_{t-\ell}\bv{x}'_{t})
+\right) \nonumber (\#eq:NW)
+\end{eqnarray}
+where $w_\ell = 1 - \ell/(L+1)$.
+
+Let us illustrate the influence of autocorrelation using simulations.
+
+We consider the following model:
+\begin{equation}
+y_i = x_i + \varepsilon_i, \quad \varepsilon_i \sim \mathcal{N}(0,x_i^2),(\#eq:simul11)
+\end{equation}
+where the $x_i$s and the $\varepsilon_i$s are such that:
+\begin{equation}
+x_i = 0.8 x_{i-1} + u_i \quad and \quad \varepsilon_i = 0.8 \varepsilon_{i-1} + v_i, (\#eq:simul22)
+\end{equation}
+where the $u_i$s and the $v_i$s are i.i.d. $\mathcal{N}(0,1)$.
+
+Here is a simulated sample ($n=200$) of this model:
+<!-- \end{itemize} -->
+<!-- \begin{figure} -->
+<!-- \caption{Simulation of Eqs.\,(\ref{eq:simul11}) and (\ref{eq:simul22}) on 200 periods} -->
+<!-- \includegraphics[width=\linewidth]{../../figures/Figure_OLS_GRM_autocorr1.pdf} -->
+<!-- \end{figure} -->
+<!-- \end{scriptsize} -->
+<!-- \end{frame} -->
+
+We simulate 1000 samples of the same model with $n=200$.
+
+For each sample, we compute the OLS estimate of $\beta$ (=1).
+
+Using these 1000 estimates of $b$, we construct an approximated (kernel-based) distribution of this OLS estimator (in red on the figure).
+
+For each of the 1000 OLS estimations, we employ the standard OLS variance formula ($s^2 (\bv{X}'\bv{X})^{-1}$) to estimate the variance of $b$. The blue curve is a normal distribution centred on 1 and whose variance is the average of the 1000 previous variance estimates.
+
+The variance of the simulated $b$ is of 0.020 (that is the *true* one); the average of the estimated variances based on the standard OLS formula is of 0.005 (*bad* estimate); the average of the estimated variances based on the White robust covariance matrix is of 0.015 (*better* estimate).
+
+The standard OLS formula for the variance of $b$ overestimates the precision of this estimator.
+
+For about 35\% of the simulations, 1 is not included in the 95\% confidence interval of $\beta$ when the computation of the interval is based on the standard OLS formula for the variance of $b$.
+
+When the Newey-West robust covariance matrix is used, 1 is not in the 95\% confidence interval of $\beta$ for about 13\% of the simulations.
+
+For the sake of comparison, let us consider a model with no auto-correlation ($x_i \sim i.i.d. \mathcal{N}(0,2.8)$ and $\varepsilon_i \sim i.i.d. \mathcal{N}(0,2.8)$).
+
+
+
+### How to detect autocorrelation in residuals?
+
+Consider the usual regression (say Eq. \@ref(eq:usual)).
+
+The **Durbin-Watson test** is a typical autocorrelation test. Its test statistic is:
+$$
+DW = \frac{\sum_{i=2}^{n}(e_i - e_{i-1})^2}{\sum_{i=1}^{n}e_i^2}= 2(1 - r) - \underbrace{\frac{e_1^2 + e_n^2}{\sum_{i=1}^{n}e_i^2}}_{\overset{p}{\rightarrow} 0},
+$$
+where $r$ is the slope in the regression of the $e_i$s on the $e_{i-1}$s, i.e.:
+$$
+r = \frac{\sum_{i=2}^{n}e_i e_{i-1}}{\sum_{i=1}^{n-1}e_i^2}.
+$$
+($r$ is a consistent estimator of $\mathbb{C}or(\varepsilon_i,\varepsilon_{i-1})$, i.e. $\rho$ in Eq. \@ref(eq:usual2).)
+
+Critical values depend only on T and K: see e.g. [tables](http://web.stanford.edu/~clint/bench/dwcrit.htm) CHECK.
+
+The one-sided test for $H_0$: $\rho=0$ against $H_1$: $\rho>0$ is carried out by comparing $DW$ to values $d_L(T, K)$ and $d_U(T, K)$:
+$$
+\left\{
+\begin{array}{ll}
+\mbox{If $DW < d_L$,}&\mbox{ the null hypothesis is rejected;}\\
+\mbox{if $DW > d_U$,}&\mbox{ the hypothesis is not rejected;}\\
+\mbox{If $d_L \le DW \le d_U$,} &\mbox{ no conclusion is drawn.}
+\end{array}
+\right.
+$$
 
 
