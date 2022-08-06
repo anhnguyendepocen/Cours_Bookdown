@@ -1,3 +1,6 @@
-h1:methods Methods
-h2:math-example math example
+h1:panel-regressions Panel regressions
+fig:simulPanel The data are the same for both panels. On Panel (b), blue dots are for $t=1$, red dots are for $t=2$. The lines relate the dots associated to the same entity $i$.
+h3:three-standard-cases Three standard cases
+h2:estimation-of-fixed-effects-models Estimation of Fixed Effects Models
+h2:estimation-of-random-effects-models Estimation of random effects models
 

@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 4 Panel regressions | Advanced Econometrics</title>
+<meta name="author" content="Jean-Paul Renne">
+<meta name="description" content="The standard panel situation is the following: we have a lot of entities (\(i \in \{1,\dots,n\}\)) and, for each entity, we observe different variables over a small number of periods (\(t \in...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 4 Panel regressions | Advanced Econometrics">
+<meta property="og:type" content="book">
+<meta property="og:description" content="The standard panel situation is the following: we have a lot of entities (\(i \in \{1,\dots,n\}\)) and, for each entity, we observe different variables over a small number of periods (\(t \in...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 4 Panel regressions | Advanced Econometrics">
+<meta name="twitter:description" content="The standard panel situation is the following: we have a lot of entities (\(i \in \{1,\dots,n\}\)) and, for each entity, we observe different variables over a small number of periods (\(t \in...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Advanced Econometrics</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Prerequisites</a></li>
+<li><a class="" href="intro.html"><span class="header-section-number">2</span> Introduction</a></li>
+<li><a class="" href="linear-regressions.html"><span class="header-section-number">3</span> Linear Regressions</a></li>
+<li><a class="active" href="panel-regressions.html"><span class="header-section-number">4</span> Panel regressions</a></li>
+<li><a class="" href="estimation-methods.html"><span class="header-section-number">5</span> Estimation Methods</a></li>
+<li><a class="" href="microeconometrics.html"><span class="header-section-number">6</span> Microeconometrics</a></li>
+<li><a class="" href="time-series.html"><span class="header-section-number">7</span> Time Series</a></li>
+<li><a class="" href="appendix.html"><span class="header-section-number">8</span> Appendix</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="panel-regressions" class="section level1" number="4">
+<h1>
+<span class="header-section-number">4</span> Panel regressions<a class="anchor" aria-label="anchor" href="#panel-regressions"><i class="fas fa-link"></i></a>
+</h1>
+<p>The standard panel situation is the following: we have a lot of entities (<span class="math inline">\(i \in \{1,\dots,n\}\)</span>) and, for each entity, we observe different variables over a small number of periods (<span class="math inline">\(t \in \{1,\dots,T\}\)</span>). This is a <em>longitudinal dataset</em>.</p>
+<p>The regression then reads:
+<span class="math display">\[
+y_{i,t} = \mathbf{x}'_{i,t}\underbrace{\boldsymbol\beta}_{K \times 1} + \underbrace{\mathbf{z}'_{i}\boldsymbol\alpha}_{\mbox{Individual effects}} + \varepsilon_{i,t}
+\]</span>
+Our objective is to estimate the previous equation.</p>
+<!-- \includegraphics[width=.95\linewidth]{../../figures/Figure_Panel_simul0.pdf} -->
+<p>Figure <a href="panel-regressions.html#fig:simulPanel">4.1</a>. The model is <span class="math inline">\(y_i = \alpha_i + \beta x_{i,t} + \varepsilon_{i,t}\)</span>, <span class="math inline">\(t \in \{1,2\}\)</span>. On Panel (b), blue dots are for <span class="math inline">\(t=1\)</span>, red dots are for <span class="math inline">\(t=2\)</span>. The lines relate the dots associated to the same entity <span class="math inline">\(i\)</span>.</p>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="cn">T</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="co"># 2 periods</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">12</span> <span class="co"># 12 entities</span></span>
+<span><span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fl">5</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="co"># draw fixed effects</span></span>
+<span><span class="va">x.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">-</span> <span class="fl">.5</span><span class="op">*</span><span class="va">alpha</span> <span class="co"># note: x_i's correlate to alpha_i's</span></span>
+<span><span class="va">x.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">-</span> <span class="fl">.5</span><span class="op">*</span><span class="va">alpha</span></span>
+<span><span class="va">beta</span> <span class="op">&lt;-</span> <span class="fl">5</span>; <span class="va">sigma</span> <span class="op">&lt;-</span> <span class="fl">.3</span></span>
+<span><span class="va">y.1</span> <span class="op">&lt;-</span> <span class="va">alpha</span> <span class="op">+</span> <span class="va">x.1</span> <span class="op">+</span> <span class="va">sigma</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span><span class="va">y.2</span> <span class="op">&lt;-</span> <span class="va">alpha</span> <span class="op">+</span> <span class="va">x.2</span> <span class="op">+</span> <span class="va">sigma</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">x.1</span>,<span class="va">x.2</span><span class="op">)</span> <span class="co"># pooled x</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">y.1</span>,<span class="va">y.2</span><span class="op">)</span> <span class="co"># pooled y</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span>,col<span class="op">=</span><span class="st">"black"</span>,pch<span class="op">=</span><span class="fl">19</span>,xlab<span class="op">=</span><span class="st">"x"</span>,ylab<span class="op">=</span><span class="st">"y"</span>,main<span class="op">=</span><span class="st">"(a)"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span>,col<span class="op">=</span><span class="st">"black"</span>,pch<span class="op">=</span><span class="fl">19</span>,xlab<span class="op">=</span><span class="st">"x"</span>,ylab<span class="op">=</span><span class="st">"y"</span>,main<span class="op">=</span><span class="st">"(b)"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span><span class="va">x.1</span>,<span class="va">y.1</span>,col<span class="op">=</span><span class="st">"blue"</span>,pch<span class="op">=</span><span class="fl">19</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span><span class="va">x.2</span>,<span class="va">y.2</span>,col<span class="op">=</span><span class="st">"red"</span>,pch<span class="op">=</span><span class="fl">19</span><span class="op">)</span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">x.1</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,<span class="va">x.2</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">y.1</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,<span class="va">y.2</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:simulPanel"></span>
+<img src="AdvECTS_files/figure-html/simulPanel-1.png" alt="The data are the same for both panels. On Panel (b), blue dots are for $t=1$, red dots are for $t=2$. The lines relate the dots associated to the same entity $i$." width="90%"><p class="caption">
+Figure 4.1: The data are the same for both panels. On Panel (b), blue dots are for <span class="math inline">\(t=1\)</span>, red dots are for <span class="math inline">\(t=2\)</span>. The lines relate the dots associated to the same entity <span class="math inline">\(i\)</span>.
+</p>
+</div>
+<p>Let us know use the <a href="https://rdrr.io/cran/AER/man/CigarettesSW.html">Cigarette Consumption Panel dataset</a> of <a href="https://www.pearson.com/en-gb/subject-catalog/p/Stock-Introduction-to-Econometrics-Global-Edition-4th-Edition/P200000005500/9781292264523">Stock and Watson (2007)</a></p>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"CigarettesSW"</span>, package <span class="op">=</span> <span class="st">"AER"</span><span class="op">)</span></span>
+<span><span class="va">CigarettesSW</span><span class="op">$</span><span class="va">rprice</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">CigarettesSW</span>, <span class="va">price</span><span class="op">/</span><span class="va">cpi</span><span class="op">)</span></span>
+<span><span class="va">CigarettesSW</span><span class="op">$</span><span class="va">rincome</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">CigarettesSW</span>, <span class="va">income</span><span class="op">/</span><span class="va">population</span><span class="op">/</span><span class="va">cpi</span><span class="op">)</span></span>
+<span><span class="cn">T</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">CigarettesSW</span><span class="op">$</span><span class="va">year</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">CigarettesSW</span><span class="op">$</span><span class="va">state</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">eq.pooled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">packs</span><span class="op">)</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">rprice</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">rincome</span><span class="op">)</span>,data<span class="op">=</span><span class="va">CigarettesSW</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">eq.pooled</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##                Estimate Std. Error   t value     Pr(&gt;|t|)
+## (Intercept)  10.0671678  0.5156035 19.525020 1.158630e-34
+## log(rprice)  -1.3341612  0.1353614 -9.856288 4.120472e-16
+## log(rincome)  0.3181371  0.1361194  2.337191 2.157508e-02</code></pre>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">eq.LSDV</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">packs</span><span class="op">)</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">rprice</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">rincome</span><span class="op">)</span><span class="op">+</span><span class="va">state</span>,</span>
+<span>              data<span class="op">=</span><span class="va">CigarettesSW</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">eq.LSDV</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,<span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##                Estimate Std. Error   t value     Pr(&gt;|t|)
+## (Intercept)   9.9543751  0.2641889  37.67901 3.156258e-36
+## log(rprice)  -1.2103380  0.1138384 -10.63207 5.590562e-14
+## log(rincome)  0.1209004  0.1901069   0.63596 5.279541e-01</code></pre>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">CigarettesSW</span><span class="op">$</span><span class="va">year</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">CigarettesSW</span><span class="op">$</span><span class="va">year</span><span class="op">)</span></span>
+<span><span class="va">eq.LSDV2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">packs</span><span class="op">)</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">rprice</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">rincome</span><span class="op">)</span><span class="op">+</span><span class="va">state</span><span class="op">+</span><span class="va">year</span>,</span>
+<span>              data<span class="op">=</span><span class="va">CigarettesSW</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">eq.LSDV2</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,<span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##                Estimate Std. Error   t value     Pr(&gt;|t|)
+## (Intercept)   8.3597463  1.0485390  7.972757 3.776672e-10
+## log(rprice)  -1.0559739  0.1490905 -7.082770 7.682380e-09
+## log(rincome)  0.4974424  0.3042306  1.635084 1.090085e-01</code></pre>
+<!-- \includegraphics[width=.95\linewidth]{../../figures/Figure_Panel_cigarettes0.pdf} -->
+<p>Cigarettes data from <a href="https://vincentarelbundock.github.io/Rdatasets/doc/Ecdat/Cigarette.html">Stock and Watson (2003)</a>. Data for U.S. states, 2 years: 1985 and 1995. Each colour corresponds to a given State.</p>
+<p>Airlines: cost versus fuel price</p>
+<!-- \includegraphics[width=.95\linewidth]{../../figures/Figure_Panel_airline1.pdf} -->
+<p>Airlines data from <a href="https://vincentarelbundock.github.io/Rdatasets/doc/Ecdat/Airline.html">Greene (2003)</a>. Each colour corresponds to a given airline.</p>
+<p>Notations:
+<span class="math display">\[
+\mathbf{y}_i =
+\underbrace{\left[
+\begin{array}{c}
+y_{i,1}\\
+\vdots\\
+y_{i,T}
+\end{array}\right]}_{T \times 1}, \quad
+\boldsymbol\varepsilon_i =
+\underbrace{\left[
+\begin{array}{c}
+\varepsilon_{i,1}\\
+\vdots\\
+\varepsilon_{i,T}
+\end{array}\right]}_{T \times 1}, \quad
+\mathbf{x}_i =
+\underbrace{\left[
+\begin{array}{c}
+\mathbf{x}_{i,1}'\\
+\vdots\\
+\mathbf{x}_{i,T}'
+\end{array}\right]}_{T \times K}, \quad
+\mathbf{X} =
+\underbrace{\left[
+\begin{array}{c}
+\mathbf{x}_{1}\\
+\vdots\\
+\mathbf{x}_{n}
+\end{array}\right]}_{(nT) \times K}.
+\]</span>
+<span class="math display">\[
+\tilde{\mathbf{y}}_i =
+\left[
+\begin{array}{c}
+y_{i,1} - \bar{y}_i\\
+\vdots\\
+y_{i,T} - \bar{y}_i
+\end{array}\right], \quad
+\tilde{\boldsymbol\varepsilon}_i =
+\left[
+\begin{array}{c}
+\varepsilon_{i,1} - \bar{\varepsilon}_i\\
+\vdots\\
+\varepsilon_{i,T} - \bar{\varepsilon}_i
+\end{array}\right],
+\]</span>
+<span class="math display">\[
+\tilde{\mathbf{x}}_i =
+\left[
+\begin{array}{c}
+\mathbf{x}_{i,1}' - \bar{\mathbf{x}}_i'\\
+\vdots\\
+\mathbf{x}_{i,T}' - \bar{\mathbf{x}}_i'
+\end{array}\right], \quad
+\tilde{\mathbf{X}} =
+\left[
+\begin{array}{c}
+\tilde{\mathbf{x}}_{1}\\
+\vdots\\
+\tilde{\mathbf{x}}_{n}
+\end{array}\right], \quad
+\tilde{\mathbf{Y}} =
+\left[
+\begin{array}{c}
+\tilde{\mathbf{y}}_{1}\\
+\vdots\\
+\tilde{\mathbf{y}}_{n}
+\end{array}\right],
+\]</span>
+where
+<span class="math display">\[
+\bar{y}_i = \frac{1}{T} \sum_{t=1}^T y_{i,t}, \quad \bar{\varepsilon}_i = \frac{1}{T}\sum_{t=1}^T \varepsilon_{i,t} \quad \mbox{and} \quad \bar{\mathbf{x}}_i = \frac{1}{T}\sum_{t=1}^T \mathbf{x}_{i,t}.
+\]</span></p>
+<div id="three-standard-cases" class="section level3" number="4.0.1">
+<h3>
+<span class="header-section-number">4.0.1</span> Three standard cases<a class="anchor" aria-label="anchor" href="#three-standard-cases"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>
+<strong>Pooled regression</strong>: <span class="math inline">\(\mathbf{z}_i \equiv 1\)</span>.</li>
+<li>
+<strong>Fixed Effects</strong>: <span class="math inline">\(\mathbf{z}_i\)</span> is unobserved, but correlates with <span class="math inline">\(\mathbf{x}_i\)</span> <span class="math inline">\(\Rightarrow\)</span> <span class="math inline">\(\mathbf{b}\)</span> is biased and inconsistent in the OLS regression of <span class="math inline">\(\mathbf{y}\)</span> on <span class="math inline">\(\mathbf{X}\)</span> (omitted variable, see XXX).</li>
+<li>
+<strong>Random Effects</strong>: <span class="math inline">\(\mathbf{z}_i\)</span> is unobserved, but uncorrelated with <span class="math inline">\(\mathbf{x}_i\)</span>. The model writes:
+<span class="math display">\[
+y_{i,t} = \mathbf{x}'_{i,t}\boldsymbol\beta + \alpha +  \underbrace{{\color{blue}u_i + \varepsilon_{i,t}}}_{\mbox{compound disturbance}},
+\]</span>
+where <span class="math inline">\(\alpha = \mathbb{E}(\mathbf{z}'_{i}\boldsymbol\alpha)\)</span> and <span class="math inline">\(u_i = \mathbf{z}'_{i}\boldsymbol\alpha - \mathbb{E}(\mathbf{z}'_{i}\boldsymbol\alpha) \perp \mathbf{x}_i\)</span>.</li>
+</ul>
+<p>Least squares are consistent (but inefficient, see GLS XXXX).</p>
+</div>
+<div id="estimation-of-fixed-effects-models" class="section level2" number="4.1">
+<h2>
+<span class="header-section-number">4.1</span> Estimation of Fixed Effects Models<a class="anchor" aria-label="anchor" href="#estimation-of-fixed-effects-models"><i class="fas fa-link"></i></a>
+</h2>
+<hr>
+<div class="hypothesis">
+<p><span id="hyp:FE" class="hypothesis"><strong>Hypothesis 4.1  (Fixed-effect model) </strong></span>We assume that:</p>
+<ol style="list-style-type: lower-roman">
+<li>There is no perfect multicollinearity among the regressors.</li>
+<li>
+<span class="math inline">\(\mathbb{E}(\varepsilon_{i,t}|\mathbf{X})=0\)</span>, for all <span class="math inline">\(i,t\)</span>.</li>
+<li>We have:
+<span class="math display">\[
+\mathbb{E}(\varepsilon_{i,t}\varepsilon_{j,s}|\mathbf{X}) =
+\left\{
+\begin{array}{cl}
+\sigma^2 &amp; \mbox{if $i=j$ and $s=t$},\\
+0 &amp; \mbox{otherwise.}
+\end{array}\right.
+\]</span>
+</li>
+</ol>
+</div>
+<hr>
+<p>These assumptions are analogous to those introduced in the standard linear regression:</p>
+<ol style="list-style-type: lower-roman">
+<li>
+<span class="math inline">\(\leftrightarrow\)</span> <a href="linear-regressions.html#hyp:fullrank">3.1</a>, (ii) <span class="math inline">\(\leftrightarrow\)</span> <a href="linear-regressions.html#hyp:exogeneity">3.2</a>, (iii) <span class="math inline">\(\leftrightarrow\)</span> <a href="linear-regressions.html#hyp:homoskedasticity">3.3</a> + <a href="linear-regressions.html#hyp:noncorrelResid">3.4</a>.</li>
+</ol>
+<p>In matrix form, for a given <span class="math inline">\(i\)</span>, the model writes:
+<span class="math display">\[
+\mathbf{y}_i = \mathbf{X}_i \boldsymbol\beta + \mathbf{1}\alpha_i + \boldsymbol\varepsilon_i,
+\]</span>
+where <span class="math inline">\(\mathbf{1}\)</span> is a <span class="math inline">\(T\)</span>-dimensional vector of ones.</p>
+<p>This is the <strong>Least Square Dummy Variable (LSDV)</strong> model:
+<span class="math display" id="eq:LSDV">\[\begin{equation}
+\boxed{\mathbf{y} = [\mathbf{X} \quad \mathbf{D}]
+\left[
+\begin{array}{c}
+\boldsymbol\beta\\
+\boldsymbol\alpha
+\end{array}
+\right]
++ \boldsymbol\varepsilon,} \tag{4.1}
+\end{equation}\]</span>
+with:
+<span class="math display">\[
+\mathbf{D} = \underbrace{ \left[\begin{array}{cccc}
+\mathbf{1}&amp;\mathbf{0}&amp;\dots&amp;\mathbf{0}\\
+\mathbf{0}&amp;\mathbf{1}&amp;\dots&amp;\mathbf{0}\\
+&amp;&amp;\vdots&amp;\\
+\mathbf{0}&amp;\mathbf{0}&amp;\dots&amp;\mathbf{1}\\
+\end{array}\right]}_{(nT \times n)}.
+\]</span></p>
+<p>The linear regression (Eq. <a href="panel-regressions.html#eq:LSDV">(4.1)</a>) –with the dummy variables– satisfies the Gauss-Markov conditions (Theorem <a href="linear-regressions.html#thm:GaussMarkov">3.1</a>). Hence, in this context, the OLS estimator is the <strong>best linear unbiased estimator</strong>.</p>
+<p>Denoting by <span class="math inline">\(\mathbf{Z}\)</span> the matrix <span class="math inline">\([\mathbf{X} \quad \mathbf{D}]\)</span>, and by <span class="math inline">\(\mathbf{b}\)</span> and <span class="math inline">\(\mathbf{a}\)</span> the respective OLS estimates of <span class="math inline">\(\boldsymbol\beta\)</span> and of <span class="math inline">\(\boldsymbol\alpha\)</span>, we have:
+<span class="math display" id="eq:bfixedeffects11">\[\begin{equation}
+\boxed{
+\left[
+\begin{array}{c}
+\mathbf{b}\\
+\mathbf{a}
+\end{array}
+\right]
+= [\mathbf{Z}'\mathbf{Z}]^{-1}\mathbf{Z}'\mathbf{y}.} \tag{4.2}
+\end{equation}\]</span></p>
+<p>The asymptotical distribution of <span class="math inline">\([\mathbf{b}',\mathbf{a}']'\)</span> derives from the standard OLS context: Prop. <a href="linear-regressions.html#prp:asymptOLS">3.11</a> can be used after having replaced <span class="math inline">\(\mathbf{X}\)</span> by <span class="math inline">\(\mathbf{Z}=[\mathbf{X} \quad \mathbf{D}]\)</span>.</p>
+<p>We have:
+<span class="math display">\[\begin{equation}
+\boxed{\left[
+\begin{array}{c}
+\mathbf{b}\\
+\mathbf{a}
+\end{array}
+\right] \overset{d}{\rightarrow}
+\mathcal{N}\left(
+\left[
+\begin{array}{c}
+\boldsymbol\beta\\
+\boldsymbol\alpha
+\end{array}
+\right],
+\sigma^2 \frac{Q^{-1}}{nT}
+\right)}
+\end{equation}\]</span>
+where
+<span class="math display">\[
+Q = \mbox{plim}_{nT \rightarrow \infty} \frac{1}{nT} \mathbf{Z}'\mathbf{Z}.
+\]</span></p>
+<p>In practice, an estimator of the covariance matrix of <span class="math inline">\([\mathbf{b}',\mathbf{a}']'\)</span> is:
+<span class="math display">\[
+s^2 \left( \mathbf{Z}'\mathbf{Z}\right)^{-1} \quad with \quad s^2 = \frac{\mathbf{e}'\mathbf{e}}{nT - K - n},
+\]</span>
+where <span class="math inline">\(\mathbf{e}\)</span> is the <span class="math inline">\((nT) \times 1\)</span> vector of OLS residuals.</p>
+<p>There is an alternative way of expressing the LSDV estimators.</p>
+<p>It is based on matrix <span class="math inline">\(\mathbf{M_D}=\mathbf{I} - \mathbf{D}(\mathbf{D}'\mathbf{D})^{-1}\mathbf{D}'\)</span>, which acts as an operator that removes entity-specific means, i.e.:
+<span class="math display">\[
+\tilde{\mathbf{Y}} = \mathbf{M_D}\mathbf{Y}, \quad \tilde{\mathbf{X}} = \mathbf{M_D}\mathbf{X} \quad and \quad \tilde{\boldsymbol\varepsilon} = \mathbf{M_D}\boldsymbol\varepsilon.
+\]</span></p>
+<p>With these notations, using Theorem <a href="linear-regressions.html#thm:FW">3.2</a>, we get:
+<span class="math display" id="eq:bfixedeffects">\[\begin{equation}
+\boxed{\mathbf{b} = [\mathbf{X}'\mathbf{M_D}\mathbf{X}]^{-1}\mathbf{X}'\mathbf{M_D}\mathbf{y}.}\tag{4.3}
+\end{equation}\]</span></p>
+<p>This amounts to regressing the <span class="math inline">\(\tilde{y}_{i,t}\)</span>s (<span class="math inline">\(= y_{i,t} - \bar{y}_i\)</span>) on the <span class="math inline">\(\tilde{\mathbf{x}}_{i,t}\)</span>s (<span class="math inline">\(=\mathbf{x}_{i,t} - \bar{\mathbf{x}}_i\)</span>).</p>
+<p>The estimates of <span class="math inline">\(\boldsymbol\alpha\)</span> are given by:
+<span class="math display" id="eq:a">\[\begin{equation}
+\boxed{\mathbf{a} = (\mathbf{D}'\mathbf{D})^{-1}\mathbf{D}'(\mathbf{y} - \mathbf{X}\mathbf{b}),} \tag{4.4}
+\end{equation}\]</span>
+which is obtained by developing the second row of
+<span class="math display">\[
+\left[
+\begin{array}{cc}
+\mathbf{X}'\mathbf{X} &amp; \mathbf{X}'\mathbf{D}\\
+\mathbf{D}'\mathbf{X} &amp; \mathbf{D}'\mathbf{D}
+\end{array}\right]
+\left[
+\begin{array}{c}
+\mathbf{b}\\
+\mathbf{a}
+\end{array}\right] =
+\left[
+\begin{array}{c}
+\mathbf{X}'\mathbf{Y}\\
+\mathbf{D}'\mathbf{Y}
+\end{array}\right],
+\]</span>
+which are the first-order conditions resulting from the least squares problem (see Eq. <a href="linear-regressions.html#eq:OLSFOC">(3.1)</a>).</p>
+<p>XXXX Regression of the log of airline costs on log(output), log(fuel price) and capacity utilization of the fleet (Data from , see Fig. <a href="#fig:airline"><strong>??</strong></a>.</p>
+<p>XXXX Regression of the number of cigarette packs (log) on real income (log) and real price of cigarettes (log)</p>
+<!-- %\begin{frame}{} -->
+<!-- %\begin{scriptsize} -->
+<!-- %Look at: -->
+<!-- %http://www.princeton.edu/~otorres/Panel101R.pdf -->
+<!-- % -->
+<!-- %Nice chart with OLS versus LSDV. -->
+<!-- % -->
+<!-- %Use also Grunfeld data: -->
+<!-- % -->
+<!-- %https://vincentarelbundock.github.io/Rdatasets/doc/plm/Grunfeld.html -->
+<!-- % -->
+<!-- %===> Use Applied Econometrics with R 3.6: If $u_i$ exogen, then random effects more efficient. Hausman test. -->
+<!-- % -->
+<!-- %\end{scriptsize} -->
+<!-- %\end{frame} -->
+<p>Extension: Fixed time and group effects</p>
+<p>Time effects are easily introduced:
+<span class="math display">\[
+y_{i,t} = \mathbf{x}_i'\boldsymbol\beta + \alpha_i + \gamma_t + \varepsilon_{i,t}.
+\]</span></p>
+<p>The LSDV (Eq. <a href="panel-regressions.html#eq:LSDV">(4.1)</a>) can be extended:
+<span class="math display" id="eq:LSDV2">\[\begin{equation}
+\mathbf{y} = [\mathbf{X} \quad \mathbf{D} \quad \mathbf{C}]
+\left[
+\begin{array}{c}
+\boldsymbol\beta\\
+\boldsymbol\alpha\\
+\boldsymbol\gamma
+\end{array}
+\right]
++ \boldsymbol\varepsilon, \tag{4.5}
+\end{equation}\]</span>
+with:
+<span class="math display">\[
+\mathbf{C} = \left[\begin{array}{cccc}
+\boldsymbol{\delta}_1&amp;\boldsymbol{\delta}_2&amp;\dots&amp;\boldsymbol{\delta}_{T-1}\\
+\vdots&amp;\vdots&amp;&amp;\vdots\\
+\boldsymbol{\delta}_1&amp;\boldsymbol{\delta}_2&amp;\dots&amp;\boldsymbol{\delta}_{T-1}\\
+\end{array}\right],
+\]</span>
+where the <span class="math inline">\(T\)</span>-dimensional vector <span class="math inline">\(\boldsymbol\delta_t\)</span> is
+<span class="math display">\[
+[0,\dots,0,\underbrace{1}_{\mbox{t$^{th}$ entry}},0,\dots,0]'.
+\]</span></p>
+<p>XXXX Geo-located data from Airbnb, Z"urich</p>
+<p>Source: <a href="http://tomslee.net/airbnb-data-collection-get-the-data">Airbnb, date 22 June 2017</a>. Regression of price for Entire home/apt on number of bedrooms, number of people that can be accommodated.</p>
+</div>
+<div id="estimation-of-random-effects-models" class="section level2" number="4.2">
+<h2>
+<span class="header-section-number">4.2</span> Estimation of random effects models<a class="anchor" aria-label="anchor" href="#estimation-of-random-effects-models"><i class="fas fa-link"></i></a>
+</h2>
+<p>Here, the individual effects are assumed not to be correlated to other variables (the <span class="math inline">\(\mathbf{x}_i\)</span>s).</p>
+<p><strong>Random-effect models</strong> write:
+<span class="math display">\[
+y_{i,t}=\mathbf{x}'_{it}\boldsymbol\beta + (\alpha + \underbrace{u_i}_{\substack{\text{Random}\\\text{heterogeneity}}}) + \varepsilon_{i,t}
+\]</span>
+with
+<span class="math display">\[\begin{eqnarray*}
+\mathbb{E}(\varepsilon_{i,t}|\mathbf{X})&amp;=&amp;\mathbb{E}(u_{i}|\mathbf{X}) =0,\\
+\mathbb{E}(\varepsilon_{i,t}\varepsilon_{j,s}|\mathbf{X}) &amp;=&amp;
+\left\{
+\begin{array}{cl}
+\sigma_\varepsilon^2 &amp; \mbox{ if $i=j$ and $s=t$},\\
+0 &amp; \mbox{ otherwise.}
+\end{array}
+\right.\\
+\mathbb{E}(u_{i}u_{j}|\mathbf{X}) &amp;=&amp;
+\left\{
+\begin{array}{cl}
+\sigma_u^2 &amp; \mbox{ if $i=j$},\\
+0 &amp; \mbox{otherwise.}
+\end{array}
+\right.\\
+\mathbb{E}(\varepsilon_{i,t}u_{j}|\mathbf{X})&amp;=&amp;0 \quad \text{for all $i$, $j$ and $t$}.
+\end{eqnarray*}\]</span></p>
+<p>Notation: <span class="math inline">\(\eta_{i,t} = u_i + \varepsilon_{i,t}\)</span> and <span class="math inline">\(\boldsymbol\eta_i = [\eta_{i,1},\eta_{i,2},\dots,\eta_{i,T}]'\)</span>.</p>
+<p>We have <span class="math inline">\(\mathbb{E}(\boldsymbol\eta_i |\mathbf{X}) = \mathbf{0}\)</span> and <span class="math inline">\(\mathbb{V}ar(\boldsymbol\eta_i | \mathbf{X}) = \boldsymbol\Gamma\)</span> where
+<span class="math display">\[
+\boldsymbol\Gamma = \left[  \begin{array}{ccccc}
+\sigma_\varepsilon^2+\sigma_u^2 &amp; \sigma_u^2 &amp; \sigma_u^2 &amp; \dots &amp; \sigma_u^2\\
+\sigma_u^2 &amp; \sigma_\varepsilon^2+\sigma_u^2 &amp; \sigma_u^2 &amp; \dots &amp; \sigma_u^2\\
+\vdots &amp;&amp; \ddots &amp;&amp; \vdots \\
+\sigma_u^2 &amp; \sigma_u^2 &amp; \sigma_u^2 &amp; \dots &amp; \sigma_\varepsilon^2+\sigma_u^2\\
+\end{array}
+\right] = \sigma_\varepsilon^2\mathbf{I} + \sigma_u^2\mathbf{1}\mathbf{1}'.
+\]</span></p>
+<p>Denoting by <span class="math inline">\(\boldsymbol\Sigma\)</span> the covariance matrix of <span class="math inline">\(\boldsymbol\eta = [\boldsymbol\eta_1',\dots,\boldsymbol\eta_n']'\)</span>, we have:
+<span class="math display">\[
+\boldsymbol\Sigma = \mathbf{I} \otimes \boldsymbol\Gamma.
+\]</span></p>
+<p>If we knew <span class="math inline">\(\boldsymbol\Sigma\)</span>, we would apply (feasible) GLS (Eq. <a href="linear-regressions.html#eq:betaGLS">(3.28)</a>):
+<span class="math display">\[
+\boldsymbol\beta = (\mathbf{X}'\boldsymbol\Sigma^{-1}\mathbf{X})^{-1}\mathbf{X}'\boldsymbol\Sigma^{-1}\mathbf{y}
+\]</span>
+(recall that this amounts to regressing <span class="math inline">\({\boldsymbol\Sigma^{-1/2}}'\mathbf{y}\)</span> on <span class="math inline">\({\boldsymbol\Sigma^{-1/2}}'\mathbf{X}\)</span>).</p>
+<p>It can be checked that <span class="math inline">\(\boldsymbol\Sigma^{-1/2} = \mathbf{I} \otimes (\boldsymbol\Gamma^{-1/2})\)</span> where
+<span class="math display">\[
+\boldsymbol\Gamma^{-1/2} = \frac{1}{\sigma_\varepsilon}\left( \mathbf{I} - \frac{\theta}{T}\mathbf{1}\mathbf{1}'\right)
+\]</span>
+with
+<span class="math display">\[
+\theta = 1 - \frac{\sigma_\varepsilon}{\sqrt{\sigma_\varepsilon^2+T\sigma_u^2}}.
+\]</span></p>
+<p>Hence, if we knew <span class="math inline">\(\boldsymbol\Sigma\)</span>, we would transform the data as follows:
+<span class="math display">\[
+\boldsymbol\Gamma^{-1/2}\mathbf{y}_i = \frac{1}{\sigma_\varepsilon}\left[\begin{array}{c}y_{i,1} - \theta\bar{y}_i\\y_{i,2} - \theta\bar{y}_i\\\vdots\\y_{i,T} - \theta\bar{y}_i\\\end{array}\right].
+\]</span></p>
+<p>What about when <span class="math inline">\(\boldsymbol\Sigma\)</span> is unknown?</p>
+<p>Idea: taking deviations from group means removes heterogeneity:
+<span class="math display">\[
+y_{i,t} - \bar{y}_i = [\mathbf{x}_{i,t} - \bar{\mathbf{x}}_i]'\boldsymbol\beta + (\varepsilon_{i,t} - \bar{\varepsilon}_i).
+\]</span></p>
+<p>The previous equation can be consistently estimated by OLS</p>
+<p>(the residuals are correlated across <span class="math inline">\(t\)</span> within an entity but the OLS remain consistent though, see Prop. @ref{prp:XXX)).</p>
+<p>We have <span class="math inline">\(\mathbb{E}\left[\sum_{i=1}^{T}(\varepsilon_{i,t}-\bar{\varepsilon}_i)^2\right] = (T-1)\sigma_{\varepsilon}^2\)</span>.</p>
+<p>The <span class="math inline">\(\varepsilon_{i,t}\)</span>s are not observed but <span class="math inline">\(\mathbf{b}\)</span> is a consistent estimator of <span class="math inline">\(\boldsymbol\beta\)</span>; adjustment for the degrees of freedom:
+<span class="math display">\[
+\hat{\sigma}_e^2 = \frac{1}{nT-n-K}\sum_{i=1}^{n}\sum_{t=1}^{T}(e_{i,t} - \bar{e}_i)^2.
+\]</span></p>
+<p>And for <span class="math inline">\(\sigma_u^2\)</span>? We can exploit the fact that OLS are consistent in the pooled regression:
+<span class="math display">\[
+\mbox{plim }s^2_{pooled} = \mbox{plim }\frac{\mathbf{e}'\mathbf{e}}{nT-K-1} = \sigma_u^2 + \sigma_\varepsilon^2,
+\]</span>
+and therefore use <span class="math inline">\(s^2_{pooled} - \hat{\sigma}_e^2\)</span> as an approximation to <span class="math inline">\(\sigma_u^2\)</span>.</p>
+<!-- %\begin{frame}{} -->
+<!-- %\begin{scriptsize} -->
+<!-- %\begin{itemize} -->
+<!-- %  \item Breusch and Pagan LM test of $H_0: \quad \sigma_u^2=0$ (13.4.3 in Greene) -->
+<!-- %  \item Hausman's specification test 13.4.4. -->
+<!-- %  \item Cluster-robust standard errors (\href{http://cameron.econ.ucdavis.edu/research/Cameron_Miller_Cluster_Robust_October152013.pdf}{nice paper}) + \href{http://www.cemfi.es/~arellano/obes_1987.pdf}{Arellano (1987)} -->
+<!-- %  \item Random versus Fixed effects: uncorrelated errors / LSDV: lose a lot of degrees of freedom. -->
+<!-- %  \item \href{http://econweb.tamu.edu/keli/Hausman\%201978.pdf}{Hausman (1978)} test: $H_0:$ no correlation of random effects and regressors. -->
+<!-- %\end{itemize} -->
+<!-- %\end{scriptsize} -->
+<!-- %\end{frame} -->
+<!-- %\begin{frame}{} -->
+<!-- %Instrumental Variable estimation of the random effect model -->
+<!-- %\begin{scriptsize} -->
+<!-- %\begin{itemize} -->
+<!-- %  \item Objective: have a specification where the model can contain time-invariant characteristics. Specification: -->
+<!-- %  $$ -->
+<!-- %  y_{i,t} =   \underbrace{\bv{x}'_{1,i,t} \boldsymbol\beta_1}_{\perp u_i} + -->
+<!-- %          \underbrace{\bv{x}'_{2,i,t} \boldsymbol\beta_2}_{\not\perp u_i} + -->
+<!-- %          \underbrace{\bv{z}'_{1,i} \boldsymbol\alpha_1}_{\perp u_i} + -->
+<!-- %          \underbrace{\bv{z}'_{2,i} \boldsymbol\alpha_2}_{\not\perp u_i} + \varepsilon_{i,t}. -->
+<!-- %  $$ -->
+<!-- %  \item Assumptions: -->
+<!-- %  \begin{eqnarray*} -->
+<!-- %  E(u_i) = E(u_i|\bv{x}_{1,i,t},\bv{z}_{1,i,t}) &=& 0\\ -->
+<!-- %  E(u_i|\bv{x}_{2,i,t},\bv{z}_{2,i,t}) &\ne& 0\\ -->
+<!-- %  \mbox{Var}(u_i|\bv{x}_{1,i,t},\bv{z}_{1,i,t},\bv{x}_{2,i,t},\bv{z}_{2,i,t})&=& \sigma_u^2\\ -->
+<!-- %  \mbox{Cov}(u_i,\varepsilon_{i,t}|\bv{x}_{1,i,t},\bv{z}_{1,i,t},\bv{x}_{2,i,t},\bv{z}_{2,i,t})&=& 0\\ -->
+<!-- %  \mbox{Var}(u_i + \varepsilon_{i,t}|\bv{x}_{1,i,t},\bv{z}_{1,i,t},\bv{x}_{2,i,t},\bv{z}_{2,i,t})&=& \sigma^2 = \sigma_u^2 + \sigma_\varepsilon^2\\ -->
+<!-- %  \mbox{Corr}(u_i + \varepsilon_{i,t},u_i + \varepsilon_{i,s}|\bv{x}_{1,i,t},\bv{z}_{1,i,t},\bv{x}_{2,i,t},\bv{z}_{2,i,t})&=& \rho = \sigma_u^2/\sigma^2 -->
+<!-- %  \end{eqnarray*}  -->
+<!-- %\end{itemize} -->
+<!-- %\end{scriptsize} -->
+<!-- %\end{frame} -->
+<!-- % -->
+<!-- %\begin{frame}{} -->
+<!-- %\begin{scriptsize} -->
+<!-- %\begin{itemize} -->
+<!-- %  \item OLS and GLS inconsistent. -->
+<!-- %  \item \href{http://web.mit.edu/14.33/www/hausman.pdf}{Hausman and Taylor, 1981}. Example cited in the plm package by Baltagi (2001) (with data in the plm package). -->
+<!-- %  \item First: -->
+<!-- %  \begin{equation}\label{eq:13.36} -->
+<!-- %  y_{i,t} - \bar{y}_i = [\bv{x}_{1,i,t} - \bar{\bv{x}}_{1,i}]'\boldsymbol\beta_1 + [\bv{x}_{2,i,t} - \bar{\bv{x}}_{2,i}]'\boldsymbol\beta_2 + (\varepsilon_{i,t} - \bar{\varepsilon}_i) -->
+<!-- %  \end{equation} -->
+<!-- %  \item[$\Rightarrow$] $\boldsymbol\beta$ can consistently be estimated by LS. -->
+<!-- %  \item[Step 1] LSDV of $\boldsymbol\beta$ (Eq. \ref{eq:13.36})  -->
+<!-- %  \item[Step 2] residuals of step 1: $e_{i,t}$. Regress $e_{i}$ on $(\bv{z}_1',\bv{z}_2')'$ with IV $\bv{z}_1$ and $\bv{x}_1$ (assuming $K_1\ge L_2$). NB: time-invariant data are repeated $T$ times. $\Rightarrow$ consistent estimate of $\boldsymbol\alpha$. -->
+<!-- %  \item[Step 3] The residual variance in Step 2 = consistent estimator of $\sigma_u^2 + \sigma^2_\varepsilon/T$. From and from the estimator of $\sigma^2_\varepsilon$ from Step 1, estimator of $\sigma^2_u$. This leads to an estimate $\hat{\theta}$ of: -->
+<!-- %  $$ -->
+<!-- %  \theta = \sqrt{\frac{\sigma^2_\varepsilon}{\sigma^2_\varepsilon + T\sigma^2_u}} -->
+<!-- %  $$ -->
+<!-- %  that can  be used in Feasible GLS. -->
+<!-- %\end{itemize} -->
+<!-- %\end{scriptsize} -->
+<!-- %\end{frame} -->
+<!-- % -->
+<!-- %\begin{frame}{} -->
+<!-- %\begin{scriptsize} -->
+<!-- %\begin{itemize} -->
+<!-- %  \item[Step 4] Define $\bv{w}_{i,t} = [\bv{x}_{1,i,t}',\bv{x}_{2,i,t}',\bv{z}_{1,i,t}',\bv{z}_{2,i,t}']$, -->
+<!-- %  $$ -->
+<!-- %  \bv{w}_{i,t}^* = \bv{w}_{i,t} - (1 - \hat{\theta})\bv{w}_i \quad \mbox{and} \quad y_{i,t}^* = y_{i,t} - (1 - \hat\theta) y_i. -->
+<!-- %  $$ -->
+<!-- %  The IVs are: -->
+<!-- %  $$ -->
+<!-- %  \bv{v}_{i,t} = [(\bv{x}_{1,i,t}-\bv{x}_{1,i})',(\bv{x}_{2,i,t}-\bv{x}_{2,i})',\bv{z}_{1,i}',\bv{x}_{1,i}']. -->
+<!-- %  $$ -->
+<!-- %  Finally: -->
+<!-- %  \begin{equation} -->
+<!-- %  (\bv{b}_{iv}',\bv{a}_{iv}')' = [({\bv{W}^*}'\bv{V})(\bv{V}'\bv{V})^{-1}(\bv{V}'{\bv{W}^*})][({\bv{W}^*}'\bv{V})(\bv{V}'\bv{V})^{-1}(\bv{V}'{\bv{y}^*})] -->
+<!-- %  \end{equation} -->
+<!-- %  \item No Asymp Var??? -->
+<!-- %\end{itemize} -->
+<!-- %\end{scriptsize} -->
+<!-- %\end{frame} -->
+<!-- % -->
+<!-- %\begin{frame}{} -->
+<!-- %\begin{scriptsize} -->
+<!-- %\begin{itemize} -->
+<!-- %  \item GMM estimation \href{http://people.stern.nyu.edu/wgreene/Econometrics/Arellano-Bond.pdf}{Arellano and Bond (1991)}. plm package does it; see Greene 13.6. -->
+<!-- %\end{itemize} -->
+<!-- %\end{scriptsize} -->
+<!-- %\end{frame} -->
+<!-- % -->
+<!-- %\begin{frame}{} -->
+<!-- %\begin{scriptsize} -->
+<!-- %\begin{itemize} -->
+<!-- %  \item XXX -->
+<!-- %\end{itemize} -->
+<!-- %\end{scriptsize} -->
+<!-- %\end{frame} -->
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="linear-regressions.html"><span class="header-section-number">3</span> Linear Regressions</a></div>
+<div class="next"><a href="estimation-methods.html"><span class="header-section-number">5</span> Estimation Methods</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li>
+<a class="nav-link" href="#panel-regressions"><span class="header-section-number">4</span> Panel regressions</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#three-standard-cases"><span class="header-section-number">4.0.1</span> Three standard cases</a></li></ul>
+</li>
+<li><a class="nav-link" href="#estimation-of-fixed-effects-models"><span class="header-section-number">4.1</span> Estimation of Fixed Effects Models</a></li>
+<li><a class="nav-link" href="#estimation-of-random-effects-models"><span class="header-section-number">4.2</span> Estimation of random effects models</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Advanced Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-08-06.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

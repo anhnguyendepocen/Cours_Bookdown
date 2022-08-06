@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 5 Estimation Methods | Advanced Econometrics</title>
+<meta name="author" content="Jean-Paul Renne">
+<meta name="description" content="5.1 Generalized Method of Moments  5.1.1 Framework We denote by \(x_t\) a \(p \times 1\) vector of (stationary) variables observed at date \(t\); by \(\theta\) an \(a \times 1\) vector of...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 5 Estimation Methods | Advanced Econometrics">
+<meta property="og:type" content="book">
+<meta property="og:description" content="5.1 Generalized Method of Moments  5.1.1 Framework We denote by \(x_t\) a \(p \times 1\) vector of (stationary) variables observed at date \(t\); by \(\theta\) an \(a \times 1\) vector of...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 5 Estimation Methods | Advanced Econometrics">
+<meta name="twitter:description" content="5.1 Generalized Method of Moments  5.1.1 Framework We denote by \(x_t\) a \(p \times 1\) vector of (stationary) variables observed at date \(t\); by \(\theta\) an \(a \times 1\) vector of...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Advanced Econometrics</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Prerequisites</a></li>
+<li><a class="" href="intro.html"><span class="header-section-number">2</span> Introduction</a></li>
+<li><a class="" href="linear-regressions.html"><span class="header-section-number">3</span> Linear Regressions</a></li>
+<li><a class="" href="panel-regressions.html"><span class="header-section-number">4</span> Panel regressions</a></li>
+<li><a class="active" href="estimation-methods.html"><span class="header-section-number">5</span> Estimation Methods</a></li>
+<li><a class="" href="microeconometrics.html"><span class="header-section-number">6</span> Microeconometrics</a></li>
+<li><a class="" href="time-series.html"><span class="header-section-number">7</span> Time Series</a></li>
+<li><a class="" href="appendix.html"><span class="header-section-number">8</span> Appendix</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="estimation-methods" class="section level1" number="5">
+<h1>
+<span class="header-section-number">5</span> Estimation Methods<a class="anchor" aria-label="anchor" href="#estimation-methods"><i class="fas fa-link"></i></a>
+</h1>
+<div id="generalized-method-of-moments" class="section level2" number="5.1">
+<h2>
+<span class="header-section-number">5.1</span> Generalized Method of Moments<a class="anchor" aria-label="anchor" href="#generalized-method-of-moments"><i class="fas fa-link"></i></a>
+</h2>
+<div id="framework" class="section level3" number="5.1.1">
+<h3>
+<span class="header-section-number">5.1.1</span> Framework<a class="anchor" aria-label="anchor" href="#framework"><i class="fas fa-link"></i></a>
+</h3>
+<p>We denote by <span class="math inline">\(x_t\)</span> a <span class="math inline">\(p \times 1\)</span> vector of (stationary) variables observed at date <span class="math inline">\(t\)</span>; by <span class="math inline">\(\theta\)</span> an <span class="math inline">\(a \times 1\)</span> vector of parameters, and by <span class="math inline">\(h(x_t;\theta)\)</span> a continuous <span class="math inline">\(r \times 1\)</span> vector-valued function.</p>
+<p>We denote by <span class="math inline">\(\theta_0\)</span> the true value of <span class="math inline">\(\theta\)</span> and we assume that <span class="math inline">\(\theta_0\)</span> satisfies:
+<span class="math display">\[
+\mathbb{E}[h(x_t;\theta_0)] = 0.
+\]</span></p>
+<p>We denote by <span class="math inline">\(\underline{x_t}\)</span> the information contained in the current and past observations of <span class="math inline">\(x_t\)</span>, that is: <span class="math inline">\(\underline{x_t} = \{x_t,x_{t-1},\dots,x_1\}\)</span>. We denote by <span class="math inline">\(g(\underline{x_T};\theta)\)</span> the sample average of <span class="math inline">\(h(x_t;\theta)\)</span>, i.e.:
+<span class="math display">\[
+g(\underline{x_T};\theta) = \frac{1}{T} \sum_{t=1}^{T} h(x_t;\theta).
+\]</span></p>
+<p>Intuition behind GMM: Choose <span class="math inline">\(\theta\)</span> so as to make the sample moment as close as possible to 0.</p>
+<p>A GMM estimator of <span class="math inline">\(\theta_0\)</span> is given by:
+<span class="math display">\[
+\hat{\theta}_T = \mbox{argmin}_{\theta} \quad g(\underline{x_T};\theta)'\, W_T \, g(\underline{x_T};\theta),
+\]</span>
+where <span class="math inline">\(W_T\)</span> is a positive definite matrix (that may depend on <span class="math inline">\(\underline{x_T}\)</span>).</p>
+<p>If <span class="math inline">\(a = r\)</span>, <span class="math inline">\(\hat{\theta}_T\)</span> is such that:
+<span class="math display">\[
+g(\underline{x_T};\hat{\theta}_T) = 0.
+\]</span>
+Under regularity and identification conditions:
+<span class="math display">\[
+\hat{\theta}_{T} \overset{P}{\rightarrow} \theta_0,
+\]</span>
+i.e. <span class="math inline">\(\forall \varepsilon&gt;0\)</span>, <span class="math inline">\(\lim_{n \rightarrow \infty} \mathbb{P}(|\hat{\theta}_{T} - \theta_0|&gt;\varepsilon) = 0\)</span>.</p>
+<p><strong>Optimal weighting matrix</strong>. The GMM estimator achieving the minimum asymptotic variance is obtained when <span class="math inline">\(W_T\)</span> is the inverse of the matrix <span class="math inline">\(S\)</span> defined by:
+<span class="math display">\[
+S := \sum_{\nu = -\infty}^{\infty} \Gamma_\nu,
+\]</span>
+where <span class="math inline">\(\Gamma_\nu := \mathbb{E}[h(x_t;\theta_0) h(x_{t-\nu};\theta_0)']\)</span>.</p>
+<p>For <span class="math inline">\(\nu \ge 0\)</span>, let us define <span class="math inline">\(\hat{\Gamma}_{\nu,T}\)</span> by:
+<span class="math display">\[
+\hat{\Gamma}_{\nu,T} = \frac{1}{T} \sum_{t=\nu + 1}^{T} h(x_t;\hat{\theta}_T)h(x_{t-\nu};\hat{\theta}_T)',
+\]</span>
+<span class="math inline">\(S\)</span> can be approximated by:
+<span class="math display" id="eq:Shat">\[\begin{eqnarray}
+&amp;\hat{\Gamma}_{0,T}&amp; \quad \mbox{if the $h(x_t;\theta_0)$ are serially uncorrelated and} \nonumber \\
+&amp;\hat{\Gamma}_{0,T}&amp; + \sum_{\nu=1}^{q}[1-\nu/(q+1)](\hat{\Gamma}_{\nu,T}+\hat{\Gamma}_{\nu,T}') \quad \mbox{otherwise.}    \tag{5.1}
+\end{eqnarray}\]</span></p>
+<p><strong>Asymptotic distribution of <span class="math inline">\(\hat\theta_T\)</span></strong></p>
+<p>We have:
+<span class="math display">\[
+\sqrt{T}(\hat\theta_T - \theta_0) \overset{\mathcal{L}}{\rightarrow} \mathcal{N}(0,V),
+\]</span>
+where <span class="math inline">\(V = (DS^{-1}D')^{-1}\)</span>.</p>
+<p><span class="math inline">\(V\)</span> can be approximated by <span class="math inline">\((\hat{D}_T\hat{S}_T^{-1}\hat{D}_T')^{-1}\)</span>,
+where <span class="math inline">\(\hat{S}_T\)</span> is given by Eq. <a href="estimation-methods.html#eq:Shat">(5.1)</a> and
+<span class="math display">\[
+\hat{D}'_T := \left.\frac{\partial g(\underline{x_T};\theta)}{\partial \theta'}\right|_{\theta = \hat\theta_T}.
+\]</span></p>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="panel-regressions.html"><span class="header-section-number">4</span> Panel regressions</a></div>
+<div class="next"><a href="microeconometrics.html"><span class="header-section-number">6</span> Microeconometrics</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#estimation-methods"><span class="header-section-number">5</span> Estimation Methods</a></li>
+<li>
+<a class="nav-link" href="#generalized-method-of-moments"><span class="header-section-number">5.1</span> Generalized Method of Moments</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#framework"><span class="header-section-number">5.1.1</span> Framework</a></li></ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Advanced Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-08-06.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

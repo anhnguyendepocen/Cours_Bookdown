@@ -1,23 +1,543 @@
-# Methods
+# Panel regressions
 
-We describe our methods in this chapter.
 
-Math can be added in body using usual syntax like this 
+The standard panel situation is the following: we have a lot of entities ($i \in \{1,\dots,n\}$) and, for each entity, we observe different variables over a small number of periods ($t \in \{1,\dots,T\}$). This is a *longitudinal dataset*.
 
-## math example
-
-$p$ is unknown but expected to be around 1/3. Standard error will be approximated
-
+The regression then reads:
 $$
-SE = \sqrt(\frac{p(1-p)}{n}) \approx \sqrt{\frac{1/3 (1 - 1/3)} {300}} = 0.027
+y_{i,t} = \bv{x}'_{i,t}\underbrace{\boldsymbol\beta}_{K \times 1} + \underbrace{\bv{z}'_{i}\boldsymbol\alpha}_{\mbox{Individual effects}} + \varepsilon_{i,t}
+$$
+Our objective is to estimate the previous equation.
+
+<!-- \includegraphics[width=.95\linewidth]{../../figures/Figure_Panel_simul0.pdf} -->
+
+Figure \@ref(fig:simulPanel). The model is $y_i = \alpha_i + \beta x_{i,t} + \varepsilon_{i,t}$, $t \in \{1,2\}$. On Panel (b), blue dots are for $t=1$, red dots are for $t=2$. The lines relate the dots associated to the same entity $i$.
+
+```{r simulPanel, fig.cap="The data are the same for both panels. On Panel (b), blue dots are for $t=1$, red dots are for $t=2$. The lines relate the dots associated to the same entity $i$.", fig.asp = .6, out.width = "90%", fig.align = 'center'}
+T <- 2 # 2 periods
+n <- 12 # 12 entities
+alpha <- 5*rnorm(n) # draw fixed effects
+x.1 <- rnorm(n) - .5*alpha # note: x_i's correlate to alpha_i's
+x.2 <- rnorm(n) - .5*alpha
+beta <- 5; sigma <- .3
+y.1 <- alpha + x.1 + sigma*rnorm(n)
+y.2 <- alpha + x.2 + sigma*rnorm(n)
+x <- c(x.1,x.2) # pooled x
+y <- c(y.1,y.2) # pooled y
+par(mfrow=c(1,2))
+plot(x,y,col="black",pch=19,xlab="x",ylab="y",main="(a)")
+plot(x,y,col="black",pch=19,xlab="x",ylab="y",main="(b)")
+points(x.1,y.1,col="blue",pch=19)
+points(x.2,y.2,col="red",pch=19)
+for(i in 1:n){
+  lines(c(x.1[i],x.2[i]),c(y.1[i],y.2[i]))
+}
+```
+
+
+
+
+
+Let us know use the [Cigarette Consumption Panel dataset](https://rdrr.io/cran/AER/man/CigarettesSW.html) of [Stock and Watson (2007)](https://www.pearson.com/en-gb/subject-catalog/p/Stock-Introduction-to-Econometrics-Global-Edition-4th-Edition/P200000005500/9781292264523)
+
+```{r cigarettes}
+data("CigarettesSW", package = "AER")
+CigarettesSW$rprice  <- with(CigarettesSW, price/cpi)
+CigarettesSW$rincome <- with(CigarettesSW, income/population/cpi)
+T <- length(levels(CigarettesSW$year))
+n <- length(levels(CigarettesSW$state))
+eq.pooled <- lm(log(packs)~log(rprice)+log(rincome),data=CigarettesSW)
+print(summary(eq.pooled)$coefficients)
+eq.LSDV <- lm(log(packs)~log(rprice)+log(rincome)+state,
+              data=CigarettesSW)
+print(summary(eq.LSDV)$coefficients[1:3,])
+CigarettesSW$year <- as.factor(CigarettesSW$year)
+eq.LSDV2 <- lm(log(packs)~log(rprice)+log(rincome)+state+year,
+              data=CigarettesSW)
+print(summary(eq.LSDV2)$coefficients[1:3,])
+```
+
+<!-- \includegraphics[width=.95\linewidth]{../../figures/Figure_Panel_cigarettes0.pdf} -->
+
+Cigarettes data from [Stock and Watson (2003)](https://vincentarelbundock.github.io/Rdatasets/doc/Ecdat/Cigarette.html). Data for U.S. states, 2 years: 1985 and 1995. Each colour corresponds to a given State.
+
+Airlines: cost versus fuel price
+
+<!-- \includegraphics[width=.95\linewidth]{../../figures/Figure_Panel_airline1.pdf} -->
+
+Airlines data from [Greene (2003)](https://vincentarelbundock.github.io/Rdatasets/doc/Ecdat/Airline.html). Each colour corresponds to a given airline.
+
+Notations:
+$$
+\bv{y}_i =
+\underbrace{\left[
+\begin{array}{c}
+y_{i,1}\\
+\vdots\\
+y_{i,T}
+\end{array}\right]}_{T \times 1}, \quad
+\boldsymbol\varepsilon_i =
+\underbrace{\left[
+\begin{array}{c}
+\varepsilon_{i,1}\\
+\vdots\\
+\varepsilon_{i,T}
+\end{array}\right]}_{T \times 1}, \quad
+\bv{x}_i =
+\underbrace{\left[
+\begin{array}{c}
+\bv{x}_{i,1}'\\
+\vdots\\
+\bv{x}_{i,T}'
+\end{array}\right]}_{T \times K}, \quad
+\bv{X} =
+\underbrace{\left[
+\begin{array}{c}
+\bv{x}_{1}\\
+\vdots\\
+\bv{x}_{n}
+\end{array}\right]}_{(nT) \times K}.
+$$
+$$
+\tilde{\bv{y}}_i =
+\left[
+\begin{array}{c}
+y_{i,1} - \bar{y}_i\\
+\vdots\\
+y_{i,T} - \bar{y}_i
+\end{array}\right], \quad
+\tilde{\boldsymbol\varepsilon}_i =
+\left[
+\begin{array}{c}
+\varepsilon_{i,1} - \bar{\varepsilon}_i\\
+\vdots\\
+\varepsilon_{i,T} - \bar{\varepsilon}_i
+\end{array}\right],
+$$
+$$
+\tilde{\bv{x}}_i =
+\left[
+\begin{array}{c}
+\bv{x}_{i,1}' - \bar{\bv{x}}_i'\\
+\vdots\\
+\bv{x}_{i,T}' - \bar{\bv{x}}_i'
+\end{array}\right], \quad
+\tilde{\bv{X}} =
+\left[
+\begin{array}{c}
+\tilde{\bv{x}}_{1}\\
+\vdots\\
+\tilde{\bv{x}}_{n}
+\end{array}\right], \quad
+\tilde{\bv{Y}} =
+\left[
+\begin{array}{c}
+\tilde{\bv{y}}_{1}\\
+\vdots\\
+\tilde{\bv{y}}_{n}
+\end{array}\right],
+$$
+where
+$$
+\bar{y}_i = \frac{1}{T} \sum_{t=1}^T y_{i,t}, \quad \bar{\varepsilon}_i = \frac{1}{T}\sum_{t=1}^T \varepsilon_{i,t} \quad \mbox{and} \quad \bar{\bv{x}}_i = \frac{1}{T}\sum_{t=1}^T \bv{x}_{i,t}.
 $$
 
-You can also use math in footnotes like this^[where we mention $p = \frac{a}{b}$].
 
-We will approximate standard error to 0.027[^longnote]
+### Three standard cases
 
-[^longnote]: $p$ is unknown but expected to be around 1/3. Standard error will be approximated
+* **Pooled regression**: $\bv{z}_i \equiv 1$.
+* **Fixed Effects**: $\bv{z}_i$ is unobserved, but correlates with $\bv{x}_i$ $\Rightarrow$ $\bv{b}$ is biased and inconsistent in the OLS regression of $\bv{y}$ on $\bv{X}$ (omitted variable, see XXX).
+* **Random Effects**: $\bv{z}_i$ is unobserved, but uncorrelated with $\bv{x}_i$. The model writes:
+$$
+y_{i,t} = \bv{x}'_{i,t}\boldsymbol\beta + \alpha +  \underbrace{{\color{blue}u_i + \varepsilon_{i,t}}}_{\mbox{compound disturbance}},
+$$
+where $\alpha = \mathbb{E}(\bv{z}'_{i}\boldsymbol\alpha)$ and $u_i = \bv{z}'_{i}\boldsymbol\alpha - \mathbb{E}(\bv{z}'_{i}\boldsymbol\alpha) \perp \bv{x}_i$.
 
-    $$
-    SE = \sqrt(\frac{p(1-p)}{n}) \approx \sqrt{\frac{1/3 (1 - 1/3)} {300}} = 0.027
-    $$
+Least squares are consistent (but inefficient, see GLS XXXX).
+
+## Estimation of Fixed Effects Models
+
+***
+:::{.hypothesis #FE name="Fixed-effect model"}
+
+We assume that:
+
+i. There is no perfect multicollinearity among the regressors.
+ii. $\mathbb{E}(\varepsilon_{i,t}|\bv{X})=0$, for all $i,t$.
+iii. We have:
+$$
+\mathbb{E}(\varepsilon_{i,t}\varepsilon_{j,s}|\bv{X}) =
+\left\{
+\begin{array}{cl}
+\sigma^2 & \mbox{if $i=j$ and $s=t$},\\
+0 & \mbox{otherwise.}
+\end{array}\right.
+$$
+:::
+***
+
+
+These assumptions are analogous to those introduced in the standard linear regression:
+
+(i) $\leftrightarrow$ \@ref(hyp:fullrank), (ii) $\leftrightarrow$ \@ref(hyp:exogeneity), (iii) $\leftrightarrow$  \@ref(hyp:homoskedasticity) + \@ref(hyp:noncorrelResid).
+
+
+In matrix form, for a given $i$, the model writes:
+$$
+\bv{y}_i = \bv{X}_i \boldsymbol\beta + \bv{1}\alpha_i + \boldsymbol\varepsilon_i,
+$$
+where $\bv{1}$ is a $T$-dimensional vector of ones.
+
+This is the **Least Square Dummy Variable (LSDV)** model:
+\begin{equation}
+\boxed{\bv{y} = [\bv{X} \quad \bv{D}]
+\left[
+\begin{array}{c}
+\boldsymbol\beta\\
+\boldsymbol\alpha
+\end{array}
+\right]
++ \boldsymbol\varepsilon,} (\#eq:LSDV)
+\end{equation}
+with:
+$$
+\bv{D} = \underbrace{ \left[\begin{array}{cccc}
+\bv{1}&\bv{0}&\dots&\bv{0}\\
+\bv{0}&\bv{1}&\dots&\bv{0}\\
+&&\vdots&\\
+\bv{0}&\bv{0}&\dots&\bv{1}\\
+\end{array}\right]}_{(nT \times n)}.
+$$
+
+The linear regression (Eq. \@ref(eq:LSDV)) --with the dummy variables-- satisfies the Gauss-Markov conditions (Theorem \@ref(thm:GaussMarkov)). Hence, in this context, the OLS estimator is the **best linear unbiased estimator**.
+
+Denoting by $\bv{Z}$ the matrix $[\bv{X} \quad \bv{D}]$, and by $\bv{b}$ and $\bv{a}$ the respective OLS estimates of $\boldsymbol\beta$ and of $\boldsymbol\alpha$, we have:
+\begin{equation}
+\boxed{
+\left[
+\begin{array}{c}
+\bv{b}\\
+\bv{a}
+\end{array}
+\right]
+= [\bv{Z}'\bv{Z}]^{-1}\bv{Z}'\bv{y}.} (\#eq:bfixedeffects11)
+\end{equation}
+
+The asymptotical distribution of $[\bv{b}',\bv{a}']'$ derives from the standard OLS context: Prop. \@ref(prp:asymptOLS) can be used after having replaced $\bv{X}$ by $\bv{Z}=[\bv{X} \quad \bv{D}]$.
+
+We have:
+\begin{equation}
+\boxed{\left[
+\begin{array}{c}
+\bv{b}\\
+\bv{a}
+\end{array}
+\right] \overset{d}{\rightarrow}
+\mathcal{N}\left(
+\left[
+\begin{array}{c}
+\boldsymbol\beta\\
+\boldsymbol\alpha
+\end{array}
+\right],
+\sigma^2 \frac{Q^{-1}}{nT}
+\right)}
+\end{equation}
+where
+$$
+Q = \mbox{plim}_{nT \rightarrow \infty} \frac{1}{nT} \bv{Z}'\bv{Z}.
+$$
+
+In practice, an estimator of the covariance matrix of $[\bv{b}',\bv{a}']'$ is:
+$$
+s^2 \left( \bv{Z}'\bv{Z}\right)^{-1} \quad with \quad s^2 = \frac{\bv{e}'\bv{e}}{nT - K - n},
+$$
+where $\bv{e}$ is the $(nT) \times 1$ vector of OLS residuals.
+
+There is an alternative way of expressing the LSDV estimators.
+
+It is based on matrix $\bv{M_D}=\bv{I} - \bv{D}(\bv{D}'\bv{D})^{-1}\bv{D}'$, which acts as an operator that removes entity-specific means, i.e.:
+$$
+\tilde{\bv{Y}} = \bv{M_D}\bv{Y}, \quad \tilde{\bv{X}} = \bv{M_D}\bv{X} \quad and \quad \tilde{\boldsymbol\varepsilon} = \bv{M_D}\boldsymbol\varepsilon.
+$$
+
+With these notations, using Theorem \@ref(thm:FW), we get:
+\begin{equation}
+\boxed{\bv{b} = [\bv{X}'\bv{M_D}\bv{X}]^{-1}\bv{X}'\bv{M_D}\bv{y}.}(\#eq:bfixedeffects)
+\end{equation}
+
+This amounts to regressing the $\tilde{y}_{i,t}$s ($= y_{i,t} - \bar{y}_i$) on the $\tilde{\bv{x}}_{i,t}$s ($=\bv{x}_{i,t} - \bar{\bv{x}}_i$).
+
+The estimates of $\boldsymbol\alpha$ are given by:
+\begin{equation}
+\boxed{\bv{a} = (\bv{D}'\bv{D})^{-1}\bv{D}'(\bv{y} - \bv{X}\bv{b}),} (\#eq:a)
+\end{equation}
+which is obtained by developing the second row of
+$$
+\left[
+\begin{array}{cc}
+\bv{X}'\bv{X} & \bv{X}'\bv{D}\\
+\bv{D}'\bv{X} & \bv{D}'\bv{D}
+\end{array}\right]
+\left[
+\begin{array}{c}
+\bv{b}\\
+\bv{a}
+\end{array}\right] =
+\left[
+\begin{array}{c}
+\bv{X}'\bv{Y}\\
+\bv{D}'\bv{Y}
+\end{array}\right],
+$$
+which are the first-order conditions resulting from the least squares problem (see Eq. \@ref(eq:OLSFOC)).
+
+XXXX Regression of the log of airline costs on log(output), log(fuel price) and capacity utilization of the fleet (Data from \href{https://vincentarelbundock.github.io/Rdatasets/doc/Ecdat/Airline.html}{Greene (2003)}, see Fig. \@ref(fig:airline).
+
+XXXX Regression of the number of cigarette packs (log) on real income (log) and real price of cigarettes (log)
+
+
+
+<!-- %\begin{frame}{} -->
+<!-- %\begin{scriptsize} -->
+<!-- %Look at: -->
+<!-- %http://www.princeton.edu/~otorres/Panel101R.pdf -->
+<!-- % -->
+<!-- %Nice chart with OLS versus LSDV. -->
+<!-- % -->
+<!-- %Use also Grunfeld data: -->
+<!-- % -->
+<!-- %https://vincentarelbundock.github.io/Rdatasets/doc/plm/Grunfeld.html -->
+<!-- % -->
+<!-- %===> Use Applied Econometrics with R 3.6: If $u_i$ exogen, then random effects more efficient. Hausman test. -->
+<!-- % -->
+<!-- %\end{scriptsize} -->
+<!-- %\end{frame} -->
+
+
+Extension: Fixed time and group effects
+
+Time effects are easily introduced:
+$$
+y_{i,t} = \bv{x}_i'\boldsymbol\beta + \alpha_i + \gamma_t + \varepsilon_{i,t}.
+$$
+
+The LSDV (Eq. \@ref(eq:LSDV)) can be extended:
+\begin{equation}
+\bv{y} = [\bv{X} \quad \bv{D} \quad \bv{C}]
+\left[
+\begin{array}{c}
+\boldsymbol\beta\\
+\boldsymbol\alpha\\
+\boldsymbol\gamma
+\end{array}
+\right]
++ \boldsymbol\varepsilon, (\#eq:LSDV2)
+\end{equation}
+with:
+$$
+\bv{C} = \left[\begin{array}{cccc}
+\boldsymbol{\delta}_1&\boldsymbol{\delta}_2&\dots&\boldsymbol{\delta}_{T-1}\\
+\vdots&\vdots&&\vdots\\
+\boldsymbol{\delta}_1&\boldsymbol{\delta}_2&\dots&\boldsymbol{\delta}_{T-1}\\
+\end{array}\right],
+$$
+where the $T$-dimensional vector $\boldsymbol\delta_t$ is
+$$
+[0,\dots,0,\underbrace{1}_{\mbox{t$^{th}$ entry}},0,\dots,0]'.
+$$
+
+
+XXXX Geo-located data from Airbnb, Z\"urich
+
+
+
+Source: [Airbnb, date 22 June 2017](http://tomslee.net/airbnb-data-collection-get-the-data). Regression of price for Entire home/apt on number of bedrooms, number of people that can be accommodated.
+
+
+## Estimation of random effects models
+
+Here, the individual effects are assumed not to be correlated to other variables (the $\bv{x}_i$s).
+
+**Random-effect models** write:
+$$
+y_{i,t}=\bv{x}'_{it}\boldsymbol\beta + (\alpha + \underbrace{u_i}_{\substack{\text{Random}\\\text{heterogeneity}}}) + \varepsilon_{i,t}
+$$
+with
+\begin{eqnarray*}
+\mathbb{E}(\varepsilon_{i,t}|\bv{X})&=&\mathbb{E}(u_{i}|\bv{X}) =0,\\
+\mathbb{E}(\varepsilon_{i,t}\varepsilon_{j,s}|\bv{X}) &=&
+\left\{
+\begin{array}{cl}
+\sigma_\varepsilon^2 & \mbox{ if $i=j$ and $s=t$},\\
+0 & \mbox{ otherwise.}
+\end{array}
+\right.\\
+\mathbb{E}(u_{i}u_{j}|\bv{X}) &=&
+\left\{
+\begin{array}{cl}
+\sigma_u^2 & \mbox{ if $i=j$},\\
+0 & \mbox{otherwise.}
+\end{array}
+\right.\\
+\mathbb{E}(\varepsilon_{i,t}u_{j}|\bv{X})&=&0 \quad \text{for all $i$, $j$ and $t$}.
+\end{eqnarray*}
+
+Notation: $\eta_{i,t} = u_i + \varepsilon_{i,t}$ and $\boldsymbol\eta_i = [\eta_{i,1},\eta_{i,2},\dots,\eta_{i,T}]'$.
+
+We have $\mathbb{E}(\boldsymbol\eta_i |\bv{X}) = \bv{0}$ and $\mathbb{V}ar(\boldsymbol\eta_i | \bv{X}) = \boldsymbol\Gamma$ where
+$$
+\boldsymbol\Gamma = \left[	\begin{array}{ccccc}
+\sigma_\varepsilon^2+\sigma_u^2 & \sigma_u^2 & \sigma_u^2 & \dots & \sigma_u^2\\
+\sigma_u^2 & \sigma_\varepsilon^2+\sigma_u^2 & \sigma_u^2 & \dots & \sigma_u^2\\
+\vdots && \ddots && \vdots \\
+\sigma_u^2 & \sigma_u^2 & \sigma_u^2 & \dots & \sigma_\varepsilon^2+\sigma_u^2\\
+\end{array}
+\right] = \sigma_\varepsilon^2\bv{I} + \sigma_u^2\bv{1}\bv{1}'.
+$$
+
+Denoting by $\boldsymbol\Sigma$ the covariance matrix of $\boldsymbol\eta = [\boldsymbol\eta_1',\dots,\boldsymbol\eta_n']'$, we have:
+$$
+\boldsymbol\Sigma = \bv{I} \otimes \boldsymbol\Gamma.
+$$
+
+If we knew $\boldsymbol\Sigma$, we would apply (feasible) GLS (Eq. \@ref(eq:betaGLS)):
+$$
+\boldsymbol\beta = (\bv{X}'\boldsymbol\Sigma^{-1}\bv{X})^{-1}\bv{X}'\boldsymbol\Sigma^{-1}\bv{y}
+$$
+(recall that this amounts to regressing ${\boldsymbol\Sigma^{-1/2}}'\bv{y}$ on ${\boldsymbol\Sigma^{-1/2}}'\bv{X}$).
+
+It can be checked that $\boldsymbol\Sigma^{-1/2} = \bv{I} \otimes (\boldsymbol\Gamma^{-1/2})$ where
+$$
+\boldsymbol\Gamma^{-1/2} = \frac{1}{\sigma_\varepsilon}\left( \bv{I} - \frac{\theta}{T}\bv{1}\bv{1}'\right)
+$$
+with
+$$
+\theta = 1 - \frac{\sigma_\varepsilon}{\sqrt{\sigma_\varepsilon^2+T\sigma_u^2}}.
+$$
+
+Hence, if we knew $\boldsymbol\Sigma$, we would transform the data as follows:
+$$
+\boldsymbol\Gamma^{-1/2}\bv{y}_i = \frac{1}{\sigma_\varepsilon}\left[\begin{array}{c}y_{i,1} - \theta\bar{y}_i\\y_{i,2} - \theta\bar{y}_i\\\vdots\\y_{i,T} - \theta\bar{y}_i\\\end{array}\right].
+$$
+
+What about when $\boldsymbol\Sigma$ is unknown?
+
+Idea: taking deviations from group means removes heterogeneity:
+$$
+y_{i,t} - \bar{y}_i = [\bv{x}_{i,t} - \bar{\bv{x}}_i]'\boldsymbol\beta + (\varepsilon_{i,t} - \bar{\varepsilon}_i).
+$$
+
+The previous equation can be consistently estimated by OLS
+
+(the residuals are correlated across $t$ within an entity but the OLS remain consistent though, see Prop. \@ref{prp:XXX)).
+
+We have $\mathbb{E}\left[\sum_{i=1}^{T}(\varepsilon_{i,t}-\bar{\varepsilon}_i)^2\right] = (T-1)\sigma_{\varepsilon}^2$.
+
+The $\varepsilon_{i,t}$s are not observed but $\bv{b}$ is a consistent estimator of $\boldsymbol\beta$; adjustment for the degrees of freedom:
+$$
+\hat{\sigma}_e^2 = \frac{1}{nT-n-K}\sum_{i=1}^{n}\sum_{t=1}^{T}(e_{i,t} - \bar{e}_i)^2.
+$$
+
+And for $\sigma_u^2$? We can exploit the fact that OLS are consistent in the pooled regression:
+$$
+\mbox{plim }s^2_{pooled} = \mbox{plim }\frac{\bv{e}'\bv{e}}{nT-K-1} = \sigma_u^2 + \sigma_\varepsilon^2,
+$$
+and therefore use $s^2_{pooled} - \hat{\sigma}_e^2$ as an approximation to $\sigma_u^2$.
+
+
+<!-- %\begin{frame}{} -->
+<!-- %\begin{scriptsize} -->
+<!-- %\begin{itemize} -->
+<!-- %	\item Breusch and Pagan LM test of $H_0: \quad \sigma_u^2=0$ (13.4.3 in Greene) -->
+<!-- %	\item Hausman's specification test 13.4.4. -->
+<!-- %	\item Cluster-robust standard errors (\href{http://cameron.econ.ucdavis.edu/research/Cameron_Miller_Cluster_Robust_October152013.pdf}{nice paper}) + \href{http://www.cemfi.es/~arellano/obes_1987.pdf}{Arellano (1987)} -->
+<!-- %	\item Random versus Fixed effects: uncorrelated errors / LSDV: lose a lot of degrees of freedom. -->
+<!-- %	\item \href{http://econweb.tamu.edu/keli/Hausman\%201978.pdf}{Hausman (1978)} test: $H_0:$ no correlation of random effects and regressors. -->
+<!-- %\end{itemize} -->
+<!-- %\end{scriptsize} -->
+<!-- %\end{frame} -->
+
+<!-- %\begin{frame}{} -->
+<!-- %Instrumental Variable estimation of the random effect model -->
+<!-- %\begin{scriptsize} -->
+<!-- %\begin{itemize} -->
+<!-- %	\item Objective: have a specification where the model can contain time-invariant characteristics. Specification: -->
+<!-- %	$$ -->
+<!-- %	y_{i,t} = 	\underbrace{\bv{x}'_{1,i,t} \boldsymbol\beta_1}_{\perp u_i} + -->
+<!-- %			\underbrace{\bv{x}'_{2,i,t} \boldsymbol\beta_2}_{\not\perp u_i} + -->
+<!-- %			\underbrace{\bv{z}'_{1,i} \boldsymbol\alpha_1}_{\perp u_i} + -->
+<!-- %			\underbrace{\bv{z}'_{2,i} \boldsymbol\alpha_2}_{\not\perp u_i} + \varepsilon_{i,t}. -->
+<!-- %	$$ -->
+<!-- %	\item Assumptions: -->
+<!-- %	\begin{eqnarray*} -->
+<!-- %	E(u_i) = E(u_i|\bv{x}_{1,i,t},\bv{z}_{1,i,t}) &=& 0\\ -->
+<!-- %	E(u_i|\bv{x}_{2,i,t},\bv{z}_{2,i,t}) &\ne& 0\\ -->
+<!-- %	\mbox{Var}(u_i|\bv{x}_{1,i,t},\bv{z}_{1,i,t},\bv{x}_{2,i,t},\bv{z}_{2,i,t})&=& \sigma_u^2\\ -->
+<!-- %	\mbox{Cov}(u_i,\varepsilon_{i,t}|\bv{x}_{1,i,t},\bv{z}_{1,i,t},\bv{x}_{2,i,t},\bv{z}_{2,i,t})&=& 0\\ -->
+<!-- %	\mbox{Var}(u_i + \varepsilon_{i,t}|\bv{x}_{1,i,t},\bv{z}_{1,i,t},\bv{x}_{2,i,t},\bv{z}_{2,i,t})&=& \sigma^2 = \sigma_u^2 + \sigma_\varepsilon^2\\ -->
+<!-- %	\mbox{Corr}(u_i + \varepsilon_{i,t},u_i + \varepsilon_{i,s}|\bv{x}_{1,i,t},\bv{z}_{1,i,t},\bv{x}_{2,i,t},\bv{z}_{2,i,t})&=& \rho = \sigma_u^2/\sigma^2 -->
+<!-- %	\end{eqnarray*}	 -->
+<!-- %\end{itemize} -->
+<!-- %\end{scriptsize} -->
+<!-- %\end{frame} -->
+<!-- % -->
+<!-- %\begin{frame}{} -->
+<!-- %\begin{scriptsize} -->
+<!-- %\begin{itemize} -->
+<!-- %	\item OLS and GLS inconsistent. -->
+<!-- %	\item \href{http://web.mit.edu/14.33/www/hausman.pdf}{Hausman and Taylor, 1981}. Example cited in the plm package by Baltagi (2001) (with data in the plm package). -->
+<!-- %	\item First: -->
+<!-- %	\begin{equation}\label{eq:13.36} -->
+<!-- %	y_{i,t} - \bar{y}_i = [\bv{x}_{1,i,t} - \bar{\bv{x}}_{1,i}]'\boldsymbol\beta_1 + [\bv{x}_{2,i,t} - \bar{\bv{x}}_{2,i}]'\boldsymbol\beta_2 + (\varepsilon_{i,t} - \bar{\varepsilon}_i) -->
+<!-- %	\end{equation} -->
+<!-- %	\item[$\Rightarrow$] $\boldsymbol\beta$ can consistently be estimated by LS. -->
+<!-- %	\item[Step 1] LSDV of $\boldsymbol\beta$ (Eq. \ref{eq:13.36})  -->
+<!-- %	\item[Step 2] residuals of step 1: $e_{i,t}$. Regress $e_{i}$ on $(\bv{z}_1',\bv{z}_2')'$ with IV $\bv{z}_1$ and $\bv{x}_1$ (assuming $K_1\ge L_2$). NB: time-invariant data are repeated $T$ times. $\Rightarrow$ consistent estimate of $\boldsymbol\alpha$. -->
+<!-- %	\item[Step 3] The residual variance in Step 2 = consistent estimator of $\sigma_u^2 + \sigma^2_\varepsilon/T$. From and from the estimator of $\sigma^2_\varepsilon$ from Step 1, estimator of $\sigma^2_u$. This leads to an estimate $\hat{\theta}$ of: -->
+<!-- %	$$ -->
+<!-- %	\theta = \sqrt{\frac{\sigma^2_\varepsilon}{\sigma^2_\varepsilon + T\sigma^2_u}} -->
+<!-- %	$$ -->
+<!-- %	that can  be used in Feasible GLS. -->
+<!-- %\end{itemize} -->
+<!-- %\end{scriptsize} -->
+<!-- %\end{frame} -->
+<!-- % -->
+<!-- %\begin{frame}{} -->
+<!-- %\begin{scriptsize} -->
+<!-- %\begin{itemize} -->
+<!-- %	\item[Step 4] Define $\bv{w}_{i,t} = [\bv{x}_{1,i,t}',\bv{x}_{2,i,t}',\bv{z}_{1,i,t}',\bv{z}_{2,i,t}']$, -->
+<!-- %	$$ -->
+<!-- %	\bv{w}_{i,t}^* = \bv{w}_{i,t} - (1 - \hat{\theta})\bv{w}_i \quad \mbox{and} \quad y_{i,t}^* = y_{i,t} - (1 - \hat\theta) y_i. -->
+<!-- %	$$ -->
+<!-- %	The IVs are: -->
+<!-- %	$$ -->
+<!-- %	\bv{v}_{i,t} = [(\bv{x}_{1,i,t}-\bv{x}_{1,i})',(\bv{x}_{2,i,t}-\bv{x}_{2,i})',\bv{z}_{1,i}',\bv{x}_{1,i}']. -->
+<!-- %	$$ -->
+<!-- %	Finally: -->
+<!-- %	\begin{equation} -->
+<!-- %	(\bv{b}_{iv}',\bv{a}_{iv}')' = [({\bv{W}^*}'\bv{V})(\bv{V}'\bv{V})^{-1}(\bv{V}'{\bv{W}^*})][({\bv{W}^*}'\bv{V})(\bv{V}'\bv{V})^{-1}(\bv{V}'{\bv{y}^*})] -->
+<!-- %	\end{equation} -->
+<!-- %	\item No Asymp Var??? -->
+<!-- %\end{itemize} -->
+<!-- %\end{scriptsize} -->
+<!-- %\end{frame} -->
+<!-- % -->
+<!-- %\begin{frame}{} -->
+<!-- %\begin{scriptsize} -->
+<!-- %\begin{itemize} -->
+<!-- %	\item GMM estimation \href{http://people.stern.nyu.edu/wgreene/Econometrics/Arellano-Bond.pdf}{Arellano and Bond (1991)}. plm package does it; see Greene 13.6. -->
+<!-- %\end{itemize} -->
+<!-- %\end{scriptsize} -->
+<!-- %\end{frame} -->
+<!-- % -->
+<!-- %\begin{frame}{} -->
+<!-- %\begin{scriptsize} -->
+<!-- %\begin{itemize} -->
+<!-- %	\item XXX -->
+<!-- %\end{itemize} -->
+<!-- %\end{scriptsize} -->
+<!-- %\end{frame} -->
+
+
+

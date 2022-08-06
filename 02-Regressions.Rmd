@@ -901,6 +901,8 @@ $\bv{b}_{iv}$ is also the result of the regression of $\bv{y}$ on $\bv{X^*}$, wh
 
 If the instruments do not properly satisfy Condition (a) in Def. \@ref(def:instruments) (i.e. if $\bv{x}_i$ and $\bv{z}_i$ are only loosely related), the instruments are said to be **weak**.
 
+Relevant citation: @Andrews_Stock_Sun_2019.
+
 This problem is for instance discussed in [Stock and Yogo (2003)](http://scholar.harvard.edu/files/stock/files/testing_for_weak_instruments_in_linear_iv_regression.pdf). See also [Stock and Watson](https://www.pearson.com/us/higher-education/product/Stock-Introduction-to-Econometrics-3rd-Edition/9780138009007.html) pp.\,489-490.
 
 
@@ -1063,7 +1065,7 @@ The GRM context notably allows to model **heteroskedasticity** and **autocorrela
 
 :::{.example #autocorrelaaa}
 
-Autocorrelation is, in particular, a recurrent problem when time-series data are used (see Section \ref{section:TS}).
+Autocorrelation is, in particular, a recurrent problem when time-series data are used (see Section \@ref(section:TS}).
 
 In a time-series context, subscript $i$ refers to a date. Assume for instance that:
 \begin{equation}
@@ -1272,7 +1274,7 @@ lines(x,dnorm(x,mean = 1,sd = mean(sqrt(all_V_White))),col="red")
 
 ### Heteroskedasticity and Autocorrelation (HAC)
 
-This includes the cases of Eqs. \@ref{eq:heteroskedasticity) and \@ref(eq:autocorrelation).
+This includes the cases of Eqs. \@ref(eq:heteroskedasticity) and \@ref(eq:autocorrelation).
 
 [Newey and West (1987)](http://www.jstor.org/stable/1913610): If the correlation between terms $i$ and $j$ gets sufficiently small when $|i-j|$ increases:
 \begin{eqnarray}
@@ -1298,7 +1300,7 @@ where the $u_i$s and the $v_i$s are i.i.d. $\mathcal{N}(0,1)$.
 Here is a simulated sample ($n=200$) of this model:
 <!-- \end{itemize} -->
 <!-- \begin{figure} -->
-<!-- \caption{Simulation of Eqs.\,(\ref{eq:simul11}) and (\ref{eq:simul22}) on 200 periods} -->
+<!-- \caption{Simulation of Eqs.\,(\@ref(eq:simul11}) and (\@ref(eq:simul22}) on 200 periods} -->
 <!-- \includegraphics[width=\linewidth]{../../figures/Figure_OLS_GRM_autocorr1.pdf} -->
 <!-- \end{figure} -->
 <!-- \end{scriptsize} -->
@@ -1350,5 +1352,59 @@ $$
 \end{array}
 \right.
 $$
+
+## Summary
+
+<!-- ```{=latex} -->
+
+<!-- \begin{table}[tbp] -->
+<!-- \begin{center} -->
+<!-- \begin{threeparttable} -->
+<!-- \caption{Descriptive statistics included in the present study.} -->
+<!-- \begin{tabular}{ll} -->
+<!-- \toprule -->
+<!-- cyl & \multicolumn{1}{c}{Some columnname}\ -->
+<!-- \midrule -->
+<!-- 4.00 & 26.66 &plusmn; 4.51\ -->
+<!-- 6.00 & 19.74 &plusmn; 1.45\ -->
+<!-- 8.00 & 15.1 &plusmn; 2.56\ -->
+<!-- \bottomrule -->
+<!-- \addlinespace -->
+<!-- \end{tabular} -->
+<!-- \begin{tablenotes}[para] -->
+<!-- \textit{Note.} There were no signnificant differences in the means between the groups. -->
+<!-- \end{tablenotes} -->
+<!-- \end{threeparttable} -->
+<!-- \end{center} -->
+<!-- \end{table} -->
+
+<!-- ``` -->
+
+|                                                      | Under Assumptions \@ref(hyp:fullrank)+ | $\bv{b}$ normal in small sample (Eq. \@ref(eq:distriBcondi)) | $\bv{b}$ is BLUE (Thm \@ref(thm:GaussMarkov)) | $\bv{b}$ unbiased in small sample (Prop. \@ref(prp:propOLS)) | $\bv{b}$ consistent (Prop. \@ref(prp:XXX))$^*$ | $\bv{b}$ $\sim$ normal in large sample (Prop. \@ref(prp:AsymptGRM))$^*$ |
+|------------------------------------------------------|-----------------------------------------|-------------------------------------------------------------|----------------------------------------------|--------------------------------------------------------------|------------------------------------------------|--------------------------------------------------------------------------|
+| \rotatebox[origin=c]{90}{ Condit. mean-zero}         | \@ref(hyp:exogeneity)                  | X                                                           | X                                            | X                                                            | X                                              | X                                                                        |
+| \rotatebox[origin=c]{90}{ Homoskedasticity}          | \@ref(hyp:homoskedasticity)            | X                                                           | X                                            |                                                              |                                                |                                                                          |
+| \rotatebox[origin=c]{90}{Uncorrelated residuals}     | \@ref(hyp:noncorrelResid)             | X                                                           | X                                            |                                                              |                                                |                                                                          |
+| \rotatebox[origin=c]{90}{ Normality of disturbances} | \@ref(hyp:normality)                   | X                                                           |                                              |                                                              |                                                |                                                                          |
+
+
+$^*$: see however Prop. \@ref(prp:XXX) and Prop. \@ref(prp:AsymptGRM) for additional hypotheses. Specifically $\bv{X}'\bv{X}/n$ and $\bv{X}'\boldsymbol{\Sigma}\bv{X}/n$ must converge in proba. to finite positive definite matrices ($\boldsymbol\Sigma$ is defined in Eq. \@ref(eq:assumGLS2)).
+
+```{r essai}
+a <- 1
+```
+
+Alors, combien vaut `a`? Answer: `r a`.
+
+## Clusters
+
+[MacKinnon, Nielsen, and Webb (2022)](https://www.sciencedirect.com/science/article/pii/S0304407622000781#da1)
+
+A nice reference is @MACKINNON2022
+
+Another one is @Cameron_Miller_2014
+
+See package [fwildclusterboot](https://cran.r-project.org/web/packages/fwildclusterboot/vignettes/fwildclusterboot.html) for wild cluster bootstrap.
+
 
 

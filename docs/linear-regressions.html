@@ -67,9 +67,9 @@
 <li><a class="" href="index.html"><span class="header-section-number">1</span> Prerequisites</a></li>
 <li><a class="" href="intro.html"><span class="header-section-number">2</span> Introduction</a></li>
 <li><a class="active" href="linear-regressions.html"><span class="header-section-number">3</span> Linear Regressions</a></li>
-<li><a class="" href="methods.html"><span class="header-section-number">4</span> Methods</a></li>
-<li><a class="" href="methods-1.html"><span class="header-section-number">5</span> Methods</a></li>
-<li><a class="" href="applications.html"><span class="header-section-number">6</span> Applications</a></li>
+<li><a class="" href="panel-regressions.html"><span class="header-section-number">4</span> Panel regressions</a></li>
+<li><a class="" href="estimation-methods.html"><span class="header-section-number">5</span> Estimation Methods</a></li>
+<li><a class="" href="microeconometrics.html"><span class="header-section-number">6</span> Microeconometrics</a></li>
 <li><a class="" href="time-series.html"><span class="header-section-number">7</span> Time Series</a></li>
 <li><a class="" href="appendix.html"><span class="header-section-number">8</span> Appendix</a></li>
 <li><a class="" href="references.html">References</a></li>
@@ -953,6 +953,7 @@ s_{iv}^2 = \frac{1}{n}\sum_{i=1}^{n} (y_i - \mathbf{x}_i'\mathbf{b}_{iv})^2
 <p>In this case, Prop. <a href="linear-regressions.html#prp:IV">3.12</a> still holds, with <span class="math inline">\(\mathbf{b}_{iv}\)</span> given by Eq. <a href="linear-regressions.html#eq:IV">(3.21)</a>.</p>
 <p><span class="math inline">\(\mathbf{b}_{iv}\)</span> is also the result of the regression of <span class="math inline">\(\mathbf{y}\)</span> on <span class="math inline">\(\mathbf{X^*}\)</span>, where the columns of <span class="math inline">\(\mathbf{X}^*\)</span> are the (othogonal) projections of those of <span class="math inline">\(\mathbf{X}\)</span> on <span class="math inline">\(\mathbf{Z}\)</span>, i.e. <span class="math inline">\(\mathbf{X^*} = \mathbf{P^{Z}X}\)</span> (using the notations introduced in Eq. <a href="linear-regressions.html#eq:Proj">(3.3)</a>). Hence the other names of this estimator: <strong>Two-Stage Least Squares (TSLS)</strong>.</p>
 <p>If the instruments do not properly satisfy Condition (a) in Def. <a href="linear-regressions.html#def:instruments">3.2</a> (i.e. if <span class="math inline">\(\mathbf{x}_i\)</span> and <span class="math inline">\(\mathbf{z}_i\)</span> are only loosely related), the instruments are said to be <strong>weak</strong>.</p>
+<p>Relevant citation: <span class="citation">Andrews, Stock, and Sun (<a href="references.html#ref-Andrews_Stock_Sun_2019" role="doc-biblioref">2019</a>)</span>.</p>
 <p>This problem is for instance discussed in <a href="http://scholar.harvard.edu/files/stock/files/testing_for_weak_instruments_in_linear_iv_regression.pdf">Stock and Yogo (2003)</a>. See also <a href="https://www.pearson.com/us/higher-education/product/Stock-Introduction-to-Econometrics-3rd-Edition/9780138009007.html">Stock and Watson</a> pp.,489-490.</p>
 <p>The Hausman test can be used to test if IV necessary. IV techniques are required if <span class="math inline">\(\mbox{plim}_{n \rightarrow \infty} \mathbf{X}'\boldsymbol\varepsilon / n \ne 0\)</span>. <a href="http://www.jstor.org/stable/1913827?seq=1#page_scan_tab_contents">Hausman (1978)</a> proposes a test of the efficiency of estimators. Under the null hypothesis two estimators, <span class="math inline">\(\mathbf{b}_0\)</span> and <span class="math inline">\(\mathbf{b}_1\)</span>, are consistent but <span class="math inline">\(\mathbf{b}_0\)</span> is (asymptotically) efficient relative to <span class="math inline">\(\mathbf{b}_1\)</span>. Under the alternative hypothesis, <span class="math inline">\(\mathbf{b}_1\)</span> (IV in the present case) remains consistent but not <span class="math inline">\(\mathbf{b}_0\)</span> (OLS in the present case).</p>
 <p>The test statistic is:
@@ -1204,7 +1205,7 @@ Figure 3.4: This figure illustrates the situation prevailing when estimating a p
 </li>
 </ul>
 <div class="example">
-<p><span id="exm:autocorrelaaa" class="example"><strong>Example 3.4  </strong></span>Autocorrelation is, in particular, a recurrent problem when time-series data are used (see Section <span class="math inline">\(\ref{section:TS}\)</span>).</p>
+<p><span id="exm:autocorrelaaa" class="example"><strong>Example 3.4  </strong></span>Autocorrelation is, in particular, a recurrent problem when time-series data are used (see Section @ref(section:TS}).</p>
 <p>In a time-series context, subscript <span class="math inline">\(i\)</span> refers to a date. Assume for instance that:
 <span class="math display" id="eq:usual">\[\begin{equation}
 y_i = \mathbf{x}_i' \boldsymbol\beta + \varepsilon_i \tag{3.25}
@@ -1366,7 +1367,7 @@ where the <span class="math inline">\(x_i\)</span>s are i.i.d. <span class="math
 <h3>
 <span class="header-section-number">3.5.2</span> Heteroskedasticity and Autocorrelation (HAC)<a class="anchor" aria-label="anchor" href="#heteroskedasticity-and-autocorrelation-hac"><i class="fas fa-link"></i></a>
 </h3>
-<p>This includes the cases of Eqs. @ref{eq:heteroskedasticity) and <a href="linear-regressions.html#eq:autocorrelation">(3.24)</a>.</p>
+<p>This includes the cases of Eqs. <a href="linear-regressions.html#eq:heteroskedasticity">(3.23)</a> and <a href="linear-regressions.html#eq:autocorrelation">(3.24)</a>.</p>
 <p><a href="http://www.jstor.org/stable/1913610">Newey and West (1987)</a>: If the correlation between terms <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> gets sufficiently small when <span class="math inline">\(|i-j|\)</span> increases:
 <span class="math display" id="eq:NW">\[\begin{eqnarray}
 &amp;&amp;\mbox{plim} \left( \frac{1}{n}\sum_{i=1}^{n}\sum_{j=1}^{n}\sigma_{i,j}\mathbf{x}_i\mathbf{x}'_j \right) =  \\
@@ -1388,7 +1389,7 @@ where the <span class="math inline">\(u_i\)</span>s and the <span class="math in
 <p>Here is a simulated sample (<span class="math inline">\(n=200\)</span>) of this model:
 <!-- \end{itemize} -->
 <!-- \begin{figure} -->
-<!-- \caption{Simulation of Eqs.\,(\ref{eq:simul11}) and (\ref{eq:simul22}) on 200 periods} -->
+<!-- \caption{Simulation of Eqs.\,(\@ref(eq:simul11}) and (\@ref(eq:simul22}) on 200 periods} -->
 <!-- \includegraphics[width=\linewidth]{../../figures/Figure_OLS_GRM_autocorr1.pdf} -->
 <!-- \end{figure} -->
 <!-- \end{scriptsize} -->
@@ -1428,13 +1429,118 @@ r = \frac{\sum_{i=2}^{n}e_i e_{i-1}}{\sum_{i=1}^{n-1}e_i^2}.
 \end{array}
 \right.
 \]</span></p>
-
 </div>
+</div>
+<div id="summary" class="section level2" number="3.6">
+<h2>
+<span class="header-section-number">3.6</span> Summary<a class="anchor" aria-label="anchor" href="#summary"><i class="fas fa-link"></i></a>
+</h2>
+<!-- ```{=latex} -->
+<!-- \begin{table}[tbp] -->
+<!-- \begin{center} -->
+<!-- \begin{threeparttable} -->
+<!-- \caption{Descriptive statistics included in the present study.} -->
+<!-- \begin{tabular}{ll} -->
+<!-- \toprule -->
+<!-- cyl & \multicolumn{1}{c}{Some columnname}\ -->
+<!-- \midrule -->
+<!-- 4.00 & 26.66 &plusmn; 4.51\ -->
+<!-- 6.00 & 19.74 &plusmn; 1.45\ -->
+<!-- 8.00 & 15.1 &plusmn; 2.56\ -->
+<!-- \bottomrule -->
+<!-- \addlinespace -->
+<!-- \end{tabular} -->
+<!-- \begin{tablenotes}[para] -->
+<!-- \textit{Note.} There were no signnificant differences in the means between the groups. -->
+<!-- \end{tablenotes} -->
+<!-- \end{threeparttable} -->
+<!-- \end{center} -->
+<!-- \end{table} -->
+<!-- ``` -->
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="13%">
+<col width="10%">
+<col width="15%">
+<col width="11%">
+<col width="16%">
+<col width="12%">
+<col width="19%">
+</colgroup>
+<thead><tr class="header">
+<th></th>
+<th>Under Assumptions <a href="linear-regressions.html#hyp:fullrank">3.1</a>+</th>
+<th>
+<span class="math inline">\(\mathbf{b}\)</span> normal in small sample (Eq. <a href="linear-regressions.html#eq:distriBcondi">(3.8)</a>)</th>
+<th>
+<span class="math inline">\(\mathbf{b}\)</span> is BLUE (Thm <a href="linear-regressions.html#thm:GaussMarkov">3.1</a>)</th>
+<th>
+<span class="math inline">\(\mathbf{b}\)</span> unbiased in small sample (Prop. <a href="linear-regressions.html#prp:propOLS">3.3</a>)</th>
+<th>
+<span class="math inline">\(\mathbf{b}\)</span> consistent (Prop. <a href="linear-regressions.html#prp:XXX">3.14</a>)<span class="math inline">\(^*\)</span>
+</th>
+<th>
+<span class="math inline">\(\mathbf{b}\)</span> <span class="math inline">\(\sim\)</span> normal in large sample (Prop. <a href="linear-regressions.html#prp:AsymptGRM">3.15</a>)<span class="math inline">\(^*\)</span>
+</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td><a href="linear-regressions.html#hyp:exogeneity">3.2</a></td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><a href="linear-regressions.html#hyp:homoskedasticity">3.3</a></td>
+<td>X</td>
+<td>X</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><a href="linear-regressions.html#hyp:noncorrelResid">3.4</a></td>
+<td>X</td>
+<td>X</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td><a href="linear-regressions.html#hyp:normality">3.5</a></td>
+<td>X</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<p><span class="math inline">\(^*\)</span>: see however Prop. <a href="linear-regressions.html#prp:XXX">3.14</a> and Prop. <a href="linear-regressions.html#prp:AsymptGRM">3.15</a> for additional hypotheses. Specifically <span class="math inline">\(\mathbf{X}'\mathbf{X}/n\)</span> and <span class="math inline">\(\mathbf{X}'\boldsymbol{\Sigma}\mathbf{X}/n\)</span> must converge in proba. to finite positive definite matrices (<span class="math inline">\(\boldsymbol\Sigma\)</span> is defined in Eq. <a href="linear-regressions.html#eq:assumGLS2">(3.22)</a>).</p>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></code></pre></div>
+<p>Alors, combien vaut <code>a</code>? Answer: 1.</p>
+</div>
+<div id="clusters" class="section level2" number="3.7">
+<h2>
+<span class="header-section-number">3.7</span> Clusters<a class="anchor" aria-label="anchor" href="#clusters"><i class="fas fa-link"></i></a>
+</h2>
+<p><a href="https://www.sciencedirect.com/science/article/pii/S0304407622000781#da1">MacKinnon, Nielsen, and Webb (2022)</a></p>
+<p>A nice reference is <span class="citation">MacKinnon, Nielsen, and Webb (<a href="references.html#ref-MACKINNON2022" role="doc-biblioref">2022</a>)</span></p>
+<p>Another one is <span class="citation">Cameron and Miller (<a href="references.html#ref-Cameron_Miller_2014" role="doc-biblioref">2014</a>)</span></p>
+<p>See package <a href="https://cran.r-project.org/web/packages/fwildclusterboot/vignettes/fwildclusterboot.html">fwildclusterboot</a> for wild cluster bootstrap.</p>
+
 </div>
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="intro.html"><span class="header-section-number">2</span> Introduction</a></div>
-<div class="next"><a href="methods.html"><span class="header-section-number">4</span> Methods</a></div>
+<div class="next"><a href="panel-regressions.html"><span class="header-section-number">4</span> Panel regressions</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -1465,6 +1571,8 @@ r = \frac{\sum_{i=2}^{n}e_i e_{i-1}}{\sum_{i=1}^{n-1}e_i^2}.
 <li><a class="nav-link" href="#how-to-detect-autocorrelation-in-residuals"><span class="header-section-number">3.5.3</span> How to detect autocorrelation in residuals?</a></li>
 </ul>
 </li>
+<li><a class="nav-link" href="#summary"><span class="header-section-number">3.6</span> Summary</a></li>
+<li><a class="nav-link" href="#clusters"><span class="header-section-number">3.7</span> Clusters</a></li>
 </ul>
 
       <div class="book-extra">
@@ -1481,7 +1589,7 @@ r = \frac{\sum_{i=2}^{n}e_i e_{i-1}}{\sum_{i=1}^{n-1}e_i^2}.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-08-05.</p>
+    <p>"<strong>Advanced Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-08-06.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

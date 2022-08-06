@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.7.23)  5 AUG 2022 09:39
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.7.23)  6 AUG 2022 19:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -750,6 +750,9 @@ Chapter 1.
 
 ]
 Chapter 2.
+
+LaTeX Warning: Reference `methods' on page 7 undefined on input line 177.
+
 File: AdvECTS_files/figure-latex/nice-fig-1.pdf Graphic file (type pdf)
 <use AdvECTS_files/figure-latex/nice-fig-1.pdf>
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
@@ -758,29 +761,29 @@ LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
 LaTeX Font Warning: Font shape `TU/lmtt/bx/it' in size <10> not available
 (Font)              Font shape `TU/lmtt/b/sl' tried instead on input line 250.
 
-[7] [8] [9] [10
-
-]
+[7] [8] [9] [10]
 Chapter 3.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 10.0pt on input line 327.
+(Font)              scaled to size 10.0pt on input line 343.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 7.0pt on input line 327.
+(Font)              scaled to size 7.0pt on input line 343.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 5.0pt on input line 327.
+(Font)              scaled to size 5.0pt on input line 343.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 10.00092pt on input line 327.
+(Font)              scaled to size 10.00092pt on input line 343.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 7.00064pt on input line 327.
+(Font)              scaled to size 7.00064pt on input line 343.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 5.00046pt on input line 327.
+(Font)              scaled to size 5.00046pt on input line 343.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 9.99893pt on input line 327.
+(Font)              scaled to size 9.99893pt on input line 343.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 6.99925pt on input line 327.
+(Font)              scaled to size 6.99925pt on input line 343.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 4.99947pt on input line 327.
-[11]
+(Font)              scaled to size 4.99947pt on input line 343.
+[11
+
+]
 File: AdvECTS_files/figure-latex/heteroskedasticity-1.pdf Graphic file (type pdf)
 <use AdvECTS_files/figure-latex/heteroskedasticity-1.pdf>
 [12] [13]
@@ -795,32 +798,32 @@ Missing character: There is no 𝜀 (U+1D700) in font [lmroman10-bold]:mapping=t
 Missing character: There is no 𝜀 (U+1D700) in font [lmroman10-bold]:mapping=tex-text;!
 Missing character: There is no 𝜀 (U+1D700) in font [lmroman10-bold]:mapping=tex-text;!
 [16] [17]
-Overfull \hbox (6.9601pt too wide) in paragraph at lines 687--689
+Overfull \hbox (6.9601pt too wide) in paragraph at lines 703--705
 \TU/lmr/m/n/10 Therefore, we have $[][][][][][][][][][] [] [][][][][][][][][][][] [] [][][][][][][][] [] [][][][][][][][][][][] []
  []
 
 
-Underfull \hbox (badness 3118) in paragraph at lines 706--707
+Underfull \hbox (badness 3118) in paragraph at lines 722--723
 []\TU/lmr/m/n/10 Consider the case where we have two sets of explanatory variables:
  []
 
 
-Overfull \hbox (43.12312pt too wide) detected at line 729
+Overfull \hbox (43.12312pt too wide) detected at line 745
 [][] [] [][][][][] [] [][][][][][][][][][][][][][][][][][][][][] [] [][][][][][][][][][][][] [] [][][][][][][][][][][][][][][]
  []
 
 [18]
-Overfull \hbox (12.0pt too wide) in paragraph at lines 783--783
+Overfull \hbox (12.0pt too wide) in paragraph at lines 799--799
 []\TU/lmtt/m/n/10 ##                    Estimate Std. Error       t value     Pr(>|t|)[] 
  []
 
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 783--783
+Overfull \hbox (12.0pt too wide) in paragraph at lines 799--799
 []\TU/lmtt/m/n/10 ## (Intercept)   -3.265931e-16 0.60898084 -5.362946e-16 1.0000000000[] 
  []
 
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 783--783
+Overfull \hbox (12.0pt too wide) in paragraph at lines 799--799
 []\TU/lmtt/m/n/10 ## deseas_precip  1.300055e-01 0.03300004  3.939557e+00 0.0001907741[] 
  []
 
@@ -834,94 +837,88 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 File: AdvECTS_files/figure-latex/chartStudent-1.pdf Graphic file (type pdf)
 <use AdvECTS_files/figure-latex/chartStudent-1.pdf>
 [25]
-Underfull \hbox (badness 2310) in paragraph at lines 1021--1023
+Underfull \hbox (badness 2310) in paragraph at lines 1037--1039
 \TU/lmr/m/n/10 where $[][][][][]$ is the c.d.f. of the $[][][] [] [][]$ distribution (Table
  []
 
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 1066--1066
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1082--1082
 []\TU/lmtt/m/n/10 ## lm(formula = riearn ~ raedyrs + ragey_b + I(ragey_b^2) + rfemale,[] 
  []
 
 [26] [27]
-Underfull \hbox (badness 1888) in paragraph at lines 1138--1140
+Underfull \hbox (badness 1888) in paragraph at lines 1154--1156
 []\TU/lmr/m/n/10 Under $[][]$, we have $[] [] [][][] [] [][] [] [][][][][][][][][][]$. Therefore
  []
 
 
-Underfull \hbox (badness 2310) in paragraph at lines 1138--1140
+Underfull \hbox (badness 2310) in paragraph at lines 1154--1156
 [][][][][][][][][][][][][][][]$ \TU/lmr/m/n/10 is of the form $[][][][]$ with $[] [] [][][][]$ where
  []
 
 
-LaTeX Warning: Reference `(' on page 28 undefined on input line 1151.
+LaTeX Warning: Reference `(' on page 28 undefined on input line 1167.
 
 [28]
-Overfull \hbox (77.83908pt too wide) in paragraph at lines 1160--1161
+Overfull \hbox (77.83908pt too wide) in paragraph at lines 1176--1177
 []\TU/lmr/m/n/10 By Prop. @ref(prp:constrained_LS), we know that $[][] [] [] [] [][][][][][][][][][][][][][][][][][][][][][][][] []
  []
 
 
-Overfull \hbox (6.346pt too wide) in alignment at lines 1186--1191
+Overfull \hbox (6.346pt too wide) in alignment at lines 1202--1207
  [][][] []
  []
 
 [29] [30] [31]
 
-LaTeX Warning: Reference `(' on page 32 undefined on input line 1310.
+LaTeX Warning: Reference `(' on page 32 undefined on input line 1326.
 
 [32] [33] [34]
 File: AdvECTS_files/figure-latex/figureIV-1.pdf Graphic file (type pdf)
 <use AdvECTS_files/figure-latex/figureIV-1.pdf>
 [35] [36]
-Overfull \hbox (48.75pt too wide) in paragraph at lines 1515--1515
+Overfull \hbox (48.75pt too wide) in paragraph at lines 1533--1533
 []\TU/lmtt/m/n/10 ## ivreg(formula = log(packs) ~ log(rprice) + log(rincome) | log(rincome) +[] 
  []
 
 
-Overfull \hbox (59.25pt too wide) in paragraph at lines 1544--1544
+Overfull \hbox (59.25pt too wide) in paragraph at lines 1562--1562
 []\TU/lmtt/m/n/10 ## lm(formula = log(packs) ~ log(rprice) + log(rincome), data = CigarettesSW,[] 
  []
 
 [37]
-Overfull \hbox (54.0pt too wide) in paragraph at lines 1562--1562
+Overfull \hbox (54.0pt too wide) in paragraph at lines 1580--1580
 []\TU/lmtt/m/n/10 ## Model 1: log(packs) ~ log(rprice) + log(rincome) | log(rincome) + tdiff +[] 
  []
 
 
-Overfull \hbox (22.5pt too wide) in paragraph at lines 1613--1613
+Overfull \hbox (22.5pt too wide) in paragraph at lines 1631--1631
 []\TU/lmtt/m/n/10 ## lm(formula = wage ~ urban + gender + ethnicity + unemp + education,[] 
  []
 
 [38]
-Overfull \hbox (12.0pt too wide) in paragraph at lines 1646--1646
+Overfull \hbox (12.0pt too wide) in paragraph at lines 1664--1664
 []\TU/lmtt/m/n/10 ## lm(formula = wage ~ urban + gender + ethnicity + unemp + ed.pred,[] 
  []
 
 [39]
-Overfull \hbox (43.5pt too wide) in paragraph at lines 1693--1693
+Overfull \hbox (43.5pt too wide) in paragraph at lines 1711--1711
 []\TU/lmtt/m/n/10 ## ivreg(formula = wage ~ urban + gender + ethnicity + unemp + education |[] 
  []
 
 
-Overfull \hbox (59.25pt too wide) in paragraph at lines 1693--1693
+Overfull \hbox (59.25pt too wide) in paragraph at lines 1711--1711
 []\TU/lmtt/m/n/10 ##     urban + gender + ethnicity + unemp + distance, data = CollegeDistance)[] 
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
 [40]
-Overfull \hbox (39.92pt too wide) in paragraph at lines 1705--1706
+Overfull \hbox (39.92pt too wide) in paragraph at lines 1723--1724
 []\TU/lmr/m/n/10 Note that Eq. ([]) is more general than Hypothesis []3.3[] and @ref(hyp:noncorrel_resid)
  []
 
-
-LaTeX Warning: Reference `section:TS' on page 41 undefined on input line 1740.
-
 [41]
 
-LaTeX Warning: Reference `exm:autocorrelaa' on page 42 undefined on input line 1785.
+LaTeX Warning: Reference `exm:autocorrelaa' on page 42 undefined on input line 1803.
 
 [42] [43]
 File: AdvECTS_files/figure-latex/simulHeterosk-1.pdf Graphic file (type pdf)
@@ -933,56 +930,66 @@ File: AdvECTS_files/figure-latex/simulHeterosk2-1.pdf Graphic file (type pdf)
 Underfull \vbox (badness 3417) has occurred while \output is active []
 
 [46] [47] [48]
+Underfull \vbox (badness 1783) has occurred while \output is active []
+
+[49] [50]
 Chapter 4.
-[49
-
-] [50
+[51
 
 ]
+File: AdvECTS_files/figure-latex/simulPanel-1.pdf Graphic file (type pdf)
+<use AdvECTS_files/figure-latex/simulPanel-1.pdf>
+[52] [53] [54]
+
+LaTeX Warning: Reference `fig:airline' on page 55 undefined on input line 2445.
+
+[55] [56] [57] [58]
 Chapter 5.
-[51] [52
+[59
 
-]
+] [60]
 Chapter 6.
-[53] [54
+[61
+
+] [62
 
 ]
 Chapter 7.
-[55] [56
+[63] [64
 
 ]
 Chapter 8.
 
-Overfull \hbox (81.5801pt too wide) in paragraph at lines 2096--2161
+Overfull \hbox (81.5801pt too wide) in paragraph at lines 2663--2728
  [][] 
  []
 
 
-Overfull \hbox (43.44008pt too wide) in paragraph at lines 2220--2267
+Overfull \hbox (43.44008pt too wide) in paragraph at lines 2787--2834
  [][] 
  []
 
 
-Overfull \hbox (124.92009pt too wide) in paragraph at lines 2273--2326
+Overfull \hbox (124.92009pt too wide) in paragraph at lines 2840--2893
  [][] 
  []
 
-(./AdvECTS.bbl [57] [58] [59] [60] [61] [62
+(./AdvECTS.bbl [65] [66] [67] [68] [69] [70
 
-]) [63] (./AdvECTS.aux)
+]) [71] (./AdvECTS.aux)
 
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `AdvECTS.out' has not changed.
-(rerunfilecheck)             Checksum: A25BDFF612D8622B235CDF697E28F918;2215.
+(rerunfilecheck)             Checksum: 1F8E9FE864F9CD0A6D5DE6A9A28304B2;2762.
  ) 
 Here is how much of TeX's memory you used:
- 17783 strings out of 477864
- 327151 string characters out of 5846125
- 854802 words of memory out of 5000000
- 38438 multiletter control sequences out of 15000+600000
- 477259 words of font info for 102 fonts, out of 8000000 for 9000
+ 17829 strings out of 477864
+ 328339 string characters out of 5846125
+ 860043 words of memory out of 5000000
+ 38487 multiletter control sequences out of 15000+600000
+ 477243 words of font info for 100 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 86i,13n,121p,1291b,558s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 86i,14n,121p,1291b,558s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on AdvECTS.pdf (63 pages).
+Output written on AdvECTS.pdf (71 pages).

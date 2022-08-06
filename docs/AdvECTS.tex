@@ -124,7 +124,7 @@
 
 \title{Advanced Econometrics}
 \author{Jean-Paul Renne}
-\date{2022-08-05}
+\date{2022-08-06}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -312,6 +312,22 @@ Below is an example borrowed from \href{https://www.kellogg.northwestern.edu/fac
 ## (Intercept)  4.233313e-03 -2.845344e-05
 ## x           -2.845344e-05  2.868462e-03
 \end{verbatim}
+
+XXXX
+
+Sargan-Hansen () test. \citet{Sargan_1958} and \citet{Hansen_1982}
+
+Durbin-Wu-Hausman test: \citet{Durbin_1954} / \citet{Wu_1973} / \citet{Hausman_1978}
+
+\href{https://www.hds.utc.fr/~tdenoeux/dokuwiki/_media/en/kleibzeil_-_aer.pdf}{Use R!} is an excellent tutorial.
+(notably for \texttt{plm} and the Arellano-Bond example, 140 UK firms)
+
+Program evaluation (very good survey): \citet{Abadie_Cattaneo_2018}
+Mostly harmless: \citet{angrist_mostly_2008}
+
+Diff-in-Diff: \href{https://towardsdatascience.com/analyze-causal-effect-using-diff-in-diff-model-85e07b17e7b7}{Card and Krueger (1994)}
+
+XXXX
 
 \hypertarget{linear-regressions}{%
 \chapter{Linear Regressions}\label{linear-regressions}}
@@ -1429,6 +1445,8 @@ In this case, Prop. \ref{prp:IV} still holds, with \(\mathbf{b}_{iv}\) given by 
 
 If the instruments do not properly satisfy Condition (a) in Def. \ref{def:instruments} (i.e.~if \(\mathbf{x}_i\) and \(\mathbf{z}_i\) are only loosely related), the instruments are said to be \textbf{weak}.
 
+Relevant citation: \citet{Andrews_Stock_Sun_2019}.
+
 This problem is for instance discussed in \href{http://scholar.harvard.edu/files/stock/files/testing_for_weak_instruments_in_linear_iv_regression.pdf}{Stock and Yogo (2003)}. See also \href{https://www.pearson.com/us/higher-education/product/Stock-Introduction-to-Econometrics-3rd-Edition/9780138009007.html}{Stock and Watson} pp.,489-490.
 
 The Hausman test can be used to test if IV necessary. IV techniques are required if \(\mbox{plim}_{n \rightarrow \infty} \mathbf{X}'\boldsymbol\varepsilon / n \ne 0\). \href{http://www.jstor.org/stable/1913827?seq=1\#page_scan_tab_contents}{Hausman (1978)} proposes a test of the efficiency of estimators. Under the null hypothesis two estimators, \(\mathbf{b}_0\) and \(\mathbf{b}_1\), are consistent but \(\mathbf{b}_0\) is (asymptotically) efficient relative to \(\mathbf{b}_1\). Under the alternative hypothesis, \(\mathbf{b}_1\) (IV in the present case) remains consistent but not \(\mathbf{b}_0\) (OLS in the present case).
@@ -1737,7 +1755,7 @@ The GRM context notably allows to model \textbf{heteroskedasticity} and \textbf{
 \end{itemize}
 
 \begin{example}
-\protect\hypertarget{exm:autocorrelaaa}{}\label{exm:autocorrelaaa}Autocorrelation is, in particular, a recurrent problem when time-series data are used (see Section \ref{section:TS}).
+\protect\hypertarget{exm:autocorrelaaa}{}\label{exm:autocorrelaaa}Autocorrelation is, in particular, a recurrent problem when time-series data are used (see Section @ref(section:TS\}).
 
 In a time-series context, subscript \(i\) refers to a date. Assume for instance that:
 \begin{equation}
@@ -1948,7 +1966,7 @@ When the White robust covariance matrix is used, 1 is not in the 95\% confidence
 \hypertarget{heteroskedasticity-and-autocorrelation-hac}{%
 \subsection{Heteroskedasticity and Autocorrelation (HAC)}\label{heteroskedasticity-and-autocorrelation-hac}}
 
-This includes the cases of Eqs. @ref\{eq:heteroskedasticity) and \eqref{eq:autocorrelation}.
+This includes the cases of Eqs. \eqref{eq:heteroskedasticity} and \eqref{eq:autocorrelation}.
 
 \href{http://www.jstor.org/stable/1913610}{Newey and West (1987)}: If the correlation between terms \(i\) and \(j\) gets sufficiently small when \(|i-j|\) increases:
 \begin{eqnarray}
@@ -2019,64 +2037,613 @@ The one-sided test for \(H_0\): \(\rho=0\) against \(H_1\): \(\rho>0\) is carrie
 \right.
 \]
 
-\hypertarget{methods}{%
-\chapter{Methods}\label{methods}}
+\hypertarget{summary}{%
+\section{Summary}\label{summary}}
 
-We describe our methods in this chapter.
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1399}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1062}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1580}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1192}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1606}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1244}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1917}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Under Assumptions \ref{hyp:fullrank}+
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(\mathbf{b}\) normal in small sample (Eq. \eqref{eq:distriBcondi})
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(\mathbf{b}\) is BLUE (Thm \ref{thm:GaussMarkov})
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(\mathbf{b}\) unbiased in small sample (Prop. \ref{prp:propOLS})
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(\mathbf{b}\) consistent (Prop. \ref{prp:XXX})\(^*\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(\mathbf{b}\) \(\sim\) normal in large sample (Prop. \ref{prp:AsymptGRM})\(^*\)
+\end{minipage} \\
+\midrule()
+\endhead
+\rotatebox[origin=c]{90}{ Condit. mean-zero} & \ref{hyp:exogeneity} & X & X & X & X & X \\
+\rotatebox[origin=c]{90}{ Homoskedasticity} & \ref{hyp:homoskedasticity} & X & X & & & \\
+\rotatebox[origin=c]{90}{Uncorrelated residuals} & \ref{hyp:noncorrelResid} & X & X & & & \\
+\rotatebox[origin=c]{90}{ Normality of disturbances} & \ref{hyp:normality} & X & & & & \\
+\bottomrule()
+\end{longtable}
 
-Math can be added in body using usual syntax like this
+\(^*\): see however Prop. \ref{prp:XXX} and Prop. \ref{prp:AsymptGRM} for additional hypotheses. Specifically \(\mathbf{X}'\mathbf{X}/n\) and \(\mathbf{X}'\boldsymbol{\Sigma}\mathbf{X}/n\) must converge in proba. to finite positive definite matrices (\(\boldsymbol\Sigma\) is defined in Eq. \eqref{eq:assumGLS2}).
 
-\hypertarget{math-example}{%
-\section{math example}\label{math-example}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a }\OtherTok{\textless{}{-}} \DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
 
-\(p\) is unknown but expected to be around 1/3. Standard error will be approximated
+Alors, combien vaut \texttt{a}? Answer: 1.
 
+\hypertarget{clusters}{%
+\section{Clusters}\label{clusters}}
+
+\href{https://www.sciencedirect.com/science/article/pii/S0304407622000781\#da1}{MacKinnon, Nielsen, and Webb (2022)}
+
+A nice reference is \citet{MACKINNON2022}
+
+Another one is \citet{Cameron_Miller_2014}
+
+See package \href{https://cran.r-project.org/web/packages/fwildclusterboot/vignettes/fwildclusterboot.html}{fwildclusterboot} for wild cluster bootstrap.
+
+\hypertarget{panel-regressions}{%
+\chapter{Panel regressions}\label{panel-regressions}}
+
+The standard panel situation is the following: we have a lot of entities (\(i \in \{1,\dots,n\}\)) and, for each entity, we observe different variables over a small number of periods (\(t \in \{1,\dots,T\}\)). This is a \emph{longitudinal dataset}.
+
+The regression then reads:
 \[
-SE = \sqrt(\frac{p(1-p)}{n}) \approx \sqrt{\frac{1/3 (1 - 1/3)} {300}} = 0.027
+y_{i,t} = \mathbf{x}'_{i,t}\underbrace{\boldsymbol\beta}_{K \times 1} + \underbrace{\mathbf{z}'_{i}\boldsymbol\alpha}_{\mbox{Individual effects}} + \varepsilon_{i,t}
+\]
+Our objective is to estimate the previous equation.
+
+Figure \ref{fig:simulPanel}. The model is \(y_i = \alpha_i + \beta x_{i,t} + \varepsilon_{i,t}\), \(t \in \{1,2\}\). On Panel (b), blue dots are for \(t=1\), red dots are for \(t=2\). The lines relate the dots associated to the same entity \(i\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{T }\OtherTok{\textless{}{-}} \DecValTok{2} \CommentTok{\# 2 periods}
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{12} \CommentTok{\# 12 entities}
+\NormalTok{alpha }\OtherTok{\textless{}{-}} \DecValTok{5}\SpecialCharTok{*}\FunctionTok{rnorm}\NormalTok{(n) }\CommentTok{\# draw fixed effects}
+\NormalTok{x}\FloatTok{.1} \OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(n) }\SpecialCharTok{{-}}\NormalTok{ .}\DecValTok{5}\SpecialCharTok{*}\NormalTok{alpha }\CommentTok{\# note: x\_i\textquotesingle{}s correlate to alpha\_i\textquotesingle{}s}
+\NormalTok{x}\FloatTok{.2} \OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(n) }\SpecialCharTok{{-}}\NormalTok{ .}\DecValTok{5}\SpecialCharTok{*}\NormalTok{alpha}
+\NormalTok{beta }\OtherTok{\textless{}{-}} \DecValTok{5}\NormalTok{; sigma }\OtherTok{\textless{}{-}}\NormalTok{ .}\DecValTok{3}
+\NormalTok{y}\FloatTok{.1} \OtherTok{\textless{}{-}}\NormalTok{ alpha }\SpecialCharTok{+}\NormalTok{ x}\FloatTok{.1} \SpecialCharTok{+}\NormalTok{ sigma}\SpecialCharTok{*}\FunctionTok{rnorm}\NormalTok{(n)}
+\NormalTok{y}\FloatTok{.2} \OtherTok{\textless{}{-}}\NormalTok{ alpha }\SpecialCharTok{+}\NormalTok{ x}\FloatTok{.2} \SpecialCharTok{+}\NormalTok{ sigma}\SpecialCharTok{*}\FunctionTok{rnorm}\NormalTok{(n)}
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(x}\FloatTok{.1}\NormalTok{,x}\FloatTok{.2}\NormalTok{) }\CommentTok{\# pooled x}
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(y}\FloatTok{.1}\NormalTok{,y}\FloatTok{.2}\NormalTok{) }\CommentTok{\# pooled y}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(x,y,}\AttributeTok{col=}\StringTok{"black"}\NormalTok{,}\AttributeTok{pch=}\DecValTok{19}\NormalTok{,}\AttributeTok{xlab=}\StringTok{"x"}\NormalTok{,}\AttributeTok{ylab=}\StringTok{"y"}\NormalTok{,}\AttributeTok{main=}\StringTok{"(a)"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(x,y,}\AttributeTok{col=}\StringTok{"black"}\NormalTok{,}\AttributeTok{pch=}\DecValTok{19}\NormalTok{,}\AttributeTok{xlab=}\StringTok{"x"}\NormalTok{,}\AttributeTok{ylab=}\StringTok{"y"}\NormalTok{,}\AttributeTok{main=}\StringTok{"(b)"}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(x}\FloatTok{.1}\NormalTok{,y}\FloatTok{.1}\NormalTok{,}\AttributeTok{col=}\StringTok{"blue"}\NormalTok{,}\AttributeTok{pch=}\DecValTok{19}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(x}\FloatTok{.2}\NormalTok{,y}\FloatTok{.2}\NormalTok{,}\AttributeTok{col=}\StringTok{"red"}\NormalTok{,}\AttributeTok{pch=}\DecValTok{19}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{n)\{}
+  \FunctionTok{lines}\NormalTok{(}\FunctionTok{c}\NormalTok{(x}\FloatTok{.1}\NormalTok{[i],x}\FloatTok{.2}\NormalTok{[i]),}\FunctionTok{c}\NormalTok{(y}\FloatTok{.1}\NormalTok{[i],y}\FloatTok{.2}\NormalTok{[i]))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{AdvECTS_files/figure-latex/simulPanel-1} 
+
+}
+
+\caption{The data are the same for both panels. On Panel (b), blue dots are for $t=1$, red dots are for $t=2$. The lines relate the dots associated to the same entity $i$.}\label{fig:simulPanel}
+\end{figure}
+
+Let us know use the \href{https://rdrr.io/cran/AER/man/CigarettesSW.html}{Cigarette Consumption Panel dataset} of \href{https://www.pearson.com/en-gb/subject-catalog/p/Stock-Introduction-to-Econometrics-Global-Edition-4th-Edition/P200000005500/9781292264523}{Stock and Watson (2007)}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(}\StringTok{"CigarettesSW"}\NormalTok{, }\AttributeTok{package =} \StringTok{"AER"}\NormalTok{)}
+\NormalTok{CigarettesSW}\SpecialCharTok{$}\NormalTok{rprice  }\OtherTok{\textless{}{-}} \FunctionTok{with}\NormalTok{(CigarettesSW, price}\SpecialCharTok{/}\NormalTok{cpi)}
+\NormalTok{CigarettesSW}\SpecialCharTok{$}\NormalTok{rincome }\OtherTok{\textless{}{-}} \FunctionTok{with}\NormalTok{(CigarettesSW, income}\SpecialCharTok{/}\NormalTok{population}\SpecialCharTok{/}\NormalTok{cpi)}
+\NormalTok{T }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(}\FunctionTok{levels}\NormalTok{(CigarettesSW}\SpecialCharTok{$}\NormalTok{year))}
+\NormalTok{n }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(}\FunctionTok{levels}\NormalTok{(CigarettesSW}\SpecialCharTok{$}\NormalTok{state))}
+\NormalTok{eq.pooled }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\FunctionTok{log}\NormalTok{(packs)}\SpecialCharTok{\textasciitilde{}}\FunctionTok{log}\NormalTok{(rprice)}\SpecialCharTok{+}\FunctionTok{log}\NormalTok{(rincome),}\AttributeTok{data=}\NormalTok{CigarettesSW)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{summary}\NormalTok{(eq.pooled)}\SpecialCharTok{$}\NormalTok{coefficients)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                Estimate Std. Error   t value     Pr(>|t|)
+## (Intercept)  10.0671678  0.5156035 19.525020 1.158630e-34
+## log(rprice)  -1.3341612  0.1353614 -9.856288 4.120472e-16
+## log(rincome)  0.3181371  0.1361194  2.337191 2.157508e-02
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eq.LSDV }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\FunctionTok{log}\NormalTok{(packs)}\SpecialCharTok{\textasciitilde{}}\FunctionTok{log}\NormalTok{(rprice)}\SpecialCharTok{+}\FunctionTok{log}\NormalTok{(rincome)}\SpecialCharTok{+}\NormalTok{state,}
+              \AttributeTok{data=}\NormalTok{CigarettesSW)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{summary}\NormalTok{(eq.LSDV)}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{,])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                Estimate Std. Error   t value     Pr(>|t|)
+## (Intercept)   9.9543751  0.2641889  37.67901 3.156258e-36
+## log(rprice)  -1.2103380  0.1138384 -10.63207 5.590562e-14
+## log(rincome)  0.1209004  0.1901069   0.63596 5.279541e-01
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CigarettesSW}\SpecialCharTok{$}\NormalTok{year }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(CigarettesSW}\SpecialCharTok{$}\NormalTok{year)}
+\NormalTok{eq.LSDV2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\FunctionTok{log}\NormalTok{(packs)}\SpecialCharTok{\textasciitilde{}}\FunctionTok{log}\NormalTok{(rprice)}\SpecialCharTok{+}\FunctionTok{log}\NormalTok{(rincome)}\SpecialCharTok{+}\NormalTok{state}\SpecialCharTok{+}\NormalTok{year,}
+              \AttributeTok{data=}\NormalTok{CigarettesSW)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{summary}\NormalTok{(eq.LSDV2)}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{,])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                Estimate Std. Error   t value     Pr(>|t|)
+## (Intercept)   8.3597463  1.0485390  7.972757 3.776672e-10
+## log(rprice)  -1.0559739  0.1490905 -7.082770 7.682380e-09
+## log(rincome)  0.4974424  0.3042306  1.635084 1.090085e-01
+\end{verbatim}
+
+Cigarettes data from \href{https://vincentarelbundock.github.io/Rdatasets/doc/Ecdat/Cigarette.html}{Stock and Watson (2003)}. Data for U.S. states, 2 years: 1985 and 1995. Each colour corresponds to a given State.
+
+Airlines: cost versus fuel price
+
+Airlines data from \href{https://vincentarelbundock.github.io/Rdatasets/doc/Ecdat/Airline.html}{Greene (2003)}. Each colour corresponds to a given airline.
+
+Notations:
+\[
+\mathbf{y}_i =
+\underbrace{\left[
+\begin{array}{c}
+y_{i,1}\\
+\vdots\\
+y_{i,T}
+\end{array}\right]}_{T \times 1}, \quad
+\boldsymbol\varepsilon_i =
+\underbrace{\left[
+\begin{array}{c}
+\varepsilon_{i,1}\\
+\vdots\\
+\varepsilon_{i,T}
+\end{array}\right]}_{T \times 1}, \quad
+\mathbf{x}_i =
+\underbrace{\left[
+\begin{array}{c}
+\mathbf{x}_{i,1}'\\
+\vdots\\
+\mathbf{x}_{i,T}'
+\end{array}\right]}_{T \times K}, \quad
+\mathbf{X} =
+\underbrace{\left[
+\begin{array}{c}
+\mathbf{x}_{1}\\
+\vdots\\
+\mathbf{x}_{n}
+\end{array}\right]}_{(nT) \times K}.
+\]
+\[
+\tilde{\mathbf{y}}_i =
+\left[
+\begin{array}{c}
+y_{i,1} - \bar{y}_i\\
+\vdots\\
+y_{i,T} - \bar{y}_i
+\end{array}\right], \quad
+\tilde{\boldsymbol\varepsilon}_i =
+\left[
+\begin{array}{c}
+\varepsilon_{i,1} - \bar{\varepsilon}_i\\
+\vdots\\
+\varepsilon_{i,T} - \bar{\varepsilon}_i
+\end{array}\right],
+\]
+\[
+\tilde{\mathbf{x}}_i =
+\left[
+\begin{array}{c}
+\mathbf{x}_{i,1}' - \bar{\mathbf{x}}_i'\\
+\vdots\\
+\mathbf{x}_{i,T}' - \bar{\mathbf{x}}_i'
+\end{array}\right], \quad
+\tilde{\mathbf{X}} =
+\left[
+\begin{array}{c}
+\tilde{\mathbf{x}}_{1}\\
+\vdots\\
+\tilde{\mathbf{x}}_{n}
+\end{array}\right], \quad
+\tilde{\mathbf{Y}} =
+\left[
+\begin{array}{c}
+\tilde{\mathbf{y}}_{1}\\
+\vdots\\
+\tilde{\mathbf{y}}_{n}
+\end{array}\right],
+\]
+where
+\[
+\bar{y}_i = \frac{1}{T} \sum_{t=1}^T y_{i,t}, \quad \bar{\varepsilon}_i = \frac{1}{T}\sum_{t=1}^T \varepsilon_{i,t} \quad \mbox{and} \quad \bar{\mathbf{x}}_i = \frac{1}{T}\sum_{t=1}^T \mathbf{x}_{i,t}.
 \]
 
-You can also use math in footnotes like this\footnote{where we mention \(p = \frac{a}{b}\)}.
+\hypertarget{three-standard-cases}{%
+\subsection{Three standard cases}\label{three-standard-cases}}
 
-We will approximate standard error to 0.027\footnote{\(p\) is unknown but expected to be around 1/3. Standard error will be approximated
-
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Pooled regression}: \(\mathbf{z}_i \equiv 1\).
+\item
+  \textbf{Fixed Effects}: \(\mathbf{z}_i\) is unobserved, but correlates with \(\mathbf{x}_i\) \(\Rightarrow\) \(\mathbf{b}\) is biased and inconsistent in the OLS regression of \(\mathbf{y}\) on \(\mathbf{X}\) (omitted variable, see XXX).
+\item
+  \textbf{Random Effects}: \(\mathbf{z}_i\) is unobserved, but uncorrelated with \(\mathbf{x}_i\). The model writes:
   \[
-  SE = \sqrt(\frac{p(1-p)}{n}) \approx \sqrt{\frac{1/3 (1 - 1/3)} {300}} = 0.027
-  \]}
+  y_{i,t} = \mathbf{x}'_{i,t}\boldsymbol\beta + \alpha +  \underbrace{{\color{blue}u_i + \varepsilon_{i,t}}}_{\mbox{compound disturbance}},
+  \]
+  where \(\alpha = \mathbb{E}(\mathbf{z}'_{i}\boldsymbol\alpha)\) and \(u_i = \mathbf{z}'_{i}\boldsymbol\alpha - \mathbb{E}(\mathbf{z}'_{i}\boldsymbol\alpha) \perp \mathbf{x}_i\).
+\end{itemize}
 
-\hypertarget{methods-1}{%
-\chapter{Methods}\label{methods-1}}
+Least squares are consistent (but inefficient, see GLS XXXX).
 
-We describe our methods in this chapter.
+\hypertarget{estimation-of-fixed-effects-models}{%
+\section{Estimation of Fixed Effects Models}\label{estimation-of-fixed-effects-models}}
 
-Math can be added in body using usual syntax like this
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\hypertarget{math-example-1}{%
-\section{math example}\label{math-example-1}}
+\begin{hypothesis}[Fixed-effect model]
+\protect\hypertarget{hyp:FE}{}\label{hyp:FE}
 
-\(p\) is unknown but expected to be around 1/3. Standard error will be approximated
+We assume that:
 
+\begin{enumerate}
+\def\labelenumi{\roman{enumi}.}
+\tightlist
+\item
+  There is no perfect multicollinearity among the regressors.
+\item
+  \(\mathbb{E}(\varepsilon_{i,t}|\mathbf{X})=0\), for all \(i,t\).
+\item
+  We have:
+  \[
+  \mathbb{E}(\varepsilon_{i,t}\varepsilon_{j,s}|\mathbf{X}) =
+  \left\{
+  \begin{array}{cl}
+  \sigma^2 & \mbox{if $i=j$ and $s=t$},\\
+  0 & \mbox{otherwise.}
+  \end{array}\right.
+  \]
+\end{enumerate}
+
+\end{hypothesis}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+These assumptions are analogous to those introduced in the standard linear regression:
+
+\begin{enumerate}
+\def\labelenumi{(\roman{enumi})}
+\tightlist
+\item
+  \(\leftrightarrow\) \ref{hyp:fullrank}, (ii) \(\leftrightarrow\) \ref{hyp:exogeneity}, (iii) \(\leftrightarrow\) \ref{hyp:homoskedasticity} + \ref{hyp:noncorrelResid}.
+\end{enumerate}
+
+In matrix form, for a given \(i\), the model writes:
 \[
-SE = \sqrt(\frac{p(1-p)}{n}) \approx \sqrt{\frac{1/3 (1 - 1/3)} {300}} = 0.027
+\mathbf{y}_i = \mathbf{X}_i \boldsymbol\beta + \mathbf{1}\alpha_i + \boldsymbol\varepsilon_i,
+\]
+where \(\mathbf{1}\) is a \(T\)-dimensional vector of ones.
+
+This is the \textbf{Least Square Dummy Variable (LSDV)} model:
+\begin{equation}
+\boxed{\mathbf{y} = [\mathbf{X} \quad \mathbf{D}]
+\left[
+\begin{array}{c}
+\boldsymbol\beta\\
+\boldsymbol\alpha
+\end{array}
+\right]
++ \boldsymbol\varepsilon,} \label{eq:LSDV}
+\end{equation}
+with:
+\[
+\mathbf{D} = \underbrace{ \left[\begin{array}{cccc}
+\mathbf{1}&\mathbf{0}&\dots&\mathbf{0}\\
+\mathbf{0}&\mathbf{1}&\dots&\mathbf{0}\\
+&&\vdots&\\
+\mathbf{0}&\mathbf{0}&\dots&\mathbf{1}\\
+\end{array}\right]}_{(nT \times n)}.
 \]
 
-You can also use math in footnotes like this\footnote{where we mention \(p = \frac{a}{b}\)}.
+The linear regression (Eq. \eqref{eq:LSDV}) --with the dummy variables-- satisfies the Gauss-Markov conditions (Theorem \ref{thm:GaussMarkov}). Hence, in this context, the OLS estimator is the \textbf{best linear unbiased estimator}.
 
-We will approximate standard error to 0.027\footnote{\(p\) is unknown but expected to be around 1/3. Standard error will be approximated
+Denoting by \(\mathbf{Z}\) the matrix \([\mathbf{X} \quad \mathbf{D}]\), and by \(\mathbf{b}\) and \(\mathbf{a}\) the respective OLS estimates of \(\boldsymbol\beta\) and of \(\boldsymbol\alpha\), we have:
+\begin{equation}
+\boxed{
+\left[
+\begin{array}{c}
+\mathbf{b}\\
+\mathbf{a}
+\end{array}
+\right]
+= [\mathbf{Z}'\mathbf{Z}]^{-1}\mathbf{Z}'\mathbf{y}.} \label{eq:bfixedeffects11}
+\end{equation}
 
-  \[
-  SE = \sqrt(\frac{p(1-p)}{n}) \approx \sqrt{\frac{1/3 (1 - 1/3)} {300}} = 0.027
-  \]}
+The asymptotical distribution of \([\mathbf{b}',\mathbf{a}']'\) derives from the standard OLS context: Prop. \ref{prp:asymptOLS} can be used after having replaced \(\mathbf{X}\) by \(\mathbf{Z}=[\mathbf{X} \quad \mathbf{D}]\).
 
-\hypertarget{applications}{%
-\chapter{Applications}\label{applications}}
+We have:
+\begin{equation}
+\boxed{\left[
+\begin{array}{c}
+\mathbf{b}\\
+\mathbf{a}
+\end{array}
+\right] \overset{d}{\rightarrow}
+\mathcal{N}\left(
+\left[
+\begin{array}{c}
+\boldsymbol\beta\\
+\boldsymbol\alpha
+\end{array}
+\right],
+\sigma^2 \frac{Q^{-1}}{nT}
+\right)}
+\end{equation}
+where
+\[
+Q = \mbox{plim}_{nT \rightarrow \infty} \frac{1}{nT} \mathbf{Z}'\mathbf{Z}.
+\]
 
-Some \emph{significant} applications are demonstrated in this chapter.
+In practice, an estimator of the covariance matrix of \([\mathbf{b}',\mathbf{a}']'\) is:
+\[
+s^2 \left( \mathbf{Z}'\mathbf{Z}\right)^{-1} \quad with \quad s^2 = \frac{\mathbf{e}'\mathbf{e}}{nT - K - n},
+\]
+where \(\mathbf{e}\) is the \((nT) \times 1\) vector of OLS residuals.
 
-\hypertarget{example-one}{%
-\section{Example one}\label{example-one}}
+There is an alternative way of expressing the LSDV estimators.
 
-\hypertarget{example-two}{%
-\section{Example two}\label{example-two}}
+It is based on matrix \(\mathbf{M_D}=\mathbf{I} - \mathbf{D}(\mathbf{D}'\mathbf{D})^{-1}\mathbf{D}'\), which acts as an operator that removes entity-specific means, i.e.:
+\[
+\tilde{\mathbf{Y}} = \mathbf{M_D}\mathbf{Y}, \quad \tilde{\mathbf{X}} = \mathbf{M_D}\mathbf{X} \quad and \quad \tilde{\boldsymbol\varepsilon} = \mathbf{M_D}\boldsymbol\varepsilon.
+\]
+
+With these notations, using Theorem \ref{thm:FW}, we get:
+\begin{equation}
+\boxed{\mathbf{b} = [\mathbf{X}'\mathbf{M_D}\mathbf{X}]^{-1}\mathbf{X}'\mathbf{M_D}\mathbf{y}.}\label{eq:bfixedeffects}
+\end{equation}
+
+This amounts to regressing the \(\tilde{y}_{i,t}\)s (\(= y_{i,t} - \bar{y}_i\)) on the \(\tilde{\mathbf{x}}_{i,t}\)s (\(=\mathbf{x}_{i,t} - \bar{\mathbf{x}}_i\)).
+
+The estimates of \(\boldsymbol\alpha\) are given by:
+\begin{equation}
+\boxed{\mathbf{a} = (\mathbf{D}'\mathbf{D})^{-1}\mathbf{D}'(\mathbf{y} - \mathbf{X}\mathbf{b}),} \label{eq:a}
+\end{equation}
+which is obtained by developing the second row of
+\[
+\left[
+\begin{array}{cc}
+\mathbf{X}'\mathbf{X} & \mathbf{X}'\mathbf{D}\\
+\mathbf{D}'\mathbf{X} & \mathbf{D}'\mathbf{D}
+\end{array}\right]
+\left[
+\begin{array}{c}
+\mathbf{b}\\
+\mathbf{a}
+\end{array}\right] =
+\left[
+\begin{array}{c}
+\mathbf{X}'\mathbf{Y}\\
+\mathbf{D}'\mathbf{Y}
+\end{array}\right],
+\]
+which are the first-order conditions resulting from the least squares problem (see Eq. \eqref{eq:OLSFOC}).
+
+XXXX Regression of the log of airline costs on log(output), log(fuel price) and capacity utilization of the fleet (Data from \href{https://vincentarelbundock.github.io/Rdatasets/doc/Ecdat/Airline.html}{Greene (2003)}, see Fig. \ref{fig:airline}.
+
+XXXX Regression of the number of cigarette packs (log) on real income (log) and real price of cigarettes (log)
+
+Extension: Fixed time and group effects
+
+Time effects are easily introduced:
+\[
+y_{i,t} = \mathbf{x}_i'\boldsymbol\beta + \alpha_i + \gamma_t + \varepsilon_{i,t}.
+\]
+
+The LSDV (Eq. \eqref{eq:LSDV}) can be extended:
+\begin{equation}
+\mathbf{y} = [\mathbf{X} \quad \mathbf{D} \quad \mathbf{C}]
+\left[
+\begin{array}{c}
+\boldsymbol\beta\\
+\boldsymbol\alpha\\
+\boldsymbol\gamma
+\end{array}
+\right]
++ \boldsymbol\varepsilon, \label{eq:LSDV2}
+\end{equation}
+with:
+\[
+\mathbf{C} = \left[\begin{array}{cccc}
+\boldsymbol{\delta}_1&\boldsymbol{\delta}_2&\dots&\boldsymbol{\delta}_{T-1}\\
+\vdots&\vdots&&\vdots\\
+\boldsymbol{\delta}_1&\boldsymbol{\delta}_2&\dots&\boldsymbol{\delta}_{T-1}\\
+\end{array}\right],
+\]
+where the \(T\)-dimensional vector \(\boldsymbol\delta_t\) is
+\[
+[0,\dots,0,\underbrace{1}_{\mbox{t$^{th}$ entry}},0,\dots,0]'.
+\]
+
+XXXX Geo-located data from Airbnb, Z"urich
+
+Source: \href{http://tomslee.net/airbnb-data-collection-get-the-data}{Airbnb, date 22 June 2017}. Regression of price for Entire home/apt on number of bedrooms, number of people that can be accommodated.
+
+\hypertarget{estimation-of-random-effects-models}{%
+\section{Estimation of random effects models}\label{estimation-of-random-effects-models}}
+
+Here, the individual effects are assumed not to be correlated to other variables (the \(\mathbf{x}_i\)s).
+
+\textbf{Random-effect models} write:
+\[
+y_{i,t}=\mathbf{x}'_{it}\boldsymbol\beta + (\alpha + \underbrace{u_i}_{\substack{\text{Random}\\\text{heterogeneity}}}) + \varepsilon_{i,t}
+\]
+with
+\begin{eqnarray*}
+\mathbb{E}(\varepsilon_{i,t}|\mathbf{X})&=&\mathbb{E}(u_{i}|\mathbf{X}) =0,\\
+\mathbb{E}(\varepsilon_{i,t}\varepsilon_{j,s}|\mathbf{X}) &=&
+\left\{
+\begin{array}{cl}
+\sigma_\varepsilon^2 & \mbox{ if $i=j$ and $s=t$},\\
+0 & \mbox{ otherwise.}
+\end{array}
+\right.\\
+\mathbb{E}(u_{i}u_{j}|\mathbf{X}) &=&
+\left\{
+\begin{array}{cl}
+\sigma_u^2 & \mbox{ if $i=j$},\\
+0 & \mbox{otherwise.}
+\end{array}
+\right.\\
+\mathbb{E}(\varepsilon_{i,t}u_{j}|\mathbf{X})&=&0 \quad \text{for all $i$, $j$ and $t$}.
+\end{eqnarray*}
+
+Notation: \(\eta_{i,t} = u_i + \varepsilon_{i,t}\) and \(\boldsymbol\eta_i = [\eta_{i,1},\eta_{i,2},\dots,\eta_{i,T}]'\).
+
+We have \(\mathbb{E}(\boldsymbol\eta_i |\mathbf{X}) = \mathbf{0}\) and \(\mathbb{V}ar(\boldsymbol\eta_i | \mathbf{X}) = \boldsymbol\Gamma\) where
+\[
+\boldsymbol\Gamma = \left[  \begin{array}{ccccc}
+\sigma_\varepsilon^2+\sigma_u^2 & \sigma_u^2 & \sigma_u^2 & \dots & \sigma_u^2\\
+\sigma_u^2 & \sigma_\varepsilon^2+\sigma_u^2 & \sigma_u^2 & \dots & \sigma_u^2\\
+\vdots && \ddots && \vdots \\
+\sigma_u^2 & \sigma_u^2 & \sigma_u^2 & \dots & \sigma_\varepsilon^2+\sigma_u^2\\
+\end{array}
+\right] = \sigma_\varepsilon^2\mathbf{I} + \sigma_u^2\mathbf{1}\mathbf{1}'.
+\]
+
+Denoting by \(\boldsymbol\Sigma\) the covariance matrix of \(\boldsymbol\eta = [\boldsymbol\eta_1',\dots,\boldsymbol\eta_n']'\), we have:
+\[
+\boldsymbol\Sigma = \mathbf{I} \otimes \boldsymbol\Gamma.
+\]
+
+If we knew \(\boldsymbol\Sigma\), we would apply (feasible) GLS (Eq. \eqref{eq:betaGLS}):
+\[
+\boldsymbol\beta = (\mathbf{X}'\boldsymbol\Sigma^{-1}\mathbf{X})^{-1}\mathbf{X}'\boldsymbol\Sigma^{-1}\mathbf{y}
+\]
+(recall that this amounts to regressing \({\boldsymbol\Sigma^{-1/2}}'\mathbf{y}\) on \({\boldsymbol\Sigma^{-1/2}}'\mathbf{X}\)).
+
+It can be checked that \(\boldsymbol\Sigma^{-1/2} = \mathbf{I} \otimes (\boldsymbol\Gamma^{-1/2})\) where
+\[
+\boldsymbol\Gamma^{-1/2} = \frac{1}{\sigma_\varepsilon}\left( \mathbf{I} - \frac{\theta}{T}\mathbf{1}\mathbf{1}'\right)
+\]
+with
+\[
+\theta = 1 - \frac{\sigma_\varepsilon}{\sqrt{\sigma_\varepsilon^2+T\sigma_u^2}}.
+\]
+
+Hence, if we knew \(\boldsymbol\Sigma\), we would transform the data as follows:
+\[
+\boldsymbol\Gamma^{-1/2}\mathbf{y}_i = \frac{1}{\sigma_\varepsilon}\left[\begin{array}{c}y_{i,1} - \theta\bar{y}_i\\y_{i,2} - \theta\bar{y}_i\\\vdots\\y_{i,T} - \theta\bar{y}_i\\\end{array}\right].
+\]
+
+What about when \(\boldsymbol\Sigma\) is unknown?
+
+Idea: taking deviations from group means removes heterogeneity:
+\[
+y_{i,t} - \bar{y}_i = [\mathbf{x}_{i,t} - \bar{\mathbf{x}}_i]'\boldsymbol\beta + (\varepsilon_{i,t} - \bar{\varepsilon}_i).
+\]
+
+The previous equation can be consistently estimated by OLS
+
+(the residuals are correlated across \(t\) within an entity but the OLS remain consistent though, see Prop. @ref\{prp:XXX)).
+
+We have \(\mathbb{E}\left[\sum_{i=1}^{T}(\varepsilon_{i,t}-\bar{\varepsilon}_i)^2\right] = (T-1)\sigma_{\varepsilon}^2\).
+
+The \(\varepsilon_{i,t}\)s are not observed but \(\mathbf{b}\) is a consistent estimator of \(\boldsymbol\beta\); adjustment for the degrees of freedom:
+\[
+\hat{\sigma}_e^2 = \frac{1}{nT-n-K}\sum_{i=1}^{n}\sum_{t=1}^{T}(e_{i,t} - \bar{e}_i)^2.
+\]
+
+And for \(\sigma_u^2\)? We can exploit the fact that OLS are consistent in the pooled regression:
+\[
+\mbox{plim }s^2_{pooled} = \mbox{plim }\frac{\mathbf{e}'\mathbf{e}}{nT-K-1} = \sigma_u^2 + \sigma_\varepsilon^2,
+\]
+and therefore use \(s^2_{pooled} - \hat{\sigma}_e^2\) as an approximation to \(\sigma_u^2\).
+
+\hypertarget{estimation-methods}{%
+\chapter{Estimation Methods}\label{estimation-methods}}
+
+\hypertarget{generalized-method-of-moments}{%
+\section{Generalized Method of Moments}\label{generalized-method-of-moments}}
+
+\hypertarget{framework}{%
+\subsection{Framework}\label{framework}}
+
+We denote by \(x_t\) a \(p \times 1\) vector of (stationary) variables observed at date \(t\); by \(\theta\) an \(a \times 1\) vector of parameters, and by \(h(x_t;\theta)\) a continuous \(r \times 1\) vector-valued function.
+
+We denote by \(\theta_0\) the true value of \(\theta\) and we assume that \(\theta_0\) satisfies:
+\[
+\mathbb{E}[h(x_t;\theta_0)] = 0.
+\]
+
+We denote by \(\underline{x_t}\) the information contained in the current and past observations of \(x_t\), that is: \(\underline{x_t} = \{x_t,x_{t-1},\dots,x_1\}\). We denote by \(g(\underline{x_T};\theta)\) the sample average of \(h(x_t;\theta)\), i.e.:
+\[
+g(\underline{x_T};\theta) = \frac{1}{T} \sum_{t=1}^{T} h(x_t;\theta).
+\]
+
+Intuition behind GMM: Choose \(\theta\) so as to make the sample moment as close as possible to 0.
+
+A GMM estimator of \(\theta_0\) is given by:
+\[
+\hat{\theta}_T = \mbox{argmin}_{\theta} \quad g(\underline{x_T};\theta)'\, W_T \, g(\underline{x_T};\theta),
+\]
+where \(W_T\) is a positive definite matrix (that may depend on \(\underline{x_T}\)).
+
+If \(a = r\), \(\hat{\theta}_T\) is such that:
+\[
+g(\underline{x_T};\hat{\theta}_T) = 0.
+\]
+Under regularity and identification conditions:
+\[
+\hat{\theta}_{T} \overset{P}{\rightarrow} \theta_0,
+\]
+i.e.~\(\forall \varepsilon>0\), \(\lim_{n \rightarrow \infty} \mathbb{P}(|\hat{\theta}_{T} - \theta_0|>\varepsilon) = 0\).
+
+\textbf{Optimal weighting matrix}. The GMM estimator achieving the minimum asymptotic variance is obtained when \(W_T\) is the inverse of the matrix \(S\) defined by:
+\[
+S := \sum_{\nu = -\infty}^{\infty} \Gamma_\nu,
+\]
+where \(\Gamma_\nu := \mathbb{E}[h(x_t;\theta_0) h(x_{t-\nu};\theta_0)']\).
+
+For \(\nu \ge 0\), let us define \(\hat{\Gamma}_{\nu,T}\) by:
+\[
+\hat{\Gamma}_{\nu,T} = \frac{1}{T} \sum_{t=\nu + 1}^{T} h(x_t;\hat{\theta}_T)h(x_{t-\nu};\hat{\theta}_T)',
+\]
+\(S\) can be approximated by:
+\begin{eqnarray}
+&\hat{\Gamma}_{0,T}& \quad \mbox{if the $h(x_t;\theta_0)$ are serially uncorrelated and} \nonumber \\
+&\hat{\Gamma}_{0,T}& + \sum_{\nu=1}^{q}[1-\nu/(q+1)](\hat{\Gamma}_{\nu,T}+\hat{\Gamma}_{\nu,T}') \quad \mbox{otherwise.}    \label{eq:Shat}
+\end{eqnarray}
+
+\textbf{Asymptotic distribution of \(\hat\theta_T\)}
+
+We have:
+\[
+\sqrt{T}(\hat\theta_T - \theta_0) \overset{\mathcal{L}}{\rightarrow} \mathcal{N}(0,V),
+\]
+where \(V = (DS^{-1}D')^{-1}\).
+
+\(V\) can be approximated by \((\hat{D}_T\hat{S}_T^{-1}\hat{D}_T')^{-1}\),
+where \(\hat{S}_T\) is given by Eq. \eqref{eq:Shat} and
+\[
+\hat{D}'_T := \left.\frac{\partial g(\underline{x_T};\theta)}{\partial \theta'}\right|_{\theta = \hat\theta_T}.
+\]
+
+\hypertarget{microeconometrics}{%
+\chapter{Microeconometrics}\label{microeconometrics}}
 
 \hypertarget{time-series}{%
 \chapter{Time Series}\label{time-series}}

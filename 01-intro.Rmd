@@ -40,4 +40,20 @@ vcovCL(m, cluster = PetersenCL[, c("firm", "year")]) ## same
 
 ```
 
+XXXX
+
+Sargan-Hansen () test. @Sargan_1958 and @Hansen_1982
+
+Durbin-Wu-Hausman test: @Durbin_1954 / @Wu_1973 / @Hausman_1978
+
+[Use R!](https://www.hds.utc.fr/~tdenoeux/dokuwiki/_media/en/kleibzeil_-_aer.pdf) is an excellent tutorial.
+(notably for `plm` and the Arellano-Bond example, 140 UK firms)
+
+Program evaluation (very good survey): @Abadie_Cattaneo_2018
+Mostly harmless: @angrist_mostly_2008
+
+Diff-in-Diff: [Card and Krueger (1994)](https://towardsdatascience.com/analyze-causal-effect-using-diff-in-diff-model-85e07b17e7b7)
+
+XXXX
+
 
