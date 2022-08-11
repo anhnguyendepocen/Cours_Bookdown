@@ -1,11 +1,11 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.7.23)  6 AUG 2022 19:07
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.8.8)  11 AUG 2022 14:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **AdvECTS.tex
 (./AdvECTS.tex
 LaTeX2e <2022-06-01> patch level 5
-L3 programming layer <2022-07-15> (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/base/book.cls
+L3 programming layer <2022-08-05> (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/base/book.cls
 Document Class: book 2021/10/04 v1.4n Standard LaTeX document class
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/base/bk10.clo
 File: bk10.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
@@ -131,9 +131,9 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2022/02/03 v1.0f TeX engine tests
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math.sty (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2022-07-15 L3 programming layer (loader) 
+Package: expl3 2022-08-05 L3 programming layer (loader) 
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
-File: l3backend-xetex.def 2022-07-01 L3 backend support: XeTeX
+File: l3backend-xetex.def 2022-08-05 L3 backend support: XeTeX
 \g__graphics_track_int=\count268
 \l__pdf_internal_box=\box53
 \g__pdf_backend_object_int=\count269
@@ -742,11 +742,11 @@ LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 \tf@toc=\write5
 \openout5 = `AdvECTS.toc'.
 
-[3] [4
-
-]
+[3] [4]
 Chapter 1.
-[5] [6
+[5
+
+] [6
 
 ]
 Chapter 2.
@@ -948,48 +948,71 @@ Chapter 5.
 [59
 
 ] [60]
-Chapter 6.
-[61
+File: AdvECTS_files/figure-latex/MLE1-1.pdf Graphic file (type pdf)
+<use AdvECTS_files/figure-latex/MLE1-1.pdf>
+[61]
+File: AdvECTS_files/figure-latex/MLE2-1.pdf Graphic file (type pdf)
+<use AdvECTS_files/figure-latex/MLE2-1.pdf>
+File: AdvECTS_files/figure-latex/MLE3-1.pdf Graphic file (type pdf)
+<use AdvECTS_files/figure-latex/MLE3-1.pdf>
+[62]
+Overfull \hbox (2.5961pt too wide) in alignment at lines 2777--2783
+ [][][] []
+ []
 
-] [62
+[63]
+Underfull \hbox (badness 2689) in paragraph at lines 2797--2798
+[][]\TU/lmr/bx/n/10 Proposition 5.2. []\TU/lmr/m/it/10 We have $[][][][][] [] [] [] []
+ []
+
+
+Overfull \hbox (17.54283pt too wide) in paragraph at lines 2856--2857
+[]\TU/lmr/m/n/10 The Cauchy-Schwarz inequality implies that $[] []
+ []
+
+[64] [65] [66] [67] [68
+
+]
+Chapter 6.
+[69] [70
 
 ]
 Chapter 7.
-[63] [64
+[71] [72
 
 ]
 Chapter 8.
 
-Overfull \hbox (81.5801pt too wide) in paragraph at lines 2663--2728
+Overfull \hbox (81.5801pt too wide) in paragraph at lines 2993--3058
  [][] 
  []
 
 
-Overfull \hbox (43.44008pt too wide) in paragraph at lines 2787--2834
+Overfull \hbox (43.44008pt too wide) in paragraph at lines 3117--3164
  [][] 
  []
 
 
-Overfull \hbox (124.92009pt too wide) in paragraph at lines 2840--2893
+Overfull \hbox (124.92009pt too wide) in paragraph at lines 3170--3223
  [][] 
  []
 
-(./AdvECTS.bbl [65] [66] [67] [68] [69] [70
+(./AdvECTS.bbl [73] [74] [75] [76] [77] [78
 
-]) [71] (./AdvECTS.aux)
+]) [79] (./AdvECTS.aux)
 
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `AdvECTS.out' has not changed.
-(rerunfilecheck)             Checksum: 1F8E9FE864F9CD0A6D5DE6A9A28304B2;2762.
+(rerunfilecheck)             Checksum: 26D9BEEF0ED9269E562CA2771A2F5214;2968.
  ) 
 Here is how much of TeX's memory you used:
- 17829 strings out of 477864
- 328339 string characters out of 5846125
- 860043 words of memory out of 5000000
- 38487 multiletter control sequences out of 15000+600000
- 477243 words of font info for 100 fonts, out of 8000000 for 9000
+ 17885 strings out of 477855
+ 329949 string characters out of 5845862
+ 863528 words of memory out of 5000000
+ 38547 multiletter control sequences out of 15000+600000
+ 477251 words of font info for 101 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  86i,14n,121p,1291b,558s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on AdvECTS.pdf (71 pages).
+Output written on AdvECTS.pdf (79 pages).

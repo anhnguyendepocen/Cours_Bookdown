@@ -1,4 +1,11 @@
 h1:estimation-methods Estimation Methods
 h2:generalized-method-of-moments Generalized Method of Moments
 h3:framework Framework
+h2:maximum-likelihood-estimation Maximum Likelihood Estimation
+fig:MLE1 The red ticks, at the bottom, indicate observations (there are 200 of them). The historgram is based on these 200 observations
+fig:MLE2 Proba. that $y_i-\\varepsilon \\le Y_i < y_i+\\varepsilon$, $i \\in \\{1,2,3,4\\}$. The vertical red line indicates the maximum of the function.
+fig:MLE3 Log-likelihood function associated with the 200 i.i.d. observations. The vertical red line indicates the maximum of the function.
+h3:notations Notations
+h3:to-sum-up-mle-in-practice To sum up – MLE in practice
+h3:example-mle-estimation-of-a-mixture-of-gaussian-distribution Example: MLE estimation of a mixture of Gaussian distribution
 
