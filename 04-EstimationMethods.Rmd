@@ -413,34 +413,96 @@ $$
 0.30 \pm 1.96\underbrace{\sqrt{0.00528}}_{=0.0726} \quad \mbox{ and } \quad 1.40 \pm 1.96\underbrace{\sqrt{0.00526}.}_{=0.0725}
 $$
 
-\begin{figure}
-\caption{Density of 5-day returns on SMI index}
-\includegraphics[width=.9\linewidth]{../../figures/Figure_kernel_smi.pdf}
-\label{fig:illuskernel_smi}
-\begin{tiny}
-Gaussian kernel, $h=0.5$ (in percent).
+```{r smiData}
+smi <- read.csv("https://raw.githubusercontent.com/jrenne/Data4courses/master/SMI/SMI.csv",
+                dec = ".",header = TRUE, na.strings = "null")
+smi$Date <- as.Date(smi$Date,"%m/%d/%y")
+T <- dim(smi)[1]
+h <- 5 # holding period (one week)
+smi$r <- c(rep(NaN,h),
+           100*c(log(smi$Close[(1+h):T]/smi$Close[1:(T-h)])))
+indic.dates <- seq(1,T,by=5)  # weekly returns
+smi <- smi[indic.dates,]
+smi <- smi[complete.cases(smi),]
+par(mfrow=c(1,1))
+plot(smi$Date,smi$r,type="l",main="5-day return on SMI index",xlab="",ylab="in percent")
+abline(h=0,col="blue")
+abline(h=mean(smi$r,na.rm = TRUE)+2*sd(smi$r,na.rm = TRUE),lty=3,col="blue")
+abline(h=mean(smi$r,na.rm = TRUE)-2*sd(smi$r,na.rm = TRUE),lty=3,col="blue")
+```
 
-The data spans the period from 2 June 2006 to 23 February 2016 at the daily frequency.
+```{r smi_mle}
+f <- function(theta,y){ # Likelihood function
+  mu.1 <- theta[1]; mu.2 <- theta[2]
+  sigma.1 <- theta[3]; sigma.2 <- theta[4]
+  p <- exp(theta[5])/(1+exp(theta[5]))
+  res <- p*1/sqrt(2*pi*sigma.1^2)*exp(-(y-mu.1)^2/(2*sigma.1^2)) + 
+               (1-p)*1/sqrt(2*pi*sigma.2^2)*exp(-(y-mu.2)^2/(2*sigma.2^2))
+  return(res)
+}
+log.f <- function(theta,y){ #log-Likelihood function
+  return(-sum(log(f(theta,y))))
+}
+res.optim <- optim(c(0,0,0.5,1.5,.5),
+                   log.f,
+                   y=smi$r,
+                   method="BFGS", # could be "Nelder-Mead"
+                   control=list(trace=FALSE,maxit=100),hessian=TRUE)
+theta <- res.optim$par
+theta
+```
+Now, let us compute estimates of the covariance matrix of the MLE:
 
-Left-hand plot: the blue lines indicates $\mu \pm 2 \sigma$, where $\mu$ is the sample mean of the returns and $\sigma$ is their sample standard deviation. Right-hand plot: the red dotted line is the density $\mathcal{N}(\mu,\sigma^2)$
-\end{tiny}
-\end{figure}
-\end{exmpl}
-\end{scriptsize}
-\end{frame}
+```{r smiCovar}
+# Hessian approach:
+J <- res.optim$hessian
+I.1 <- solve(J)
+# Outer-product of gradient approach:
+log.f.0 <- log(f(theta,smi$r))
+epsilon <- .00000001
+d.log.f <- NULL
+for(i in 1:length(theta)){
+  theta.i <- theta
+  theta.i[i] <- theta.i[i] + epsilon
+  log.f.i <- log(f(theta.i,smi$r))
+  d.log.f <- cbind(d.log.f,
+                   (log.f.i - log.f.0)/epsilon)
+}
+V <- t(d.log.f) %*% d.log.f
+I.2 <- solve(t(d.log.f) %*% d.log.f)
+# Misspecification-robust approach (sandwich formula):
+I.3 <- solve(J) %*% V %*% solve(J)
+cbind(diag(I.1),diag(I.2),diag(I.3))
+```
+
+<!-- \begin{figure} -->
+<!-- \caption{Density of 5-day returns on SMI index} -->
+<!-- \includegraphics[width=.9\linewidth]{../../figures/Figure_kernel_smi.pdf} -->
+<!-- \label{fig:illuskernel_smi} -->
+<!-- \begin{tiny} -->
+<!-- Gaussian kernel, $h=0.5$ (in percent). -->
+
+<!-- The data spans the period from 2 June 2006 to 23 February 2016 at the daily frequency. -->
+
+<!-- Left-hand plot: the blue lines indicates $\mu \pm 2 \sigma$, where $\mu$ is the sample mean of the returns and $\sigma$ is their sample standard deviation. Right-hand plot: the red dotted line is the density $\mathcal{N}(\mu,\sigma^2)$ -->
+<!-- \end{tiny} -->
+<!-- \end{figure} -->
+<!-- \end{exmpl} -->
+<!-- \end{scriptsize} -->
+<!-- \end{frame} -->
 
 
-\begin{frame}{}
-\begin{scriptsize}
-\addtocounter{exmpl}{-1}
-\begin{exmpl}[MLE estim. of a mixture of Gaussian distri. (cont'd)]
-\begin{figure}
-\caption{Estimated density (vs kernel-based estimate)}
-\includegraphics[width=1\linewidth]{../../figures/Figure_kernel_smiMLE.pdf}
-\label{fig:MLE1}
-\end{figure}
-\end{exmpl}
-\end{scriptsize}
-\end{frame}
+<!-- \begin{frame}{} -->
+<!-- \begin{scriptsize} -->
+<!-- \addtocounter{exmpl}{-1} -->
+<!-- \begin{exmpl}[MLE estim. of a mixture of Gaussian distri. (cont'd)] -->
+<!-- \begin{figure} -->
+<!-- \caption{Estimated density (vs kernel-based estimate)} -->
+<!-- \includegraphics[width=1\linewidth]{../../figures/Figure_kernel_smiMLE.pdf} -->
+<!-- \label{fig:MLE1} -->
+<!-- \end{figure} -->
+<!-- \end{exmpl} -->
+<!-- \end{scriptsize} -->
+<!-- \end{frame} -->
 
 

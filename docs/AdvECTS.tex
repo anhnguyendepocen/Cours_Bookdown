@@ -2972,6 +2972,108 @@ It can however be estimated by, either:
   We have: \(\boldsymbol\theta_{MLE} \sim \mathcal{N}(\theta_0,\mathbf{I}(\boldsymbol\theta_0)^{-1})\), where \(\mathbf{I}(\boldsymbol\theta_0)^{-1}\) is estimated by means of Eq. \eqref{eq:III1} or Eq. \eqref{eq:I2}. Most of the time, this computation is numerical.
 \end{itemize}
 
+\hypertarget{example-mle-estimation-of-a-mixture-of-gaussian-distribution}{%
+\subsection{Example: MLE estimation of a mixture of Gaussian distribution}\label{example-mle-estimation-of-a-mixture-of-gaussian-distribution}}
+
+Consider the returns of the SMI index. Let's assume that these returns are independently drawn from a mixture of Gaussian distributions. The p.d.f. \(f(x;\boldsymbol\theta)\), with \(\boldsymbol\theta = [\mu_1,\sigma_1,\mu_2,\sigma_2,p]'\), is given by:
+\[
+p \frac{1}{\sqrt{2\pi\sigma_1^2}}\exp\left(-\frac{(x - \mu_1)^2}{2\sigma_1^2}\right) + (1-p)\frac{1}{\sqrt{2\pi\sigma_2^2}}\exp\left(-\frac{(x - \mu_2)^2}{2\sigma_2^2}\right).
+\]
+(See \href{https://jrenne.shinyapps.io/density/}{p.d.f. of mixtures of Gaussian dist.})
+
+The maximum likelihood estimate is \(\boldsymbol\theta_{MLE}=[0.30,1.40,-1.45,3.61,0.87]'\).
+
+The first two entries of the diagonal of \(\hat{\mathbf{I}}_1^{-1}\) are \(0.00528\) and \(0.00526\). They are the estimates of \(\mathbb{V}ar(\mu_{1,MLE})\) and of \(\mathbb{V}ar(\sigma_{1,MLE})\), respectively.
+
+95\% confidence intervals for \(\mu_1\) and \(\sigma_1\) are, respectively:
+\[
+0.30 \pm 1.96\underbrace{\sqrt{0.00528}}_{=0.0726} \quad \mbox{ and } \quad 1.40 \pm 1.96\underbrace{\sqrt{0.00526}.}_{=0.0725}
+\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{smi }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/jrenne/Data4courses/master/SMI/SMI.csv"}\NormalTok{,}
+                \AttributeTok{dec =} \StringTok{"."}\NormalTok{,}\AttributeTok{header =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{na.strings =} \StringTok{"null"}\NormalTok{)}
+\NormalTok{smi}\SpecialCharTok{$}\NormalTok{Date }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(smi}\SpecialCharTok{$}\NormalTok{Date,}\StringTok{"\%m/\%d/\%y"}\NormalTok{)}
+\NormalTok{T }\OtherTok{\textless{}{-}} \FunctionTok{dim}\NormalTok{(smi)[}\DecValTok{1}\NormalTok{]}
+\NormalTok{h }\OtherTok{\textless{}{-}} \DecValTok{5} \CommentTok{\# holding period (one week)}
+\NormalTok{smi}\SpecialCharTok{$}\NormalTok{r }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\ConstantTok{NaN}\NormalTok{,h),}
+           \DecValTok{100}\SpecialCharTok{*}\FunctionTok{c}\NormalTok{(}\FunctionTok{log}\NormalTok{(smi}\SpecialCharTok{$}\NormalTok{Close[(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{h)}\SpecialCharTok{:}\NormalTok{T]}\SpecialCharTok{/}\NormalTok{smi}\SpecialCharTok{$}\NormalTok{Close[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{(T}\SpecialCharTok{{-}}\NormalTok{h)])))}
+\NormalTok{indic.dates }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,T,}\AttributeTok{by=}\DecValTok{5}\NormalTok{)  }\CommentTok{\# weekly returns}
+\NormalTok{smi }\OtherTok{\textless{}{-}}\NormalTok{ smi[indic.dates,]}
+\NormalTok{smi }\OtherTok{\textless{}{-}}\NormalTok{ smi[}\FunctionTok{complete.cases}\NormalTok{(smi),]}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(smi}\SpecialCharTok{$}\NormalTok{Date,smi}\SpecialCharTok{$}\NormalTok{r,}\AttributeTok{type=}\StringTok{"l"}\NormalTok{,}\AttributeTok{main=}\StringTok{"5{-}day return on SMI index"}\NormalTok{,}\AttributeTok{xlab=}\StringTok{""}\NormalTok{,}\AttributeTok{ylab=}\StringTok{"in percent"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\DecValTok{0}\NormalTok{,}\AttributeTok{col=}\StringTok{"blue"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\FunctionTok{mean}\NormalTok{(smi}\SpecialCharTok{$}\NormalTok{r,}\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}\SpecialCharTok{+}\DecValTok{2}\SpecialCharTok{*}\FunctionTok{sd}\NormalTok{(smi}\SpecialCharTok{$}\NormalTok{r,}\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}\AttributeTok{lty=}\DecValTok{3}\NormalTok{,}\AttributeTok{col=}\StringTok{"blue"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\FunctionTok{mean}\NormalTok{(smi}\SpecialCharTok{$}\NormalTok{r,}\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}\SpecialCharTok{{-}}\DecValTok{2}\SpecialCharTok{*}\FunctionTok{sd}\NormalTok{(smi}\SpecialCharTok{$}\NormalTok{r,}\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}\AttributeTok{lty=}\DecValTok{3}\NormalTok{,}\AttributeTok{col=}\StringTok{"blue"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{AdvECTS_files/figure-latex/smiData-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(theta,y)\{ }\CommentTok{\# Likelihood function}
+\NormalTok{  mu}\FloatTok{.1} \OtherTok{\textless{}{-}}\NormalTok{ theta[}\DecValTok{1}\NormalTok{]; mu}\FloatTok{.2} \OtherTok{\textless{}{-}}\NormalTok{ theta[}\DecValTok{2}\NormalTok{]}
+\NormalTok{  sigma}\FloatTok{.1} \OtherTok{\textless{}{-}}\NormalTok{ theta[}\DecValTok{3}\NormalTok{]; sigma}\FloatTok{.2} \OtherTok{\textless{}{-}}\NormalTok{ theta[}\DecValTok{4}\NormalTok{]}
+\NormalTok{  p }\OtherTok{\textless{}{-}} \FunctionTok{exp}\NormalTok{(theta[}\DecValTok{5}\NormalTok{])}\SpecialCharTok{/}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\FunctionTok{exp}\NormalTok{(theta[}\DecValTok{5}\NormalTok{]))}
+\NormalTok{  res }\OtherTok{\textless{}{-}}\NormalTok{ p}\SpecialCharTok{*}\DecValTok{1}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{*}\NormalTok{pi}\SpecialCharTok{*}\NormalTok{sigma}\FloatTok{.1}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{*}\FunctionTok{exp}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{(y}\SpecialCharTok{{-}}\NormalTok{mu}\FloatTok{.1}\NormalTok{)}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\NormalTok{(}\DecValTok{2}\SpecialCharTok{*}\NormalTok{sigma}\FloatTok{.1}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)) }\SpecialCharTok{+} 
+\NormalTok{               (}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p)}\SpecialCharTok{*}\DecValTok{1}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{2}\SpecialCharTok{*}\NormalTok{pi}\SpecialCharTok{*}\NormalTok{sigma}\FloatTok{.2}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{*}\FunctionTok{exp}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{(y}\SpecialCharTok{{-}}\NormalTok{mu}\FloatTok{.2}\NormalTok{)}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\NormalTok{(}\DecValTok{2}\SpecialCharTok{*}\NormalTok{sigma}\FloatTok{.2}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}
+  \FunctionTok{return}\NormalTok{(res)}
+\NormalTok{\}}
+\NormalTok{log.f }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(theta,y)\{ }\CommentTok{\#log{-}Likelihood function}
+  \FunctionTok{return}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{sum}\NormalTok{(}\FunctionTok{log}\NormalTok{(}\FunctionTok{f}\NormalTok{(theta,y))))}
+\NormalTok{\}}
+\NormalTok{res.optim }\OtherTok{\textless{}{-}} \FunctionTok{optim}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}\FloatTok{1.5}\NormalTok{,.}\DecValTok{5}\NormalTok{),}
+\NormalTok{                   log.f,}
+                   \AttributeTok{y=}\NormalTok{smi}\SpecialCharTok{$}\NormalTok{r,}
+                   \AttributeTok{method=}\StringTok{"BFGS"}\NormalTok{, }\CommentTok{\# could be "Nelder{-}Mead"}
+                   \AttributeTok{control=}\FunctionTok{list}\NormalTok{(}\AttributeTok{trace=}\ConstantTok{FALSE}\NormalTok{,}\AttributeTok{maxit=}\DecValTok{100}\NormalTok{),}\AttributeTok{hessian=}\ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{theta }\OtherTok{\textless{}{-}}\NormalTok{ res.optim}\SpecialCharTok{$}\NormalTok{par}
+\NormalTok{theta}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  0.3012379 -1.3167476  1.7715072  4.8197596  1.9454889
+\end{verbatim}
+
+Now, let us compute estimates of the covariance matrix of the MLE:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Hessian approach:}
+\NormalTok{J }\OtherTok{\textless{}{-}}\NormalTok{ res.optim}\SpecialCharTok{$}\NormalTok{hessian}
+\NormalTok{I}\FloatTok{.1} \OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(J)}
+\CommentTok{\# Outer{-}product of gradient approach:}
+\NormalTok{log.f}\FloatTok{.0} \OtherTok{\textless{}{-}} \FunctionTok{log}\NormalTok{(}\FunctionTok{f}\NormalTok{(theta,smi}\SpecialCharTok{$}\NormalTok{r))}
+\NormalTok{epsilon }\OtherTok{\textless{}{-}}\NormalTok{ .}\DecValTok{00000001}
+\NormalTok{d.log.f }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(theta))\{}
+\NormalTok{  theta.i }\OtherTok{\textless{}{-}}\NormalTok{ theta}
+\NormalTok{  theta.i[i] }\OtherTok{\textless{}{-}}\NormalTok{ theta.i[i] }\SpecialCharTok{+}\NormalTok{ epsilon}
+\NormalTok{  log.f.i }\OtherTok{\textless{}{-}} \FunctionTok{log}\NormalTok{(}\FunctionTok{f}\NormalTok{(theta.i,smi}\SpecialCharTok{$}\NormalTok{r))}
+\NormalTok{  d.log.f }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(d.log.f,}
+\NormalTok{                   (log.f.i }\SpecialCharTok{{-}}\NormalTok{ log.f}\FloatTok{.0}\NormalTok{)}\SpecialCharTok{/}\NormalTok{epsilon)}
+\NormalTok{\}}
+\NormalTok{V }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(d.log.f) }\SpecialCharTok{\%*\%}\NormalTok{ d.log.f}
+\NormalTok{I}\FloatTok{.2} \OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(d.log.f) }\SpecialCharTok{\%*\%}\NormalTok{ d.log.f)}
+\CommentTok{\# Misspecification{-}robust approach (sandwich formula):}
+\NormalTok{I}\FloatTok{.3} \OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(J) }\SpecialCharTok{\%*\%}\NormalTok{ V }\SpecialCharTok{\%*\%} \FunctionTok{solve}\NormalTok{(J)}
+\FunctionTok{cbind}\NormalTok{(}\FunctionTok{diag}\NormalTok{(I}\FloatTok{.1}\NormalTok{),}\FunctionTok{diag}\NormalTok{(I}\FloatTok{.2}\NormalTok{),}\FunctionTok{diag}\NormalTok{(I}\FloatTok{.3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             [,1]        [,2]       [,3]
+## [1,] 0.003683422 0.003199481 0.00586160
+## [2,] 0.226892824 0.194283391 0.38653389
+## [3,] 0.005764271 0.002769579 0.01712255
+## [4,] 0.194081311 0.047466419 0.83130838
+## [5,] 0.092114437 0.040366005 0.31347858
+\end{verbatim}
+
 \hypertarget{microeconometrics}{%
 \chapter{Microeconometrics}\label{microeconometrics}}
 

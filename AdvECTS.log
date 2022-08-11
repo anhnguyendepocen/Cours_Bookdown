@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.8.8)  11 AUG 2022 14:00
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.8.8)  11 AUG 2022 15:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -970,36 +970,39 @@ Overfull \hbox (17.54283pt too wide) in paragraph at lines 2856--2857
 []\TU/lmr/m/n/10 The Cauchy-Schwarz inequality implies that $[] []
  []
 
-[64] [65] [66] [67] [68
+[64] [65] [66]
+File: AdvECTS_files/figure-latex/smiData-1.pdf Graphic file (type pdf)
+<use AdvECTS_files/figure-latex/smiData-1.pdf>
+[67] [68] [69] [70
 
 ]
 Chapter 6.
-[69] [70
+[71] [72
 
 ]
 Chapter 7.
-[71] [72
+[73] [74
 
 ]
 Chapter 8.
 
-Overfull \hbox (81.5801pt too wide) in paragraph at lines 2993--3058
+Overfull \hbox (81.5801pt too wide) in paragraph at lines 3095--3160
  [][] 
  []
 
 
-Overfull \hbox (43.44008pt too wide) in paragraph at lines 3117--3164
+Overfull \hbox (43.44008pt too wide) in paragraph at lines 3219--3266
  [][] 
  []
 
 
-Overfull \hbox (124.92009pt too wide) in paragraph at lines 3170--3223
+Overfull \hbox (124.92009pt too wide) in paragraph at lines 3272--3325
  [][] 
  []
 
-(./AdvECTS.bbl [73] [74] [75] [76] [77] [78
+(./AdvECTS.bbl [75] [76] [77] [78] [79] [80
 
-]) [79] (./AdvECTS.aux)
+]) [81] (./AdvECTS.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -1007,12 +1010,12 @@ Package rerunfilecheck Info: File `AdvECTS.out' has not changed.
 (rerunfilecheck)             Checksum: 26D9BEEF0ED9269E562CA2771A2F5214;2968.
  ) 
 Here is how much of TeX's memory you used:
- 17885 strings out of 477855
- 329949 string characters out of 5845862
- 863528 words of memory out of 5000000
- 38547 multiletter control sequences out of 15000+600000
+ 17894 strings out of 477855
+ 330355 string characters out of 5845862
+ 863624 words of memory out of 5000000
+ 38555 multiletter control sequences out of 15000+600000
  477251 words of font info for 101 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  86i,14n,121p,1291b,558s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on AdvECTS.pdf (79 pages).
+Output written on AdvECTS.pdf (81 pages).
