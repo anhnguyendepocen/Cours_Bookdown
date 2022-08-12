@@ -1,6 +1,7 @@
 h1:estimation-methods Estimation Methods
-h2:generalized-method-of-moments Generalized Method of Moments
+h2:generalized-method-of-moments-gmm Generalized Method of Moments (GMM)
 h3:framework Framework
+h3:example-estimation-of-the-stochastic-discount-factor-s.d.f. Example: Estimation of the Stochastic Discount Factor (s.d.f.)
 h2:maximum-likelihood-estimation Maximum Likelihood Estimation
 fig:MLE1 The red ticks, at the bottom, indicate observations (there are 200 of them). The historgram is based on these 200 observations
 fig:MLE2 Proba. that $y_i-\\varepsilon \\le Y_i < y_i+\\varepsilon$, $i \\in \\{1,2,3,4\\}$. The vertical red line indicates the maximum of the function.
@@ -8,4 +9,6 @@ fig:MLE3 Log-likelihood function associated with the 200 i.i.d. observations. Th
 h3:notations Notations
 h3:to-sum-up-mle-in-practice To sum up – MLE in practice
 h3:example-mle-estimation-of-a-mixture-of-gaussian-distribution Example: MLE estimation of a mixture of Gaussian distribution
+fig:smiData Time series of SMI weekly returns (source: Yahoo Finance).
+fig:smidistri Comparison of different estimates of the distribution of returns.
 

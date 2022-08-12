@@ -76,7 +76,10 @@ eq:bfixedeffects11
 eq:bfixedeffects
 eq:a
 eq:LSDV2
+def:GMM
 eq:Shat
+eq:sdf
+eq:momF
 fig:MLE1
 fig:MLE2
 fig:MLE3
@@ -98,6 +101,8 @@ prp:MLEproperties
 eq:normMLE
 eq:III1
 eq:I2
+fig:smiData
+fig:smidistri
 tab:Normal
 tab:Student
 tab:Chi2
@@ -132,8 +137,9 @@ three-standard-cases
 estimation-of-fixed-effects-models
 estimation-of-random-effects-models
 estimation-methods
-generalized-method-of-moments
+generalized-method-of-moments-gmm
 framework
+example-estimation-of-the-stochastic-discount-factor-s.d.f.
 maximum-likelihood-estimation
 notations
 to-sum-up-mle-in-practice
