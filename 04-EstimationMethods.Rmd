@@ -79,7 +79,7 @@ Under the no-arbitrage assumption, there exists a random variable $\mathcal{M}_{
 $$
 \mathbb{E}_t(\mathcal{M}_{t,t+1}R_{t+1})=1
 $$
-for any (gross) asset return $R_t$. 
+for any (gross) asset return $R_t$. In the following, $R_t$ denotes a $n_r$-dimensional vector of gross  returns.
 
 We consider the following specification of the s.d.f.:
 \begin{equation}
@@ -197,6 +197,18 @@ for(i in 1:length(theta)){
 V <- 1/T * solve(t(D) %*% W %*% D)
 std.dev <- sqrt(diag(V));t.stud <- theta/std.dev
 cbind(theta,std.dev,t.stud)
+```
+
+The Hansen statistic can be used to test the model. If the model is correct, we have:
+$$
+T g(\underline{x_T};\theta)'\, S^{-1} \, g(\underline{x_T};\theta) \sim \,i.i.d.\,\chi^2(J - K),
+$$
+where $J$ is the number of moment contraints ($n_z \times n_r$ here) and $K$ is the number of estimated parameters ($=n_F$ here).
+
+```{r gmm6}
+g <- f_aux(theta)$g
+Hanse_stat <- T * t(g) %*% W %*% g
+pvalue <- pchisq(q = Hanse_stat,df = n_R*n_z - n_F)
 ```
 
 

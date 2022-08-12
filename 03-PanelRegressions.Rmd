@@ -446,6 +446,16 @@ $$
 and therefore use $s^2_{pooled} - \hat{\sigma}_e^2$ as an approximation to $\sigma_u^2$.
 
 
+
+### Example: Macro-History database
+
+Date from [Jorda, Schularick, and Jorda](https://www.macrohistory.net)
+
+```{r JSTpanel}
+library(haven)
+JST <- read_dta("http://data.macrohistory.net/JST/JSTdatasetR6.dta")
+```
+
 <!-- %\begin{frame}{} -->
 <!-- %\begin{scriptsize} -->
 <!-- %\begin{itemize} -->
