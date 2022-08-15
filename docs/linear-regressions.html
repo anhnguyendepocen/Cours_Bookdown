@@ -1535,6 +1535,13 @@ r = \frac{\sum_{i=2}^{n}e_i e_{i-1}}{\sum_{i=1}^{n-1}e_i^2}.
 <p>A nice reference is <span class="citation">MacKinnon, Nielsen, and Webb (<a href="references.html#ref-MACKINNON2022" role="doc-biblioref">2022</a>)</span></p>
 <p>Another one is <span class="citation">Cameron and Miller (<a href="references.html#ref-Cameron_Miller_2014" role="doc-biblioref">2014</a>)</span></p>
 <p>See package <a href="https://cran.r-project.org/web/packages/fwildclusterboot/vignettes/fwildclusterboot.html">fwildclusterboot</a> for wild cluster bootstrap.</p>
+</div>
+<div id="shrinkage-method" class="section level2" number="3.8">
+<h2>
+<span class="header-section-number">3.8</span> Shrinkage method<a class="anchor" aria-label="anchor" href="#shrinkage-method"><i class="fas fa-link"></i></a>
+</h2>
+<p>Chosing the right variables is often a compicated matter, especially in the presence of many potentially relevant covariates. Keeping a large number of covariates results in large standard deviations for the estimated parameters. In order to address this issue, shrinkage methods have been designed. The objective of these methods is to help to select of a limited number of variables (by shrinking the regression coefficients of the less useful variables towards zero). The two best-known shrinkage techniques are ridge regression and the lasso.</p>
+<p><span class="citation">James et al. (<a href="references.html#ref-James2013" role="doc-biblioref">2013</a>)</span> (Chapter 6.2)</p>
 
 </div>
 </div>
@@ -1573,6 +1580,7 @@ r = \frac{\sum_{i=2}^{n}e_i e_{i-1}}{\sum_{i=1}^{n-1}e_i^2}.
 </li>
 <li><a class="nav-link" href="#summary"><span class="header-section-number">3.6</span> Summary</a></li>
 <li><a class="nav-link" href="#clusters"><span class="header-section-number">3.7</span> Clusters</a></li>
+<li><a class="nav-link" href="#shrinkage-method"><span class="header-section-number">3.8</span> Shrinkage method</a></li>
 </ul>
 
       <div class="book-extra">
@@ -1589,7 +1597,7 @@ r = \frac{\sum_{i=2}^{n}e_i e_{i-1}}{\sum_{i=1}^{n-1}e_i^2}.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-08-12.</p>
+    <p>"<strong>Advanced Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-08-15.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

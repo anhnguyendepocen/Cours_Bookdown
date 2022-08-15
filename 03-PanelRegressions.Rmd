@@ -53,7 +53,7 @@ eq.LSDV <- lm(log(packs)~log(rprice)+log(rincome)+state,
 print(summary(eq.LSDV)$coefficients[1:3,])
 CigarettesSW$year <- as.factor(CigarettesSW$year)
 eq.LSDV2 <- lm(log(packs)~log(rprice)+log(rincome)+state+year,
-              data=CigarettesSW)
+               data=CigarettesSW)
 print(summary(eq.LSDV2)$coefficients[1:3,])
 ```
 
@@ -449,11 +449,92 @@ and therefore use $s^2_{pooled} - \hat{\sigma}_e^2$ as an approximation to $\sig
 
 ### Example: Macro-History database
 
-Date from [Jorda, Schularick, and Jorda](https://www.macrohistory.net)
+Date from @JST_2017 [see website](https://www.macrohistory.net).
 
-```{r JSTpanel}
-library(haven)
-JST <- read_dta("http://data.macrohistory.net/JST/JSTdatasetR6.dta")
+```{r JSTpanel, warning=FALSE}
+JST <- read.csv("https://raw.githubusercontent.com/jrenne/Data4courses/master/JST/JSTdatasetR6.csv")
+JST <- subset(JST,year>1950)
+N <- dim(JST)[1]
+JST$hpreal <- JST$hpnom/JST$cpi # real house price index
+JST$chge_ctry <- c(NaN,JST$iso[2:N]!=JST$iso[1:(N-1)])# will be use to put NA's when computing change in price
+JST$dhpreal <- log(JST$hpreal/c(NaN,JST$hpreal[1:(N-1)]))
+JST$dhpreal[JST$chge_ctry==1] <- NaN
+JST$dhpreal[abs(JST$dhpreal)>.3] <- NaN # remove extreme price change
+# JST$ltrate_1 <- c(NaN,JST$ltrate[1:(N-1)])
+# JST$ltrate_1[JST$chge_ctry==1] <- NaN
+# JST$stir_1 <- c(NaN,JST$stir[1:(N-1)])
+# JST$stir_1[JST$chge_ctry==1] <- NaN
+JST$YEAR <- as.factor(JST$year) # to have time fixed effects
+eq <- lm(dhpreal ~ stir + ltrate + iso + YEAR,data=JST)
+eq <- lm(dhpreal ~ I(ltrate-stir) + iso + YEAR,data=JST)
+lmtest::coeftest(eq)[1:2,]
+library(sandwich)
+library(lmtest)
+eq <- lm(dhpreal ~ I(ltrate-stir) + iso,data=JST)
+vcov_cluster <- vcovCL(eq, cluster = JST[, c("iso")])
+coeftest(eq, vcov = vcov_cluster)[1:2,]
+vcov_cluster <- vcovCL(eq, cluster = JST[, c("iso","YEAR")])
+coeftest(eq, vcov = vcov_cluster)[1:2,]
+```
+
+### Example Spatial Data
+
+```{r airbnb, warning=FALSE}
+library(rgdal)
+library(AEC)
+library(sandwich)
+library(lmtest)
+library(stargazer)
+library(RColorBrewer)
+par(mar=c(0,0,0,0))
+plot(zurich_districts,col="gray",border="white")
+for(i in 1:dim(airbnb)[1]){
+  points(airbnb$longitude[i],airbnb$latitude[i],pch=1,cex=(airbnb$price[i]/200))
+}
+eq_noFE <- lm(price~bedrooms+accommodates,data=airbnb)
+eq_FE <- lm(price~bedrooms+accommodates+neighborhood,data=airbnb)
+# stargazer(
+#   eq_FE,eq_noFE, type = "text", column.labels = c("FE", "No FE"),
+#   omit = c("neighborhood"),
+#   omit.labels = c("District FE")#,keep.stat = "n"
+# )
+# lmtest::coeftest(eq_FE)[1:2,]
+# lmtest::coeftest(eq_noFE)[1:2,]
+
+# Adjust standard errors
+cov_FE          <- vcovHC(eq_FE, type = "HC1")
+robust_se_FE    <- sqrt(diag(cov_FE))
+cov_noFE        <- vcovHC(eq_noFE, type = "HC1")
+robust_se_noFE  <- sqrt(diag(cov_noFE))
+
+# Stargazer output (with and without RSE)
+stargazer(eq_FE, eq_noFE, eq_FE, eq_noFE, type = "text",
+          column.labels = c("FE (no HAC)", "No FE (no HAC)",
+                            "FE (with HAC)", "No FE (with HAC)"),
+          omit = c("neighborhood"),
+          omit.labels = c("District FE"),keep.stat = "n",
+          se = list(NULL, NULL, robust_se_FE, robust_se_noFE))
+# Plot residuals
+par(mfrow=c(1,2))
+for(j in 1:2){# with/without FE
+  par(plt=c(0,1,0,.8))
+  if(j==1){
+    residuals <- eq_FE$residuals
+    titl <- "(a) With FE"
+  }else{
+    residuals <- eq_noFE$residuals
+    titl <- "(b) Without FE"
+  }
+  plot(zurich_districts,col="gray",border="white",main=titl)
+  # create categories based on resisuals:
+  nb_categ <- 11
+  categ <- round((nb_categ-1)*(residuals-min(residuals))/(max(residuals)-min(residuals)))+1
+  colour <- paste(brewer.pal(n = nb_categ, name = "RdBu"),"77",sep="")
+  for(i in 1:dim(airbnb)[1]){
+    points(airbnb$longitude[i],airbnb$latitude[i],pch=19,
+           cex=(abs(residuals[i])/100),col=colour[categ[i]])
+  }
+}
 ```
 
 <!-- %\begin{frame}{} -->

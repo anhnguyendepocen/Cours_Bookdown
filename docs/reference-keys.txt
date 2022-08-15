@@ -132,10 +132,13 @@ heteroskedasticity-and-autocorrelation-hac
 how-to-detect-autocorrelation-in-residuals
 summary
 clusters
+shrinkage-method
 panel-regressions
 three-standard-cases
 estimation-of-fixed-effects-models
 estimation-of-random-effects-models
+example-macro-history-database
+example-spatial-data
 estimation-methods
 generalized-method-of-moments-gmm
 framework
@@ -148,4 +151,3 @@ microeconometrics
 time-series
 appendix
 statitical-tables
-exm:unlabeled-div-3

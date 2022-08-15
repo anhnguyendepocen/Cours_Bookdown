@@ -1,6 +1,71 @@
 {
     "sources": [
         {
+            "URL": "https://www.statlearning.com",
+            "author": [
+                {
+                    "family": "James",
+                    "given": "Gareth"
+                },
+                {
+                    "family": "Witten",
+                    "given": "Daniela"
+                },
+                {
+                    "family": "Hastie",
+                    "given": "Trevor"
+                },
+                {
+                    "family": "Tibshirani",
+                    "given": "Robert"
+                }
+            ],
+            "id": "James2013",
+            "issued": {
+                "date-parts": [
+                    [
+                        2013
+                    ]
+                ]
+            },
+            "keyword": "general_machine_learning",
+            "publisher": "Springer",
+            "title": "An introduction to statistical learning: With applications in r",
+            "title-short": "An introduction to statistical learning",
+            "type": "book"
+        },
+        {
+            "URL": "https://ideas.repec.org/a/ucp/macann/doi10.1086-690241.html",
+            "author": [
+                {
+                    "family": "Jordà",
+                    "given": "Òscar"
+                },
+                {
+                    "family": "Schularick",
+                    "given": "Moritz"
+                },
+                {
+                    "family": "Taylor",
+                    "given": "Alan M."
+                }
+            ],
+            "container-title": "NBER Macroeconomics Annual",
+            "id": "JST_2017",
+            "issue": "1",
+            "issued": {
+                "date-parts": [
+                    [
+                        2017
+                    ]
+                ]
+            },
+            "page": "213-263",
+            "title": "Macrofinancial History and the New Business Cycle Facts",
+            "type": "article-journal",
+            "volume": "31"
+        },
+        {
             "URL": "http://yihui.name/knitr/",
             "author": [
                 {

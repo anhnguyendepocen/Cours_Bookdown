@@ -1406,5 +1406,11 @@ Another one is @Cameron_Miller_2014
 
 See package [fwildclusterboot](https://cran.r-project.org/web/packages/fwildclusterboot/vignettes/fwildclusterboot.html) for wild cluster bootstrap.
 
+## Shrinkage method
+
+Chosing the right variables is often a compicated matter, especially in the presence of many potentially relevant covariates. Keeping a large number of covariates results in large standard deviations for the estimated parameters. In order to address this issue, shrinkage methods have been designed. The objective of these methods is to help to select of a limited number of variables (by shrinking the regression coefficients of the less useful variables towards zero). The two best-known shrinkage techniques are ridge regression and the lasso.
+
+@James2013 (Chapter 6.2)
+
 
 

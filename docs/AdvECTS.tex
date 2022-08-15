@@ -124,7 +124,7 @@
 
 \title{Advanced Econometrics}
 \author{Jean-Paul Renne}
-\date{2022-08-12}
+\date{2022-08-15}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -2093,6 +2093,13 @@ Another one is \citet{Cameron_Miller_2014}
 
 See package \href{https://cran.r-project.org/web/packages/fwildclusterboot/vignettes/fwildclusterboot.html}{fwildclusterboot} for wild cluster bootstrap.
 
+\hypertarget{shrinkage-method}{%
+\section{Shrinkage method}\label{shrinkage-method}}
+
+Chosing the right variables is often a compicated matter, especially in the presence of many potentially relevant covariates. Keeping a large number of covariates results in large standard deviations for the estimated parameters. In order to address this issue, shrinkage methods have been designed. The objective of these methods is to help to select of a limited number of variables (by shrinking the regression coefficients of the less useful variables towards zero). The two best-known shrinkage techniques are ridge regression and the lasso.
+
+\citet{James2013} (Chapter 6.2)
+
 \hypertarget{panel-regressions}{%
 \chapter{Panel regressions}\label{panel-regressions}}
 
@@ -2178,7 +2185,7 @@ Let us know use the \href{https://rdrr.io/cran/AER/man/CigarettesSW.html}{Cigare
 \begin{Highlighting}[]
 \NormalTok{CigarettesSW}\SpecialCharTok{$}\NormalTok{year }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(CigarettesSW}\SpecialCharTok{$}\NormalTok{year)}
 \NormalTok{eq.LSDV2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\FunctionTok{log}\NormalTok{(packs)}\SpecialCharTok{\textasciitilde{}}\FunctionTok{log}\NormalTok{(rprice)}\SpecialCharTok{+}\FunctionTok{log}\NormalTok{(rincome)}\SpecialCharTok{+}\NormalTok{state}\SpecialCharTok{+}\NormalTok{year,}
-              \AttributeTok{data=}\NormalTok{CigarettesSW)}
+               \AttributeTok{data=}\NormalTok{CigarettesSW)}
 \FunctionTok{print}\NormalTok{(}\FunctionTok{summary}\NormalTok{(eq.LSDV2)}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{,])}
 \end{Highlighting}
 \end{Shaded}
@@ -2573,6 +2580,215 @@ And for \(\sigma_u^2\)? We can exploit the fact that OLS are consistent in the p
 \]
 and therefore use \(s^2_{pooled} - \hat{\sigma}_e^2\) as an approximation to \(\sigma_u^2\).
 
+\hypertarget{example-macro-history-database}{%
+\subsection{Example: Macro-History database}\label{example-macro-history-database}}
+
+Date from \citet{JST_2017} \href{https://www.macrohistory.net}{see website}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{JST }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/jrenne/Data4courses/master/JST/JSTdatasetR6.csv"}\NormalTok{)}
+\NormalTok{JST }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(JST,year}\SpecialCharTok{\textgreater{}}\DecValTok{1950}\NormalTok{)}
+\NormalTok{N }\OtherTok{\textless{}{-}} \FunctionTok{dim}\NormalTok{(JST)[}\DecValTok{1}\NormalTok{]}
+\NormalTok{JST}\SpecialCharTok{$}\NormalTok{hpreal }\OtherTok{\textless{}{-}}\NormalTok{ JST}\SpecialCharTok{$}\NormalTok{hpnom}\SpecialCharTok{/}\NormalTok{JST}\SpecialCharTok{$}\NormalTok{cpi }\CommentTok{\# real house price index}
+\NormalTok{JST}\SpecialCharTok{$}\NormalTok{chge\_ctry }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\ConstantTok{NaN}\NormalTok{,JST}\SpecialCharTok{$}\NormalTok{iso[}\DecValTok{2}\SpecialCharTok{:}\NormalTok{N]}\SpecialCharTok{!=}\NormalTok{JST}\SpecialCharTok{$}\NormalTok{iso[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{(N}\DecValTok{{-}1}\NormalTok{)])}\CommentTok{\# will be use to put NA\textquotesingle{}s when computing change in price}
+\NormalTok{JST}\SpecialCharTok{$}\NormalTok{dhpreal }\OtherTok{\textless{}{-}} \FunctionTok{log}\NormalTok{(JST}\SpecialCharTok{$}\NormalTok{hpreal}\SpecialCharTok{/}\FunctionTok{c}\NormalTok{(}\ConstantTok{NaN}\NormalTok{,JST}\SpecialCharTok{$}\NormalTok{hpreal[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{(N}\DecValTok{{-}1}\NormalTok{)]))}
+\NormalTok{JST}\SpecialCharTok{$}\NormalTok{dhpreal[JST}\SpecialCharTok{$}\NormalTok{chge\_ctry}\SpecialCharTok{==}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \ConstantTok{NaN}
+\NormalTok{JST}\SpecialCharTok{$}\NormalTok{dhpreal[}\FunctionTok{abs}\NormalTok{(JST}\SpecialCharTok{$}\NormalTok{dhpreal)}\SpecialCharTok{\textgreater{}}\NormalTok{.}\DecValTok{3}\NormalTok{] }\OtherTok{\textless{}{-}} \ConstantTok{NaN} \CommentTok{\# remove extreme price change}
+\CommentTok{\# JST$ltrate\_1 \textless{}{-} c(NaN,JST$ltrate[1:(N{-}1)])}
+\CommentTok{\# JST$ltrate\_1[JST$chge\_ctry==1] \textless{}{-} NaN}
+\CommentTok{\# JST$stir\_1 \textless{}{-} c(NaN,JST$stir[1:(N{-}1)])}
+\CommentTok{\# JST$stir\_1[JST$chge\_ctry==1] \textless{}{-} NaN}
+\NormalTok{JST}\SpecialCharTok{$}\NormalTok{YEAR }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(JST}\SpecialCharTok{$}\NormalTok{year) }\CommentTok{\# to have time fixed effects}
+\NormalTok{eq }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(dhpreal }\SpecialCharTok{\textasciitilde{}}\NormalTok{ stir }\SpecialCharTok{+}\NormalTok{ ltrate }\SpecialCharTok{+}\NormalTok{ iso }\SpecialCharTok{+}\NormalTok{ YEAR,}\AttributeTok{data=}\NormalTok{JST)}
+\NormalTok{eq }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(dhpreal }\SpecialCharTok{\textasciitilde{}} \FunctionTok{I}\NormalTok{(ltrate}\SpecialCharTok{{-}}\NormalTok{stir) }\SpecialCharTok{+}\NormalTok{ iso }\SpecialCharTok{+}\NormalTok{ YEAR,}\AttributeTok{data=}\NormalTok{JST)}
+\NormalTok{lmtest}\SpecialCharTok{::}\FunctionTok{coeftest}\NormalTok{(eq)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{,]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                      Estimate  Std. Error    t value     Pr(>|t|)
+## (Intercept)      -0.009956382 0.020728411 -0.4803254 0.6310957161
+## I(ltrate - stir) -0.004746647 0.001254511 -3.7836614 0.0001632386
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(sandwich)}
+\FunctionTok{library}\NormalTok{(lmtest)}
+\NormalTok{eq }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(dhpreal }\SpecialCharTok{\textasciitilde{}} \FunctionTok{I}\NormalTok{(ltrate}\SpecialCharTok{{-}}\NormalTok{stir) }\SpecialCharTok{+}\NormalTok{ iso,}\AttributeTok{data=}\NormalTok{JST)}
+\NormalTok{vcov\_cluster }\OtherTok{\textless{}{-}} \FunctionTok{vcovCL}\NormalTok{(eq, }\AttributeTok{cluster =}\NormalTok{ JST[, }\FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{)])}
+\FunctionTok{coeftest}\NormalTok{(eq, }\AttributeTok{vcov =}\NormalTok{ vcov\_cluster)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{,]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                      Estimate  Std. Error   t value     Pr(>|t|)
+## (Intercept)       0.028199744 0.001814513 15.541217 1.778760e-49
+## I(ltrate - stir) -0.004732743 0.002349209 -2.014611 4.418367e-02
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vcov\_cluster }\OtherTok{\textless{}{-}} \FunctionTok{vcovCL}\NormalTok{(eq, }\AttributeTok{cluster =}\NormalTok{ JST[, }\FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{,}\StringTok{"YEAR"}\NormalTok{)])}
+\FunctionTok{coeftest}\NormalTok{(eq, }\AttributeTok{vcov =}\NormalTok{ vcov\_cluster)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{,]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                      Estimate  Std. Error   t value     Pr(>|t|)
+## (Intercept)       0.028199744 0.002182053 12.923490 1.020962e-35
+## I(ltrate - stir) -0.004732743 0.002720606 -1.739592 8.220498e-02
+\end{verbatim}
+
+\hypertarget{example-spatial-data}{%
+\subsection{Example Spatial Data}\label{example-spatial-data}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(rgdal)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: sp
+\end{verbatim}
+
+\begin{verbatim}
+## Please note that rgdal will be retired by the end of 2023,
+## plan transition to sf/stars/terra functions using GDAL and PROJ
+## at your earliest convenience.
+## 
+## rgdal: version: 1.5-30, (SVN revision 1171)
+## Geospatial Data Abstraction Library extensions to R successfully loaded
+## Loaded GDAL runtime: GDAL 3.4.2, released 2022/03/08
+## Path to GDAL shared files: /Library/Frameworks/R.framework/Versions/4.2/Resources/library/rgdal/gdal
+## GDAL binary built with GEOS: FALSE 
+## Loaded PROJ runtime: Rel. 8.2.1, January 1st, 2022, [PJ_VERSION: 821]
+## Path to PROJ shared files: /Library/Frameworks/R.framework/Versions/4.2/Resources/library/rgdal/proj
+## PROJ CDN enabled: FALSE
+## Linking to sp version:1.4-6
+## To mute warnings of possible GDAL/OSR exportToProj4() degradation,
+## use options("rgdal_show_exportToProj4_warnings"="none") before loading sp or rgdal.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(AEC)}
+\FunctionTok{library}\NormalTok{(sandwich)}
+\FunctionTok{library}\NormalTok{(lmtest)}
+\FunctionTok{library}\NormalTok{(stargazer)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Please cite as:
+\end{verbatim}
+
+\begin{verbatim}
+##  Hlavac, Marek (2022). stargazer: Well-Formatted Regression and Summary Statistics Tables.
+\end{verbatim}
+
+\begin{verbatim}
+##  R package version 5.2.3. https://CRAN.R-project.org/package=stargazer
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(RColorBrewer)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mar=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(zurich\_districts,}\AttributeTok{col=}\StringTok{"gray"}\NormalTok{,}\AttributeTok{border=}\StringTok{"white"}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{dim}\NormalTok{(airbnb)[}\DecValTok{1}\NormalTok{])\{}
+  \FunctionTok{points}\NormalTok{(airbnb}\SpecialCharTok{$}\NormalTok{longitude[i],airbnb}\SpecialCharTok{$}\NormalTok{latitude[i],}\AttributeTok{pch=}\DecValTok{1}\NormalTok{,}\AttributeTok{cex=}\NormalTok{(airbnb}\SpecialCharTok{$}\NormalTok{price[i]}\SpecialCharTok{/}\DecValTok{200}\NormalTok{))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{AdvECTS_files/figure-latex/airbnb-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eq\_noFE }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(price}\SpecialCharTok{\textasciitilde{}}\NormalTok{bedrooms}\SpecialCharTok{+}\NormalTok{accommodates,}\AttributeTok{data=}\NormalTok{airbnb)}
+\NormalTok{eq\_FE }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(price}\SpecialCharTok{\textasciitilde{}}\NormalTok{bedrooms}\SpecialCharTok{+}\NormalTok{accommodates}\SpecialCharTok{+}\NormalTok{neighborhood,}\AttributeTok{data=}\NormalTok{airbnb)}
+\CommentTok{\# stargazer(}
+\CommentTok{\#   eq\_FE,eq\_noFE, type = "text", column.labels = c("FE", "No FE"),}
+\CommentTok{\#   omit = c("neighborhood"),}
+\CommentTok{\#   omit.labels = c("District FE")\#,keep.stat = "n"}
+\CommentTok{\# )}
+\CommentTok{\# lmtest::coeftest(eq\_FE)[1:2,]}
+\CommentTok{\# lmtest::coeftest(eq\_noFE)[1:2,]}
+
+\CommentTok{\# Adjust standard errors}
+\NormalTok{cov\_FE          }\OtherTok{\textless{}{-}} \FunctionTok{vcovHC}\NormalTok{(eq\_FE, }\AttributeTok{type =} \StringTok{"HC1"}\NormalTok{)}
+\NormalTok{robust\_se\_FE    }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{diag}\NormalTok{(cov\_FE))}
+\NormalTok{cov\_noFE        }\OtherTok{\textless{}{-}} \FunctionTok{vcovHC}\NormalTok{(eq\_noFE, }\AttributeTok{type =} \StringTok{"HC1"}\NormalTok{)}
+\NormalTok{robust\_se\_noFE  }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{diag}\NormalTok{(cov\_noFE))}
+
+\CommentTok{\# Stargazer output (with and without RSE)}
+\FunctionTok{stargazer}\NormalTok{(eq\_FE, eq\_noFE, eq\_FE, eq\_noFE, }\AttributeTok{type =} \StringTok{"text"}\NormalTok{,}
+          \AttributeTok{column.labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"FE (no HAC)"}\NormalTok{, }\StringTok{"No FE (no HAC)"}\NormalTok{,}
+                            \StringTok{"FE (with HAC)"}\NormalTok{, }\StringTok{"No FE (with HAC)"}\NormalTok{),}
+          \AttributeTok{omit =} \FunctionTok{c}\NormalTok{(}\StringTok{"neighborhood"}\NormalTok{),}
+          \AttributeTok{omit.labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"District FE"}\NormalTok{),}\AttributeTok{keep.stat =} \StringTok{"n"}\NormalTok{,}
+          \AttributeTok{se =} \FunctionTok{list}\NormalTok{(}\ConstantTok{NULL}\NormalTok{, }\ConstantTok{NULL}\NormalTok{, robust\_se\_FE, robust\_se\_noFE))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## ======================================================================
+##                                 Dependent variable:                   
+##              ---------------------------------------------------------
+##                                        price                          
+##              FE (no HAC) No FE (no HAC) FE (with HAC) No FE (with HAC)
+##                  (1)          (2)            (3)            (4)       
+## ----------------------------------------------------------------------
+## bedrooms      7.229***      5.629**       7.229***        5.629***    
+##                (2.135)      (2.194)        (2.037)        (2.066)     
+##                                                                       
+## accommodates  16.426***    17.449***      16.426***      17.449***    
+##                (1.284)      (1.323)        (1.415)        (1.419)     
+##                                                                       
+## Constant      95.118***    68.417***      95.118***      68.417***    
+##                (5.323)      (3.223)        (5.618)        (3.504)     
+##                                                                       
+## ----------------------------------------------------------------------
+## District FE      Yes           No            Yes             No       
+## ----------------------------------------------------------------------
+## Observations    1,321        1,321          1,321          1,321      
+## ======================================================================
+## Note:                                      *p<0.1; **p<0.05; ***p<0.01
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot residuals}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{)\{}\CommentTok{\# with/without FE}
+  \FunctionTok{par}\NormalTok{(}\AttributeTok{plt=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,.}\DecValTok{8}\NormalTok{))}
+  \ControlFlowTok{if}\NormalTok{(j}\SpecialCharTok{==}\DecValTok{1}\NormalTok{)\{}
+\NormalTok{    residuals }\OtherTok{\textless{}{-}}\NormalTok{ eq\_FE}\SpecialCharTok{$}\NormalTok{residuals}
+\NormalTok{    titl }\OtherTok{\textless{}{-}} \StringTok{"(a) With FE"}
+\NormalTok{  \}}\ControlFlowTok{else}\NormalTok{\{}
+\NormalTok{    residuals }\OtherTok{\textless{}{-}}\NormalTok{ eq\_noFE}\SpecialCharTok{$}\NormalTok{residuals}
+\NormalTok{    titl }\OtherTok{\textless{}{-}} \StringTok{"(b) Without FE"}
+\NormalTok{  \}}
+  \FunctionTok{plot}\NormalTok{(zurich\_districts,}\AttributeTok{col=}\StringTok{"gray"}\NormalTok{,}\AttributeTok{border=}\StringTok{"white"}\NormalTok{,}\AttributeTok{main=}\NormalTok{titl)}
+  \CommentTok{\# create categories based on resisuals:}
+\NormalTok{  nb\_categ }\OtherTok{\textless{}{-}} \DecValTok{11}
+\NormalTok{  categ }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{((nb\_categ}\DecValTok{{-}1}\NormalTok{)}\SpecialCharTok{*}\NormalTok{(residuals}\SpecialCharTok{{-}}\FunctionTok{min}\NormalTok{(residuals))}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{max}\NormalTok{(residuals)}\SpecialCharTok{{-}}\FunctionTok{min}\NormalTok{(residuals)))}\SpecialCharTok{+}\DecValTok{1}
+\NormalTok{  colour }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\FunctionTok{brewer.pal}\NormalTok{(}\AttributeTok{n =}\NormalTok{ nb\_categ, }\AttributeTok{name =} \StringTok{"RdBu"}\NormalTok{),}\StringTok{"77"}\NormalTok{,}\AttributeTok{sep=}\StringTok{""}\NormalTok{)}
+  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{dim}\NormalTok{(airbnb)[}\DecValTok{1}\NormalTok{])\{}
+    \FunctionTok{points}\NormalTok{(airbnb}\SpecialCharTok{$}\NormalTok{longitude[i],airbnb}\SpecialCharTok{$}\NormalTok{latitude[i],}\AttributeTok{pch=}\DecValTok{19}\NormalTok{,}
+           \AttributeTok{cex=}\NormalTok{(}\FunctionTok{abs}\NormalTok{(residuals[i])}\SpecialCharTok{/}\DecValTok{100}\NormalTok{),}\AttributeTok{col=}\NormalTok{colour[categ[i]])}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{AdvECTS_files/figure-latex/airbnb-2.pdf}
+
 \hypertarget{estimation-methods}{%
 \chapter{Estimation Methods}\label{estimation-methods}}
 
@@ -2661,7 +2877,7 @@ Under the no-arbitrage assumption, there exists a random variable \(\mathcal{M}_
 \[
 \mathbb{E}_t(\mathcal{M}_{t,t+1}R_{t+1})=1
 \]
-for any (gross) asset return \(R_t\).
+for any (gross) asset return \(R_t\). In the following, \(R_t\) denotes a \(n_r\)-dimensional vector of gross returns.
 
 We consider the following specification of the s.d.f.:
 \begin{equation}
@@ -2795,6 +3011,20 @@ Finally, let's compute the standard deviation of the parameter estimates.
 ## [1,] -0.6774355  0.3182614 -2.1285502
 ## [2,]  4.3612746 13.1163581  0.3325065
 \end{verbatim}
+
+The Hansen statistic can be used to test the model. If the model is correct, we have:
+\[
+T g(\underline{x_T};\theta)'\, S^{-1} \, g(\underline{x_T};\theta) \sim \,i.i.d.\,\chi^2(J - K),
+\]
+where \(J\) is the number of moment contraints (\(n_z \times n_r\) here) and \(K\) is the number of estimated parameters (\(=n_F\) here).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g }\OtherTok{\textless{}{-}} \FunctionTok{f\_aux}\NormalTok{(theta)}\SpecialCharTok{$}\NormalTok{g}
+\NormalTok{Hanse\_stat }\OtherTok{\textless{}{-}}\NormalTok{ T }\SpecialCharTok{*} \FunctionTok{t}\NormalTok{(g) }\SpecialCharTok{\%*\%}\NormalTok{ W }\SpecialCharTok{\%*\%}\NormalTok{ g}
+\NormalTok{pvalue }\OtherTok{\textless{}{-}} \FunctionTok{pchisq}\NormalTok{(}\AttributeTok{q =}\NormalTok{ Hanse\_stat,}\AttributeTok{df =}\NormalTok{ n\_R}\SpecialCharTok{*}\NormalTok{n\_z }\SpecialCharTok{{-}}\NormalTok{ n\_F)}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{maximum-likelihood-estimation}{%
 \section{Maximum Likelihood Estimation}\label{maximum-likelihood-estimation}}
