@@ -589,9 +589,9 @@ and therefore use <span class="math inline">\(s^2_{pooled} - \hat{\sigma}_e^2\)<
 <span><span class="co"># lmtest::coeftest(eq_noFE)[1:2,]</span></span>
 <span></span>
 <span><span class="co"># Adjust standard errors</span></span>
-<span><span class="va">cov_FE</span>          <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHC.html">vcovHC</a></span><span class="op">(</span><span class="va">eq_FE</span>, type <span class="op">=</span> <span class="st">"HC1"</span><span class="op">)</span></span>
+<span><span class="va">cov_FE</span>          <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHC.html">vcovHC</a></span><span class="op">(</span><span class="va">eq_FE</span>, cluster <span class="op">=</span> <span class="va">airbnb</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"neighborhood"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">robust_se_FE</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">cov_FE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">cov_noFE</span>        <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHC.html">vcovHC</a></span><span class="op">(</span><span class="va">eq_noFE</span>, type <span class="op">=</span> <span class="st">"HC1"</span><span class="op">)</span></span>
+<span><span class="va">cov_noFE</span>        <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHC.html">vcovHC</a></span><span class="op">(</span><span class="va">eq_noFE</span>, cluster <span class="op">=</span> <span class="va">airbnb</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"neighborhood"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">robust_se_noFE</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">cov_noFE</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Stargazer output (with and without RSE)</span></span>
@@ -610,13 +610,13 @@ and therefore use <span class="math inline">\(s^2_{pooled} - \hat{\sigma}_e^2\)<
 ##                  (1)          (2)            (3)            (4)       
 ## ----------------------------------------------------------------------
 ## bedrooms      7.229***      5.629**       7.229***        5.629***    
-##                (2.135)      (2.194)        (2.037)        (2.066)     
+##                (2.135)      (2.194)        (2.052)        (2.073)     
 ##                                                                       
 ## accommodates  16.426***    17.449***      16.426***      17.449***    
-##                (1.284)      (1.323)        (1.415)        (1.419)     
+##                (1.284)      (1.323)        (1.431)        (1.428)     
 ##                                                                       
 ## Constant      95.118***    68.417***      95.118***      68.417***    
-##                (5.323)      (3.223)        (5.618)        (3.504)     
+##                (5.323)      (3.223)        (5.664)        (3.527)     
 ##                                                                       
 ## ----------------------------------------------------------------------
 ## District FE      Yes           No            Yes             No       

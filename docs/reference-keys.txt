@@ -66,9 +66,15 @@ prp:AsymptIVGRM
 eq:GeneralXSigmaX
 exm:heteroskedasticity
 eq:white
+eq:White
 eq:NW
 eq:simul11
 eq:simul22
+eq:BBB
+eq:cluster1
+hyp:cluster
+eq:cluster2
+hyp:twowaycluster
 fig:simulPanel
 hyp:FE
 eq:LSDV
@@ -132,6 +138,7 @@ heteroskedasticity-and-autocorrelation-hac
 how-to-detect-autocorrelation-in-residuals
 summary
 clusters
+two-way-clustering
 shrinkage-method
 panel-regressions
 three-standard-cases

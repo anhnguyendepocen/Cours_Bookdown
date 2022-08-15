@@ -502,9 +502,9 @@ eq_FE <- lm(price~bedrooms+accommodates+neighborhood,data=airbnb)
 # lmtest::coeftest(eq_noFE)[1:2,]
 
 # Adjust standard errors
-cov_FE          <- vcovHC(eq_FE, type = "HC1")
+cov_FE          <- vcovHC(eq_FE, cluster = airbnb[, c("neighborhood")])
 robust_se_FE    <- sqrt(diag(cov_FE))
-cov_noFE        <- vcovHC(eq_noFE, type = "HC1")
+cov_noFE        <- vcovHC(eq_noFE, cluster = airbnb[, c("neighborhood")])
 robust_se_noFE  <- sqrt(diag(cov_noFE))
 
 # Stargazer output (with and without RSE)

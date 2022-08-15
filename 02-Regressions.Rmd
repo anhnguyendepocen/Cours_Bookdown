@@ -1203,9 +1203,9 @@ We then need to estimate $\frac{1}{n}\sum_{i=1}^{n}\sigma_{i}^2\bv{x}_i\bv{x}'_i
 \mbox{plim}\left( \frac{1}{n}\sum_{i=1}^{n}e_{i}^2\bv{x}_i\bv{x}'_i \right). (\#eq:white)
 \end{equation}
 The estimator of $\frac{1}{n}\bv{X}'\boldsymbol\Sigma\bv{X}$ therefore is:
-$$
-\frac{1}{n}\bv{X}'\bv{E}^2\bv{X},
-$$
+\begin{equation}
+\frac{1}{n}\bv{X}'\bv{E}^2\bv{X},(\#eq:White)
+\end{equation}
 where $\bv{E}$ is an $n \times n$ diagonal matrix whose diagonal elements are the estimated residuals $e_i$.
 
 Illustration: Figure \@ref(fig:exmpSalarayPhD).
@@ -1406,11 +1406,113 @@ Another one is @Cameron_Miller_2014
 
 See package [fwildclusterboot](https://cran.r-project.org/web/packages/fwildclusterboot/vignettes/fwildclusterboot.html) for wild cluster bootstrap.
 
+XXXXXX
+
+Based on @MACKINNON2022:
+
+We have:
+\begin{equation}
+\bv{b} = \boldsymbol\beta + (\bv{X}'\bv{X})^{-1}\bv{X}'\boldsymbol\varepsilon.(\#eq:BBB)
+\end{equation}
+Consider a set $\{n_1,n_2,\dots,n_G\}$ s.t. $n=\sum_g n_g$, on which is based the following decomposition of $\bv{X}$:
+$$
+\bv{X} = \left[
+\begin{array}{c}
+\bv{X}_1 \\
+\bv{X}_1 \\
+\vdots\\
+\bv{X}_G
+\end{array}
+\right].
+$$
+With these notations, Eq. \@ref(eq:BBB) rewrites:
+\begin{equation}
+\bv{b} - \boldsymbol\beta = \left(\sum_{g=1}^G \bv{X}_g'\bv{X}_g\right)^{-1}\bv{X}'\sum_{g=1}^G \bv{s}_g,(\#eq:cluster1)
+\end{equation}
+where $\bv{s}_g = \bv{X}_g'\boldsymbol\varepsilon_g$ denotes the score vector (of dimension $K \times 1$) associoated with the $g^{th}$ cluster.
+
+
+If the model is correctly specified then $\mathbb{E}(\bv{s}_g))0$ for all clusters $g$. Note that Eq. \@ref(eq:cluster1) is valid for any partition of $\{1,\dots,n\}$. Nevertheless, dividing the sample into **clusters** really becomes meaningful if we assume that the following hypothesis holds:
+
+:::{.hypothesis #cluster}
+We have:
+$$
+(i)\; \mathbb{E}(\bv{s}_g\bv{s}_g')=\Sigma_g,\quad (ii)\; \mathbb{E}(\bv{s}_g\bv{s}_q')=0,\;g \ne q.
+$$
+:::
+
+The real assumotion here is $(ii)$. The first one simply gives a notation for the covariance matrix of the score assiciated with the $g^{th}$ cluster. Remark that these covariance matrices can differ across clusters. That is, cluster-based inference is robust against both heteroskedasticity and intra-cluster dependence without imposing any restrictions on the (unknown) form of either of them.
+
+While the choice of clustering structure is sometimes debatable, the structure is generally assumed known in both theoretical and applied work. 
+
+Matrix $\Sigma_g$ depends on the covariance structure of the $\varepsilon$'s. In particular, if $\Omega_g = \mathbb{E}(\boldsymbol\varepsilon_g\boldsymbol\varepsilon_g'|\bv{X}_g)$, then we have $\Sigma_g = \mathbb{E}(\bv{X}_g'\Omega_g\bv{X}_g)$.
+
+Under Hypothesis \@ref(hyp:cluster), it comes that the covariance matrix of $\bv{b}$ is:
+\begin{equation}
+\left(\bv{X}'\bv{X}\right)^{-1}\left(\sum_{g=1}^G \Sigma_g\right)\left(\bv{X}'\bv{X}\right)^{-1}(\#eq:cluster2)
+\end{equation}
+
+Let us denote by $\varepsilon_{g,i}$ the error associated with the $i^{th}$ component of vector $\boldsymbol\varepsilon_g$. Consider the special case where $\mathbb{E}(\varepsilon_{g,i} \varepsilon_{g,j}|\bv{X}_g)=\sigma^2\mathbb{I}_{\{i=j\}}$, then Eq. \@ref(eq:cluster2) gives the standard expression $\sigma^2\left(\bv{X}'\bv{X}\right)^{-1}$.
+
+If we have $\mathbb{E}(\varepsilon_{gi} \varepsilon_{gj}|\bv{X}_g)=\sigma_{gi}^2\mathbb{I}_{\{i=j\}}$, then we fall in the case addressed by the White formula (see Eq. \@ref(eq:White)), i.e.:
+$$
+\left(\bv{X}'\bv{X}\right)^{-1}\left(\bv{X}'\left[	\begin{array}{cccc}
+\sigma_1^2 & 0 & \dots & 0 \\
+0 & \sigma_2^2 &  & 0 \\
+\vdots && \ddots& \vdots \\
+0 & \dots & 0 & \sigma_n^2
+\end{array} \right]\bv{X}\right)\left(\bv{X}'\bv{X}\right)^{-1}.
+$$
+The natural way to estimate Eq. \@ref(eq:cluster2) consists in replacing the $\Sigma_g$ by their sample equivalent, i.e. $\widehat{\Sigma}_g=\bv{X}_g'\bv{e}_g\bv{e}_g'\bv{X}_g$. Adding corrections for the degrees of freedom, this leads to the following estimate of the covariance matrix of $\bv{b}$:
+\begin{equation}
+\frac{G(n-1)}{(G-1)(n-K)}\left(\bv{X}'\bv{X}\right)^{-1}\left(\sum_{g=1}^G\widehat{\Sigma}_g\right) \left(\bv{X}'\bv{X}\right)^{-1}
+\end{equation}
+The previous estimate is CRCV1 in @MACKINNON2022.
+
+Note that we indeed find the White estimator when $G=n$ (see Eq. \@ref(eq:White)).
+
+Remark, if only one cluster, and neglecting the degree-of-freedom correction, we would have, for $G=1$:
+$$
+\left(\bv{X}'\bv{X}\right)^{-1}\left(\bv{X}'\bv{e}\bv{e}'\bv{X}\right) \left(\bv{X}'\bv{X}\right)^{-1} = 0
+$$
+because $\bv{X}'\bv{e}=0$. Hence, large clusters not necessarily increase variance.
+
+### Two-way clustering
+
+Let's add a second dimension to the data (e.g., time). There are now two partitions of the data: one through index $g$, with $g \in \{1,\dots,G\}$, and the other through index $h$, with $h \in \{1,\dots,H\}$. Accordingly, we denote by $\bv{X}_{g,h}$ the submatrix of $\bv{X}$ that contains the explanatory variables corresponding to clusters $g$ and $h$ (e.g., the firms of a given country $g$ at a given date $h$). We also denote by $\bv{X}_{g,\bullet}$ (respectively $\bv{X}_{\bullet,h}$) the submatrix of $\bv{X}$ containing all explanatory variables pertaining to cluster $g$, for all possible values of $h$ (resp. to cluster $h$, for all possible values of $g$).
+
+Consider the follwing hypothesis:
+
+:::{.hypothesis #twowaycluster}
+We have:
+\begin{eqnarray*}
+&&\mathbb{E}(\bv{s}_{g,\bullet}\bv{s}_{g,\bullet}')=\Sigma_g,\quad \mathbb{E}(\bv{s}_{\bullet,h}\bv{s}_{\bullet,h}')=\Sigma^*_h,\quad \mathbb{E}(\bv{s}_{g,h}\bv{s}_{g,h}')=\Sigma_{g,h},\\ &&\mathbb{E}(\bv{s}_{g,h}\bv{s}_{q,k}')=0\;\mbox{if }g\neq q,\mbox{ or }h \ne k.
+\end{eqnarray*}
+:::
+
+Under this assumption, the matrix of covariance of the scores is given by:
+$$
+\Sigma = \sum_{g=1}^G \Sigma_{g} + \sum_{h=1}^H \Sigma^*_{h} - \sum_{g=1}^G\sum_{h=1}^H \Sigma_{g,h}.
+$$
+The last term on the right-hand side must be subtracted in order to avoid double counting.
+
+In practice, $\Sigma$ is estimated by:
+$$
+\widehat{\Sigma} = \sum_{g=1}^G \widehat{\bv{s}}_{g,\bullet}\widehat{\bv{s}}_{g,\bullet}' + \sum_{h=1}^H \widehat{\bv{s}}_{\bullet,h}\widehat{\bv{s}}_{\bullet,h} - \sum_{g=1}^G\sum_{h=1}^H \widehat{\bv{s}}_{g,h}\widehat{\bv{s}}_{g,h}',
+$$
+and we then use:
+$$
+\widehat{\mathbb{V}ar}(\bv{b}) = \left(\bv{X}'\bv{X}\right)^{-1}\widehat{\Sigma}\left(\bv{X}'\bv{X}\right)^{-1}.
+$$
+
+
 ## Shrinkage method
 
 Chosing the right variables is often a compicated matter, especially in the presence of many potentially relevant covariates. Keeping a large number of covariates results in large standard deviations for the estimated parameters. In order to address this issue, shrinkage methods have been designed. The objective of these methods is to help to select of a limited number of variables (by shrinking the regression coefficients of the less useful variables towards zero). The two best-known shrinkage techniques are ridge regression and the lasso.
 
 @James2013 (Chapter 6.2)
+
+Example: use credit data (interest rates on XXXX)?
 
 
 

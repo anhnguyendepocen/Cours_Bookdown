@@ -1308,9 +1308,9 @@ with
 \mbox{plim}\left( \frac{1}{n}\sum_{i=1}^{n}e_{i}^2\mathbf{x}_i\mathbf{x}'_i \right). \tag{3.31}
 \end{equation}\]</span>
 The estimator of <span class="math inline">\(\frac{1}{n}\mathbf{X}'\boldsymbol\Sigma\mathbf{X}\)</span> therefore is:
-<span class="math display">\[
-\frac{1}{n}\mathbf{X}'\mathbf{E}^2\mathbf{X},
-\]</span>
+<span class="math display" id="eq:White">\[\begin{equation}
+\frac{1}{n}\mathbf{X}'\mathbf{E}^2\mathbf{X},\tag{3.32}
+\end{equation}\]</span>
 where <span class="math inline">\(\mathbf{E}\)</span> is an <span class="math inline">\(n \times n\)</span> diagonal matrix whose diagonal elements are the estimated residuals <span class="math inline">\(e_i\)</span>.</p>
 <p>Illustration: Figure <a href="linear-regressions.html#fig:exmpSalarayPhD">3.2</a>.</p>
 </div>
@@ -1373,17 +1373,17 @@ where the <span class="math inline">\(x_i\)</span>s are i.i.d. <span class="math
 &amp;&amp;\mbox{plim} \left( \frac{1}{n}\sum_{i=1}^{n}\sum_{j=1}^{n}\sigma_{i,j}\mathbf{x}_i\mathbf{x}'_j \right) =  \\
 &amp;&amp;\mbox{plim} \left( \frac{1}{n}\sum_{t=1}^{n}e_{t}^2\mathbf{x}_t\mathbf{x}'_t +
 \frac{1}{n}\sum_{\ell=1}^{L}\sum_{t=\ell+1}^{n}w_\ell e_{t}e_{t-\ell}(\mathbf{x}_t\mathbf{x}'_{t-\ell} + \mathbf{x}_{t-\ell}\mathbf{x}'_{t})
-\right) \nonumber \tag{3.32}
+\right) \nonumber \tag{3.33}
 \end{eqnarray}\]</span>
 where <span class="math inline">\(w_\ell = 1 - \ell/(L+1)\)</span>.</p>
 <p>Let us illustrate the influence of autocorrelation using simulations.</p>
 <p>We consider the following model:
 <span class="math display" id="eq:simul11">\[\begin{equation}
-y_i = x_i + \varepsilon_i, \quad \varepsilon_i \sim \mathcal{N}(0,x_i^2),\tag{3.33}
+y_i = x_i + \varepsilon_i, \quad \varepsilon_i \sim \mathcal{N}(0,x_i^2),\tag{3.34}
 \end{equation}\]</span>
 where the <span class="math inline">\(x_i\)</span>s and the <span class="math inline">\(\varepsilon_i\)</span>s are such that:
 <span class="math display" id="eq:simul22">\[\begin{equation}
-x_i = 0.8 x_{i-1} + u_i \quad and \quad \varepsilon_i = 0.8 \varepsilon_{i-1} + v_i, \tag{3.34}
+x_i = 0.8 x_{i-1} + u_i \quad and \quad \varepsilon_i = 0.8 \varepsilon_{i-1} + v_i, \tag{3.35}
 \end{equation}\]</span>
 where the <span class="math inline">\(u_i\)</span>s and the <span class="math inline">\(v_i\)</span>s are i.i.d. <span class="math inline">\(\mathcal{N}(0,1)\)</span>.</p>
 <p>Here is a simulated sample (<span class="math inline">\(n=200\)</span>) of this model:
@@ -1535,6 +1535,89 @@ r = \frac{\sum_{i=2}^{n}e_i e_{i-1}}{\sum_{i=1}^{n-1}e_i^2}.
 <p>A nice reference is <span class="citation">MacKinnon, Nielsen, and Webb (<a href="references.html#ref-MACKINNON2022" role="doc-biblioref">2022</a>)</span></p>
 <p>Another one is <span class="citation">Cameron and Miller (<a href="references.html#ref-Cameron_Miller_2014" role="doc-biblioref">2014</a>)</span></p>
 <p>See package <a href="https://cran.r-project.org/web/packages/fwildclusterboot/vignettes/fwildclusterboot.html">fwildclusterboot</a> for wild cluster bootstrap.</p>
+<p>XXXXXX</p>
+<p>Based on <span class="citation">MacKinnon, Nielsen, and Webb (<a href="references.html#ref-MACKINNON2022" role="doc-biblioref">2022</a>)</span>:</p>
+<p>We have:
+<span class="math display" id="eq:BBB">\[\begin{equation}
+\mathbf{b} = \boldsymbol\beta + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol\varepsilon.\tag{3.36}
+\end{equation}\]</span>
+Consider a set <span class="math inline">\(\{n_1,n_2,\dots,n_G\}\)</span> s.t. <span class="math inline">\(n=\sum_g n_g\)</span>, on which is based the following decomposition of <span class="math inline">\(\mathbf{X}\)</span>:
+<span class="math display">\[
+\mathbf{X} = \left[
+\begin{array}{c}
+\mathbf{X}_1 \\
+\mathbf{X}_1 \\
+\vdots\\
+\mathbf{X}_G
+\end{array}
+\right].
+\]</span>
+With these notations, Eq. <a href="linear-regressions.html#eq:BBB">(3.36)</a> rewrites:
+<span class="math display" id="eq:cluster1">\[\begin{equation}
+\mathbf{b} - \boldsymbol\beta = \left(\sum_{g=1}^G \mathbf{X}_g'\mathbf{X}_g\right)^{-1}\mathbf{X}'\sum_{g=1}^G \mathbf{s}_g,\tag{3.37}
+\end{equation}\]</span>
+where <span class="math inline">\(\mathbf{s}_g = \mathbf{X}_g'\boldsymbol\varepsilon_g\)</span> denotes the score vector (of dimension <span class="math inline">\(K \times 1\)</span>) associoated with the <span class="math inline">\(g^{th}\)</span> cluster.</p>
+<p>If the model is correctly specified then <span class="math inline">\(\mathbb{E}(\mathbf{s}_g))0\)</span> for all clusters <span class="math inline">\(g\)</span>. Note that Eq. <a href="linear-regressions.html#eq:cluster1">(3.37)</a> is valid for any partition of <span class="math inline">\(\{1,\dots,n\}\)</span>. Nevertheless, dividing the sample into <strong>clusters</strong> really becomes meaningful if we assume that the following hypothesis holds:</p>
+<div class="hypothesis">
+<p><span id="hyp:cluster" class="hypothesis"><strong>Hypothesis 3.6  </strong></span>We have:
+<span class="math display">\[
+(i)\; \mathbb{E}(\mathbf{s}_g\mathbf{s}_g')=\Sigma_g,\quad (ii)\; \mathbb{E}(\mathbf{s}_g\mathbf{s}_q')=0,\;g \ne q.
+\]</span></p>
+</div>
+<p>The real assumotion here is <span class="math inline">\((ii)\)</span>. The first one simply gives a notation for the covariance matrix of the score assiciated with the <span class="math inline">\(g^{th}\)</span> cluster. Remark that these covariance matrices can differ across clusters. That is, cluster-based inference is robust against both heteroskedasticity and intra-cluster dependence without imposing any restrictions on the (unknown) form of either of them.</p>
+<p>While the choice of clustering structure is sometimes debatable, the structure is generally assumed known in both theoretical and applied work.</p>
+<p>Matrix <span class="math inline">\(\Sigma_g\)</span> depends on the covariance structure of the <span class="math inline">\(\varepsilon\)</span>’s. In particular, if <span class="math inline">\(\Omega_g = \mathbb{E}(\boldsymbol\varepsilon_g\boldsymbol\varepsilon_g'|\mathbf{X}_g)\)</span>, then we have <span class="math inline">\(\Sigma_g = \mathbb{E}(\mathbf{X}_g'\Omega_g\mathbf{X}_g)\)</span>.</p>
+<p>Under Hypothesis <a href="linear-regressions.html#hyp:cluster">3.6</a>, it comes that the covariance matrix of <span class="math inline">\(\mathbf{b}\)</span> is:
+<span class="math display" id="eq:cluster2">\[\begin{equation}
+\left(\mathbf{X}'\mathbf{X}\right)^{-1}\left(\sum_{g=1}^G \Sigma_g\right)\left(\mathbf{X}'\mathbf{X}\right)^{-1}\tag{3.38}
+\end{equation}\]</span></p>
+<p>Let us denote by <span class="math inline">\(\varepsilon_{g,i}\)</span> the error associated with the <span class="math inline">\(i^{th}\)</span> component of vector <span class="math inline">\(\boldsymbol\varepsilon_g\)</span>. Consider the special case where <span class="math inline">\(\mathbb{E}(\varepsilon_{g,i} \varepsilon_{g,j}|\mathbf{X}_g)=\sigma^2\mathbb{I}_{\{i=j\}}\)</span>, then Eq. <a href="linear-regressions.html#eq:cluster2">(3.38)</a> gives the standard expression <span class="math inline">\(\sigma^2\left(\mathbf{X}'\mathbf{X}\right)^{-1}\)</span>.</p>
+<p>If we have <span class="math inline">\(\mathbb{E}(\varepsilon_{gi} \varepsilon_{gj}|\mathbf{X}_g)=\sigma_{gi}^2\mathbb{I}_{\{i=j\}}\)</span>, then we fall in the case addressed by the White formula (see Eq. <a href="linear-regressions.html#eq:White">(3.32)</a>), i.e.:
+<span class="math display">\[
+\left(\mathbf{X}'\mathbf{X}\right)^{-1}\left(\mathbf{X}'\left[  \begin{array}{cccc}
+\sigma_1^2 &amp; 0 &amp; \dots &amp; 0 \\
+0 &amp; \sigma_2^2 &amp;  &amp; 0 \\
+\vdots &amp;&amp; \ddots&amp; \vdots \\
+0 &amp; \dots &amp; 0 &amp; \sigma_n^2
+\end{array} \right]\mathbf{X}\right)\left(\mathbf{X}'\mathbf{X}\right)^{-1}.
+\]</span>
+The natural way to estimate Eq. <a href="linear-regressions.html#eq:cluster2">(3.38)</a> consists in replacing the <span class="math inline">\(\Sigma_g\)</span> by their sample equivalent, i.e. <span class="math inline">\(\widehat{\Sigma}_g=\mathbf{X}_g'\mathbf{e}_g\mathbf{e}_g'\mathbf{X}_g\)</span>. Adding corrections for the degrees of freedom, this leads to the following estimate of the covariance matrix of <span class="math inline">\(\mathbf{b}\)</span>:
+<span class="math display">\[\begin{equation}
+\frac{G(n-1)}{(G-1)(n-K)}\left(\mathbf{X}'\mathbf{X}\right)^{-1}\left(\sum_{g=1}^G\widehat{\Sigma}_g\right) \left(\mathbf{X}'\mathbf{X}\right)^{-1}
+\end{equation}\]</span>
+The previous estimate is CRCV1 in <span class="citation">MacKinnon, Nielsen, and Webb (<a href="references.html#ref-MACKINNON2022" role="doc-biblioref">2022</a>)</span>.</p>
+<p>Note that we indeed find the White estimator when <span class="math inline">\(G=n\)</span> (see Eq. <a href="linear-regressions.html#eq:White">(3.32)</a>).</p>
+<p>Remark, if only one cluster, and neglecting the degree-of-freedom correction, we would have, for <span class="math inline">\(G=1\)</span>:
+<span class="math display">\[
+\left(\mathbf{X}'\mathbf{X}\right)^{-1}\left(\mathbf{X}'\mathbf{e}\mathbf{e}'\mathbf{X}\right) \left(\mathbf{X}'\mathbf{X}\right)^{-1} = 0
+\]</span>
+because <span class="math inline">\(\mathbf{X}'\mathbf{e}=0\)</span>. Hence, large clusters not necessarily increase variance.</p>
+<div id="two-way-clustering" class="section level3" number="3.7.1">
+<h3>
+<span class="header-section-number">3.7.1</span> Two-way clustering<a class="anchor" aria-label="anchor" href="#two-way-clustering"><i class="fas fa-link"></i></a>
+</h3>
+<p>Let’s add a second dimension to the data (e.g., time). There are now two partitions of the data: one through index <span class="math inline">\(g\)</span>, with <span class="math inline">\(g \in \{1,\dots,G\}\)</span>, and the other through index <span class="math inline">\(h\)</span>, with <span class="math inline">\(h \in \{1,\dots,H\}\)</span>. Accordingly, we denote by <span class="math inline">\(\mathbf{X}_{g,h}\)</span> the submatrix of <span class="math inline">\(\mathbf{X}\)</span> that contains the explanatory variables corresponding to clusters <span class="math inline">\(g\)</span> and <span class="math inline">\(h\)</span> (e.g., the firms of a given country <span class="math inline">\(g\)</span> at a given date <span class="math inline">\(h\)</span>). We also denote by <span class="math inline">\(\mathbf{X}_{g,\bullet}\)</span> (respectively <span class="math inline">\(\mathbf{X}_{\bullet,h}\)</span>) the submatrix of <span class="math inline">\(\mathbf{X}\)</span> containing all explanatory variables pertaining to cluster <span class="math inline">\(g\)</span>, for all possible values of <span class="math inline">\(h\)</span> (resp. to cluster <span class="math inline">\(h\)</span>, for all possible values of <span class="math inline">\(g\)</span>).</p>
+<p>Consider the follwing hypothesis:</p>
+<div class="hypothesis">
+<p><span id="hyp:twowaycluster" class="hypothesis"><strong>Hypothesis 3.7  </strong></span>We have:
+<span class="math display">\[\begin{eqnarray*}
+&amp;&amp;\mathbb{E}(\mathbf{s}_{g,\bullet}\mathbf{s}_{g,\bullet}')=\Sigma_g,\quad \mathbb{E}(\mathbf{s}_{\bullet,h}\mathbf{s}_{\bullet,h}')=\Sigma^*_h,\quad \mathbb{E}(\mathbf{s}_{g,h}\mathbf{s}_{g,h}')=\Sigma_{g,h},\\ &amp;&amp;\mathbb{E}(\mathbf{s}_{g,h}\mathbf{s}_{q,k}')=0\;\mbox{if }g\neq q,\mbox{ or }h \ne k.
+\end{eqnarray*}\]</span></p>
+</div>
+<p>Under this assumption, the matrix of covariance of the scores is given by:
+<span class="math display">\[
+\Sigma = \sum_{g=1}^G \Sigma_{g} + \sum_{h=1}^H \Sigma^*_{h} - \sum_{g=1}^G\sum_{h=1}^H \Sigma_{g,h}.
+\]</span>
+The last term on the right-hand side must be subtracted in order to avoid double counting.</p>
+<p>In practice, <span class="math inline">\(\Sigma\)</span> is estimated by:
+<span class="math display">\[
+\widehat{\Sigma} = \sum_{g=1}^G \widehat{\mathbf{s}}_{g,\bullet}\widehat{\mathbf{s}}_{g,\bullet}' + \sum_{h=1}^H \widehat{\mathbf{s}}_{\bullet,h}\widehat{\mathbf{s}}_{\bullet,h} - \sum_{g=1}^G\sum_{h=1}^H \widehat{\mathbf{s}}_{g,h}\widehat{\mathbf{s}}_{g,h}',
+\]</span>
+and we then use:
+<span class="math display">\[
+\widehat{\mathbb{V}ar}(\mathbf{b}) = \left(\mathbf{X}'\mathbf{X}\right)^{-1}\widehat{\Sigma}\left(\mathbf{X}'\mathbf{X}\right)^{-1}.
+\]</span></p>
+</div>
 </div>
 <div id="shrinkage-method" class="section level2" number="3.8">
 <h2>
@@ -1542,6 +1625,7 @@ r = \frac{\sum_{i=2}^{n}e_i e_{i-1}}{\sum_{i=1}^{n-1}e_i^2}.
 </h2>
 <p>Chosing the right variables is often a compicated matter, especially in the presence of many potentially relevant covariates. Keeping a large number of covariates results in large standard deviations for the estimated parameters. In order to address this issue, shrinkage methods have been designed. The objective of these methods is to help to select of a limited number of variables (by shrinking the regression coefficients of the less useful variables towards zero). The two best-known shrinkage techniques are ridge regression and the lasso.</p>
 <p><span class="citation">James et al. (<a href="references.html#ref-James2013" role="doc-biblioref">2013</a>)</span> (Chapter 6.2)</p>
+<p>Example: use credit data (interest rates on XXXX)?</p>
 
 </div>
 </div>
@@ -1579,7 +1663,9 @@ r = \frac{\sum_{i=2}^{n}e_i e_{i-1}}{\sum_{i=1}^{n-1}e_i^2}.
 </ul>
 </li>
 <li><a class="nav-link" href="#summary"><span class="header-section-number">3.6</span> Summary</a></li>
-<li><a class="nav-link" href="#clusters"><span class="header-section-number">3.7</span> Clusters</a></li>
+<li>
+<a class="nav-link" href="#clusters"><span class="header-section-number">3.7</span> Clusters</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#two-way-clustering"><span class="header-section-number">3.7.1</span> Two-way clustering</a></li></ul>
+</li>
 <li><a class="nav-link" href="#shrinkage-method"><span class="header-section-number">3.8</span> Shrinkage method</a></li>
 </ul>
 
