@@ -74,7 +74,9 @@ eq:BBB
 eq:cluster1
 hyp:cluster
 eq:cluster2
+eq:AsymptCL
 hyp:twowaycluster
+eq:panel1
 fig:simulPanel
 hyp:FE
 eq:LSDV
@@ -82,6 +84,8 @@ eq:bfixedeffects11
 eq:bfixedeffects
 eq:a
 eq:LSDV2
+eq:paneldyn
+eq:paneldynFisrtDiff
 def:GMM
 eq:Shat
 eq:sdf
@@ -95,7 +99,7 @@ def:score
 prp:score
 def:Fisher
 prp:Fisher
-exm:unlabeled-div-17
+exm:unlabeled-div-18
 prp:additiv
 thm:FDCR
 def:identif
@@ -146,6 +150,7 @@ estimation-of-fixed-effects-models
 estimation-of-random-effects-models
 example-macro-history-database
 example-spatial-data
+dynamic-panel-regressions
 estimation-methods
 generalized-method-of-moments-gmm
 framework

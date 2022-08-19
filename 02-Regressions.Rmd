@@ -1396,7 +1396,7 @@ a <- 1
 
 Alors, combien vaut `a`? Answer: `r a`.
 
-## Clusters
+## Clusters {#clusters}
 
 [MacKinnon, Nielsen, and Webb (2022)](https://www.sciencedirect.com/science/article/pii/S0304407622000781#da1)
 
@@ -1465,7 +1465,7 @@ $$
 $$
 The natural way to estimate Eq. \@ref(eq:cluster2) consists in replacing the $\Sigma_g$ by their sample equivalent, i.e. $\widehat{\Sigma}_g=\bv{X}_g'\bv{e}_g\bv{e}_g'\bv{X}_g$. Adding corrections for the degrees of freedom, this leads to the following estimate of the covariance matrix of $\bv{b}$:
 \begin{equation}
-\frac{G(n-1)}{(G-1)(n-K)}\left(\bv{X}'\bv{X}\right)^{-1}\left(\sum_{g=1}^G\widehat{\Sigma}_g\right) \left(\bv{X}'\bv{X}\right)^{-1}
+\frac{G(n-1)}{(G-1)(n-K)}\left(\bv{X}'\bv{X}\right)^{-1}\left(\sum_{g=1}^G\widehat{\Sigma}_g\right) \left(\bv{X}'\bv{X}\right)^{-1}. (\#eq:AsymptCL)
 \end{equation}
 The previous estimate is CRCV1 in @MACKINNON2022.
 
@@ -1486,7 +1486,7 @@ Consider the follwing hypothesis:
 :::{.hypothesis #twowaycluster}
 We have:
 \begin{eqnarray*}
-&&\mathbb{E}(\bv{s}_{g,\bullet}\bv{s}_{g,\bullet}')=\Sigma_g,\quad \mathbb{E}(\bv{s}_{\bullet,h}\bv{s}_{\bullet,h}')=\Sigma^*_h,\quad \mathbb{E}(\bv{s}_{g,h}\bv{s}_{g,h}')=\Sigma_{g,h},\\ &&\mathbb{E}(\bv{s}_{g,h}\bv{s}_{q,k}')=0\;\mbox{if }g\neq q,\mbox{ or }h \ne k.
+&&\mathbb{E}(\bv{s}_{g,\bullet}\bv{s}_{g,\bullet}')=\Sigma_g,\quad \mathbb{E}(\bv{s}_{\bullet,h}\bv{s}_{\bullet,h}')=\Sigma^*_h,\quad \mathbb{E}(\bv{s}_{g,h}\bv{s}_{g,h}')=\Sigma_{g,h},\\ &&\mathbb{E}(\bv{s}_{g,h}\bv{s}_{q,k}')=0\;\mbox{if }g\neq q\mbox{ and }h \ne k.
 \end{eqnarray*}
 :::
 
@@ -1495,6 +1495,17 @@ $$
 \Sigma = \sum_{g=1}^G \Sigma_{g} + \sum_{h=1}^H \Sigma^*_{h} - \sum_{g=1}^G\sum_{h=1}^H \Sigma_{g,h}.
 $$
 The last term on the right-hand side must be subtracted in order to avoid double counting.
+
+:::{.proof}
+We have:
+\begin{eqnarray*}
+\Sigma &=& \sum_{g=1}^G\sum_{q=1}^G\sum_{h=1}^H\sum_{k=1}^H \bv{s}_{g,h}\bv{s}_{q,k}'\\
+&=& \sum_{g=1}^G\underbrace{\left(\sum_{h=1}^H\sum_{k=1}^H \bv{s}_{g,h}\bv{s}_{g,k}'\right)}_{=\Sigma_g}+\sum_{h=1}^H\underbrace{\left(\sum_{g=1}^G\sum_{q=1}^G \bv{s}_{g,h}\bv{s}_{q,h}'\right)}_{=\Sigma^*_h}-\sum_{g=1}^G\sum_{h=1}^H \bv{s}_{g,h}\bv{s}_{g,h}',
+\end{eqnarray*}
+which gives the result.
+:::
+
+The asymptotic theory can be based on tow different approaches: (i) large number of clusters (common case), and (ii) fixed number of clusters but large number of observations in each cluster (see SUbsections 4.1 and 4.2 in @MACKINNON2022). The more variable the $N_g$'s, the less reliable asymptotic inference based on Eq. \@ref(eq:AsymptCL), especially when a very few clusters are unusually large, or when the distribution of the data is heavy-tailed (has fewer moments). These issues are somehow mitigated when the clusters have an approximate factor structure.
 
 In practice, $\Sigma$ is estimated by:
 $$
@@ -1505,6 +1516,7 @@ $$
 \widehat{\mathbb{V}ar}(\bv{b}) = \left(\bv{X}'\bv{X}\right)^{-1}\widehat{\Sigma}\left(\bv{X}'\bv{X}\right)^{-1}.
 $$
 
+As an alternative to the asymptotic approximation to the distribution of a statistic of interest, one can resort to bootstrap approximation (see Section 5 of @MACKINNON2022). In R, the packge `fwildclusterboot` allows to implement such approaches (see, e.g., [this tutorial by Alexander Fischer](https://cran.r-project.org/web/packages/fwildclusterboot/vignettes/fwildclusterboot.html)).
 
 ## Shrinkage method
 

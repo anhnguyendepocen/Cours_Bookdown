@@ -188,7 +188,7 @@ where <span class="math inline">\(\textbf{b}_{F,j}\)</span> denotes the <span cl
 \mathbb{E}(z_{i,t} [\textbf{b}_M'\{F_{t+1} - \textbf{b}_F \textbf{z}_t\}R_{t+1}-R_{t+1}+1])=0.
 \]</span>
 Specifically, the number of restrictions is <span class="math inline">\(n_R \times n_z\)</span>. Let us implement this approach in the U.S. context, using data extracted from the <a href="https://fred.stlouisfed.org">FRED database</a>. In factor <span class="math inline">\(F_t\)</span>, we use the changes in the VIX and in the personal consumption expenditures. The returns (<span class="math inline">\(R_t\)</span>) are based on the Wilshire 5000 Price Index (a stock price index) and on the ICE BofA BBB US Corporate Index Total Return Index (a bond return index).</p>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sboysel/fredr">fredr</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/fredr/man/fredr-key.html">fredr_set_key</a></span><span class="op">(</span><span class="st">"df65e14c054697a52b4511e77fcfa1f3"</span><span class="op">)</span></span>
 <span><span class="va">start_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"1990-01-01"</span><span class="op">)</span>; <span class="va">end_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="st">"2022-01-01"</span><span class="op">)</span></span>
@@ -211,7 +211,7 @@ Specifically, the number of restrictions is <span class="math inline">\(n_R \tim
 <span><span class="va">dsto_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sto</span><span class="op">$</span><span class="va">value</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="op">(</span><span class="cn">T</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">]</span><span class="op">/</span><span class="va">sto</span><span class="op">$</span><span class="va">value</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="cn">T</span><span class="op">-</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="co"># return t</span></span>
 <span><span class="va">dbdr_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">bdr</span><span class="op">$</span><span class="va">value</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="op">(</span><span class="cn">T</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">]</span><span class="op">/</span><span class="va">bdr</span><span class="op">$</span><span class="va">value</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="cn">T</span><span class="op">-</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="co"># return t</span></span></code></pre></div>
 <p>Define the matrices containing the <span class="math inline">\(F_{t+1}\)</span>, <span class="math inline">\(\textbf{z}_t\)</span>, and <span class="math inline">\(R_{t+1}\)</span> vectors:</p>
-<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">F_tp1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">dvix</span>,<span class="va">dpce</span><span class="op">)</span></span>
 <span><span class="va">Z</span>     <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fl">1</span>,<span class="va">dvix_1</span>,<span class="va">dpce_1</span>,<span class="va">dsto_1</span>,<span class="va">dbdr_1</span><span class="op">)</span></span>
 <span><span class="va">b_F</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/solve.html">solve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">Z</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">Z</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">Z</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">F_tp1</span><span class="op">)</span></span>
@@ -219,7 +219,7 @@ Specifically, the number of restrictions is <span class="math inline">\(n_R \tim
 <span><span class="va">R_tp1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">dsto</span>,<span class="va">dbdr</span><span class="op">)</span></span>
 <span><span class="va">n_F</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">F_tp1</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>; <span class="va">n_R</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">R_tp1</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>; <span class="va">n_z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">Z</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span></code></pre></div>
 <p>Function <code>f_aux</code> compute the <span class="math inline">\(h(x_t;\theta)\)</span> and the <span class="math inline">\(g(\underline{x_T};\theta)\)</span>; function <code>f2beMin</code> is the function to be minimized.</p>
-<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f_aux</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">theta</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="va">b_M</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">theta</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">n_F</span><span class="op">]</span>,ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
 <span>  <span class="va">R_aux</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">F_innov</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">b_M</span>,<span class="cn">T</span><span class="op">-</span><span class="fl">2</span>,<span class="va">n_R</span><span class="op">)</span> <span class="op">*</span> <span class="va">R_tp1</span> <span class="op">-</span> <span class="va">R_tp1</span> <span class="op">+</span> <span class="fl">1</span></span>
@@ -232,7 +232,7 @@ Specifically, the number of restrictions is <span class="math inline">\(n_R \tim
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">g</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">W</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">res</span><span class="op">$</span><span class="va">g</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Now, let’s minimize this function. We consider 5 iterations (where <span class="math inline">\(W\)</span> is updated).</p>
-<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="va">n_F</span><span class="op">)</span><span class="op">)</span> <span class="co"># inital value</span></span>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">{</span><span class="co"># recursion on W</span></span>
 <span>  <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">f_aux</span><span class="op">(</span><span class="va">theta</span><span class="op">)</span></span>
@@ -243,7 +243,7 @@ Specifically, the number of restrictions is <span class="math inline">\(n_R \tim
 <span>  <span class="va">theta</span> <span class="op">&lt;-</span> <span class="va">res.optim</span><span class="op">$</span><span class="va">par</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Finally, let’s compute the standard deviation of the parameter estimates.</p>
-<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eps</span> <span class="op">&lt;-</span> <span class="fl">.0001</span></span>
 <span><span class="va">g0</span> <span class="op">&lt;-</span> <span class="fu">f_aux</span><span class="op">(</span><span class="va">theta</span><span class="op">)</span><span class="op">$</span><span class="va">g</span></span>
 <span><span class="va">D</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
@@ -264,7 +264,7 @@ Specifically, the number of restrictions is <span class="math inline">\(n_R \tim
 T g(\underline{x_T};\theta)'\, S^{-1} \, g(\underline{x_T};\theta) \sim \,i.i.d.\,\chi^2(J - K),
 \]</span>
 where <span class="math inline">\(J\)</span> is the number of moment contraints (<span class="math inline">\(n_z \times n_r\)</span> here) and <span class="math inline">\(K\)</span> is the number of estimated parameters (<span class="math inline">\(=n_F\)</span> here).</p>
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu">f_aux</span><span class="op">(</span><span class="va">theta</span><span class="op">)</span><span class="op">$</span><span class="va">g</span></span>
 <span><span class="va">Hanse_stat</span> <span class="op">&lt;-</span> <span class="cn">T</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">W</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">g</span></span>
 <span><span class="va">pvalue</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html">pchisq</a></span><span class="op">(</span>q <span class="op">=</span> <span class="va">Hanse_stat</span>,df <span class="op">=</span> <span class="va">n_R</span><span class="op">*</span><span class="va">n_z</span> <span class="op">-</span> <span class="va">n_F</span><span class="op">)</span></span></code></pre></div>
@@ -359,7 +359,7 @@ f(y_1,\dots,y_n;\boldsymbol\theta) = \prod_{i=1}^n f(y_i;\boldsymbol\theta).
 </div>
 <hr>
 <div class="proof">
-<p><span id="unlabeled-div-15" class="proof"><em>Proof</em>. </span>We have:
+<p><span id="unlabeled-div-16" class="proof"><em>Proof</em>. </span>We have:
 <span class="math display">\[\begin{eqnarray*}
 \mathbb{E}\left(\frac{\partial \log f(Y;\boldsymbol\theta)}{\partial \boldsymbol\theta}\right) &amp;=&amp;
 \int \frac{\partial \log f(y;\boldsymbol\theta)}{\partial \boldsymbol\theta} f(y;\boldsymbol\theta) dy \\
@@ -381,10 +381,10 @@ which gives the result.</p>
 </div>
 <hr>
 <div class="proof">
-<p><span id="unlabeled-div-16" class="proof"><em>Proof</em>. </span>We have <span class="math inline">\(\frac{\partial^2 \log f(Y;\boldsymbol\theta)}{\partial \boldsymbol\theta \partial \boldsymbol\theta'} = \frac{\partial^2 f(Y;\boldsymbol\theta)}{\partial \boldsymbol\theta \partial \boldsymbol\theta'}\frac{1}{f(Y;\boldsymbol\theta)} - \frac{\partial \log f(Y;\boldsymbol\theta)}{\partial \boldsymbol\theta}\frac{\partial \log f(Y;\boldsymbol\theta)}{\partial \boldsymbol\theta'}\)</span>. The expectation of the first right-hand side term is <span class="math inline">\(\partial^2 1 /(\partial \boldsymbol\theta \partial \boldsymbol\theta') = \mathbf{0}\)</span>, which gives the result.</p>
+<p><span id="unlabeled-div-17" class="proof"><em>Proof</em>. </span>We have <span class="math inline">\(\frac{\partial^2 \log f(Y;\boldsymbol\theta)}{\partial \boldsymbol\theta \partial \boldsymbol\theta'} = \frac{\partial^2 f(Y;\boldsymbol\theta)}{\partial \boldsymbol\theta \partial \boldsymbol\theta'}\frac{1}{f(Y;\boldsymbol\theta)} - \frac{\partial \log f(Y;\boldsymbol\theta)}{\partial \boldsymbol\theta}\frac{\partial \log f(Y;\boldsymbol\theta)}{\partial \boldsymbol\theta'}\)</span>. The expectation of the first right-hand side term is <span class="math inline">\(\partial^2 1 /(\partial \boldsymbol\theta \partial \boldsymbol\theta') = \mathbf{0}\)</span>, which gives the result.</p>
 </div>
 <div class="example">
-<p><span id="exm:unlabeled-div-17" class="example"><strong>Example 5.2  </strong></span>If <span class="math inline">\(y_i \sim\,i.i.d.\, \mathcal{N}(\mu,\sigma^2)\)</span>, let <span class="math inline">\(\boldsymbol\theta = [\mu,\sigma^2]'\)</span> then
+<p><span id="exm:unlabeled-div-18" class="example"><strong>Example 5.2  </strong></span>If <span class="math inline">\(y_i \sim\,i.i.d.\, \mathcal{N}(\mu,\sigma^2)\)</span>, let <span class="math inline">\(\boldsymbol\theta = [\mu,\sigma^2]'\)</span> then
 <span class="math display">\[
 \frac{\partial \log f(y;\boldsymbol\theta)}{\partial \boldsymbol\theta} = \left[\frac{y-\mu}{\sigma^2} \quad \frac{1}{2\sigma^2}\left(\frac{(y-\mu)^2}{\sigma^2}-1\right) \right]'
 \]</span>
@@ -424,7 +424,7 @@ y-\mu &amp; \frac{(y-\mu)^2}{\sigma^2}-\frac{1}{2}
 </div>
 <hr>
 <div class="proof">
-<p><span id="unlabeled-div-18" class="proof"><em>Proof</em>. </span>The Cauchy-Schwarz inequality implies that <span class="math inline">\(\sqrt{\mathbb{V}ar(\boldsymbol\omega'\hat{\boldsymbol\theta}(Y))\mathbb{V}ar(\boldsymbol\omega'S(Y;\boldsymbol\theta))} \ge |\boldsymbol\omega'\mathbb{C}ov[\hat{\boldsymbol\theta}(Y),S(Y;\boldsymbol\theta)]\boldsymbol\omega |\)</span>. Now, <span class="math inline">\(\mathbb{C}ov[\hat{\boldsymbol\theta}(Y),S(Y;\boldsymbol\theta)] = \int_y \hat{\boldsymbol\theta}(y) \frac{\partial \log f(y;\boldsymbol\theta)}{\partial \boldsymbol\theta} f(y;\boldsymbol\theta)dy = \frac{\partial}{\partial \boldsymbol\theta}\int_y \hat{\boldsymbol\theta}(y) f(y;\boldsymbol\theta)dy = \mathbf{I}\)</span> because <span class="math inline">\(\hat{\boldsymbol\theta}\)</span> is unbiased.</p>
+<p><span id="unlabeled-div-19" class="proof"><em>Proof</em>. </span>The Cauchy-Schwarz inequality implies that <span class="math inline">\(\sqrt{\mathbb{V}ar(\boldsymbol\omega'\hat{\boldsymbol\theta}(Y))\mathbb{V}ar(\boldsymbol\omega'S(Y;\boldsymbol\theta))} \ge |\boldsymbol\omega'\mathbb{C}ov[\hat{\boldsymbol\theta}(Y),S(Y;\boldsymbol\theta)]\boldsymbol\omega |\)</span>. Now, <span class="math inline">\(\mathbb{C}ov[\hat{\boldsymbol\theta}(Y),S(Y;\boldsymbol\theta)] = \int_y \hat{\boldsymbol\theta}(y) \frac{\partial \log f(y;\boldsymbol\theta)}{\partial \boldsymbol\theta} f(y;\boldsymbol\theta)dy = \frac{\partial}{\partial \boldsymbol\theta}\int_y \hat{\boldsymbol\theta}(y) f(y;\boldsymbol\theta)dy = \mathbf{I}\)</span> because <span class="math inline">\(\hat{\boldsymbol\theta}\)</span> is unbiased.</p>
 <p>Therefore <span class="math inline">\(\mathbb{V}ar(\boldsymbol\omega'\hat{\boldsymbol\theta}(Y)) \ge \mathbb{V}ar(\boldsymbol\omega'S(Y;\boldsymbol\theta))^{-1} (\boldsymbol\omega'\boldsymbol\omega)^2\)</span>. Prop. <a href="estimation-methods.html#prp:Fisher">5.2</a> leads to the result.</p>
 </div>
 <div class="definition">
@@ -472,7 +472,7 @@ y-\mu &amp; \frac{(y-\mu)^2}{\sigma^2}-\frac{1}{2}
 </div>
 <hr>
 <div class="proof">
-<p><span id="unlabeled-div-19" class="proof"><em>Proof</em>. </span>See <a href="https://www.dropbox.com/s/8xelbghtvnd43yh/Proofs_MLE.pdf?dl=0">Online additional material</a>.</p>
+<p><span id="unlabeled-div-20" class="proof"><em>Proof</em>. </span>See <a href="https://www.dropbox.com/s/8xelbghtvnd43yh/Proofs_MLE.pdf?dl=0">Online additional material</a>.</p>
 </div>
 <p>Note that (b) also writes:
 <span class="math display" id="eq:normMLE">\[\begin{equation}
@@ -520,7 +520,7 @@ p \frac{1}{\sqrt{2\pi\sigma_1^2}}\exp\left(-\frac{(x - \mu_1)^2}{2\sigma_1^2}\ri
 <span class="math display">\[
 0.30 \pm 1.96\underbrace{\sqrt{0.00528}}_{=0.0726} \quad \mbox{ and } \quad 1.40 \pm 1.96\underbrace{\sqrt{0.00526}.}_{=0.0725}
 \]</span></p>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">smi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/jrenne/Data4courses/master/SMI/SMI.csv"</span>,</span>
 <span>                dec <span class="op">=</span> <span class="st">"."</span>,header <span class="op">=</span> <span class="cn">TRUE</span>, na.strings <span class="op">=</span> <span class="st">"null"</span><span class="op">)</span></span>
 <span><span class="va">smi</span><span class="op">$</span><span class="va">Date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">as.Date</a></span><span class="op">(</span><span class="va">smi</span><span class="op">$</span><span class="va">Date</span>,<span class="st">"%m/%d/%y"</span><span class="op">)</span></span>
@@ -542,7 +542,7 @@ p \frac{1}{\sqrt{2\pi\sigma_1^2}}\exp\left(-\frac{(x - \mu_1)^2}{2\sigma_1^2}\ri
 Figure 5.4: Time series of SMI weekly returns (source: Yahoo Finance).
 </p>
 </div>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">theta</span>,<span class="va">y</span><span class="op">)</span><span class="op">{</span> <span class="co"># Likelihood function</span></span>
 <span>  <span class="va">mu.1</span> <span class="op">&lt;-</span> <span class="va">theta</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>; <span class="va">mu.2</span> <span class="op">&lt;-</span> <span class="va">theta</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
 <span>  <span class="va">sigma.1</span> <span class="op">&lt;-</span> <span class="va">theta</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>; <span class="va">sigma.2</span> <span class="op">&lt;-</span> <span class="va">theta</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span></span>
@@ -563,7 +563,7 @@ Figure 5.4: Time series of SMI weekly returns (source: Yahoo Finance).
 <span><span class="va">theta</span></span></code></pre></div>
 <pre><code>## [1]  0.3012379 -1.3167476  1.7715072  4.8197596  1.9454889</code></pre>
 <p>Now, let us compute estimates of the covariance matrix of the MLE:</p>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Hessian approach:</span></span>
 <span><span class="va">J</span> <span class="op">&lt;-</span> <span class="va">res.optim</span><span class="op">$</span><span class="va">hessian</span></span>
 <span><span class="va">I.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/solve.html">solve</a></span><span class="op">(</span><span class="va">J</span><span class="op">)</span></span>
@@ -590,7 +590,7 @@ Figure 5.4: Time series of SMI weekly returns (source: Yahoo Finance).
 ## [4,] 0.194081311 0.047466419 0.83130838
 ## [5,] 0.092114437 0.040366005 0.31347858</code></pre>
 <p>According to the first (respectively third) type of estimate for the covariance matrix, a 95% confidence interval for <span class="math inline">\(\mu_1\)</span> is [0.182, 0.42] (resp. [0.151, 0.451]).</p>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>,<span class="fl">5</span>,by<span class="op">=</span><span class="fl">.01</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">x</span>,<span class="fu">f</span><span class="op">(</span><span class="va">theta</span>,<span class="va">x</span><span class="op">)</span>,type<span class="op">=</span><span class="st">"l"</span>,lwd<span class="op">=</span><span class="fl">2</span>,xlab<span class="op">=</span><span class="st">"returns, in percent"</span>,ylab<span class="op">=</span><span class="st">""</span>,</span>
 <span>     ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1.4</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">theta</span>,<span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -679,7 +679,7 @@ Figure 5.5: Comparison of different estimates of the distribution of returns.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-08-15.</p>
+    <p>"<strong>Advanced Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-08-19.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

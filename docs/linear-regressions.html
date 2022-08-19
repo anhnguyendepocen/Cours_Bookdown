@@ -1582,8 +1582,8 @@ where <span class="math inline">\(\mathbf{s}_g = \mathbf{X}_g'\boldsymbol\vareps
 \end{array} \right]\mathbf{X}\right)\left(\mathbf{X}'\mathbf{X}\right)^{-1}.
 \]</span>
 The natural way to estimate Eq. <a href="linear-regressions.html#eq:cluster2">(3.38)</a> consists in replacing the <span class="math inline">\(\Sigma_g\)</span> by their sample equivalent, i.e. <span class="math inline">\(\widehat{\Sigma}_g=\mathbf{X}_g'\mathbf{e}_g\mathbf{e}_g'\mathbf{X}_g\)</span>. Adding corrections for the degrees of freedom, this leads to the following estimate of the covariance matrix of <span class="math inline">\(\mathbf{b}\)</span>:
-<span class="math display">\[\begin{equation}
-\frac{G(n-1)}{(G-1)(n-K)}\left(\mathbf{X}'\mathbf{X}\right)^{-1}\left(\sum_{g=1}^G\widehat{\Sigma}_g\right) \left(\mathbf{X}'\mathbf{X}\right)^{-1}
+<span class="math display" id="eq:AsymptCL">\[\begin{equation}
+\frac{G(n-1)}{(G-1)(n-K)}\left(\mathbf{X}'\mathbf{X}\right)^{-1}\left(\sum_{g=1}^G\widehat{\Sigma}_g\right) \left(\mathbf{X}'\mathbf{X}\right)^{-1}. \tag{3.39}
 \end{equation}\]</span>
 The previous estimate is CRCV1 in <span class="citation">MacKinnon, Nielsen, and Webb (<a href="references.html#ref-MACKINNON2022" role="doc-biblioref">2022</a>)</span>.</p>
 <p>Note that we indeed find the White estimator when <span class="math inline">\(G=n\)</span> (see Eq. <a href="linear-regressions.html#eq:White">(3.32)</a>).</p>
@@ -1601,7 +1601,7 @@ because <span class="math inline">\(\mathbf{X}'\mathbf{e}=0\)</span>. Hence, lar
 <div class="hypothesis">
 <p><span id="hyp:twowaycluster" class="hypothesis"><strong>Hypothesis 3.7  </strong></span>We have:
 <span class="math display">\[\begin{eqnarray*}
-&amp;&amp;\mathbb{E}(\mathbf{s}_{g,\bullet}\mathbf{s}_{g,\bullet}')=\Sigma_g,\quad \mathbb{E}(\mathbf{s}_{\bullet,h}\mathbf{s}_{\bullet,h}')=\Sigma^*_h,\quad \mathbb{E}(\mathbf{s}_{g,h}\mathbf{s}_{g,h}')=\Sigma_{g,h},\\ &amp;&amp;\mathbb{E}(\mathbf{s}_{g,h}\mathbf{s}_{q,k}')=0\;\mbox{if }g\neq q,\mbox{ or }h \ne k.
+&amp;&amp;\mathbb{E}(\mathbf{s}_{g,\bullet}\mathbf{s}_{g,\bullet}')=\Sigma_g,\quad \mathbb{E}(\mathbf{s}_{\bullet,h}\mathbf{s}_{\bullet,h}')=\Sigma^*_h,\quad \mathbb{E}(\mathbf{s}_{g,h}\mathbf{s}_{g,h}')=\Sigma_{g,h},\\ &amp;&amp;\mathbb{E}(\mathbf{s}_{g,h}\mathbf{s}_{q,k}')=0\;\mbox{if }g\neq q\mbox{ and }h \ne k.
 \end{eqnarray*}\]</span></p>
 </div>
 <p>Under this assumption, the matrix of covariance of the scores is given by:
@@ -1609,6 +1609,15 @@ because <span class="math inline">\(\mathbf{X}'\mathbf{e}=0\)</span>. Hence, lar
 \Sigma = \sum_{g=1}^G \Sigma_{g} + \sum_{h=1}^H \Sigma^*_{h} - \sum_{g=1}^G\sum_{h=1}^H \Sigma_{g,h}.
 \]</span>
 The last term on the right-hand side must be subtracted in order to avoid double counting.</p>
+<div class="proof">
+<p><span id="unlabeled-div-15" class="proof"><em>Proof</em>. </span>We have:
+<span class="math display">\[\begin{eqnarray*}
+\Sigma &amp;=&amp; \sum_{g=1}^G\sum_{q=1}^G\sum_{h=1}^H\sum_{k=1}^H \mathbf{s}_{g,h}\mathbf{s}_{q,k}'\\
+&amp;=&amp; \sum_{g=1}^G\underbrace{\left(\sum_{h=1}^H\sum_{k=1}^H \mathbf{s}_{g,h}\mathbf{s}_{g,k}'\right)}_{=\Sigma_g}+\sum_{h=1}^H\underbrace{\left(\sum_{g=1}^G\sum_{q=1}^G \mathbf{s}_{g,h}\mathbf{s}_{q,h}'\right)}_{=\Sigma^*_h}-\sum_{g=1}^G\sum_{h=1}^H \mathbf{s}_{g,h}\mathbf{s}_{g,h}',
+\end{eqnarray*}\]</span>
+which gives the result.</p>
+</div>
+<p>The asymptotic theory can be based on tow different approaches: (i) large number of clusters (common case), and (ii) fixed number of clusters but large number of observations in each cluster (see SUbsections 4.1 and 4.2 in <span class="citation">MacKinnon, Nielsen, and Webb (<a href="references.html#ref-MACKINNON2022" role="doc-biblioref">2022</a>)</span>). The more variable the <span class="math inline">\(N_g\)</span>’s, the less reliable asymptotic inference based on Eq. <a href="linear-regressions.html#eq:AsymptCL">(3.39)</a>, especially when a very few clusters are unusually large, or when the distribution of the data is heavy-tailed (has fewer moments). These issues are somehow mitigated when the clusters have an approximate factor structure.</p>
 <p>In practice, <span class="math inline">\(\Sigma\)</span> is estimated by:
 <span class="math display">\[
 \widehat{\Sigma} = \sum_{g=1}^G \widehat{\mathbf{s}}_{g,\bullet}\widehat{\mathbf{s}}_{g,\bullet}' + \sum_{h=1}^H \widehat{\mathbf{s}}_{\bullet,h}\widehat{\mathbf{s}}_{\bullet,h} - \sum_{g=1}^G\sum_{h=1}^H \widehat{\mathbf{s}}_{g,h}\widehat{\mathbf{s}}_{g,h}',
@@ -1617,6 +1626,7 @@ and we then use:
 <span class="math display">\[
 \widehat{\mathbb{V}ar}(\mathbf{b}) = \left(\mathbf{X}'\mathbf{X}\right)^{-1}\widehat{\Sigma}\left(\mathbf{X}'\mathbf{X}\right)^{-1}.
 \]</span></p>
+<p>As an alternative to the asymptotic approximation to the distribution of a statistic of interest, one can resort to bootstrap approximation (see Section 5 of <span class="citation">MacKinnon, Nielsen, and Webb (<a href="references.html#ref-MACKINNON2022" role="doc-biblioref">2022</a>)</span>). In R, the packge <code>fwildclusterboot</code> allows to implement such approaches (see, e.g., <a href="https://cran.r-project.org/web/packages/fwildclusterboot/vignettes/fwildclusterboot.html">this tutorial by Alexander Fischer</a>).</p>
 </div>
 </div>
 <div id="shrinkage-method" class="section level2" number="3.8">
@@ -1683,7 +1693,7 @@ and we then use:
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-08-15.</p>
+    <p>"<strong>Advanced Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-08-19.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

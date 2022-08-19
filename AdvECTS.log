@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.8.8)  15 AUG 2022 17:45
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.8.8)  19 AUG 2022 09:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -932,273 +932,284 @@ Underfull \vbox (badness 3417) has occurred while \output is active []
 [46] [47] [48]
 Underfull \vbox (badness 1783) has occurred while \output is active []
 
-[49] [50] [51] [52]
-Chapter 4.
-[53
+[49] [50] [51] [52] [53] [54
 
 ]
+Chapter 4.
+[55]
 File: AdvECTS_files/figure-latex/simulPanel-1.pdf Graphic file (type pdf)
 <use AdvECTS_files/figure-latex/simulPanel-1.pdf>
-[54] [55] [56]
+[56] [57] [58]
 
-LaTeX Warning: Reference `fig:airline' on page 57 undefined on input line 2553.
+LaTeX Warning: Reference `fig:airline' on page 59 undefined on input line 2566.
 
-[57] [58] [59]
-Overfull \hbox (12.0pt too wide) in paragraph at lines 2714--2714
+[59] [60] [61]
+Overfull \hbox (12.0pt too wide) in paragraph at lines 2727--2727
 []\TU/lmtt/m/n/10 ##                      Estimate  Std. Error    t value     Pr(>|t|)[] 
  []
 
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 2714--2714
+Overfull \hbox (12.0pt too wide) in paragraph at lines 2727--2727
 []\TU/lmtt/m/n/10 ## (Intercept)      -0.009956382 0.020728411 -0.4803254 0.6310957161[] 
  []
 
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 2714--2714
+Overfull \hbox (12.0pt too wide) in paragraph at lines 2727--2727
 []\TU/lmtt/m/n/10 ## I(ltrate - stir) -0.004746647 0.001254511 -3.7836614 0.0001632386[] 
  []
 
-[60]
-Overfull \hbox (6.75pt too wide) in paragraph at lines 2730--2730
+[62]
+Overfull \hbox (6.75pt too wide) in paragraph at lines 2743--2743
 []\TU/lmtt/m/n/10 ##                      Estimate  Std. Error   t value     Pr(>|t|)[] 
  []
 
 
-Overfull \hbox (6.75pt too wide) in paragraph at lines 2730--2730
+Overfull \hbox (6.75pt too wide) in paragraph at lines 2743--2743
 []\TU/lmtt/m/n/10 ## (Intercept)       0.028199744 0.001814513 15.541217 1.778760e-49[] 
  []
 
 
-Overfull \hbox (6.75pt too wide) in paragraph at lines 2730--2730
+Overfull \hbox (6.75pt too wide) in paragraph at lines 2743--2743
 []\TU/lmtt/m/n/10 ## I(ltrate - stir) -0.004732743 0.002349209 -2.014611 4.418367e-02[] 
  []
 
 
-Overfull \hbox (6.75pt too wide) in paragraph at lines 2743--2743
+Overfull \hbox (6.75pt too wide) in paragraph at lines 2756--2756
 []\TU/lmtt/m/n/10 ##                      Estimate  Std. Error   t value     Pr(>|t|)[] 
  []
 
 
-Overfull \hbox (6.75pt too wide) in paragraph at lines 2743--2743
+Overfull \hbox (6.75pt too wide) in paragraph at lines 2756--2756
 []\TU/lmtt/m/n/10 ## (Intercept)       0.028199744 0.002182053 12.923490 1.020962e-35[] 
  []
 
 
-Overfull \hbox (6.75pt too wide) in paragraph at lines 2743--2743
+Overfull \hbox (6.75pt too wide) in paragraph at lines 2756--2756
 []\TU/lmtt/m/n/10 ## I(ltrate - stir) -0.004732743 0.002720606 -1.739592 8.220498e-02[] 
  []
 
 
-Overfull \hbox (1.5pt too wide) in paragraph at lines 2774--2774
+Overfull \hbox (1.5pt too wide) in paragraph at lines 2787--2787
 []\TU/lmtt/m/n/10 ## plan transition to sf/stars/terra functions using GDAL and PROJ[] 
  []
 
 
-Overfull \hbox (43.5pt too wide) in paragraph at lines 2774--2774
+Overfull \hbox (43.5pt too wide) in paragraph at lines 2787--2787
 []\TU/lmtt/m/n/10 ## Geospatial Data Abstraction Library extensions to R successfully loaded[] 
  []
 
 
-Overfull \hbox (195.75pt too wide) in paragraph at lines 2774--2774
+Overfull \hbox (195.75pt too wide) in paragraph at lines 2787--2787
 []\TU/lmtt/m/n/10 ## Path to GDAL shared files: /Library/Frameworks/R.framework/Versions/4.2/Resources/library/rgdal/gdal[] 
  []
 
 
-Overfull \hbox (33.0pt too wide) in paragraph at lines 2774--2774
+Overfull \hbox (33.0pt too wide) in paragraph at lines 2787--2787
 []\TU/lmtt/m/n/10 ## Loaded PROJ runtime: Rel. 8.2.1, January 1st, 2022, [PJ_VERSION: 821][] 
  []
 
 
-Overfull \hbox (195.75pt too wide) in paragraph at lines 2774--2774
+Overfull \hbox (195.75pt too wide) in paragraph at lines 2787--2787
 []\TU/lmtt/m/n/10 ## Path to PROJ shared files: /Library/Frameworks/R.framework/Versions/4.2/Resources/library/rgdal/proj[] 
  []
 
 
-Overfull \hbox (17.25pt too wide) in paragraph at lines 2774--2774
+Overfull \hbox (17.25pt too wide) in paragraph at lines 2787--2787
 []\TU/lmtt/m/n/10 ## To mute warnings of possible GDAL/OSR exportToProj4() degradation,[] 
  []
 
 
-Overfull \hbox (106.5pt too wide) in paragraph at lines 2774--2774
+Overfull \hbox (106.5pt too wide) in paragraph at lines 2787--2787
 []\TU/lmtt/m/n/10 ## use options("rgdal_show_exportToProj4_warnings"="none") before loading sp or rgdal.[] 
  []
 
-[61]
-Overfull \hbox (143.25pt too wide) in paragraph at lines 2792--2792
+[63]
+Overfull \hbox (143.25pt too wide) in paragraph at lines 2805--2805
 []\TU/lmtt/m/n/10 ##  Hlavac, Marek (2022). stargazer: Well-Formatted Regression and Summary Statistics Tables.[] 
  []
 
 
-Overfull \hbox (38.25pt too wide) in paragraph at lines 2796--2796
+Overfull \hbox (38.25pt too wide) in paragraph at lines 2809--2809
 []\TU/lmtt/m/n/10 ##  R package version 5.2.3. https://CRAN.R-project.org/package=stargazer[] 
  []
 
 File: AdvECTS_files/figure-latex/airbnb-1.pdf Graphic file (type pdf)
 <use AdvECTS_files/figure-latex/airbnb-1.pdf>
-[62]
-Overfull \hbox (38.25pt too wide) in paragraph at lines 2863--2863
+[64]
+Overfull \hbox (38.25pt too wide) in paragraph at lines 2876--2876
 []\TU/lmtt/m/n/10 ## ======================================================================[] 
  []
 
 
-Overfull \hbox (38.25pt too wide) in paragraph at lines 2863--2863
+Overfull \hbox (38.25pt too wide) in paragraph at lines 2876--2876
 []\TU/lmtt/m/n/10 ##              ---------------------------------------------------------[] 
  []
 
 
-Overfull \hbox (38.25pt too wide) in paragraph at lines 2863--2863
+Overfull \hbox (38.25pt too wide) in paragraph at lines 2876--2876
 []\TU/lmtt/m/n/10 ##              FE (no HAC) No FE (no HAC) FE (with HAC) No FE (with HAC)[] 
  []
 
 
-Overfull \hbox (1.5pt too wide) in paragraph at lines 2863--2863
+Overfull \hbox (1.5pt too wide) in paragraph at lines 2876--2876
 []\TU/lmtt/m/n/10 ##                  (1)          (2)            (3)            (4)[] 
  []
 
 
-Overfull \hbox (38.25pt too wide) in paragraph at lines 2863--2863
+Overfull \hbox (38.25pt too wide) in paragraph at lines 2876--2876
 []\TU/lmtt/m/n/10 ## ----------------------------------------------------------------------[] 
  []
 
 
-Overfull \hbox (17.25pt too wide) in paragraph at lines 2863--2863
+Overfull \hbox (17.25pt too wide) in paragraph at lines 2876--2876
 []\TU/lmtt/m/n/10 ## bedrooms      7.229***      5.629**       7.229***        5.629***[] 
  []
 
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 2863--2863
+Overfull \hbox (12.0pt too wide) in paragraph at lines 2876--2876
 []\TU/lmtt/m/n/10 ##                (2.135)      (2.194)        (2.052)        (2.073)[] 
  []
 
 
-Overfull \hbox (17.25pt too wide) in paragraph at lines 2863--2863
+Overfull \hbox (17.25pt too wide) in paragraph at lines 2876--2876
 []\TU/lmtt/m/n/10 ## accommodates  16.426***    17.449***      16.426***      17.449***[] 
  []
 
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 2863--2863
+Overfull \hbox (12.0pt too wide) in paragraph at lines 2876--2876
 []\TU/lmtt/m/n/10 ##                (1.284)      (1.323)        (1.431)        (1.428)[] 
  []
 
 
-Overfull \hbox (17.25pt too wide) in paragraph at lines 2863--2863
+Overfull \hbox (17.25pt too wide) in paragraph at lines 2876--2876
 []\TU/lmtt/m/n/10 ## Constant      95.118***    68.417***      95.118***      68.417***[] 
  []
 
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 2863--2863
+Overfull \hbox (12.0pt too wide) in paragraph at lines 2876--2876
 []\TU/lmtt/m/n/10 ##                (5.323)      (3.223)        (5.664)        (3.527)[] 
  []
 
 
-Overfull \hbox (38.25pt too wide) in paragraph at lines 2863--2863
+Overfull \hbox (38.25pt too wide) in paragraph at lines 2876--2876
 []\TU/lmtt/m/n/10 ## ----------------------------------------------------------------------[] 
  []
 
 
-Overfull \hbox (1.5pt too wide) in paragraph at lines 2863--2863
+Overfull \hbox (1.5pt too wide) in paragraph at lines 2876--2876
 []\TU/lmtt/m/n/10 ## District FE      Yes           No            Yes             No[] 
  []
 
 
-Overfull \hbox (38.25pt too wide) in paragraph at lines 2863--2863
+Overfull \hbox (38.25pt too wide) in paragraph at lines 2876--2876
 []\TU/lmtt/m/n/10 ## ----------------------------------------------------------------------[] 
  []
 
 
-Overfull \hbox (6.75pt too wide) in paragraph at lines 2863--2863
+Overfull \hbox (6.75pt too wide) in paragraph at lines 2876--2876
 []\TU/lmtt/m/n/10 ## Observations    1,321        1,321          1,321          1,321[] 
  []
 
 
-Overfull \hbox (38.25pt too wide) in paragraph at lines 2863--2863
+Overfull \hbox (38.25pt too wide) in paragraph at lines 2876--2876
 []\TU/lmtt/m/n/10 ## ======================================================================[] 
  []
 
 
-Overfull \hbox (38.25pt too wide) in paragraph at lines 2863--2863
+Overfull \hbox (38.25pt too wide) in paragraph at lines 2876--2876
 []\TU/lmtt/m/n/10 ## Note:                                      *p<0.1; **p<0.05; ***p<0.01[] 
  []
 
-[63]
+[65]
 File: AdvECTS_files/figure-latex/airbnb-2.pdf Graphic file (type pdf)
 <use AdvECTS_files/figure-latex/airbnb-2.pdf>
-[64]
-Chapter 5.
-[65
 
-] [66] [67] [68] [69]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[66] [67]
+File: AdvECTS_files/figure-latex/dynpanel1-1.pdf Graphic file (type pdf)
+<use AdvECTS_files/figure-latex/dynpanel1-1.pdf>
+[68] [69] [70]
+Overfull \hbox (1.5pt too wide) in paragraph at lines 3096--3096
+[]\TU/lmtt/m/n/10 ## J-Test (overid restrictions):  70.82 with 25 DF, pvalue: <0.001[] 
+ []
+
+[71] [72
+
+]
+Chapter 5.
+[73] [74] [75] [76] [77]
 File: AdvECTS_files/figure-latex/MLE1-1.pdf Graphic file (type pdf)
 <use AdvECTS_files/figure-latex/MLE1-1.pdf>
-[70]
+[78]
 File: AdvECTS_files/figure-latex/MLE2-1.pdf Graphic file (type pdf)
 <use AdvECTS_files/figure-latex/MLE2-1.pdf>
 File: AdvECTS_files/figure-latex/MLE3-1.pdf Graphic file (type pdf)
 <use AdvECTS_files/figure-latex/MLE3-1.pdf>
-[71]
-Overfull \hbox (2.5961pt too wide) in alignment at lines 3252--3258
+[79]
+Overfull \hbox (2.5961pt too wide) in alignment at lines 3457--3463
  [][][] []
  []
 
-[72]
-Underfull \hbox (badness 2689) in paragraph at lines 3272--3273
+[80]
+Underfull \hbox (badness 2689) in paragraph at lines 3477--3478
 [][]\TU/lmr/bx/n/10 Proposition 5.2. []\TU/lmr/m/it/10 We have $[][][][][] [] [] [] []
  []
 
-[73]
-Overfull \hbox (17.54283pt too wide) in paragraph at lines 3331--3332
+[81]
+Overfull \hbox (17.54283pt too wide) in paragraph at lines 3536--3537
 []\TU/lmr/m/n/10 The Cauchy-Schwarz inequality implies that $[] []
  []
 
-[74] [75] [76]
+[82] [83] [84]
 File: AdvECTS_files/figure-latex/smiData-1.pdf Graphic file (type pdf)
 <use AdvECTS_files/figure-latex/smiData-1.pdf>
-[77] [78]
+[85] [86]
 File: AdvECTS_files/figure-latex/smidistri-1.pdf Graphic file (type pdf)
 <use AdvECTS_files/figure-latex/smidistri-1.pdf>
-[79] [80
+[87] [88
 
 ]
 Chapter 6.
-[81] [82
+[89] [90
 
 ]
 Chapter 7.
-[83] [84
+[91] [92
 
 ]
 Chapter 8.
 
-Overfull \hbox (81.5801pt too wide) in paragraph at lines 3610--3675
+Overfull \hbox (81.5801pt too wide) in paragraph at lines 3815--3880
  [][] 
  []
 
 
-Overfull \hbox (43.44008pt too wide) in paragraph at lines 3734--3781
+Overfull \hbox (43.44008pt too wide) in paragraph at lines 3939--3986
  [][] 
  []
 
 
-Overfull \hbox (124.92009pt too wide) in paragraph at lines 3787--3840
+Overfull \hbox (124.92009pt too wide) in paragraph at lines 3992--4045
  [][] 
  []
 
-(./AdvECTS.bbl [85] [86] [87] [88] [89] [90
+(./AdvECTS.bbl [93] [94] [95] [96] [97] [98
 
-] [91]) [92] (./AdvECTS.aux)
+] [99]) [100] (./AdvECTS.aux)
 
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `AdvECTS.out' has not changed.
-(rerunfilecheck)             Checksum: EE013BFF49721A6AAE8D90F01710A6CD;3145.
+(rerunfilecheck)             Checksum: BFD29C49B3369A0C8CB4E53A7F58FF9E;3331.
  ) 
 Here is how much of TeX's memory you used:
- 17944 strings out of 477855
- 331945 string characters out of 5845862
- 867620 words of memory out of 5000000
- 38602 multiletter control sequences out of 15000+600000
- 477251 words of font info for 101 fonts, out of 8000000 for 9000
+ 17972 strings out of 477855
+ 332796 string characters out of 5845862
+ 868985 words of memory out of 5000000
+ 38625 multiletter control sequences out of 15000+600000
+ 477267 words of font info for 103 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  86i,14n,121p,1291b,558s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on AdvECTS.pdf (92 pages).
+Output written on AdvECTS.pdf (100 pages).

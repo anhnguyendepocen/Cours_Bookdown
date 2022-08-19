@@ -1,6 +1,90 @@
 {
     "sources": [
         {
+            "URL": "https://ideas.repec.org/p/zbw/upadbr/b3919.html",
+            "author": [
+                {
+                    "family": "Fritsch",
+                    "given": "Markus"
+                },
+                {
+                    "family": "Pua",
+                    "given": "Andrew Adrian Yu"
+                },
+                {
+                    "family": "Schnurbus",
+                    "given": "Joachim"
+                }
+            ],
+            "genre": "Passauer Diskussionspapiere, Betriebswirtschaftliche Reihe",
+            "id": "Fritsch_et_al_2019",
+            "issued": {
+                "date-parts": [
+                    [
+                        2019
+                    ]
+                ]
+            },
+            "number": "B-39-19",
+            "publisher": "University of Passau, Faculty of Business; Economics",
+            "title": "Pdynmc - An R-package for estimating linear dynamic panel data models based on linear and nonlinear moment conditions",
+            "type": "report"
+        },
+        {
+            "URL": "https://ideas.repec.org/a/oup/restud/v58y1991i2p277-297..html",
+            "author": [
+                {
+                    "family": "Arellano",
+                    "given": "Manuel"
+                },
+                {
+                    "family": "Bond",
+                    "given": "Stephen"
+                }
+            ],
+            "container-title": "Review of Economic Studies",
+            "id": "Arellano_Bond_1991",
+            "issue": "2",
+            "issued": {
+                "date-parts": [
+                    [
+                        1991
+                    ]
+                ]
+            },
+            "page": "277-297",
+            "title": "Some Tests of Specification for Panel Data: Monte Carlo Evidence and an Application to Employment Equations",
+            "type": "article-journal",
+            "volume": "58"
+        },
+        {
+            "URL": "https://ideas.repec.org/a/eee/econom/v18y1982i1p47-82.html",
+            "author": [
+                {
+                    "family": "Anderson",
+                    "given": "T. W."
+                },
+                {
+                    "family": "Hsiao",
+                    "given": "Cheng"
+                }
+            ],
+            "container-title": "Journal of Econometrics",
+            "id": "Anderson_Hsiao_1982",
+            "issue": "1",
+            "issued": {
+                "date-parts": [
+                    [
+                        1982
+                    ]
+                ]
+            },
+            "page": "47-82",
+            "title": "Formulation and estimation of dynamic models using panel data",
+            "type": "article-journal",
+            "volume": "18"
+        },
+        {
             "URL": "https://www.statlearning.com",
             "author": [
                 {

@@ -4,9 +4,9 @@
 The standard panel situation is the following: we have a lot of entities ($i \in \{1,\dots,n\}$) and, for each entity, we observe different variables over a small number of periods ($t \in \{1,\dots,T\}$). This is a *longitudinal dataset*.
 
 The regression then reads:
-$$
-y_{i,t} = \bv{x}'_{i,t}\underbrace{\boldsymbol\beta}_{K \times 1} + \underbrace{\bv{z}'_{i}\boldsymbol\alpha}_{\mbox{Individual effects}} + \varepsilon_{i,t}
-$$
+\begin{equation}
+y_{i,t} = \bv{x}'_{i,t}\underbrace{\boldsymbol\beta}_{K \times 1} + \underbrace{\bv{z}'_{i}\boldsymbol\alpha}_{\mbox{Individual effects}} + \varepsilon_{i,t}.(\#eq:panel1)
+\end{equation}
 Our objective is to estimate the previous equation.
 
 <!-- \includegraphics[width=.95\linewidth]{../../figures/Figure_Panel_simul0.pdf} -->
@@ -630,5 +630,153 @@ for(j in 1:2){# with/without FE
 <!-- %\end{scriptsize} -->
 <!-- %\end{frame} -->
 
+
+## Dynamic Panel Regressions
+
+In what precedes, it has been assumed that there is no correlation between the observations indexed by $(i,t)$ and those indexed by $(j,s)$ as long as $j \ne i$ or $t \ne s$. If one suspects that the errors $\varepsilon_{i,t}$ are correlated (across entities $i$ for a given date $t$, or across dates for a given entity, or both), then one should employ a robust covariance matrix (see Section \@ref(clusters)).
+
+In several cases, auto-correlation in the variable of interest may stem from an auto-regressive specification of the variable of interest. Eq. \@ref(eq:panel1) is then replaced by:
+\begin{equation}
+y_{i,t} = \rho y_{i,t-1} + \bv{x}'_{i,t}\underbrace{\boldsymbol\beta}_{K \times 1} + \underbrace{\alpha_i}_{\mbox{Individual effects}} + \varepsilon_{i,t}.(\#eq:paneldyn)
+\end{equation}
+
+In that case, even if the explanatory variables $\bv{x}_{i,t}$  are uncorrelated to the errors $\varepsilon_{i,t}$, we have that the additional *explanatory variable* $y_{i,t-1}$ correlates to the errors $\varepsilon_{i,t-1},\varepsilon_{i,t-2},\dots,\varepsilon_{i,1}$.  As a result, the LSDV estimate of the model parameters $\{\rho,\boldsymbol\beta\}$ may be biased, even if $n$ is large. To see this, notice that the LSDV regression amounts to regress $\widetilde{\bv{y}}$ on $\widetilde{\bv{X}}$ (see Eq. \@ref(eq:bfixedeffects)), where the elements of $\widetilde{\bv{X}}$ are the explanatory variables to which we subtract their within-sample means. In particular, we have:
+$$
+\tilde{y}_{i,t-1} = y_{i,t-1} - \frac{1}{T} \sum_{s=1}^{T} y_{i,s-1},
+$$
+which correlates to the corresponding error, that is:
+$$
+\tilde{\varepsilon}_{i,t} = \varepsilon_{i,t} - \frac{1}{T} \sum_{s=1}^{T} \varepsilon_{i,s}.
+$$
+
+The previous equation shows that the *within-group* estimator (LSDV) introduces all realisations of the $\varepsilon_{i,t}$ errors into the transformed error term ($\tilde{\varepsilon}_{i,t}$). As a result, in large $n$, fixed $T$ panels, it is consistent only if all the right-hand side variables are strictly exogenous (i.e., do not correlate to past, present, and future errors $\varepsilon_{i,t}$).[^footnote1]
+
+[^footnote1]: The bias may vanish for large $T$'s.
+
+
+```{r dynpanel1}
+n <- 500;T <- 10
+rho <- 0.9;sigma <- .5
+alpha <- rnorm(n)
+y <- alpha /(1-rho) + sigma^2/(1 - rho^2) * rnorm(n)
+all_y <- y
+for(t in 2:T){
+  eps <- rnorm(n)
+  y <- rho * y + alpha + sigma * eps
+  all_y <- rbind(all_y,y)
+}
+y   <- c(all_y[2:T,])
+y_1 <- c(all_y[1:(T-1),])
+D <- diag(n) %x% rep(1,T-1)
+Z <- cbind(c(y_1),D)
+b <- solve(t(Z) %*% Z) %*% t(Z) %*% y
+a <- b[2:(n+1)]
+plot(alpha,a)
+lines(c(-10,10),c(-10,10),col="blue")
+#plot(all_y[,1],type="l")
+```
+
+How to address this? One can resort to instrumental-variable regressions.
+
+@Anderson_Hsiao_1982 proposed a first-differenced Two Stage Least Squares (2SLS) estimator. This estimation is based on the following transformation of the model:
+\begin{equation}
+\Delta y_{i,t} = \rho \Delta y_{i,t-1} + (\Delta \bv{x}_{i,t})'\boldsymbol\beta + \Delta\varepsilon_{i,t}.(\#eq:paneldynFisrtDiff)
+\end{equation}
+The OLS estimates of the parameters are biased because $\varepsilon_{i,t_1}$ (which is part of the error $\Delta\varepsilon_{i,t}$) is correlated to $y_{i,t-1}$ (which is part of the "explanatory variable," namely $\Delta y_{i,t-1}$). But consistent estimates can be obtained using 2SLS with instrumental variables that are both correlated with $\Delta y_{i,t}$ and orthogonal to $\Delta\varepsilon_{i,t}$. One can for instance use $\{y_{i,t-2},\bv{x}_{i,t-2}\}$ as instruments. Note that this approach can be implemented only if there are more than 3 time observations per entity $i$.
+
+If the explanatory variables $\bv{x}_{i,t}$ are assumed to be predetermined (i.e., do not contemporaneous correlate with the errors $\varepsilon_{i,t}$), then $\bv{x}_{i,t-1}$ can be added to the instruments associated with $\Delta y_{i,t}$. Further, if these variables (the $\bv{x}_{i,t}$'s) are assumed to be exogenous (i.e., do not contemporaneous correlate with any of the errors $\varepsilon_{i,s}$, $\forall s$), then $\bv{x}_{i,t}$ also is a valid instrument.
+
+```{r dynpanel2}
+Dy   <- c(all_y[3:T,]) - c(all_y[2:(T-1),])
+Dy_1 <- c(all_y[2:(T-1),]) - c(all_y[1:(T-2),])
+y_2  <- c(all_y[1:(T-2),])
+Z <- matrix(y_2,ncol=1)
+Pz <- Z %*% solve(t(Z) %*% Z) %*% t(Z)
+Dy_hat  <- Pz %*% Dy
+Dy_1hat <- Pz %*% Dy_1
+rho_TSLS <- solve(t(Dy_1hat) %*% Dy_1hat) %*% t(Dy_1hat) %*% Dy_hat
+```
+
+For $t=3$, $y_{i,1}$ (and $\bv{x}_{i,1}$) is the only possible instrument. However, for $t=4$, one could use $y_{i,2}$ and $y_{i,1}$ (as well as $\bv{x}_{i,2}$ and $\bv{x}_{i,1}$). More generally, defining matrix $Z_i$ as follows:
+$$
+Z_i = \left[
+\begin{array}{ccccccccccccccccc}
+\bv{z}_{i,1}' & 0 & \dots \\
+0 & \bv{z}_{i,1}' & \bv{z}_{i,2}' & 0 & \dots \\
+0 &0 &0 & \bv{z}_{i,1} & \bv{z}_{i,2}' & \bv{z}_{i,3}' & 0 & \dots \\
+\vdots \\
+0 & \dots &&&&&& 0 & \bv{z}_{i,1}' &  \dots &   \bv{z}_{i,T-2}'
+\end{array}
+\right],
+$$
+where $\bv{z}_{i,t} = [y_{i,t},\bv{x}_{i,t}']'$, we have the moment conditions:[^footnote2]
+$$
+\mathbb{E}(Z_i'\Delta  \bv{v}_i)=0,
+$$
+
+with $\Delta\bv{v}_i = [ \Delta v_{i,3},\dots,\Delta v_{i,T}]'$.
+
+[^footnote2]: If $\bv{x}_{i,t}$ is predetermined (exogenous), we can use $\bv{z}_{i,t} = [y_{i,t},\bv{x}_{i,t+1},\bv{x}_{i,t}']'$ (respectively $\bv{z}_{i,t} = [y_{i,t},\bv{x}_{i,t+2},\bv{x}_{i,t+1},\bv{x}_{i,t}']'$).
+
+These restrictions are used in the GMM approach employed by @Arellano_Bond_1991. Specifically, a GMM estimator of the model parameters is given by:
+$$
+\mbox{argmin}\;\left(\frac{1}{n} \sum_{i=1}^n Z_i' \Delta \bv{v}_i\right)'W_n\left(\frac{1}{n} \sum_{i=1}^n Z_i' \Delta \bv{v}_i\right),
+$$
+using the weighting matrix
+$$
+W_n = \left(\frac{1}{n}\sum_{i=1}^n Z_i'\widehat{\Delta\bv{v}_i}\widehat{\Delta\bv{v}_i}'Z_i\right)^{-1},
+$$
+where the $\widehat{\Delta\bv{v}_i}$'s are consistent esitmates of the $\Delta\bv{v}_i$ that result from a preliminary estimation. Hence, this estimator is a two-step GMM one.
+
+If the disturbances are homoskedastic, then it can be shown that an asymtotically equilvalent (efficient) GMM estimator can  be obtained by using:
+$$
+W_{1,n} = \left(\frac{1}{n}Z_i'HZ_i\right)^{-1},
+$$
+where $H$ is is $(T-2) \times (T-2)$ matrix of the form:
+$$
+H = \left[\begin{array}{ccccccc}
+2 & -1 & 0 & \dots &0 \\
+-1 & 2 & -1 &  & \vdots \\
+0 & \ddots& \ddots & \ddots & 0 \\
+\vdots &  & -1 & 2&-1\\
+0&\dots & 0 & -1 & 2
+\end{array}\right].
+$$
+
+It is straightforward to extend these GMM methods extend to cases where there is more than one lag of the dependent variable on the right-hand side of the equation or in cases where disturbances feature limited moving-average serial correlation.
+
+
+The `pdynmc` package allows to run these GMM approaches (see @Fritsch_et_al_2019). The following lines of code allow to replicate the results of @Arellano_Bond_1991:
+
+```{r dynpanel3}
+library(pdynmc)
+data(EmplUK, package = "plm")
+dat <- EmplUK
+dat[,c(4:7)]         <- log(dat[,c(4:7)])
+m1 <- pdynmc(dat = dat, # name of the dataset
+             varname.i = "firm", # name of the cross-section identifier
+             varname.t = "year", # name of the time-series identifiers
+             use.mc.diff = TRUE, # use moment conditions from equations in differences? (i.e. instruments in levels) 
+             use.mc.lev = FALSE, # use moment conditions from equations in levels? (i.e. instruments in differences)
+             use.mc.nonlin = FALSE, # use nonlinear (quadratic) moment conditions?
+             include.y = TRUE, # instruments should be derived from the lags of the dependent variable?
+             varname.y = "emp", # name of the dependent variable in the dataset
+             lagTerms.y = 2, # number of lags of the dependent variable
+             fur.con = TRUE, # further control variables (covariates) are included?
+             fur.con.diff = TRUE, # include further control variables in equations from differences ?
+             fur.con.lev = FALSE, # include further control variables in equations from level?
+             varname.reg.fur = c("wage", "capital", "output"), # covariate(s) -in the dataset- to treat as further controls
+             lagTerms.reg.fur = c(1,2,2), # number of lags of the further controls
+             include.dum = TRUE, # A logical variable indicating whether dummy variables for the time periods are included (defaults to 'FALSE').
+             dum.diff = TRUE, # A logical variable indicating whether dummy variables are included in the equations in first differences (defaults to 'NULL').
+             dum.lev = FALSE, # A logical variable indicating whether dummy variables are included in the equations in levels (defaults to 'NULL').
+             varname.dum = "year",
+             w.mat = "iid.err", # One of the character strings c('"iid.err"', '"identity"', '"zero.cov"') indicating the type of weighting matrix to use (defaults to '"iid.err"')
+             std.err = "corrected",
+             estimation = "onestep", # One of the character strings c('"onestep"', '"twostep"', '"iterative"'). Denotes the number of iterations of the parameter procedure (defaults to '"twostep"').
+             opt.meth = "none" # numerical optimization procedure. When no nonlinear moment conditions are employed in estimation, closed form estimates can be computed by setting the argument to '"none"
+             )
+summary(m1)
+```
 
 

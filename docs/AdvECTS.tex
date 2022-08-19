@@ -124,7 +124,7 @@
 
 \title{Advanced Econometrics}
 \author{Jean-Paul Renne}
-\date{2022-08-15}
+\date{2022-08-19}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -2151,7 +2151,7 @@ If we have \(\mathbb{E}(\varepsilon_{gi} \varepsilon_{gj}|\mathbf{X}_g)=\sigma_{
 \]
 The natural way to estimate Eq. \eqref{eq:cluster2} consists in replacing the \(\Sigma_g\) by their sample equivalent, i.e.~\(\widehat{\Sigma}_g=\mathbf{X}_g'\mathbf{e}_g\mathbf{e}_g'\mathbf{X}_g\). Adding corrections for the degrees of freedom, this leads to the following estimate of the covariance matrix of \(\mathbf{b}\):
 \begin{equation}
-\frac{G(n-1)}{(G-1)(n-K)}\left(\mathbf{X}'\mathbf{X}\right)^{-1}\left(\sum_{g=1}^G\widehat{\Sigma}_g\right) \left(\mathbf{X}'\mathbf{X}\right)^{-1}
+\frac{G(n-1)}{(G-1)(n-K)}\left(\mathbf{X}'\mathbf{X}\right)^{-1}\left(\sum_{g=1}^G\widehat{\Sigma}_g\right) \left(\mathbf{X}'\mathbf{X}\right)^{-1}. \label{eq:AsymptCL}
 \end{equation}
 The previous estimate is CRCV1 in \citet{MACKINNON2022}.
 
@@ -2173,7 +2173,7 @@ Consider the follwing hypothesis:
 \begin{hypothesis}
 \protect\hypertarget{hyp:twowaycluster}{}\label{hyp:twowaycluster}We have:
 \begin{eqnarray*}
-&&\mathbb{E}(\mathbf{s}_{g,\bullet}\mathbf{s}_{g,\bullet}')=\Sigma_g,\quad \mathbb{E}(\mathbf{s}_{\bullet,h}\mathbf{s}_{\bullet,h}')=\Sigma^*_h,\quad \mathbb{E}(\mathbf{s}_{g,h}\mathbf{s}_{g,h}')=\Sigma_{g,h},\\ &&\mathbb{E}(\mathbf{s}_{g,h}\mathbf{s}_{q,k}')=0\;\mbox{if }g\neq q,\mbox{ or }h \ne k.
+&&\mathbb{E}(\mathbf{s}_{g,\bullet}\mathbf{s}_{g,\bullet}')=\Sigma_g,\quad \mathbb{E}(\mathbf{s}_{\bullet,h}\mathbf{s}_{\bullet,h}')=\Sigma^*_h,\quad \mathbb{E}(\mathbf{s}_{g,h}\mathbf{s}_{g,h}')=\Sigma_{g,h},\\ &&\mathbb{E}(\mathbf{s}_{g,h}\mathbf{s}_{q,k}')=0\;\mbox{if }g\neq q\mbox{ and }h \ne k.
 \end{eqnarray*}
 \end{hypothesis}
 
@@ -2183,6 +2183,17 @@ Under this assumption, the matrix of covariance of the scores is given by:
 \]
 The last term on the right-hand side must be subtracted in order to avoid double counting.
 
+\begin{proof}
+We have:
+\begin{eqnarray*}
+\Sigma &=& \sum_{g=1}^G\sum_{q=1}^G\sum_{h=1}^H\sum_{k=1}^H \mathbf{s}_{g,h}\mathbf{s}_{q,k}'\\
+&=& \sum_{g=1}^G\underbrace{\left(\sum_{h=1}^H\sum_{k=1}^H \mathbf{s}_{g,h}\mathbf{s}_{g,k}'\right)}_{=\Sigma_g}+\sum_{h=1}^H\underbrace{\left(\sum_{g=1}^G\sum_{q=1}^G \mathbf{s}_{g,h}\mathbf{s}_{q,h}'\right)}_{=\Sigma^*_h}-\sum_{g=1}^G\sum_{h=1}^H \mathbf{s}_{g,h}\mathbf{s}_{g,h}',
+\end{eqnarray*}
+which gives the result.
+\end{proof}
+
+The asymptotic theory can be based on tow different approaches: (i) large number of clusters (common case), and (ii) fixed number of clusters but large number of observations in each cluster (see SUbsections 4.1 and 4.2 in \citet{MACKINNON2022}). The more variable the \(N_g\)'s, the less reliable asymptotic inference based on Eq. \eqref{eq:AsymptCL}, especially when a very few clusters are unusually large, or when the distribution of the data is heavy-tailed (has fewer moments). These issues are somehow mitigated when the clusters have an approximate factor structure.
+
 In practice, \(\Sigma\) is estimated by:
 \[
 \widehat{\Sigma} = \sum_{g=1}^G \widehat{\mathbf{s}}_{g,\bullet}\widehat{\mathbf{s}}_{g,\bullet}' + \sum_{h=1}^H \widehat{\mathbf{s}}_{\bullet,h}\widehat{\mathbf{s}}_{\bullet,h} - \sum_{g=1}^G\sum_{h=1}^H \widehat{\mathbf{s}}_{g,h}\widehat{\mathbf{s}}_{g,h}',
@@ -2191,6 +2202,8 @@ and we then use:
 \[
 \widehat{\mathbb{V}ar}(\mathbf{b}) = \left(\mathbf{X}'\mathbf{X}\right)^{-1}\widehat{\Sigma}\left(\mathbf{X}'\mathbf{X}\right)^{-1}.
 \]
+
+As an alternative to the asymptotic approximation to the distribution of a statistic of interest, one can resort to bootstrap approximation (see Section 5 of \citet{MACKINNON2022}). In R, the packge \texttt{fwildclusterboot} allows to implement such approaches (see, e.g., \href{https://cran.r-project.org/web/packages/fwildclusterboot/vignettes/fwildclusterboot.html}{this tutorial by Alexander Fischer}).
 
 \hypertarget{shrinkage-method}{%
 \section{Shrinkage method}\label{shrinkage-method}}
@@ -2207,9 +2220,9 @@ Example: use credit data (interest rates on XXXX)?
 The standard panel situation is the following: we have a lot of entities (\(i \in \{1,\dots,n\}\)) and, for each entity, we observe different variables over a small number of periods (\(t \in \{1,\dots,T\}\)). This is a \emph{longitudinal dataset}.
 
 The regression then reads:
-\[
-y_{i,t} = \mathbf{x}'_{i,t}\underbrace{\boldsymbol\beta}_{K \times 1} + \underbrace{\mathbf{z}'_{i}\boldsymbol\alpha}_{\mbox{Individual effects}} + \varepsilon_{i,t}
-\]
+\begin{equation}
+y_{i,t} = \mathbf{x}'_{i,t}\underbrace{\boldsymbol\beta}_{K \times 1} + \underbrace{\mathbf{z}'_{i}\boldsymbol\alpha}_{\mbox{Individual effects}} + \varepsilon_{i,t}.\label{eq:panel1}
+\end{equation}
 Our objective is to estimate the previous equation.
 
 Figure \ref{fig:simulPanel}. The model is \(y_i = \alpha_i + \beta x_{i,t} + \varepsilon_{i,t}\), \(t \in \{1,2\}\). On Panel (b), blue dots are for \(t=1\), red dots are for \(t=2\). The lines relate the dots associated to the same entity \(i\).
@@ -2889,6 +2902,198 @@ Date from \citet{JST_2017} \href{https://www.macrohistory.net}{see website}.
 \end{Shaded}
 
 \includegraphics{AdvECTS_files/figure-latex/airbnb-2.pdf}
+
+\hypertarget{dynamic-panel-regressions}{%
+\section{Dynamic Panel Regressions}\label{dynamic-panel-regressions}}
+
+In what precedes, it has been assumed that there is no correlation between the observations indexed by \((i,t)\) and those indexed by \((j,s)\) as long as \(j \ne i\) or \(t \ne s\). If one suspects that the errors \(\varepsilon_{i,t}\) are correlated (across entities \(i\) for a given date \(t\), or across dates for a given entity, or both), then one should employ a robust covariance matrix (see Section \ref{clusters}).
+
+In several cases, auto-correlation in the variable of interest may stem from an auto-regressive specification of the variable of interest. Eq. \eqref{eq:panel1} is then replaced by:
+\begin{equation}
+y_{i,t} = \rho y_{i,t-1} + \mathbf{x}'_{i,t}\underbrace{\boldsymbol\beta}_{K \times 1} + \underbrace{\alpha_i}_{\mbox{Individual effects}} + \varepsilon_{i,t}.\label{eq:paneldyn}
+\end{equation}
+
+In that case, even if the explanatory variables \(\mathbf{x}_{i,t}\) are uncorrelated to the errors \(\varepsilon_{i,t}\), we have that the additional \emph{explanatory variable} \(y_{i,t-1}\) correlates to the errors \(\varepsilon_{i,t-1},\varepsilon_{i,t-2},\dots,\varepsilon_{i,1}\). As a result, the LSDV estimate of the model parameters \(\{\rho,\boldsymbol\beta\}\) may be biased, even if \(n\) is large. To see this, notice that the LSDV regression amounts to regress \(\widetilde{\mathbf{y}}\) on \(\widetilde{\mathbf{X}}\) (see Eq. \eqref{eq:bfixedeffects}), where the elements of \(\widetilde{\mathbf{X}}\) are the explanatory variables to which we subtract their within-sample means. In particular, we have:
+\[
+\tilde{y}_{i,t-1} = y_{i,t-1} - \frac{1}{T} \sum_{s=1}^{T} y_{i,s-1},
+\]
+which correlates to the corresponding error, that is:
+\[
+\tilde{\varepsilon}_{i,t} = \varepsilon_{i,t} - \frac{1}{T} \sum_{s=1}^{T} \varepsilon_{i,s}.
+\]
+
+The previous equation shows that the \emph{within-group} estimator (LSDV) introduces all realisations of the \(\varepsilon_{i,t}\) errors into the transformed error term (\(\tilde{\varepsilon}_{i,t}\)). As a result, in large \(n\), fixed \(T\) panels, it is consistent only if all the right-hand side variables are strictly exogenous (i.e., do not correlate to past, present, and future errors \(\varepsilon_{i,t}\)).\footnote{The bias may vanish for large \(T\)'s.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{500}\NormalTok{;T }\OtherTok{\textless{}{-}} \DecValTok{10}
+\NormalTok{rho }\OtherTok{\textless{}{-}} \FloatTok{0.9}\NormalTok{;sigma }\OtherTok{\textless{}{-}}\NormalTok{ .}\DecValTok{5}
+\NormalTok{alpha }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(n)}
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ alpha }\SpecialCharTok{/}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{rho) }\SpecialCharTok{+}\NormalTok{ sigma}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ rho}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{*} \FunctionTok{rnorm}\NormalTok{(n)}
+\NormalTok{all\_y }\OtherTok{\textless{}{-}}\NormalTok{ y}
+\ControlFlowTok{for}\NormalTok{(t }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\NormalTok{T)\{}
+\NormalTok{  eps }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(n)}
+\NormalTok{  y }\OtherTok{\textless{}{-}}\NormalTok{ rho }\SpecialCharTok{*}\NormalTok{ y }\SpecialCharTok{+}\NormalTok{ alpha }\SpecialCharTok{+}\NormalTok{ sigma }\SpecialCharTok{*}\NormalTok{ eps}
+\NormalTok{  all\_y }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(all\_y,y)}
+\NormalTok{\}}
+\NormalTok{y   }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(all\_y[}\DecValTok{2}\SpecialCharTok{:}\NormalTok{T,])}
+\NormalTok{y\_1 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(all\_y[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{(T}\DecValTok{{-}1}\NormalTok{),])}
+\NormalTok{D }\OtherTok{\textless{}{-}} \FunctionTok{diag}\NormalTok{(n) }\SpecialCharTok{\%x\%} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{,T}\DecValTok{{-}1}\NormalTok{)}
+\NormalTok{Z }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\FunctionTok{c}\NormalTok{(y\_1),D)}
+\NormalTok{b }\OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(Z) }\SpecialCharTok{\%*\%}\NormalTok{ Z) }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(Z) }\SpecialCharTok{\%*\%}\NormalTok{ y}
+\NormalTok{a }\OtherTok{\textless{}{-}}\NormalTok{ b[}\DecValTok{2}\SpecialCharTok{:}\NormalTok{(n}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)]}
+\FunctionTok{plot}\NormalTok{(alpha,a)}
+\FunctionTok{lines}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{10}\NormalTok{,}\DecValTok{10}\NormalTok{),}\FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{10}\NormalTok{,}\DecValTok{10}\NormalTok{),}\AttributeTok{col=}\StringTok{"blue"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{AdvECTS_files/figure-latex/dynpanel1-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#plot(all\_y[,1],type="l")}
+\end{Highlighting}
+\end{Shaded}
+
+How to address this? One can resort to instrumental-variable regressions.
+
+\citet{Anderson_Hsiao_1982} proposed a first-differenced Two Stage Least Squares (2SLS) estimator. This estimation is based on the following transformation of the model:
+\begin{equation}
+\Delta y_{i,t} = \rho \Delta y_{i,t-1} + (\Delta \mathbf{x}_{i,t})'\boldsymbol\beta + \Delta\varepsilon_{i,t}.\label{eq:paneldynFisrtDiff}
+\end{equation}
+The OLS estimates of the parameters are biased because \(\varepsilon_{i,t_1}\) (which is part of the error \(\Delta\varepsilon_{i,t}\)) is correlated to \(y_{i,t-1}\) (which is part of the ``explanatory variable,'' namely \(\Delta y_{i,t-1}\)). But consistent estimates can be obtained using 2SLS with instrumental variables that are both correlated with \(\Delta y_{i,t}\) and orthogonal to \(\Delta\varepsilon_{i,t}\). One can for instance use \(\{y_{i,t-2},\mathbf{x}_{i,t-2}\}\) as instruments. Note that this approach can be implemented only if there are more than 3 time observations per entity \(i\).
+
+If the explanatory variables \(\mathbf{x}_{i,t}\) are assumed to be predetermined (i.e., do not contemporaneous correlate with the errors \(\varepsilon_{i,t}\)), then \(\mathbf{x}_{i,t-1}\) can be added to the instruments associated with \(\Delta y_{i,t}\). Further, if these variables (the \(\mathbf{x}_{i,t}\)'s) are assumed to be exogenous (i.e., do not contemporaneous correlate with any of the errors \(\varepsilon_{i,s}\), \(\forall s\)), then \(\mathbf{x}_{i,t}\) also is a valid instrument.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Dy   }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(all\_y[}\DecValTok{3}\SpecialCharTok{:}\NormalTok{T,]) }\SpecialCharTok{{-}} \FunctionTok{c}\NormalTok{(all\_y[}\DecValTok{2}\SpecialCharTok{:}\NormalTok{(T}\DecValTok{{-}1}\NormalTok{),])}
+\NormalTok{Dy\_1 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(all\_y[}\DecValTok{2}\SpecialCharTok{:}\NormalTok{(T}\DecValTok{{-}1}\NormalTok{),]) }\SpecialCharTok{{-}} \FunctionTok{c}\NormalTok{(all\_y[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{(T}\DecValTok{{-}2}\NormalTok{),])}
+\NormalTok{y\_2  }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(all\_y[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{(T}\DecValTok{{-}2}\NormalTok{),])}
+\NormalTok{Z }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(y\_2,}\AttributeTok{ncol=}\DecValTok{1}\NormalTok{)}
+\NormalTok{Pz }\OtherTok{\textless{}{-}}\NormalTok{ Z }\SpecialCharTok{\%*\%} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(Z) }\SpecialCharTok{\%*\%}\NormalTok{ Z) }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(Z)}
+\NormalTok{Dy\_hat  }\OtherTok{\textless{}{-}}\NormalTok{ Pz }\SpecialCharTok{\%*\%}\NormalTok{ Dy}
+\NormalTok{Dy\_1hat }\OtherTok{\textless{}{-}}\NormalTok{ Pz }\SpecialCharTok{\%*\%}\NormalTok{ Dy\_1}
+\NormalTok{rho\_TSLS }\OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(Dy\_1hat) }\SpecialCharTok{\%*\%}\NormalTok{ Dy\_1hat) }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(Dy\_1hat) }\SpecialCharTok{\%*\%}\NormalTok{ Dy\_hat}
+\end{Highlighting}
+\end{Shaded}
+
+For \(t=3\), \(y_{i,1}\) (and \(\mathbf{x}_{i,1}\)) is the only possible instrument. However, for \(t=4\), one could use \(y_{i,2}\) and \(y_{i,1}\) (as well as \(\mathbf{x}_{i,2}\) and \(\mathbf{x}_{i,1}\)). More generally, defining matrix \(Z_i\) as follows:
+\[
+Z_i = \left[
+\begin{array}{ccccccccccccccccc}
+\mathbf{z}_{i,1}' & 0 & \dots \\
+0 & \mathbf{z}_{i,1}' & \mathbf{z}_{i,2}' & 0 & \dots \\
+0 &0 &0 & \mathbf{z}_{i,1} & \mathbf{z}_{i,2}' & \mathbf{z}_{i,3}' & 0 & \dots \\
+\vdots \\
+0 & \dots &&&&&& 0 & \mathbf{z}_{i,1}' &  \dots &   \mathbf{z}_{i,T-2}'
+\end{array}
+\right],
+\]
+where \(\mathbf{z}_{i,t} = [y_{i,t},\mathbf{x}_{i,t}']'\), we have the moment conditions:\footnote{If \(\mathbf{x}_{i,t}\) is predetermined (exogenous), we can use \(\mathbf{z}_{i,t} = [y_{i,t},\mathbf{x}_{i,t+1},\mathbf{x}_{i,t}']'\) (respectively \(\mathbf{z}_{i,t} = [y_{i,t},\mathbf{x}_{i,t+2},\mathbf{x}_{i,t+1},\mathbf{x}_{i,t}']'\)).}
+\[
+\mathbb{E}(Z_i'\Delta  \mathbf{v}_i)=0,
+\]
+
+with \(\Delta\mathbf{v}_i = [ \Delta v_{i,3},\dots,\Delta v_{i,T}]'\).
+
+These restrictions are used in the GMM approach employed by \citet{Arellano_Bond_1991}. Specifically, a GMM estimator of the model parameters is given by:
+\[
+\mbox{argmin}\;\left(\frac{1}{n} \sum_{i=1}^n Z_i' \Delta \mathbf{v}_i\right)'W_n\left(\frac{1}{n} \sum_{i=1}^n Z_i' \Delta \mathbf{v}_i\right),
+\]
+using the weighting matrix
+\[
+W_n = \left(\frac{1}{n}\sum_{i=1}^n Z_i'\widehat{\Delta\mathbf{v}_i}\widehat{\Delta\mathbf{v}_i}'Z_i\right)^{-1},
+\]
+where the \(\widehat{\Delta\mathbf{v}_i}\)'s are consistent esitmates of the \(\Delta\mathbf{v}_i\) that result from a preliminary estimation. Hence, this estimator is a two-step GMM one.
+
+If the disturbances are homoskedastic, then it can be shown that an asymtotically equilvalent (efficient) GMM estimator can be obtained by using:
+\[
+W_{1,n} = \left(\frac{1}{n}Z_i'HZ_i\right)^{-1},
+\]
+where \(H\) is is \((T-2) \times (T-2)\) matrix of the form:
+\[
+H = \left[\begin{array}{ccccccc}
+2 & -1 & 0 & \dots &0 \\
+-1 & 2 & -1 &  & \vdots \\
+0 & \ddots& \ddots & \ddots & 0 \\
+\vdots &  & -1 & 2&-1\\
+0&\dots & 0 & -1 & 2
+\end{array}\right].
+\]
+
+It is straightforward to extend these GMM methods extend to cases where there is more than one lag of the dependent variable on the right-hand side of the equation or in cases where disturbances feature limited moving-average serial correlation.
+
+The \texttt{pdynmc} package allows to run these GMM approaches (see \citet{Fritsch_et_al_2019}). The following lines of code allow to replicate the results of \citet{Arellano_Bond_1991}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(pdynmc)}
+\FunctionTok{data}\NormalTok{(EmplUK, }\AttributeTok{package =} \StringTok{"plm"}\NormalTok{)}
+\NormalTok{dat }\OtherTok{\textless{}{-}}\NormalTok{ EmplUK}
+\NormalTok{dat[,}\FunctionTok{c}\NormalTok{(}\DecValTok{4}\SpecialCharTok{:}\DecValTok{7}\NormalTok{)]         }\OtherTok{\textless{}{-}} \FunctionTok{log}\NormalTok{(dat[,}\FunctionTok{c}\NormalTok{(}\DecValTok{4}\SpecialCharTok{:}\DecValTok{7}\NormalTok{)])}
+\NormalTok{m1 }\OtherTok{\textless{}{-}} \FunctionTok{pdynmc}\NormalTok{(}\AttributeTok{dat =}\NormalTok{ dat, }\CommentTok{\# name of the dataset}
+             \AttributeTok{varname.i =} \StringTok{"firm"}\NormalTok{, }\CommentTok{\# name of the cross{-}section identifier}
+             \AttributeTok{varname.t =} \StringTok{"year"}\NormalTok{, }\CommentTok{\# name of the time{-}series identifiers}
+             \AttributeTok{use.mc.diff =} \ConstantTok{TRUE}\NormalTok{, }\CommentTok{\# use moment conditions from equations in differences? (i.e. instruments in levels) }
+             \AttributeTok{use.mc.lev =} \ConstantTok{FALSE}\NormalTok{, }\CommentTok{\# use moment conditions from equations in levels? (i.e. instruments in differences)}
+             \AttributeTok{use.mc.nonlin =} \ConstantTok{FALSE}\NormalTok{, }\CommentTok{\# use nonlinear (quadratic) moment conditions?}
+             \AttributeTok{include.y =} \ConstantTok{TRUE}\NormalTok{, }\CommentTok{\# instruments should be derived from the lags of the dependent variable?}
+             \AttributeTok{varname.y =} \StringTok{"emp"}\NormalTok{, }\CommentTok{\# name of the dependent variable in the dataset}
+             \AttributeTok{lagTerms.y =} \DecValTok{2}\NormalTok{, }\CommentTok{\# number of lags of the dependent variable}
+             \AttributeTok{fur.con =} \ConstantTok{TRUE}\NormalTok{, }\CommentTok{\# further control variables (covariates) are included?}
+             \AttributeTok{fur.con.diff =} \ConstantTok{TRUE}\NormalTok{, }\CommentTok{\# include further control variables in equations from differences ?}
+             \AttributeTok{fur.con.lev =} \ConstantTok{FALSE}\NormalTok{, }\CommentTok{\# include further control variables in equations from level?}
+             \AttributeTok{varname.reg.fur =} \FunctionTok{c}\NormalTok{(}\StringTok{"wage"}\NormalTok{, }\StringTok{"capital"}\NormalTok{, }\StringTok{"output"}\NormalTok{), }\CommentTok{\# covariate(s) {-}in the dataset{-} to treat as further controls}
+             \AttributeTok{lagTerms.reg.fur =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{), }\CommentTok{\# number of lags of the further controls}
+             \AttributeTok{include.dum =} \ConstantTok{TRUE}\NormalTok{, }\CommentTok{\# A logical variable indicating whether dummy variables for the time periods are included (defaults to \textquotesingle{}FALSE\textquotesingle{}).}
+             \AttributeTok{dum.diff =} \ConstantTok{TRUE}\NormalTok{, }\CommentTok{\# A logical variable indicating whether dummy variables are included in the equations in first differences (defaults to \textquotesingle{}NULL\textquotesingle{}).}
+             \AttributeTok{dum.lev =} \ConstantTok{FALSE}\NormalTok{, }\CommentTok{\# A logical variable indicating whether dummy variables are included in the equations in levels (defaults to \textquotesingle{}NULL\textquotesingle{}).}
+             \AttributeTok{varname.dum =} \StringTok{"year"}\NormalTok{,}
+             \AttributeTok{w.mat =} \StringTok{"iid.err"}\NormalTok{, }\CommentTok{\# One of the character strings c(\textquotesingle{}"iid.err"\textquotesingle{}, \textquotesingle{}"identity"\textquotesingle{}, \textquotesingle{}"zero.cov"\textquotesingle{}) indicating the type of weighting matrix to use (defaults to \textquotesingle{}"iid.err"\textquotesingle{})}
+             \AttributeTok{std.err =} \StringTok{"corrected"}\NormalTok{,}
+             \AttributeTok{estimation =} \StringTok{"onestep"}\NormalTok{, }\CommentTok{\# One of the character strings c(\textquotesingle{}"onestep"\textquotesingle{}, \textquotesingle{}"twostep"\textquotesingle{}, \textquotesingle{}"iterative"\textquotesingle{}). Denotes the number of iterations of the parameter procedure (defaults to \textquotesingle{}"twostep"\textquotesingle{}).}
+             \AttributeTok{opt.meth =} \StringTok{"none"} \CommentTok{\# numerical optimization procedure. When no nonlinear moment conditions are employed in estimation, closed form estimates can be computed by setting the argument to \textquotesingle{}"none"}
+\NormalTok{             )}
+\FunctionTok{summary}\NormalTok{(m1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Dynamic linear panel estimation (onestep)
+## Estimation steps: 1
+## 
+## Coefficients:
+##             Estimate Std.Err.rob z-value.rob Pr(>|z.rob|)    
+## L1.emp      0.686226    0.144594       4.746      < 2e-16 ***
+## L2.emp     -0.085358    0.056016      -1.524      0.12751    
+## L0.wage    -0.607821    0.178205      -3.411      0.00065 ***
+## L1.wage     0.392623    0.167993       2.337      0.01944 *  
+## L0.capital  0.356846    0.059020       6.046      < 2e-16 ***
+## L1.capital -0.058001    0.073180      -0.793      0.42778    
+## L2.capital -0.019948    0.032713      -0.610      0.54186    
+## L0.output   0.608506    0.172531       3.527      0.00042 ***
+## L1.output  -0.711164    0.231716      -3.069      0.00215 ** 
+## L2.output   0.105798    0.141202       0.749      0.45386    
+## 1979        0.009554    0.010290       0.929      0.35289    
+## 1980        0.022015    0.017710       1.243      0.21387    
+## 1981       -0.011775    0.029508      -0.399      0.68989    
+## 1982       -0.027059    0.029275      -0.924      0.35549    
+## 1983       -0.021321    0.030460      -0.700      0.48393    
+## 1976       -0.007703    0.031411      -0.245      0.80646    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+##  41 total instruments are employed to estimate 16 parameters
+##  27 linear (DIF) 
+##  8 further controls (DIF) 
+##  6 time dummies (DIF) 
+##  
+## J-Test (overid restrictions):  70.82 with 25 DF, pvalue: <0.001
+## F-Statistic (slope coeff):  528.06 with 10 DF, pvalue: <0.001
+## F-Statistic (time dummies):  14.98 with 6 DF, pvalue: 0.0204
+\end{verbatim}
 
 \hypertarget{estimation-methods}{%
 \chapter{Estimation Methods}\label{estimation-methods}}
