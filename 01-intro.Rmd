@@ -54,6 +54,8 @@ Mostly harmless: @angrist_mostly_2008
 
 Diff-in-Diff: [Card and Krueger (1994)](https://towardsdatascience.com/analyze-causal-effect-using-diff-in-diff-model-85e07b17e7b7)
 
-XXXX
+Diff-in-Diff:
+@Meyer_Viscusi_Durbin_1995
+with data in the `wooldridge` package. See [this page](https://evalf20.classes.andrewheiss.com/example/diff-in-diff/)
 
 

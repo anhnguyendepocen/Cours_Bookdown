@@ -67,11 +67,7 @@
 <li><a class="" href="index.html"><span class="header-section-number">1</span> Prerequisites</a></li>
 <li><a class="" href="intro.html"><span class="header-section-number">2</span> Introduction</a></li>
 <li><a class="active" href="linear-regressions.html"><span class="header-section-number">3</span> Linear Regressions</a></li>
-<li><a class="" href="panel-regressions.html"><span class="header-section-number">4</span> Panel regressions</a></li>
-<li><a class="" href="estimation-methods.html"><span class="header-section-number">5</span> Estimation Methods</a></li>
-<li><a class="" href="microeconometrics.html"><span class="header-section-number">6</span> Microeconometrics</a></li>
-<li><a class="" href="time-series.html"><span class="header-section-number">7</span> Time Series</a></li>
-<li><a class="" href="appendix.html"><span class="header-section-number">8</span> Appendix</a></li>
+<li><a class="" href="appendix.html"><span class="header-section-number">4</span> Appendix</a></li>
 <li><a class="" href="references.html">References</a></li>
 </ul>
 
@@ -222,9 +218,9 @@ where <span class="math inline">\(Id\)</span> is the <span class="math inline">\
 </div>
 <hr>
 </div>
-<div id="least-square-estimation" class="section level2" number="3.2">
+<div id="LSquares" class="section level2" number="3.2">
 <h2>
-<span class="header-section-number">3.2</span> Least square estimation<a class="anchor" aria-label="anchor" href="#least-square-estimation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.2</span> Least square estimation<a class="anchor" aria-label="anchor" href="#LSquares"><i class="fas fa-link"></i></a>
 </h2>
 <p>For a given vector of coefficients <span class="math inline">\(\mathbf{b}=[b_1,\dots,b_K]'\)</span>, the sum of square residuals is:
 <span class="math display">\[
@@ -672,9 +668,9 @@ The <strong>t-statistics</strong>, that is <span class="math inline">\(b_k/\sqrt
 The <strong>p-value</strong> is defined as the probability that <span class="math inline">\(|Z| &gt; |t|\)</span>, where <span class="math inline">\(t\)</span> is the (computed) t statistics and where <span class="math inline">\(Z \sim t(n-K)\)</span>. That is, the p-value is given by <span class="math inline">\(2(1 - \Phi_{t(n-K)}(|t_k|))\)</span>.</p>
 <p>See <a href="https://jrenne.shinyapps.io/tests/">this webpage</a> for details regarding the link between critical regions, p-value, and test outcomes.</p>
 </div>
-<div id="set-of-linear-restrictions" class="section level3" number="3.2.8">
+<div id="Ftest" class="section level3" number="3.2.8">
 <h3>
-<span class="header-section-number">3.2.8</span> Set of linear restrictions<a class="anchor" aria-label="anchor" href="#set-of-linear-restrictions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.2.8</span> Set of linear restrictions<a class="anchor" aria-label="anchor" href="#Ftest"><i class="fas fa-link"></i></a>
 </h3>
 <p>We consider the following model:
 <span class="math display">\[
@@ -839,9 +835,9 @@ It can be seen that <span class="math inline">\(\xi_i = \varepsilon_i - (\beta_2
 ## english      -0.1215735 0.03231728  -3.761872 1.928369e-04</code></pre>
 </div>
 </div>
-<div id="irrelevant-variable" class="section level3" number="3.2.12">
+<div id="irrelevant" class="section level3" number="3.2.12">
 <h3>
-<span class="header-section-number">3.2.12</span> Irrelevant variable<a class="anchor" aria-label="anchor" href="#irrelevant-variable"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.2.12</span> Irrelevant variable<a class="anchor" aria-label="anchor" href="#irrelevant"><i class="fas fa-link"></i></a>
 </h3>
 <p>Consider the <em>True model</em>:
 <span class="math display">\[
@@ -1224,7 +1220,7 @@ In this case, we are in the GRM context, with:
 \end{array} \right].
 \end{equation}\]&lt;/span&gt;&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=" generalized-least-squares number="3.5.1">
+&lt;div id=" gls number="3.5.1">
 <h3>
 <span class="header-section-number">3.5.1</span> Generalized Least Squares</h3>
 <p>Assume <span class="math inline">\(\boldsymbol\Sigma\)</span> is known (``feasible GLS’’). Because <span class="math inline">\(\boldsymbol\Sigma\)</span> is symmetric positive, it admits a spectral decomposition of the form <span class="math inline">\(\boldsymbol\Sigma = \mathbf{C} \boldsymbol\Lambda \mathbf{C}'\)</span>, where <span class="math inline">\(\mathbf{C}\)</span> is an orthogonal matrix (i.e. <span class="math inline">\(\mathbf{C}\mathbf{C}'=Id\)</span>) and <span class="math inline">\(\boldsymbol\Lambda\)</span> is a diagonal matrix (the diagonal entries are the eigenvalues of <span class="math inline">\(\boldsymbol\Sigma\)</span>).</p>
@@ -1629,26 +1625,156 @@ and we then use:
 <p>As an alternative to the asymptotic approximation to the distribution of a statistic of interest, one can resort to bootstrap approximation (see Section 5 of <span class="citation">MacKinnon, Nielsen, and Webb (<a href="references.html#ref-MACKINNON2022" role="doc-biblioref">2022</a>)</span>). In R, the packge <code>fwildclusterboot</code> allows to implement such approaches (see, e.g., <a href="https://cran.r-project.org/web/packages/fwildclusterboot/vignettes/fwildclusterboot.html">this tutorial by Alexander Fischer</a>).</p>
 </div>
 </div>
-<div id="shrinkage-method" class="section level2" number="3.8">
+<div id="shrinkage-methods" class="section level2" number="3.8">
 <h2>
-<span class="header-section-number">3.8</span> Shrinkage method<a class="anchor" aria-label="anchor" href="#shrinkage-method"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.8</span> Shrinkage methods<a class="anchor" aria-label="anchor" href="#shrinkage-methods"><i class="fas fa-link"></i></a>
 </h2>
-<p>Chosing the right variables is often a compicated matter, especially in the presence of many potentially relevant covariates. Keeping a large number of covariates results in large standard deviations for the estimated parameters. In order to address this issue, shrinkage methods have been designed. The objective of these methods is to help to select of a limited number of variables (by shrinking the regression coefficients of the less useful variables towards zero). The two best-known shrinkage techniques are ridge regression and the lasso.</p>
-<p><span class="citation">James et al. (<a href="references.html#ref-James2013" role="doc-biblioref">2013</a>)</span> (Chapter 6.2)</p>
-<p>Example: use credit data (interest rates on XXXX)?</p>
+<p>Chosing the right variables is often complicated, especially in the presence of many potentially relevant covariates. Keeping a large number of covariates results in large standard deviations for the estimated parameters (see Section <a href="linear-regressions.html#irrelevant">3.2.12</a>). In order to address this issue, shrinkage methods have been designed. The objective of these methods is to help to select of a limited number of variables (by shrinking the regression coefficients of the less useful variables towards zero). The two best-known shrinkage techniques are <strong>ridge regression</strong> and the <strong>lasso</strong> approach.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;See &lt;span class="citation"&gt;Tibshirani (&lt;a href="references.html#ref-Tibshirani_2011" role="doc-biblioref"&gt;2011&lt;/a&gt;)&lt;/span&gt; for a review of the lasso approach. See also Section 6.2 of &lt;span class="citation"&gt;James et al. (&lt;a href="references.html#ref-James2013" role="doc-biblioref"&gt;2013&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;'><sup>1</sup></a></p>
+<p>In both cases (ridge and lasso), the OLS minimization problem (see Section <a href="linear-regressions.html#LSquares">3.2</a>), that is:
+<span class="math display">\[\begin{equation}
+\mathbf{b} = \underset{\boldsymbol\beta}{\mbox{argmin}}\; \sum_{i=1}^n(y_i - \mathbf{x}_i'\boldsymbol\beta)
+\end{equation}\]</span>
+is replaced by the following:
+<span class="math display" id="eq:minLasso">\[\begin{equation}
+\mathbf{b}_\lambda = \underset{\boldsymbol\beta}{\mbox{argmin}}\; \sum_{i=1}^n(y_i - \mathbf{x}_i'\boldsymbol\beta) + \lambda f(\boldsymbol\beta),\tag{3.40}
+\end{equation}\]</span>
+where <span class="math inline">\(\lambda f(\boldsymbol\beta)\)</span> is a penalty term that positively depends on the “size” of the comppments of <span class="math inline">\(\boldsymbol\beta\)</span>. This term is called the <em>shrinkage penalty</em> term.</p>
+<p>Specifically, assuming that vector <span class="math inline">\(\mathbf{x}_i\)</span>, that contains the whole set of potential covariates, is of dimension <span class="math inline">\(K \times 1\)</span>, we have:
+<span class="math display">\[\begin{eqnarray*}
+f(\boldsymbol\beta) &amp; = &amp; \sum_{j=1}^K \beta_j^2 \quad \mbox{in the ridge case ($\ell_2$ norm)},\\
+f(\boldsymbol\beta) &amp; = &amp; \sum_{j=1}^K |\beta_j| \quad \mbox{in the lasso case ($\ell_1$ norm)}.
+\end{eqnarray*}\]</span></p>
+<p>In most cases, we do not want to involve the intercept in the set of parameters to shrink, and the preceding equations are respectively replaced with:
+<span class="math display">\[\begin{eqnarray*}
+f(\boldsymbol\beta) &amp; = &amp; \sum_{j=2}^K \beta_j^2 \quad \mbox{(ridge)},\\
+f(\boldsymbol\beta) &amp; = &amp; \sum_{j=2}^K |\beta_j| \quad \mbox{(lasso)}.
+\end{eqnarray*}\]</span></p>
+<p>The nature of the penalty (based on the <span class="math inline">\(\ell_1\)</span> or <span class="math inline">\(\ell_2\)</span> norms) implies a different behaviour of the parameter estimates when <span class="math inline">\(\lambda\)</span> –the<em>tuning parameter</em>– grows. In the the ridge regression, coefficient estimates go to zero (shrinkage); in the lasso case, some coefficients reach zero when <span class="math inline">\(\lambda\)</span> reach some values. In other words, while ridge regression acheive shrinkage, lasso regressions acheive shrinkage and variable selection.</p>
+<p>Parameter <span class="math inline">\(\lambda\)</span> is a , that has to be determined separately from the minimization problem of Eq. <a href="linear-regressions.html#eq:minLasso">(3.40)</a>. One can combine standard criteria (e.g., BIC or Akaike) with lasso regressions to help determine <span class="math inline">\(\lambda\)</span>.</p>
+<p>In R, one can use the <code>glmnet</code> package to run ridge and lasso regressions. In the folowing example, we employ this package to model the interest rates proposed to debtors. The data come from the <a href="https://www.kaggle.com/datasets/ethon0426/lending-club-20072020q1">Lending Club</a>.</p>
+<p>To begin with, let us define the variables we want to consider:</p>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://glmnet.stanford.edu">glmnet</a></span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Loading required package: Matrix</code></pre>
+<pre><code>## Loaded glmnet 4.1-4</code></pre>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">credit</span><span class="op">$</span><span class="va">owner</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">*</span><span class="op">(</span><span class="va">credit</span><span class="op">$</span><span class="va">home_ownership</span><span class="op">==</span><span class="st">"OWN"</span><span class="op">)</span></span>
+<span><span class="va">credit</span><span class="op">$</span><span class="va">renter</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">*</span><span class="op">(</span><span class="va">credit</span><span class="op">$</span><span class="va">home_ownership</span><span class="op">==</span><span class="st">"MORTGAGE"</span><span class="op">)</span></span>
+<span><span class="va">credit</span><span class="op">$</span><span class="va">verification_status</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">*</span><span class="op">(</span><span class="va">credit</span><span class="op">$</span><span class="va">verification_status</span><span class="op">==</span><span class="st">"Not Verified"</span><span class="op">)</span></span>
+<span><span class="va">credit</span><span class="op">$</span><span class="va">emp_length_10</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">*</span><span class="op">(</span><span class="va">credit</span><span class="op">$</span><span class="va">emp_length_10</span><span class="op">)</span></span>
+<span><span class="va">credit</span><span class="op">$</span><span class="va">log_annual_inc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">credit</span><span class="op">$</span><span class="va">annual_inc</span><span class="op">)</span></span>
+<span><span class="va">credit</span><span class="op">$</span><span class="va">log_funded_amnt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">credit</span><span class="op">$</span><span class="va">funded_amnt</span><span class="op">)</span></span>
+<span><span class="va">credit</span><span class="op">$</span><span class="va">annual_inc2</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">credit</span><span class="op">$</span><span class="va">annual_inc</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span>
+<span><span class="va">credit</span><span class="op">$</span><span class="va">funded_amnt2</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">credit</span><span class="op">$</span><span class="va">funded_amnt</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">credit</span>,select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">delinq_2yrs</span>, <span class="va">annual_inc</span>, <span class="va">annual_inc2</span>, <span class="va">log_annual_inc</span>, <span class="va">dti</span>, <span class="va">installment</span>, <span class="va">verification_status</span>, <span class="va">funded_amnt</span>, <span class="va">funded_amnt2</span>, <span class="va">log_funded_amnt</span>, <span class="va">pub_rec</span>, <span class="va">emp_length_10</span>, <span class="va">owner</span>, <span class="va">renter</span>, <span class="va">pub_rec_bankruptcies</span>, <span class="va">revol_util</span>, <span class="va">revol_bal</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Let us standardize the data:</p>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">credit</span><span class="op">$</span><span class="va">int_rate</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">credit</span><span class="op">$</span><span class="va">int_rate</span>,na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">stdv.x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">x</span>,<span class="fl">2</span>,<span class="kw">function</span><span class="op">(</span><span class="va">a</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">a</span>,na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">stdv.x</span>,<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Next, we define the set of <span class="math inline">\(\lambda\)</span> we will use, and run the ridge and lasso regressions:</p>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">grid.lambda</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">.2</span>,by<span class="op">=</span><span class="fl">.005</span><span class="op">)</span></span>
+<span><span class="va">result.ridge</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://glmnet.stanford.edu/reference/glmnet.html">glmnet</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, alpha <span class="op">=</span> <span class="fl">0</span>, lambda <span class="op">=</span> <span class="va">grid.lambda</span><span class="op">)</span></span>
+<span><span class="va">result.lasso</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://glmnet.stanford.edu/reference/glmnet.html">glmnet</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, alpha <span class="op">=</span> <span class="fl">1</span>, lambda <span class="op">=</span> <span class="va">grid.lambda</span><span class="op">)</span></span></code></pre></div>
+<p>The following figure shows how estimated parameters depend on <span class="math inline">\(\lambda\)</span>:</p>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">variab</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">result.ridge</span><span class="op">$</span><span class="va">lambda</span>,<span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">result.ridge</span><span class="op">)</span><span class="op">[</span><span class="va">variab</span>,<span class="op">]</span>,type<span class="op">=</span><span class="st">"l"</span>,</span>
+<span>     ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">result.ridge</span><span class="op">)</span><span class="op">[</span><span class="va">variab</span>,<span class="op">]</span>,<span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">result.lasso</span><span class="op">)</span><span class="op">[</span><span class="va">variab</span>,<span class="op">]</span><span class="op">)</span>,</span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">result.ridge</span><span class="op">)</span><span class="op">[</span><span class="va">variab</span>,<span class="op">]</span>,<span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">result.lasso</span><span class="op">)</span><span class="op">[</span><span class="va">variab</span>,<span class="op">]</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>     xlab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">lambda</span><span class="op">)</span>,ylab<span class="op">=</span><span class="st">"Estimated parameter"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">result.lasso</span><span class="op">$</span><span class="va">lambda</span>,<span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">result.lasso</span><span class="op">)</span><span class="op">[</span><span class="va">variab</span>,<span class="op">]</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="AdvECTS_files/figure-html/lasso4-1.png" width="672"></div>
+<p>Let us take two values of <span class="math inline">\(\lambda\)</span> and see the associated estimated parameters in the context of lasso regressions:</p>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">20</span>; <span class="va">j</span> <span class="op">&lt;-</span> <span class="fl">40</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">result.lasso</span><span class="op">$</span><span class="va">lambda</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,<span class="va">result.lasso</span><span class="op">$</span><span class="va">lambda</span><span class="op">[</span><span class="va">j</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##       [,1]  [,2]
+## [1,] 0.105 0.005</code></pre>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">result.lasso</span><span class="op">)</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span>,<span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">result.lasso</span><span class="op">)</span><span class="op">[</span>,<span class="va">j</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##                             [,1]          [,2]
+## (Intercept)           3.24385583  6.4716266208
+## delinq_2yrs           0.06308870  0.0689352682
+## annual_inc            0.00000000  0.0045956535
+## annual_inc2           0.00000000  0.0000000000
+## log_annual_inc        0.00000000 -0.0361238200
+## dti                   0.00000000  0.0224224582
+## installment           0.14767959  8.2287289816
+## verification_status   0.00000000 -0.0009750047
+## funded_amnt           0.00000000 -7.3091694210
+## funded_amnt2          0.00000000 -0.4711846250
+## log_funded_amnt       0.00000000 -0.2460932367
+## pub_rec               0.03390816  0.0599725219
+## emp_length_10         0.00000000 -0.0192494122
+## owner                 0.00000000 -0.0244459908
+## renter               -0.03882640 -0.0624308746
+## pub_rec_bankruptcies  0.00000000  0.0000000000
+## revol_util            0.00000000  0.0000000000
+## revol_bal             0.00000000  0.0024022685</code></pre>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Compute values of y predicted by the model, for all lambdas:</span></span>
+<span><span class="va">pred1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">result.lasso</span>,<span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># Compute values of y predicted by the model, for a specific value:</span></span>
+<span><span class="va">pred2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">result.lasso</span>,<span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,s<span class="op">=</span><span class="fl">0.085</span><span class="op">)</span></span></code></pre></div>
+<p>The <code>glmnet</code> package (see <a href="https://glmnet.stanford.edu/articles/glmnet.html">Hastie et al. (2021)</a>) also offers tools to implement cross-validation:</p>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># cross validation:</span></span>
+<span><span class="va">cvglmnet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://glmnet.stanford.edu/reference/cv.glmnet.html">cv.glmnet</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,<span class="va">y</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cvglmnet</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="AdvECTS_files/figure-html/lasso6-1.png" width="672"></div>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cvglmnet</span><span class="op">$</span><span class="va">lambda.min</span> <span class="co"># value of lambda.min, that is the value of lambda that gives minimum mean cross-validated error</span></span></code></pre></div>
+<pre><code>## [1] 0.003727602</code></pre>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cvglmnet</span><span class="op">$</span><span class="va">lambda.1se</span> <span class="co"># largest value of lambda that is such that the sample cost is within the +1/-1 standard-deviation band stemming from the cv procedure</span></span></code></pre></div>
+<pre><code>## [1] 0.004927671</code></pre>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">cvglmnet</span>, s <span class="op">=</span> <span class="st">"lambda.min"</span><span class="op">)</span> <span class="co"># associated parameters</span></span></code></pre></div>
+<pre><code>## 18 x 1 sparse Matrix of class "dgCMatrix"
+##                                s1
+## (Intercept)           6.627817184
+## delinq_2yrs           0.065166059
+## annual_inc            0.006603198
+## annual_inc2           .          
+## log_annual_inc       -0.038648540
+## dti                   0.019932058
+## installment           8.636645286
+## verification_status  -0.003667472
+## funded_amnt          -7.662840777
+## funded_amnt2         -0.517617243
+## log_funded_amnt      -0.256890033
+## pub_rec               0.057255481
+## emp_length_10        -0.018817829
+## owner                -0.024997467
+## renter               -0.059573041
+## pub_rec_bankruptcies  .          
+## revol_util            .          
+## revol_bal             0.003361683</code></pre>
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">cvglmnet</span>, newx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span>, s <span class="op">=</span> <span class="st">"lambda.min"</span><span class="op">)</span> <span class="co"># predicted values of y for specific values of x</span></span></code></pre></div>
+<pre><code>##       lambda.min
+## 21529   3.811212
+## 21547   3.415492
+## 21579   4.027977
+## 21583   3.256566
+## 21608   3.337846</code></pre>
 
 </div>
 </div>
+
   <div class="chapter-nav">
 <div class="prev"><a href="intro.html"><span class="header-section-number">2</span> Introduction</a></div>
-<div class="next"><a href="panel-regressions.html"><span class="header-section-number">4</span> Panel regressions</a></div>
+<div class="next"><a href="appendix.html"><span class="header-section-number">4</span> Appendix</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#linear-regressions"><span class="header-section-number">3</span> Linear Regressions</a></li>
 <li><a class="nav-link" href="#specification"><span class="header-section-number">3.1</span> Specification</a></li>
 <li>
-<a class="nav-link" href="#least-square-estimation"><span class="header-section-number">3.2</span> Least square estimation</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#LSquares"><span class="header-section-number">3.2</span> Least square estimation</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#bivariate-case"><span class="header-section-number">3.2.1</span> Bivariate case</a></li>
 <li><a class="nav-link" href="#gauss-markow-theorem"><span class="header-section-number">3.2.2</span> Gauss Markow Theorem</a></li>
 <li><a class="nav-link" href="#frish-waugh"><span class="header-section-number">3.2.3</span> Frish-Waugh</a></li>
@@ -1656,18 +1782,18 @@ and we then use:
 <li><a class="nav-link" href="#inference-and-prediction"><span class="header-section-number">3.2.5</span> Inference and Prediction</a></li>
 <li><a class="nav-link" href="#confidence-interval-of-beta_k"><span class="header-section-number">3.2.6</span> Confidence interval of \(\beta_k\)</a></li>
 <li><a class="nav-link" href="#example"><span class="header-section-number">3.2.7</span> Example</a></li>
-<li><a class="nav-link" href="#set-of-linear-restrictions"><span class="header-section-number">3.2.8</span> Set of linear restrictions</a></li>
+<li><a class="nav-link" href="#Ftest"><span class="header-section-number">3.2.8</span> Set of linear restrictions</a></li>
 <li><a class="nav-link" href="#common-pitfalls"><span class="header-section-number">3.2.9</span> Common pitfalls</a></li>
 <li><a class="nav-link" href="#multicollinearity"><span class="header-section-number">3.2.10</span> Multicollinearity</a></li>
 <li><a class="nav-link" href="#omitted-variables"><span class="header-section-number">3.2.11</span> Omitted variables</a></li>
-<li><a class="nav-link" href="#irrelevant-variable"><span class="header-section-number">3.2.12</span> Irrelevant variable</a></li>
+<li><a class="nav-link" href="#irrelevant"><span class="header-section-number">3.2.12</span> Irrelevant variable</a></li>
 </ul>
 </li>
 <li><a class="nav-link" href="#large-sample-properties"><span class="header-section-number">3.3</span> Large Sample Properties</a></li>
 <li><a class="nav-link" href="#instrumental-variables"><span class="header-section-number">3.4</span> Instrumental Variables</a></li>
 <li>
 <a class="nav-link" href="#general-regression-model"><span class="header-section-number">3.5</span> General Regression Model</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#generalized-least-squares"><span class="header-section-number">3.5.1</span> Generalized Least Squares</a></li>
+<li><a class="nav-link" href="#GLS"><span class="header-section-number">3.5.1</span> Generalized Least Squares</a></li>
 <li><a class="nav-link" href="#heteroskedasticity-and-autocorrelation-hac"><span class="header-section-number">3.5.2</span> Heteroskedasticity and Autocorrelation (HAC)</a></li>
 <li><a class="nav-link" href="#how-to-detect-autocorrelation-in-residuals"><span class="header-section-number">3.5.3</span> How to detect autocorrelation in residuals?</a></li>
 </ul>
@@ -1676,7 +1802,7 @@ and we then use:
 <li>
 <a class="nav-link" href="#clusters"><span class="header-section-number">3.7</span> Clusters</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#two-way-clustering"><span class="header-section-number">3.7.1</span> Two-way clustering</a></li></ul>
 </li>
-<li><a class="nav-link" href="#shrinkage-method"><span class="header-section-number">3.8</span> Shrinkage method</a></li>
+<li><a class="nav-link" href="#shrinkage-methods"><span class="header-section-number">3.8</span> Shrinkage methods</a></li>
 </ul>
 
       <div class="book-extra">
@@ -1693,7 +1819,7 @@ and we then use:
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-08-19.</p>
+    <p>"<strong>Advanced Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-08-22.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -1,6 +1,193 @@
 {
     "sources": [
         {
+            "ISSN": "00384038",
+            "URL": "http://www.jstor.org/stable/1057152",
+            "accessed": {
+                "date-parts": [
+                    [
+                        2022,
+                        8,
+                        29
+                    ]
+                ]
+            },
+            "author": [
+                {
+                    "family": "Nakosteen",
+                    "given": "Robert A."
+                },
+                {
+                    "family": "Zimmer",
+                    "given": "Michael"
+                }
+            ],
+            "container-title": "Southern Economic Journal",
+            "id": "Nakosteen_Zimmer_1980",
+            "issue": "3",
+            "issued": {
+                "date-parts": [
+                    [
+                        1980
+                    ]
+                ]
+            },
+            "page": "840-851",
+            "publisher": "Southern Economic Association",
+            "title": "Migration and income: The question of self-selection",
+            "title-short": "Migration and income",
+            "type": "article-journal",
+            "volume": "46"
+        },
+        {
+            "URL": "https://ideas.repec.org/a/aea/aecrev/v85y1995i3p322-40.html",
+            "author": [
+                {
+                    "family": "Meyer",
+                    "given": "Bruce D"
+                },
+                {
+                    "family": "Viscusi",
+                    "given": "W Kip"
+                },
+                {
+                    "family": "Durbin",
+                    "given": "David L"
+                }
+            ],
+            "container-title": "American Economic Review",
+            "id": "Meyer_Viscusi_Durbin_1995",
+            "issue": "3",
+            "issued": {
+                "date-parts": [
+                    [
+                        1995
+                    ]
+                ]
+            },
+            "page": "322-340",
+            "title": "Workers’ Compensation and Injury Duration: Evidence from a Natural Experiment",
+            "type": "article-journal",
+            "volume": "85"
+        },
+        {
+            "ISSN": "10505164",
+            "URL": "http://www.jstor.org/stable/2245134",
+            "accessed": {
+                "date-parts": [
+                    [
+                        2022,
+                        8,
+                        24
+                    ]
+                ]
+            },
+            "author": [
+                {
+                    "family": "Roberts",
+                    "given": "G. O."
+                },
+                {
+                    "family": "Gelman",
+                    "given": "A."
+                },
+                {
+                    "family": "Gilks",
+                    "given": "W. R."
+                }
+            ],
+            "container-title": "The Annals of Applied Probability",
+            "id": "Roberts_Gelman_Gilks_1997",
+            "issue": "1",
+            "issued": {
+                "date-parts": [
+                    [
+                        1997
+                    ]
+                ]
+            },
+            "page": "110-120",
+            "publisher": "Institute of Mathematical Statistics",
+            "title": "Weak convergence and optimal scaling of random walk metropolis algorithms",
+            "type": "article-journal",
+            "volume": "7"
+        },
+        {
+            "URL": "https://ideas.repec.org/a/bla/jorssb/v73y2011i3p273-282.html",
+            "author": [
+                {
+                    "family": "Tibshirani",
+                    "given": "Robert"
+                }
+            ],
+            "container-title": "Journal of the Royal Statistical Society Series B",
+            "id": "Tibshirani_2011",
+            "issue": "3",
+            "issued": {
+                "date-parts": [
+                    [
+                        2011
+                    ]
+                ]
+            },
+            "page": "273-282",
+            "title": "Regression shrinkage and selection via the lasso: a retrospective",
+            "type": "article-journal",
+            "volume": "73"
+        },
+        {
+            "DOI": "10.1017/CBO9780511751967",
+            "URL": "http://cameron.econ.ucdavis.edu/mmabook/mma.html",
+            "author": [
+                {
+                    "family": "Cameron",
+                    "given": "A. Colin"
+                },
+                {
+                    "family": "Trivedi",
+                    "given": "Pravin K."
+                }
+            ],
+            "id": "Cameron_Trivedi_2005",
+            "issued": {
+                "date-parts": [
+                    [
+                        2005
+                    ]
+                ]
+            },
+            "publisher": "Cambridge University Press",
+            "title": "Microeconometrics: Methods and applications",
+            "title-short": "Microeconometrics",
+            "type": "book"
+        },
+        {
+            "DOI": "10.1017/CBO9780511751967",
+            "author": [
+                {
+                    "family": "Gouriéroux",
+                    "given": "Christian"
+                },
+                {
+                    "family": "Monfort",
+                    "given": "Alain"
+                }
+            ],
+            "collection-title": "Themes in modern econometrics",
+            "id": "gourieroux_monfort_1995",
+            "issued": {
+                "date-parts": [
+                    [
+                        1995
+                    ]
+                ]
+            },
+            "publisher": "Cambridge University Press",
+            "title": "Statistics and econometric models",
+            "type": "book",
+            "volume": "1"
+        },
+        {
             "URL": "https://ideas.repec.org/p/zbw/upadbr/b3919.html",
             "author": [
                 {
