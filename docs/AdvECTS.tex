@@ -124,7 +124,7 @@
 
 \title{Advanced Econometrics}
 \author{Jean-Paul Renne}
-\date{2022-08-29}
+\date{2022-09-05}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -331,598 +331,602 @@ Diff-in-Diff:
 \citet{Meyer_Viscusi_Durbin_1995}
 with data in the \texttt{wooldridge} package. See \href{https://evalf20.classes.andrewheiss.com/example/diff-in-diff/}{this page}
 
-\hypertarget{microeconometrics}{%
-\chapter{Microeconometrics}\label{microeconometrics}}
+\hypertarget{vector-auto-regressive-var-models}{%
+\chapter{Vector Auto-Regressive (VAR) models}\label{vector-auto-regressive-var-models}}
 
-\hypertarget{binary-choice-models}{%
-\section{Binary-choice models}\label{binary-choice-models}}
+\citet{Kilian_1998} See \href{https://rdrr.io/cran/VAR.etp/man/VAR.Boot.html}{this page}
 
-In many instances, the variables to be explained (\(y_i\)s) have only two possible values (\(0\) and \(1\), say).
+Sign restrictions: \href{https://github.com/chrstdanne/VARsignR}{package}, \citet{Danne_2015}.
 
-Assume we suspect some variable \(\mathbf{x}_i\) (\(K \times 1\)) to be able to account for the probability that \(y_i=1\).
+\citet{vars}
 
-The model reads:
-\begin{equation}\label{eq:binaryBenroulli}
-y_i | \mathbf{X} \sim \mathcal{B}(g(\mathbf{x}_i;\boldsymbol\theta)),
-\end{equation}
-where \(g(\mathbf{x}_i;\boldsymbol\theta)\) is the parameter of the Bernoulli distribution. In other words, conditionally on \(\mathbf{X}\):
-\[
-y_i = \left\{
-\begin{array}{cl}
-1 & \mbox{ with probability } g(\mathbf{x}_i;\boldsymbol\theta)\\
-0 & \mbox{ with probability } 1-g(\mathbf{x}_i;\boldsymbol\theta),
-\end{array}
-\right.
-\]
-where \(\boldsymbol\theta\) is a vector of parameters to be estimated.
-
-The objective is to estimate the vector of population parameters \(\boldsymbol\theta\).
-
-Binary-choice models can be used to account for\ldots{}
-
-\begin{itemize}
-\tightlist
-\item
-  any binary decisions (e.g.~in referendums, being owner or renter, living in the city or in the countryside, in/out of the labour force,\ldots),
-\item
-  contamination (disease or default),
-\item
-  success/failure (exams).
-\end{itemize}
-
-A possibility is to run a linear regression (a situation called \textbf{Linear Probability Model, LPM}):
-\[
-y_i = \boldsymbol\theta'\mathbf{x}_i + \varepsilon_i.
-\]
-
-Such a regression could be consistent with the \emph{conditional-mean-zero assumption} (Hypothesis \ref{hyp:exogeneity}) and with the \emph{assumption of non-correlated residuals} (Hypothesis \ref{hyp:noncorrelResid}), but more difficultly with the \textbf{homoskedasticity assumption} (Hypothesis \ref{hyp:homoskedasticity}). Moreover, the \(\varepsilon_i\)s cannot be Gaussian (because \(y_i \in \{0,1\}\)). Therefore, using a linear regression to study the relationship between \(\mathbf{x}_i\) and \(y_i\) can be consistent but it is inefficient.
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{AdvECTS_files/figure-latex/LPM-1} 
-
-}
-
-\caption{Fitting a binary variable with a linear model (Linear Probability Model, LPM). The model is $\mathbb{P}(y_i=1|x_i)=\Phi(0.5+2x_i)$, where $\Phi$ is the c.d.f. of the normal distribution and where $x_i \sim \,i.i.d.\,\mathcal{N}(0,1)$.}\label{fig:LPM}
-\end{figure}
-
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.0634}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.6972}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2394}}@{}}
-\caption{\label{tab:foo} This table provides examples of function \(g\), s.t. \(\mathbb{P}(y_i=1|\mathbf{x}_i;\boldsymbol heta) = g(\boldsymbol\theta'\mathbf{x}_i)\). The ``linear'' case is given for comparison, but note that it does not satisfy \(g(\boldsymbol\theta'\mathbf{x}_i)\) for any value of \(\boldsymbol\theta'\mathbf{x}_i\).}\tabularnewline
-\toprule()
-\begin{minipage}[b]{\linewidth}\raggedright
-Model
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Function \(g\)
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Derivative
-\end{minipage} \\
-\midrule()
-\endfirsthead
-\toprule()
-\begin{minipage}[b]{\linewidth}\raggedright
-Model
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Function \(g\)
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Derivative
-\end{minipage} \\
-\midrule()
-\endhead
-Probit & \(\Phi\) & \(\phi\) \\
-Logit & \(\dfrac{\exp(x)}{1+\exp(x)}\) & \(\dfrac{\exp(x)}{(1+\exp(x))^2}\) \\
-log-log & \(1 - \exp(-\exp(x))\) & \(\exp(-\exp(x))\exp(x)\) \\
-linear & \(x\) & 1 \\
-\bottomrule()
-\end{longtable}
-
-Two prominent models to tackle this situation. In both models, we have:
-\[
-\mathbb{P}(y_i=1|\mathbf{x}_i;\boldsymbol\theta)=g(\boldsymbol\theta'\mathbf{x}_i).
-\]
-
-In the \textbf{Probit model}, we have
-\begin{equation}
-g(z) = \Phi(z),\label{eq:probit}
-\end{equation}
-where \(\Phi\) is the c.d.f. of the normal distribution.
-
-And for the \textbf{logit model}:
-\begin{equation}
-g(z) = \frac{1}{1+\exp(-z)}.\label{eq:logit}
-\end{equation}
-
-Figure \ref{fig:ProbLogit} displays the functions \(g\) appearing in Table \ref{tab:foo}.
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{AdvECTS_files/figure-latex/ProbLogit-1} 
-
-}
-
-\caption{Probit, Logit, and Log-log functions.}\label{fig:ProbLogit}
-\end{figure}
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{AdvECTS_files/figure-latex/LPM2-1} 
-
-}
-
-\caption{The model is $\mathbb{P}(y_i=1|x_i)=\Phi(0.5+2x_i)$, where $\Phi$ is the c.d.f. of the normal distribution and where $x_i \sim \,i.i.d.\,\mathcal{N}(0,1)$. Crosses give the model-implied probabilities of having $y_i=1$.}\label{fig:LPM2}
-\end{figure}
-
-\hypertarget{interpretation-in-terms-of-latent-variable-and-utility-based-models}{%
-\subsection{Interpretation in terms of latent variable, and utility-based models}\label{interpretation-in-terms-of-latent-variable-and-utility-based-models}}
-
-The probit model has an interpretation in terms of \textbf{latent variables}. In this model, we indeed have:
-\[
-\mathbb{P}(y_i=1|\mathbf{x}_i;\boldsymbol\theta) = \Phi(\boldsymbol\theta'\mathbf{x}_i) = \mathbb{P}(-\varepsilon_{i}<\boldsymbol\theta'\mathbf{x}_i),
-\]
-where \(\varepsilon_{i} \sim \mathcal{N}(0,1)\). That is:
-\[
-\mathbb{P}(y_i=1|\mathbf{x}_i;\boldsymbol\theta) = \mathbb{P}(0< y_i^*),
-\]
-where \(y_i^* = \boldsymbol\theta'\mathbf{x}_i + \varepsilon_i\), with \(\varepsilon_{i} \sim \mathcal{N}(0,1)\). Variable \(y_i^*\) can be interpreted as a (latent) variable that determines \(y_i\) since \(y_i = \mathbb{I}_{\{y_i^*>0\}}\).
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{AdvECTS_files/figure-latex/Latent-1} 
-
-}
-
-\caption{Distribution of $y_i^*$ conditional on $\mathbf{x}_i$.}\label{fig:Latent}
-\end{figure}
-
-\textbf{Random Utility Models (RUM)} are based on such a view of probit models. Assume that agent (\(i\)) chooses \(y_i=1\) if the utility associated with this choice (\(U_{i,1}\)) is higher than the one associated with \(y_i=0\) (\(U_{i,0}\)). Assume further that the utility of agent \(i\), if she chooses outcome \(j\) (\(\in \{0,1\}\)), is given by
-\[
-U_{i,j} = V_{i,j} + \varepsilon_{i,j},
-\]
-where \(V_{i,j}\) is the deterministic component of the utility associated with choice and \(\varepsilon_{i,j}\) is a random (agent-specific) component.
-
-Moreover, posit \(V_{i,j} = \boldsymbol\theta_j'\mathbf{x}_i\). We then have:
-\begin{eqnarray}
-\mathbb{P}(y_i = 1|\mathbf{x}_i;\boldsymbol\theta) &=& \mathbb{P}(\boldsymbol\theta_1'\mathbf{x}_i+\varepsilon_{i,1}>\boldsymbol\theta_0'\mathbf{x}_i+\varepsilon_{i,0}) \nonumber\\
-&=& F(\boldsymbol\theta_1'\mathbf{x}_i-\boldsymbol\theta_0'\mathbf{x}_i) = F([\boldsymbol\theta_1-\boldsymbol\theta_0]'\mathbf{x}_i),\label{eq:utility}
-\end{eqnarray}
-where \(F\) is the c.d.f. of \(\varepsilon_{i,0}-\varepsilon_{i,1}\).
-
-Note that only the difference \(\boldsymbol\theta_1-\boldsymbol\theta_0\) is identifiable (as opposed to \(\boldsymbol\theta_1\) AND \(\boldsymbol\theta_0\)). Indeed, replacing \(U\) with \(aU\) (\(a>0\)) gives the same model \(\Leftrightarrow\) scaling issue, solved by fixing the variance of \(\varepsilon_{i,0}-\varepsilon_{i,1}\).
-
-Other types of structural models --based on the comparison of marginal costs and benefits-- give rise to the existence of latent variable and to probit models. An example is \citet{Nakosteen_Zimmer_1980}. The main ingredients of their approach are as follows:
-
-\begin{itemize}
-\item
-  Wage that can be earned at the present location: \(y_p^* = \boldsymbol\theta_p'\mathbf{x}_p + \varepsilon_p\).
-\item
-  Migration cost: \(C^*= \boldsymbol\theta_c'\mathbf{x}_c + \varepsilon_c\).
-\item
-  Wage earned elsewhere: \(y_m^* = \boldsymbol\theta_m'\mathbf{x}_m + \varepsilon_m\).
-\end{itemize}
-
-In this context, agents decision to migrate if \(y_m^* > y_p^* + C^*\), i.e.~if
-\[
-y^* = y_m^* -  y_p^* - C^* =  \boldsymbol\theta'\mathbf{x} + \underbrace{\varepsilon}_{=\varepsilon_m - \varepsilon_c - \varepsilon_p}>0,
-\]
-where \(\mathbf{x}\) is the union of the \(\mathbf{x}_i\)s, for \(i \in \{p,m,c\}\).
-
-\hypertarget{Avregressors}{%
-\subsection{Alternative-Varying Regressors}\label{Avregressors}}
-
-In some cases, the regressors may depend on the considered alternative (\(0\) or \(1\)). For instance:
-
-\begin{itemize}
-\item
-  When modeling the decision to participate in the labour force (or not), the wage depends on the alternative. It cannot be included among the regressors given it is not observed if the considered agent has decided not to work.
-\item
-  In the context of the choice of transportation mode, the \emph{time cost} depends on the considered transportation mode.
-\end{itemize}
-
-In terms of utility, we then have:
-\[
-V_{i,j} = {\theta^{(u)}_{j}}'\mathbf{u}_{i,j} + {\theta^{(v)}_{j}}'\mathbf{v}_{i},
-\]
-where the \(\mathbf{u}_{i,j}\)s are regressors associated with agent \(i\), but taking different values for the different choices (\(j=0\) or \(j=1\)).
-
-In that case, Eq. \eqref{eq:utility} becomes:
-\begin{equation}
-\mathbb{P}(y_i = 1|\mathbf{x}_i;\boldsymbol\theta)  = F\left({\theta^{(u)}_{1}}'\mathbf{u}_{i,1}-{\theta^{(u)}_{0}}'\mathbf{u}_{i,0}+[\boldsymbol\theta_1^{(v)}-\boldsymbol\theta_0^{(v)}]'\mathbf{v}_i\right),\label{eq:utility2}
-\end{equation}
-and, if \(\theta^{(u)}_{1}=\theta^{(u)}_{0}=\theta^{(u)}\) --as is customary-- we get:
-\begin{equation}
-\mathbb{P}(y_i = 1|\mathbf{x}_i;\boldsymbol\theta)  = F\left({\theta^{(u)}_{1}}'(\mathbf{u}_{i,1}-\mathbf{u}_{i,0})+[\boldsymbol\theta_1^{(v)}-\boldsymbol\theta_0^{(v)}]'\mathbf{v}_i\right).\label{eq:utility3}
-\end{equation}
-
-The fishing-mode dataset used in \citet{Cameron_Trivedi_2005} (Chapter 14 and 15) contains alternative-specific variables. Specifically, for each individual, the price and catch rate depend on the fishing model. In the table reported below, lines \texttt{price} and \texttt{catch} correspond to the prices and catch rates associated with the chosen alternative.
+\citet{Stargazer}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(Ecdat)}
-\FunctionTok{data}\NormalTok{(Fishing)}
-\NormalTok{stargazer}\SpecialCharTok{::}\FunctionTok{stargazer}\NormalTok{(Fishing,}\AttributeTok{type=}\StringTok{"text"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(VAR.etp)}
+\FunctionTok{library}\NormalTok{(vars) }\CommentTok{\#standard VAR models}
+\FunctionTok{data}\NormalTok{(dat) }\CommentTok{\# part of VAR.etp package}
+\NormalTok{a }\OtherTok{\textless{}{-}} \FunctionTok{VAR.Boot}\NormalTok{(dat,}\AttributeTok{p=}\DecValTok{2}\NormalTok{,}\AttributeTok{nb=}\DecValTok{200}\NormalTok{,}\AttributeTok{type=}\StringTok{"const"}\NormalTok{)}
+\NormalTok{b }\OtherTok{\textless{}{-}} \FunctionTok{VAR}\NormalTok{(dat,}\AttributeTok{p=}\DecValTok{2}\NormalTok{)}
+\FunctionTok{rbind}\NormalTok{(a}\SpecialCharTok{$}\NormalTok{coef[}\DecValTok{1}\NormalTok{,],(a}\SpecialCharTok{$}\NormalTok{coef}\SpecialCharTok{+}\NormalTok{a}\SpecialCharTok{$}\NormalTok{Bias)[}\DecValTok{1}\NormalTok{,],b}\SpecialCharTok{$}\NormalTok{varresult}\SpecialCharTok{$}\NormalTok{inv}\SpecialCharTok{$}\NormalTok{coefficients)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## 
-## ======================================================
-## Statistic   N     Mean    St. Dev.    Min      Max    
-## ------------------------------------------------------
-## price     1,182  52.082    53.830    1.290   666.110  
-## catch     1,182   0.389     0.561   0.0002    2.310   
-## pbeach    1,182  103.422   103.641   1.290   843.186  
-## ppier     1,182  103.422   103.641   1.290   843.186  
-## pboat     1,182  55.257    62.713    2.290   666.110  
-## pcharter  1,182  84.379    63.545   27.290   691.110  
-## cbeach    1,182   0.241     0.191    0.068    0.533   
-## cpier     1,182   0.162     0.160    0.001    0.452   
-## cboat     1,182   0.171     0.210   0.0002    0.737   
-## ccharter  1,182   0.629     0.706    0.002    2.310   
-## income    1,182 4,099.337 2,461.964 416.667 12,500.000
-## ------------------------------------------------------
+##         inv(-1)   inc(-1)  con(-1)    inv(-2)   inc(-2)   con(-2)       const
+## [1,] -0.3177971 0.1318571 1.016190 -0.1310161 0.1495442 0.9587964 -0.01935124
+## [2,] -0.3196310 0.1459888 0.961219 -0.1605511 0.1146050 0.9343938 -0.01672199
+## [3,] -0.3196310 0.1459888 0.961219 -0.1605511 0.1146050 0.9343938 -0.01672199
 \end{verbatim}
 
-\hypertarget{estimation}{%
-\subsection{Estimation}\label{estimation}}
+VARs are widely used in macroeconomic analysis. While simple and easy to estimate, they make it possible to conveniently capture the dynamics of complex multivariate systems. VAR popularity is notably due to \citet{Sims_1980}'s influential work. In economics, VAR models are often employed in order to identify \emph{structural} shocks. First, we will present VAR models. Second, we will study its \emph{structural} extension (SVAR models).
 
-These models can be estimated by Maximum Likelihood approaches (see Section \ref{secMLE}).
-
-To simplify the exposition, we consider the \(\mathbf{x}_i\) to be deterministic. Also, we assume that the r.v. are independent across entities \(i\). How to write the likelihood here? It can be seen that:
+\begin{definition}[(S)VAR model]
+\protect\hypertarget{def:SVAR}{}\label{def:SVAR}Let \(y_{t}\) denote a \(n \times1\) vector of random variables. Process \(y_{t}\) follows a \(p^{th}\)-order VAR if, for all \(t\), we have
 \begin{eqnarray}
-f(y_i|\mathbf{x}_i;\boldsymbol\theta) &=& y_i g(\boldsymbol\theta'\mathbf{x}_i) + (1-y_i) (1-g(\boldsymbol\theta'\mathbf{x}_i)) \nonumber \\
-&=&  g(\boldsymbol\theta'\mathbf{x}_i)^{y_i}(1-g(\boldsymbol\theta'\mathbf{x}_i))^{1-y_i}.
+\begin{array}{rllll}
+VAR:& y_t &=& c + \Phi_1 y_{t-1} + \dots + \Phi_p y_{t-p} + \varepsilon_t,& \varepsilon_t:\mbox{ (correlated) innovation}\\
+SVAR:& y_t &=& c + \Phi_1 y_{t-1} + \dots + \Phi_p y_{t-p} + B \eta_t,& \eta_t:\mbox{ ($\bot$) structural shock},
+\end{array}\label{eq:yVAR}
 \end{eqnarray}
+with \(\varepsilon_t = B\eta_t\). We assume that \(\{\eta_{t}\}\) is a white noise sequence whose components are are mutually and serially independent.
+\end{definition}
 
-Therefore, if the observations \((\mathbf{x}_i,y_i)\) are independent across entities \(i\), then:
-\[
-\log \mathcal{L}(\boldsymbol\theta;\mathbf{y},\mathbf{X}) = \sum_{i=1}^{n}y_i \log[g(\boldsymbol\theta'\mathbf{x}_i)] + (1-y_i)\log[1-g(\boldsymbol\theta'\mathbf{x}_i)].
-\]
+The first line of Eq. \eqref{eq:yVAR} corresponds to the \textbf{reduced-form} of the VAR model (\textbf{structural form} for the second line).
 
-The likelihood equation reads (FOC of the optimization program, see Def. \ref{def:likFunction}):
+Eq. \eqref{eq:yVAR} can also be written:
 \[
-\dfrac{\partial \log \mathcal{L}(\boldsymbol\theta;\mathbf{y},\mathbf{X})}{\partial \boldsymbol\theta} = \mathbf{0},
+y_{t}=c+\Phi(L)y_{t-1}+\varepsilon_{t},
 \]
-that is:
-\[
-\sum_{i=1}^{n} y_i \mathbf{x}_i\frac{g'(\boldsymbol\theta'\mathbf{x}_i)}{g(\boldsymbol\theta'\mathbf{x}_i)} - (1-y_i) \mathbf{x}_i \frac{g'(\boldsymbol\theta'\mathbf{x}_i)}{1-g(\boldsymbol\theta'\mathbf{x}_i)} = \mathbf{0}.
-\]
+with \(\Phi(L) = \Phi_1 + \Phi_2 L + \dots + \Phi_p L^{p-1}\).
 
-This is a nonlinear equation that generally has to be numerically solved. Under regularity conditions (Hypotheses \ref{hyp:MLEregularity}), we have (Prop. \ref{prp:MLEproperties}):
+Consequently:
 \[
-\boldsymbol\theta_{MLE} \sim \mathcal{N}(\boldsymbol\theta_0,\mathbf{I}(\boldsymbol\theta_0)^{-1}),
-\]
-where
-\[
-\mathbf{I}(\boldsymbol\theta_0) = - \mathbb{E}_0 \left( \frac{\partial^2 \log \mathcal{L}(\theta;\mathbf{y},\mathbf{X})}{\partial \boldsymbol\theta \partial \boldsymbol\theta'}\right) = n \mathcal{I}_Y(\boldsymbol\theta_0).
+y_{t}\mid y_{t-1},y_{t-2},\ldots,y_{-p+1}\sim \mathcal{N}(c+\Phi_{1}y_{t-1}+\ldots\Phi_{p}y_{t-p},\Omega).
 \]
 
-For finite samples, we can e.g.~approximate \(\mathbf{I}(\boldsymbol\theta_0)^{-1}\) by (Eq. \eqref{eq:III1}):
-\[
-\mathbf{I}(\boldsymbol\theta_0)^{-1} \approx -\left(\frac{\partial^2 \log \mathcal{L}(\boldsymbol\theta_{MLE};\mathbf{y},\mathbf{X})}{\partial \boldsymbol\theta \partial \boldsymbol\theta'}\right)^{-1}.
-\]
+Using \citet{Hamilton_1994}'s notations, denote with \(\Pi\) the matrix \(\left[\begin{array}{ccccc} c & \Phi_{1} & \Phi_{2} & \ldots & \Phi_{p}\end{array}\right]'\) and with \(x_{t}\) the vector \(\left[\begin{array}{ccccc} 1 & y'_{t-1} & y'_{t-2} & \ldots & y'_{t-p}\end{array}\right]'\), we have:
+\begin{equation}
+y_{t}= \Pi'x_{t} + \varepsilon_{t}. \label{eq:PIVAR}
+\end{equation}
+The previous representation is convenient to discuss the estimation of the VAR model, as parameters are gathered in two matrices only: \(\Pi\) and \(\Omega\).
 
-In the Probit case (see Table \ref{tab:foo}), it can be shown that we have:
+\hypertarget{var-estimation}{%
+\subsection{VAR estimation}\label{var-estimation}}
+
+Let us start with the case where the shocks are Gaussian.
+
+\begin{proposition}[MLE of a Gaussian VAR]
+\protect\hypertarget{prp:estimVARGaussian}{}\label{prp:estimVARGaussian}If \(y_t\) follows a VAR(p) (see Definition \ref{def:SVAR}), and if \(\varepsilon_t \sim \,i.i.d.\,\mathcal{N}(0,\Omega)\), then the ML estimate of \(\Pi\), denoted by \(\hat{\Pi}\) (see Eq. \eqref{eq:PIVAR}), is given by
+\begin{equation}
+\hat{\Pi}=\left[\sum_{t=1}^{T}x_{t}x'_{t}\right]^{-1}\left[\sum_{t=1}^{T}y_{t}'x_{t}\right]= (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y},\label{eq:Pi}
+\end{equation}
+where \(\mathbf{X}\) is the \(T \times (np)\) matrix whose \(t^{th}\) row is \(x_t\) and where \(\mathbf{y}\) is the \(T \times n\) matrix whose \(t^{th}\) row is \(y_{t}'\).
+
+That is, the \(i^{th}\) column of \(\hat{\Pi}\) (\(b_i\), say) is the OLS estimate of \(\beta_i\), where:
+\begin{equation}
+y_{i,t} = \beta_i'x_t + \varepsilon_{i,t},\label{eq:betayx}
+\end{equation}
+(i.e., \(\beta_i' = [c_i,\phi_{i,1}',\dots,\phi_{i,p}']'\)).
+
+The ML estimate of \(\Omega\), denoted by \(\hat{\Omega}\), coincides with the sample covariance matrix of the \(n\) series of the OLS residuals in Eq. \eqref{eq:betayx}, i.e.:
+\begin{equation}
+\hat{\Omega} = \frac{1}{T} \sum_{i=1}^T \hat{\varepsilon}_t\hat{\varepsilon}_t',\quad\mbox{with } \hat{\varepsilon}_t= y_t - \hat{\Pi}'x_t.
+\end{equation}
+
+The asymptotic distributions of these estimators are the ones resulting from standard OLS formula.
+\end{proposition}
+
+\begin{proof}
+See Appendix \ref{estimVARGaussian}.
+\end{proof}
+
+As stated by Proposition \ref{OLSVAR}, when the shocks are not Gaussian, then the OLS regressions still provide consistent estimates of the model parameters. However, since \(x_t\) correlates to \(\varepsilon_s\) for \(s<t\), the OLS estimator \(\mathbf{b}_i\) of \(\boldsymbol\beta_i\) is biased in small sample. (That is also the case for the ML estimator.)
+
+Indeed, denoting by \(\boldsymbol\varepsilon_i\) the \(T \times 1\) vector of \(\varepsilon_{i,t}\)'s, and using the notations of \(b_i\) and \(\beta_i\) introduced in Proposition \ref{prp:estimVARGaussian}, we have:
+\begin{equation}
+\mathbf{b}_i = \beta_i + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol\varepsilon_i.\label{eq:olsar1}
+\end{equation}
+We have non-zero correlation between \(x_t\) and \(\varepsilon_{i,s}\) for \(s<t\) and, therefore, \(\mathbb{E}[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol\varepsilon_i] \ne 0\).
+
+However, when \(y_t\) is covariance stationary, then \(\frac{1}{n}\mathbf{X}'\mathbf{X}\) converges to a positive definite matrix \(\mathbf{Q}\), and \(\frac{1}{n}X'\boldsymbol\varepsilon_i\) converges to 0. Hence \(\mathbf{b}_i \overset{p}{\rightarrow} \beta_i\). More precisely:
+
+\begin{proposition}[Asymptotic distribution of the OLS estimate of $\beta_i$]
+\protect\hypertarget{prp:OLSVAR}{}\label{prp:OLSVAR}If \(y_t\) follows a VAR model, as defined in Definition \ref{def:SVAR}, we have:
+\[
+\sqrt{T}(\mathbf{b}_i-\beta_i) =  \underbrace{\left[\frac{1}{T}\sum_{t=p}^T x_t x_t' \right]^{-1}}_{\overset{p}{\rightarrow} \mathbf{Q}^{-1}}
+\underbrace{\sqrt{T} \left[\frac{1}{T}\sum_{t=1}^T x_t\varepsilon_{i,t} \right]}_{\overset{d}{\rightarrow} \mathcal{N}(0,\sigma_i^2\mathbf{Q})},
+\]
+where \(\sigma_i = \mathbb{V}ar(\varepsilon_{i,t})\) and where \(\mathbf{Q} = \mbox{plim }\frac{1}{T}\sum_{t=p}^T x_t x_t'\) is given by:
+\begin{equation}
+\mathbf{Q} = \left[
+\begin{array}{ccccc}
+1 & \mu' &\mu' & \dots & \mu' \\
+\mu & \gamma_0 + \mu\mu' & \gamma_1 + \mu\mu' & \dots & \gamma_{p-1} + \mu\mu'\\
+\mu & \gamma_1 + \mu\mu' & \gamma_0 + \mu\mu' & \dots & \gamma_{p-2} + \mu\mu'\\
+\vdots &\vdots &\vdots &\dots &\vdots \\
+\mu & \gamma_{p-1} + \mu\mu' & \gamma_{p-2} + \mu\mu' & \dots & \gamma_{0} + \mu\mu'
+\end{array}
+\right].\label{eq:Qols}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+See Appendix \ref{OLSVAR}.
+\end{proof}
+
+The following proposition extends the previous proposition and includes covariances between different \(\beta_i\)'s as well as the asymptotic distribution of the ML estimates of \(\Omega\).
+
+\begin{proposition}[Asymptotic distribution of the OLS estimates]
+\protect\hypertarget{prp:OLSVAR2}{}\label{prp:OLSVAR2}If \(y_t\) follows a VAR model, as defined in Definition \ref{def:SVAR}, we have:
+\begin{equation}
+\sqrt{T}\left[
+\begin{array}{c}
+vec(\hat\Pi - \Pi)\\
+vec(\hat\Omega - \Omega)
+\end{array}
+\right]
+\sim \mathcal{N}\left(0,
+\left[
+\begin{array}{cc}
+\Omega \otimes \mathbf{Q}^{-1} & 0\\
+0 & \Sigma_{22}
+\end{array}
+\right]\right),\label{eq:asymptPi}
+\end{equation}
+where the component of \(\Sigma_{22}\) corresponding to the covariance between \(\hat\sigma_{i,j}\) and \(\hat\sigma_{k,l}\) (for \(i,j,l,m \in \{1,\dots,n\}^4\)) is equal to \(\sigma_{i,l}\sigma_{j,m}+\sigma_{i,m}\sigma_{j,l}\).
+\end{proposition}
+
+\begin{proof}
+See \citet{Hamilton_1994}, Appendix of Chapter 11.
+\end{proof}
+
+Naturally, in practice, \(\Omega\) is replaced by \(\hat{\Omega}\), \(Q\) is replaced with \(\hat{\mathbf{Q}} = \frac{1}{T}\sum_{t=p}^T x_t x_t'\) and \(\Sigma\) with the matrix whose components are of the form \(\hat\sigma_{i,l}\hat\sigma_{j,m}+\hat\sigma_{i,m}\hat\sigma_{j,l}\), where the \(\hat\sigma_{i,l}\)'s are the components of \(\hat\Omega\).
+
+The simplicity of the VAR framework and the tractability of its MLE open the way to convenient econometric testing. Let's illustrate this with the likelihood ratio test. The maximum value achieved by the MLE is
+\[
+\log\mathcal{L}(Y_{T};\hat{\Pi},\hat{\Omega}) = -\frac{Tn}{2}\log(2\pi)+\frac{T}{2}\log\left|\hat{\Omega}^{-1}\right| -\frac{1}{2}\sum_{t=1}^{T}\left[\hat{\varepsilon}_{t}'\hat{\Omega}^{-1}\hat{\varepsilon}_{t}\right].
+\]
+The last term is:
 \begin{eqnarray*}
-&&\frac{\partial^2 \log \mathcal{L}(\boldsymbol\theta;\mathbf{y},\mathbf{X})}{\partial \boldsymbol\theta \partial \boldsymbol\theta'} = - \sum_{i=1}^{n} g'(\boldsymbol\theta'\mathbf{x}_i) [\mathbf{x}_i \mathbf{x}_i'] \times \\
-&&\left[y_i \frac{g'(\boldsymbol\theta'\mathbf{x}_i) + \boldsymbol\theta'\mathbf{x}_ig(\boldsymbol\theta'\mathbf{x}_i)}{g(\boldsymbol\theta'\mathbf{x}_i)^2} + (1-y_i) \frac{g'(\boldsymbol\theta'\mathbf{x}_i) - \boldsymbol\theta'\mathbf{x}_i (1 - g(\boldsymbol\theta'\mathbf{x}_i))}{(1-g(\boldsymbol\theta'\mathbf{x}_i))^2}\right].
+\sum_{t=1}^{T}\hat{\varepsilon}_{t}'\hat{\Omega}^{-1}\hat{\varepsilon}_{t} &=& \mbox{Tr}\left[\sum_{t=1}^{T}\hat{\varepsilon}_{t}'\hat{\Omega}^{-1}\hat{\varepsilon}_{t}\right] = \mbox{Tr}\left[\sum_{t=1}^{T}\hat{\Omega}^{-1}\hat{\varepsilon}_{t}\hat{\varepsilon}_{t}'\right]\\
+&=&\mbox{Tr}\left[\hat{\Omega}^{-1}\sum_{t=1}^{T}\hat{\varepsilon}_{t}\hat{\varepsilon}_{t}'\right] = \mbox{Tr}\left[\hat{\Omega}^{-1}\left(T\hat{\Omega}\right)\right]=Tn.
+\end{eqnarray*}
+Therefore, the optimized log-likelihood is simply obtained by:
+\begin{equation}
+\log\mathcal{L}(Y_{T};\hat{\Pi},\hat{\Omega})=-(Tn/2)\log(2\pi)+(T/2)\log\left|\hat{\Omega}^{-1}\right|-Tn/2.\label{eq:optimzedLogL}
+\end{equation}
+
+Assume that we want to test the null hypothesis that a set of variables follows a VAR(\(p_{0}\)) against the alternative
+specification of \(p_{1}\) (\(>p_{0}\)).
+
+Let us denote by \(\hat{L}_{0}\) and \(\hat{L}_{1}\) the maximum log-likelihoods obtained with \(p_{0}\) and \(p_{1}\) lags, respectively.
+
+Under the null hypothesis (\(H_0\): \(p=p_0\)), we have:
+\begin{eqnarray*}
+2\left(\hat{L}_{1}-\hat{L}_{0}\right)&=&T\left(\log\left|\hat{\Omega}_{1}^{-1}\right|-\log\left|\hat{\Omega}_{0}^{-1}\right|\right)  \sim \chi^2(n^{2}(p_{1}-p_{0})).
 \end{eqnarray*}
 
-In the Logit case (see Table \ref{tab:foo}), it can be shown that we have:
+\textbf{Block exogeneity}
+
+Let's decompose \(y_t\) into two subvectors \(y^{(1)}_{t}\) (\(n_1 \times 1\)) and \(y^{(2)}_{t}\) (\(n_2 \times 1\)), with \(y_t' = [{y^{(1)}_{t}}',{y^{(2)}_{t}}']\) (and therefore \(n=n_1 +n_2\)), such that:
 \[
-\frac{\partial^2 \log \mathcal{L}(\boldsymbol\theta;\mathbf{y},\mathbf{X})}{\partial \boldsymbol\theta \partial \boldsymbol\theta'} = - \sum_{i=1}^{n} g'(\boldsymbol\theta'\mathbf{x}_i) \mathbf{x}_i\mathbf{x}_i',
+\left[
+\begin{array}{c}
+y^{(1)}_{t}\\
+y^{(2)}_{t}
+\end{array}
+\right] = \left[
+\begin{array}{cc}
+\Phi^{(1,1)} & \Phi^{(1,2)}\\
+\Phi^{(2,1)} & \Phi^{(2,2)}
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+y^{(1)}_{t-1}\\
+y^{(2)}_{t-1}
+\end{array}
+\right] + \varepsilon_t.
 \]
-where \(g'(x)=\dfrac{\exp(-x)}{(1 + \exp(-x))^2}\).
+One can easily test for block exogeneity of \(y_t^{(2)}\) (say). The null assumption ca n be expressed as \(\Phi^{(2,1)}=0\) and \(\Sigma^{(2,1)}=0\).
 
-Since \(g'(x)>0\), it can be checked that \(-\partial^2 \log \mathcal{L}(\boldsymbol\theta;\mathbf{y},\mathbf{X})/\partial \boldsymbol\theta \partial \boldsymbol\theta'\) is positive definite.
+\textbf{Lag selection}
 
-\hypertarget{marginal-effectss}{%
-\subsection{Marginal effectss}\label{marginal-effectss}}
+In a VAR, adding lags consumes numerous degrees of freedom: with \(p\) lags, each of the \(n\) equations in the VAR contains \(n\times p\) coefficients plus the intercept term.
 
-How to measure marginal effects, i.e.~the effect on the probability that \(y_i=1\) of a marginal increase of \(x_{i,k}\)? This object is given by:
+Adding lags improve in-sample fit, but is likely to result in over-parameterization and affect the \{\color{blue}out-of-sample\} prediction performance.
+
+To select appropriate lag length, so-called \textbf{selection criteria} can be used (see Definition \ref{def:infocriteria}). These criteria have to be minimized. That is, the best specification is the one giving the lowest criteria.
+
+In the context of VAR models, using Eq. \eqref{eq:optimzedLogL}, we have:
+\begin{eqnarray*}
+AIC & = & cst + \log\left|\hat{\Omega}\right|+\frac{2}{T}N\\
+BIC & = & cst + \log\left|\hat{\Omega}\right|+\frac{\log T}{T}N,
+\end{eqnarray*}
+where \(N=p \times n^{2}\).
+
+\textbf{Companion Form and Stability of a VAR process}
+
+Let us introduce vector \(y_{t}^{*}\), whihc stacks the last \(p\) values of \(y_t\):
 \[
-\frac{\partial \mathbb{P}(y_i=1|\mathbf{x_i};\boldsymbol\theta)}{\partial x_{i,k}} = \underbrace{g'(\boldsymbol\theta'\mathbf{x}_i)}_{>0}\theta_k,
+y_{t}^{*}=\left[\begin{array}{cccc}
+y'_{t} & y'_{t-1} & \ldots & y'_{t-p+1}\end{array}\right]^{'},
 \]
-which is of the same sign as \(\theta_k\).
+Eq. \eqref{eq:yVAR} can then be rewritten in its companion form:
+\begin{equation}
+y_{t}^{*} =
+\underbrace{\left[\begin{array}{c}
+c\\
+0\\
+\vdots\\
+0\end{array}\right]}_{=c^*}+
+\underbrace{\left[\begin{array}{cccc}
+\Phi_{1} & \Phi_{2} & \cdots & \Phi_{p}\\
+I & 0 & \cdots & 0\\
+0 & \ddots & 0 & 0\\
+0 & 0 & I & 0\end{array}\right]}_{=\Phi}
+y_{t-1}^{*}+
+\underbrace{\left[\begin{array}{c}
+\varepsilon_{t}\\
+0\\
+\vdots\\
+0\end{array}\right]}_{\varepsilon_t^*}\label{eq:ystarVAR}
+\end{equation}
 
-It can be estimated by \(g'(\boldsymbol\theta_{MLE}'\mathbf{x}_i)\theta_{MLE,k}\). It is important to see that the marginal effect depends on \(\mathbf{x}_i\): increases by 1 unit of \(x_{i,k}\) (entity \(i\)) and of \(x_{j,k}\) (entity \(j\)) do not necessarily have the same effects on \(\mathbb{P}(y_i=1|\mathbf{x_i};\boldsymbol\theta)\) and on \(\mathbb{P}(y_j=1|\mathbf{x_j};\boldsymbol\theta)\), respectively.
+Matrices \(\Phi\) and \(\Sigma^* = \mathbb{V}ar(\varepsilon_t^*)\) are of dimension \(np \times np\). \(\Sigma^*\) is filled with zeros, except the \(n\times n\) upper-left block that is equal to \(\Sigma = \mathbb{V}ar(\varepsilon_t)\).
 
-To address this issue, one can compute some measures of ``average'' marginal effect. There are two main solutions. For each explanatory variable \(k\):
+We then have:
+\begin{eqnarray*}
+y_{t}^{*} & = & c^{*}+\Phi\left(c^{*}+\Phi y_{t-2}^{*}+\varepsilon_{t-1}^{*}\right)+\varepsilon_{t}^{*} \nonumber \\
+& = & c^{*}+\varepsilon_{t}^{*}+\Phi(c^{*}+\varepsilon_{t-1}^{*})+\ldots+\Phi^{k}(c^{*}+\varepsilon_{t-k}^{*})+\Phi^k y_{t-k}^{*}.
+\end{eqnarray*}
+
+If the eigenvalues of \(\Phi\) are strictly within the unit circle, then \(\Phi^k\) geometrically decays to the zero matrix and we get the following Wold decomposition for \(y_t\):
+\begin{eqnarray}
+y_{t}^{*}  & = & c^{*}+\varepsilon_{t}^{*}+\Phi(c^{*}+\varepsilon_{t-1}^{*})+\ldots+\Phi^{k}(c^{*}+\varepsilon_{t-k}^{*})+\ldots \nonumber \\
+& = & \mu^{*} +\varepsilon_{t}^{*}+\Phi\varepsilon_{t-1}^{*}+\ldots+\Phi^{k}\varepsilon_{t-k}^{*}+\ldots,\label{eq:VARstar}
+\end{eqnarray}
+where \(\mu^* = (I - \Phi)^{-1} c^*\).
+
+(It can also be seen that \(\mu^{*} = [\mu',\dots,\mu']'\), where \(\mu = (I - \Phi_1 - \dots - \Phi_p)^{-1}c\)).
+
+The unconditional variance of \(y_t\) can be derived from Eq. \eqref{eq:VARstar}, exploiting the fact that the \(\varepsilon_{t}^{*}\) are serially uncorrelated:
+\[
+\mathbb{V}ar(y_t^*)=\Omega^*+\Phi\Omega^*\Phi'+\ldots+\Phi^{k}\Omega^*\Phi'^{k}+\ldots,
+\]
+with \(\mathbb{V}ar(\varepsilon_t^*)=\Omega^*\).
+
+The unconditional variance of \(y_t\) is the upper-left \(n\times n\) block of matrix \(\mathbb{V}ar(y_t^*)\).
+
+Eq. \eqref{eq:VARstar} also implies that the \(\Psi_k\) matrices defining the IRFs (see Eq. \eqref{eq:InfMA}) are given by: \(\Psi_k = \widetilde{\Phi^k}B\), where \(\widetilde{\Phi^k}\) is the upper-left matrix block of \(\Phi^k\).
+
+\textbf{Granger Causality}
+
+\citet{Granger_1969} developed a method to explore \textbf{causal relationships} among variables. The approach consists in determining whether the past values of \(y_{1,t}\) can help explain the current \(y_{2,t}\) (beyond the information already included in the past values of \(y_{2,t}\)).
+
+Formally, let us denote three information sets:
+\begin{eqnarray*}
+\mathcal{I}_{1,t} & = & \left\{ y_{1,t},y_{1,t-1},\ldots\right\} \\
+\mathcal{I}_{2,t} & = & \left\{ y_{2,t},y_{2,t-1},\ldots\right\} \\
+\mathcal{I}_{t} & = & \left\{ y_{1,t},y_{1,t-1},\ldots y_{2,t},y_{2,t-1},\ldots\right\}.
+\end{eqnarray*}
+We say that \(y_{1,t}\) Granger-causes \(y_{2,t}\) if
+\[
+\mathbb{E}\left[y_{2,t}\mid \mathcal{I}_{2,t-1}\right]\neq \mathbb{E}\left[y_{2,t}\mid \mathcal{I}_{t-1}\right].
+\]
+
+To get the intuition behind the testing procedure, consider the following
+bivariate VAR(\(p\)) process:
+\begin{eqnarray*}
+y_{1,t} & = & c_1+\Sigma_{i=1}^{p}\Phi_i^{(11)}y_{1,t-i}+\Sigma_{i=1}^{p}\Phi_i^{(12)}y_{2,t-i}+\varepsilon_{1,t}\\
+y_{2,t} & = & c_2+\Sigma_{i=1}^{p}\Phi_i^{(21)}y_{1,t-i}+\Sigma_{i=1}^{p}\Phi_i^{(22)}y_{2,t-i}+\varepsilon_{2,t},
+\end{eqnarray*}
+where \(\Phi_k^{(ij)}\) denotes the element \((i,j)\) of \(\Phi_k\).
+
+Then, \(y_{1,t}\) is said not to Granger-cause \(y_{2,t}\) if
+\[
+\Phi_1^{(21)}=\Phi_2^{(21)}=\ldots=\Phi_p^{(21)}=0.
+\]
+Therefore the hypothesis testing is
+\[
+\begin{cases}
+H_{0}: & \Phi_1^{(21)}=\Phi_2^{(21)}=\ldots=\Phi_p^{(21)}=0\\
+H_{1}: & \Phi_1^{(21)}\neq0\mbox{ or }\Phi_2^{(21)}\neq0\mbox{ or}\ldots\Phi_p^{(21)}\neq0.\end{cases}
+\]
+Loosely speaking, we reject \(H_{0}\) if some of the coefficients on the lagged \(y_{1,t}\)'s are statistically significant. Formally, this can be tested using the \(F\)-test or asymptotic chi-square test. The \(F\)-statistic is
+\[
+F=\frac{(RSS-USS)/p}{USS/(T-2p-1)},
+\]
+where RSS is the Restricted sum of squared residuals and USS is the Unrestricted sum of squared residuals. Under \(H_{0}\), the \(F\)-statistic is distributed as \(\mathcal{F}(p,T-2p-1)\).
+
+Note that \(pF\underset{T \rightarrow \infty}{\rightarrow}\chi^{2}(p)\). Therefore, for large samples and under \(H_0\):
+\[
+F \sim \chi^{2}(p)/p.
+\]
+
+\textbf{Factor-Augmented VAR (FAVAR)}
+
+VAR models are subject to the curse of dimensionality: If \(n\), is large, then the number of parameters (in \(n^2\)) explodes.
+
+In the case where one suspects that the \(y_{i,t}\)'s are mainly driven by a small number of random sources, a \textbf{factor structure} may be imposed (\citet{Bernanke_Boivin_Eliasz_2005}).
+
+Let us denote by \(f_t\) a \(k\)-dimensional vector of latent factors accounting for important shares of the variances of the \(y_{i,t}\)'s (with \(k \ll n\)) and by \(x_t\) is a small \(q\)-dimensional subset of \(y_t\) (with \(q \ll n\)). The following factor structure is posited:
+\[
+y_t = \Lambda^f f_t + \Lambda^x x_t + e_t,
+\]
+where the \(e_t\) are ``small'\,' serially and mutually i.i.d. error terms.
+
+The model is complemented by positing a VAR dynamics for \([f_t',x_t']'\):
+\begin{equation}
+\left[\begin{array}{c}f_t\\x_t\end{array}\right] = \Phi(L)\left[\begin{array}{c}f_{t-1}\\x_{t-1}\end{array}\right] + v_t.\label{eq:FAVAR}
+\end{equation}
+
+\(f_t\) e.g.~\(\equiv\) the first \(k\) principal components of \(y_t\).
+
+Standard identification techniques of structural shocks can be employed in Eq. \eqref{eq:FAVAR}: Cholesky approach can be used for instance if the last component of \(x_t\) is the short-term interest rate and if it is assumed that a MP shock has no contemporaneous impact on other macro-variables (in \(y_t\)).
+
+\hypertarget{identification-problem-and-standard-identification-techniques}{%
+\section{Identification Problem and Standard Identification Techniques}\label{identification-problem-and-standard-identification-techniques}}
+
+\textbf{The Identification Issue}*
+
+In the previous section, we have seen how to estimate \(\Omega\) and the \(\Phi_k\) matrices in the context of a VAR model. But the IRFs are functions of \(B\) and the \(\Phi_k\)'s, not of \(\Omega\) the \(\Phi_k\)'s. We have \(\Omega = BB'\), but this is not sufficient to recover \(B\).
+
+Indeed, seen a system of equations whose unknowns are the \(b_{i,j}\)'s (components of \(B\)), the system \(\Omega = BB'\) contains only \(n(n+1)/2\) linearly independent equations. Example for \(n=2\):
+\begin{eqnarray*}
+&&\left[
+\begin{array}{cc}
+\omega_{11} & \omega_{12} \\
+\omega_{12} & \omega_{22}
+\end{array}
+\right] = \left[
+\begin{array}{cc}
+b_{11} & b_{12} \\
+b_{21} & b_{22}
+\end{array}
+\right]\left[
+\begin{array}{cc}
+b_{11} & b_{21} \\
+b_{12} & b_{22}
+\end{array}
+\right]\\
+&\Leftrightarrow&\left[
+\begin{array}{cc}
+\omega_{11} & \omega_{12} \\
+\omega_{12} & \omega_{22}
+\end{array}
+\right] = \left[
+\begin{array}{cc}
+b_{11}^2+b_{12}^2 & {\color{red}b_{11}b_{21}+b_{12}b_{22}} \\
+{\color{red}b_{11}b_{21}+b_{12}b_{22}} & b_{22}^2 + b_{21}^2
+\end{array}
+\right].
+\end{eqnarray*}
+
+We have 3 linearly independent equations but 4 unknowns. Therefore, \(B\) is not identified based on second-order moments. Additional restrictions are required to identify \(B\).
+
+This section covers two standard identification schemes: \textbf{short-run} and \textbf{long-run} restrictions:
 
 \begin{enumerate}
-\def\labelenumi{\roman{enumi}.}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
-  Denoting by \(\hat{\mathbf{x}}\) the sample average of the \(\mathbf{x}_i\)s, compute \(g'(\boldsymbol\theta_{MLE}'\hat{\mathbf{x}})\theta_{MLE,k}\).
-\item
-  Compute the average (across \(i\)) of \(g'(\boldsymbol\theta_{MLE}'\mathbf{x}_i)\theta_{MLE,k}\).
+  a \textbf{short-run restriction (SRR)} prevents a structural shock from affecting an endogenous variable contemporaneously.
 \end{enumerate}
-
-\hypertarget{goodness-of-fit}{%
-\subsection{Goodness of fit}\label{goodness-of-fit}}
-
-There is no obvious version of ``\(R^2\)'' for binary-choice models. Existing measures are called \textbf{pseudo-\(R^2\)\} measures}.
-
-Denoting by \(\log \mathcal{L}_0(\mathbf{y})\) the (maximum) log-likelihood that would be obtained for a model containing only a constant term (i.e.~with \(\mathbf{x}_i = 1\) for all \(i\)), the \textbf{McFadden's pseudo-\(R^2\)} is given by:
-\[
-R^2_{MF} = 1 - \frac{\log \mathcal{L}(\boldsymbol\theta;\mathbf{y})}{\log \mathcal{L}_0(\mathbf{y})}.
-\]
-Intuitively, \(R^2_{MF}=0\) if the explanatory variables do not allow to predict the decision (\(y\)).
-
-\hypertarget{example-credit-data}{%
-\subsection{Example: Credit data}\label{example-credit-data}}
-
-This example makes use of the \texttt{credit} data of package \texttt{AEC}. The objective is to model the default probabilities of lenders.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(AEC)}
-\NormalTok{credit}\SpecialCharTok{$}\NormalTok{Default }\OtherTok{\textless{}{-}} \DecValTok{0}
-\NormalTok{credit}\SpecialCharTok{$}\NormalTok{Default[credit}\SpecialCharTok{$}\NormalTok{loan\_status }\SpecialCharTok{==} \StringTok{"Charged Off"}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{1}
-\NormalTok{credit}\SpecialCharTok{$}\NormalTok{Default[credit}\SpecialCharTok{$}\NormalTok{loan\_status }\SpecialCharTok{==} \StringTok{"Does not meet the credit policy. Status:Charged Off"}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{1}
-\NormalTok{credit}\SpecialCharTok{$}\NormalTok{amt2income }\OtherTok{\textless{}{-}}\NormalTok{ credit}\SpecialCharTok{$}\NormalTok{loan\_amnt}\SpecialCharTok{/}\NormalTok{credit}\SpecialCharTok{$}\NormalTok{annual\_inc}
-\FunctionTok{plot}\NormalTok{(}\FunctionTok{as.factor}\NormalTok{(credit}\SpecialCharTok{$}\NormalTok{Default)}\SpecialCharTok{\textasciitilde{}}\FunctionTok{log}\NormalTok{(credit}\SpecialCharTok{$}\NormalTok{annual\_inc),}
-     \AttributeTok{ylevels=}\DecValTok{2}\SpecialCharTok{:}\DecValTok{1}\NormalTok{,}\AttributeTok{ylab=}\StringTok{"Default status"}\NormalTok{,}\AttributeTok{xlab=}\StringTok{"log(annual income)"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{AdvECTS_files/figure-latex/Probitlending-1.pdf}
-
-We consider three specifications. The first one, with no explanatory variables, is trivial. It will just be used to compute the pseudo-\(R^2\).
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{eq0 }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(Default }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}\AttributeTok{data=}\NormalTok{credit,}\AttributeTok{family=}\FunctionTok{binomial}\NormalTok{(}\AttributeTok{link=}\StringTok{"probit"}\NormalTok{))}
-\NormalTok{eq1 }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(Default }\SpecialCharTok{\textasciitilde{}} \FunctionTok{log}\NormalTok{(loan\_amnt) }\SpecialCharTok{+}\NormalTok{ amt2income }\SpecialCharTok{+}\NormalTok{ delinq\_2yrs }\SpecialCharTok{+} \FunctionTok{log}\NormalTok{(annual\_inc)}\SpecialCharTok{+} \FunctionTok{I}\NormalTok{(}\FunctionTok{log}\NormalTok{(annual\_inc)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{),}
-                 \AttributeTok{data=}\NormalTok{credit,}\AttributeTok{family=}\FunctionTok{binomial}\NormalTok{(}\AttributeTok{link=}\StringTok{"probit"}\NormalTok{))}
-\NormalTok{eq2 }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(Default }\SpecialCharTok{\textasciitilde{}}\NormalTok{ grade }\SpecialCharTok{+} \FunctionTok{log}\NormalTok{(loan\_amnt) }\SpecialCharTok{+}\NormalTok{ amt2income }\SpecialCharTok{+}\NormalTok{ delinq\_2yrs }\SpecialCharTok{+} \FunctionTok{log}\NormalTok{(annual\_inc)}\SpecialCharTok{+} \FunctionTok{I}\NormalTok{(}\FunctionTok{log}\NormalTok{(annual\_inc)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{),}
-                 \AttributeTok{data=}\NormalTok{credit,}\AttributeTok{family=}\FunctionTok{binomial}\NormalTok{(}\AttributeTok{link=}\StringTok{"probit"}\NormalTok{))}
-\NormalTok{logL0 }\OtherTok{\textless{}{-}} \FunctionTok{logLik}\NormalTok{(eq0)}
-\NormalTok{logL1 }\OtherTok{\textless{}{-}} \FunctionTok{logLik}\NormalTok{(eq1)}
-\NormalTok{logL2 }\OtherTok{\textless{}{-}} \FunctionTok{logLik}\NormalTok{(eq2)}
-\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ logL1}\SpecialCharTok{/}\NormalTok{logL0 }\CommentTok{\# pseudo R2}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 'log Lik.' 0.01173993 (df=6)
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ logL2}\SpecialCharTok{/}\NormalTok{logL0 }\CommentTok{\# pseudo R2}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 'log Lik.' 0.0558487 (df=12)
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{stargazer}\SpecialCharTok{::}\FunctionTok{stargazer}\NormalTok{(eq0,eq1,eq2,}\AttributeTok{type=}\StringTok{"text"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## ====================================================
-##                           Dependent variable:       
-##                     --------------------------------
-##                                 Default             
-##                        (1)        (2)        (3)    
-## ----------------------------------------------------
-## gradeB                                     0.400*** 
-##                                            (0.055)  
-##                                                     
-## gradeC                                     0.587*** 
-##                                            (0.057)  
-##                                                     
-## gradeD                                     0.820*** 
-##                                            (0.061)  
-##                                                     
-## gradeE                                     0.874*** 
-##                                            (0.091)  
-##                                                     
-## gradeF                                     1.230*** 
-##                                            (0.147)  
-##                                                     
-## gradeG                                     1.439*** 
-##                                            (0.227)  
-##                                                     
-## log(loan_amnt)                  -0.149**  -0.194*** 
-##                                 (0.060)    (0.061)  
-##                                                     
-## amt2income                      1.266***   1.222*** 
-##                                 (0.383)    (0.393)  
-##                                                     
-## delinq_2yrs                     0.096***    0.009   
-##                                 (0.034)    (0.035)  
-##                                                     
-## log(annual_inc)                 -1.444**    -0.874  
-##                                 (0.569)    (0.586)  
-##                                                     
-## I(log(annual_inc)2)             0.064**     0.038   
-##                                 (0.025)    (0.026)  
-##                                                     
-## Constant            -1.231***   7.937***    4.749   
-##                      (0.017)    (3.060)    (3.154)  
-##                                                     
-## ----------------------------------------------------
-## Observations          9,156      9,156      9,156   
-## Log Likelihood      -3,157.696 -3,120.625 -2,981.343
-## Akaike Inf. Crit.   6,317.392  6,253.250  5,986.686 
-## ====================================================
-## Note:                    *p<0.1; **p<0.05; ***p<0.01
-\end{verbatim}
-
-Let us now compute marginal effects.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{mean}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(}\FunctionTok{predict}\NormalTok{(eq2)),}\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{)}\SpecialCharTok{*}\NormalTok{eq2}\SpecialCharTok{$}\NormalTok{coefficients}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##          (Intercept)               gradeB               gradeC 
-##          0.840731198          0.070747353          0.103944305 
-##               gradeD               gradeE               gradeF 
-##          0.145089219          0.154773742          0.217702041 
-##               gradeG       log(loan_amnt)           amt2income 
-##          0.254722161         -0.034289921          0.216251992 
-##          delinq_2yrs      log(annual_inc) I(log(annual_inc)^2) 
-##          0.001574178         -0.154701321          0.006813694
-\end{verbatim}
-
-There is, however, an issue for the \texttt{annual\_inc} variable. Indeed, the previous computation does not realize that this variable appears twice among the explanatory variables. To address this, one can proceed as follows.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{new\_credit }\OtherTok{\textless{}{-}}\NormalTok{ credit}
-\NormalTok{new\_credit}\SpecialCharTok{$}\NormalTok{annual\_inc }\OtherTok{\textless{}{-}} \FloatTok{1.01} \SpecialCharTok{*}\NormalTok{ new\_credit}\SpecialCharTok{$}\NormalTok{annual\_inc }\CommentTok{\# increase of income by 1\%}
-\NormalTok{bas\_predict\_eq2  }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(eq2, }\AttributeTok{newdata =}\NormalTok{ credit, }\AttributeTok{type =} \StringTok{"response"}\NormalTok{)}
-\CommentTok{\# This is equivalent to pnorm(predict(eq2, newdata = credit))}
-\NormalTok{new\_predict\_eq2  }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(eq2, }\AttributeTok{newdata =}\NormalTok{ new\_credit, }\AttributeTok{type =} \StringTok{"response"}\NormalTok{)}
-\FunctionTok{mean}\NormalTok{(new\_predict\_eq2 }\SpecialCharTok{{-}}\NormalTok{ bas\_predict\_eq2)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] -6.562126e-05
-\end{verbatim}
-
-This average effect is pretty low. To compare, let us compute the average effect associated with a unit increase in the number of delinquencies:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{new\_credit }\OtherTok{\textless{}{-}}\NormalTok{ credit}
-\NormalTok{new\_credit}\SpecialCharTok{$}\NormalTok{delinq\_2yrs }\OtherTok{\textless{}{-}}\NormalTok{ credit}\SpecialCharTok{$}\NormalTok{delinq\_2yrs }\SpecialCharTok{+} \DecValTok{1}
-\NormalTok{new\_predict\_eq2  }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(eq2, }\AttributeTok{newdata =}\NormalTok{ new\_credit, }\AttributeTok{type =} \StringTok{"response"}\NormalTok{)}
-\FunctionTok{mean}\NormalTok{(new\_predict\_eq2 }\SpecialCharTok{{-}}\NormalTok{ bas\_predict\_eq2)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.001582332
-\end{verbatim}
-
-We can employ a likelihood ratio test (see Def. \ref{def:LR}) to see if the two variables associated with annual income are jointly statistically significant (in the context of \texttt{eq1}):
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{eq1restr }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(Default }\SpecialCharTok{\textasciitilde{}} \FunctionTok{log}\NormalTok{(loan\_amnt) }\SpecialCharTok{+}\NormalTok{ amt2income }\SpecialCharTok{+}\NormalTok{ delinq\_2yrs,}
-                 \AttributeTok{data=}\NormalTok{credit,}\AttributeTok{family=}\FunctionTok{binomial}\NormalTok{(}\AttributeTok{link=}\StringTok{"probit"}\NormalTok{))}
-\NormalTok{LRstat }\OtherTok{\textless{}{-}} \DecValTok{2}\SpecialCharTok{*}\NormalTok{(logL1 }\SpecialCharTok{{-}} \FunctionTok{logLik}\NormalTok{(eq1restr))}
-\NormalTok{pvalue }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{pchisq}\NormalTok{(LRstat,}\AttributeTok{df=}\DecValTok{2}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-The computation gives a p-value of 0.0436.
-
-\hypertarget{replicating-table-14.2-of-cameron-and-trivedi-2005}{%
-\subsection{Replicating Table 14.2 of Cameron and Trivedi (2005)}\label{replicating-table-14.2-of-cameron-and-trivedi-2005}}
-
-The following lines of codes replicate Table 14.2 of \citet{Cameron_Trivedi_2005}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{data.reduced }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(Fishing,mode }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"charter"}\NormalTok{,}\StringTok{"pier"}\NormalTok{))}
-\NormalTok{data.reduced}\SpecialCharTok{$}\NormalTok{lnrelp }\OtherTok{\textless{}{-}} \FunctionTok{log}\NormalTok{(data.reduced}\SpecialCharTok{$}\NormalTok{pcharter}\SpecialCharTok{/}\NormalTok{data.reduced}\SpecialCharTok{$}\NormalTok{ppier)}
-\NormalTok{data.reduced}\SpecialCharTok{$}\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{*}\NormalTok{(data.reduced}\SpecialCharTok{$}\NormalTok{mode}\SpecialCharTok{==}\StringTok{"charter"}\NormalTok{)}
-\CommentTok{\# check first line of Table 14.1:}
-\NormalTok{price.charter.y0 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(data.reduced}\SpecialCharTok{$}\NormalTok{pcharter[data.reduced}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{==}\DecValTok{0}\NormalTok{])}
-\NormalTok{price.charter.y1 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(data.reduced}\SpecialCharTok{$}\NormalTok{pcharter[data.reduced}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{==}\DecValTok{1}\NormalTok{])}
-\NormalTok{price.charter    }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(data.reduced}\SpecialCharTok{$}\NormalTok{pcharter)}
-\CommentTok{\# Run probit regression:}
-\NormalTok{reg.probit }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ lnrelp,}
-                  \AttributeTok{data=}\NormalTok{data.reduced,}
-                  \AttributeTok{family=}\FunctionTok{binomial}\NormalTok{(}\AttributeTok{link=}\StringTok{"probit"}\NormalTok{))}
-\CommentTok{\# Run Logit regression:}
-\NormalTok{reg.logit }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ lnrelp,}
-                 \AttributeTok{data=}\NormalTok{data.reduced,}
-                 \AttributeTok{family=}\FunctionTok{binomial}\NormalTok{(}\AttributeTok{link=}\StringTok{"logit"}\NormalTok{))}
-\CommentTok{\# Run OLS regression:}
-\NormalTok{reg.OLS }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ lnrelp,}
-              \AttributeTok{data=}\NormalTok{data.reduced)}
-\CommentTok{\# Replicates Table 14.2 of Cameron and Trivedi:}
-\NormalTok{stargazer}\SpecialCharTok{::}\FunctionTok{stargazer}\NormalTok{(reg.logit, reg.probit, reg.OLS,}
-                     \AttributeTok{type=}\StringTok{"text"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## ================================================================
-##                                 Dependent variable:             
-##                     --------------------------------------------
-##                                          y                      
-##                     logistic   probit             OLS           
-##                        (1)       (2)              (3)           
-## ----------------------------------------------------------------
-## lnrelp              -1.823*** -1.056***        -0.243***        
-##                      (0.145)   (0.075)          (0.010)         
-##                                                                 
-## Constant            2.053***  1.194***          0.784***        
-##                      (0.169)   (0.088)          (0.013)         
-##                                                                 
-## ----------------------------------------------------------------
-## Observations           630       630              630           
-## R2                                               0.463          
-## Adjusted R2                                      0.462          
-## Log Likelihood      -206.827  -204.411                          
-## Akaike Inf. Crit.    417.654   412.822                          
-## Residual Std. Error                         0.330 (df = 628)    
-## F Statistic                             542.123*** (df = 1; 628)
-## ================================================================
-## Note:                                *p<0.1; **p<0.05; ***p<0.01
-\end{verbatim}
-
-\hypertarget{predictions}{%
-\subsection{Predictions}\label{predictions}}
-
-How to define predicted outcomes? As is the case for \(y_i\), predicted outcomes \(\hat{y}_i\) need to be valued in \(\{0,1\}\). A natural choice consists in considering that \(\hat{y}_i=1\) if \(\mathbb{P}(y_i=1|\mathbf{x}_i;\boldsymbol\theta) > 0.5\), i.e., in taking a cutoff of \(c=0.5\).However, we may have some models where all predicted probabilities are small, but some less than others. In this context, a model-implied probability of 10\% (say) could characterize a ``high-risk'' entity. However, using a cutoff of 50\% would not identify this level of riskiness.
-
-The \textbf{receiver operating characteristics (ROC)} curve consitutes a more general approach. It works as follows:
-
-For each potential cutoff \(c \in [0,1]\), compute (and plot):
 
 \begin{itemize}
 \tightlist
 \item
-  The fraction of \(y = 1\) values correctly classified (\emph{True Positive Rate}) against
+  Easy to implement: the appropriate entries of \(B\) are set to 0.
 \item
-  The fraction of \(y = 0\) values incorrectly specified (\emph{False Positive Rate}).
+  Particular case: \textbf{Cholesky, or recursive approach}.
+\item
+  Examples: \citet{BERNANKE198649}, \citet{Sims_1986}, \citet{Gali_1992}, \citet{RubioRamirez_et_al_2010}.
 \end{itemize}
 
-Such a curve mechanically starts at (0,0) {[}situation when \(c=1\){]} and terminates at (1,1) {[}situation when \(c=0\){]}.
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  a \textbf{long-run restriction (LRR)} prevents a structural shock from having a cumulative impact on one of the endogenous variables.
+\end{enumerate}
 
-In the case of no predictive ability (worst situation), the ROC curve is a straight line between (0,0) and (1,1).
+\begin{itemize}
+\tightlist
+\item
+  Additional computations are required to implement this. One needs to compute the cumulative effect of one of the structural shocks \(u_{t}\) on one of the endogenous variable.
+\item
+  Examples: \citet{Blanchard_Quah_1989}, \citet{Faust_Leeper_1997}, \citet{Gali_1999}, \citet{Erceg_et_al_2005}, \citet{NBERc11177}.
+\end{itemize}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(pROC)}
-\NormalTok{predict\_model }\OtherTok{\textless{}{-}} \FunctionTok{predict.glm}\NormalTok{(reg.probit,}\AttributeTok{type =} \StringTok{"response"}\NormalTok{)}
-\FunctionTok{roc}\NormalTok{(data.reduced}\SpecialCharTok{$}\NormalTok{y, predict\_model, }\AttributeTok{percent=}\NormalTok{T,}
-    \AttributeTok{boot.n=}\DecValTok{1000}\NormalTok{, }\AttributeTok{ci.alpha=}\FloatTok{0.9}\NormalTok{, }\AttributeTok{stratified=}\NormalTok{T, }\AttributeTok{plot=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{grid=}\ConstantTok{TRUE}\NormalTok{,}
-    \AttributeTok{show.thres=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{legacy.axes =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{reuse.auc =} \ConstantTok{TRUE}\NormalTok{,}
-    \AttributeTok{print.auc =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{print.thres.col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{ci=}\ConstantTok{TRUE}\NormalTok{,}
-    \AttributeTok{ci.type=}\StringTok{"bars"}\NormalTok{, }\AttributeTok{print.thres.cex =} \FloatTok{0.7}\NormalTok{, }\AttributeTok{col =} \StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{,}
-    \AttributeTok{main =} \FunctionTok{paste}\NormalTok{(}\StringTok{"ROC curve using"}\NormalTok{,}\StringTok{"(N = "}\NormalTok{,}\FunctionTok{nrow}\NormalTok{(data.reduced),}\StringTok{")"}\NormalTok{) )}
-\end{Highlighting}
-\end{Shaded}
+The two approaches can be combined (see, e.g., \citet{Gerlach_Smets_1995}).
 
-\includegraphics{AdvECTS_files/figure-latex/fishing3-1.pdf}
+\textbf{A Simple Example}
 
-\begin{verbatim}
-## 
-## Call:
-## roc.default(response = data.reduced$y, predictor = predict_model,     percent = T, ci = TRUE, plot = TRUE, boot.n = 1000, ci.alpha = 0.9,     stratified = T, grid = TRUE, show.thres = TRUE, legacy.axes = TRUE,     reuse.auc = TRUE, print.auc = TRUE, print.thres.col = "blue",     ci.type = "bars", print.thres.cex = 0.7, col = "red", main = paste("ROC curve using",         "(N = ", nrow(data.reduced), ")"))
-## 
-## Data: predict_model in 178 controls (data.reduced$y 0) < 452 cases (data.reduced$y 1).
-## Area under the curve: 91.69%
-## 95% CI: 89.5%-93.87% (DeLong)
-\end{verbatim}
+Consider the following stylized economic dynamics:
+\begin{equation}
+\begin{array}{clll}
+g_{t}&=& \bar{g}-\lambda(i_{t-1}-\mathbb{E}_{t-1}\pi_{t})+ \underbrace{{\color{blue}\sigma_d \eta_{d,t}}}_{\mbox{demand shock}}& (\mbox{IS curve})\\
+\Delta \pi_{t} & = & \beta (g_{t} - \bar{g})+ \underbrace{{\color{blue}\sigma_{\pi} \eta_{\pi,t}}}_{\mbox{cost push shock}} & (\mbox{Phillips curve})\\
+i_{t} & = & \rho i_{t-1} + \left[ \gamma_\pi \mathbb{E}_{t}\pi_{t+1}  + \gamma_g (g_{t} - \bar{g}) \right]\\
+&& \qquad \qquad+\underbrace{{\color{blue}\sigma_{mp} \eta_{mp,t}}}_{\mbox{Mon. Pol. shock}} & (\mbox{Taylor rule}),
+\end{array}\label{eq:systemI}
+\end{equation}
+where:
+\begin{equation}
+\eta_t = 
+\left[
+\begin{array}{c}
+\eta_{\pi,t}\\
+\eta_{d,t}\\
+\eta_{mp,t}
+\end{array}
+\right]
+\sim i.i.d.\,\mathcal{N}(0,I).\label{eq:covU}
+\end{equation}
+
+Vector \(\eta_t\) is a vector of Gaussian \{\color{blue}structural shocks\}, mutually and serially independent.
+
+On date \(t\):
+
+\begin{itemize}
+\tightlist
+\item
+  \(g_t\) is contemporaneously affected by \(\eta_{d,t}\) only;
+\item
+  \(\pi_t\) is contemporaneously affected by \(\eta_{\pi,t}\) and \(\eta_{d,t}\);
+\item
+  \(i_t\) is contemporaneously affected by \(\eta_{mp,t}\), \(\eta_{\pi,t}\) and \(\eta_{d,t}\).
+\end{itemize}
+
+System \eqref{eq:systemI} could be rewritten in the form:
+\begin{equation}
+\left[\begin{array}{c}
+d_t\\
+\pi_t\\
+i_t
+\end{array}\right]
+= \Phi(L)
+\left[\begin{array}{c}
+d_{t-1}\\
+\pi_{t-1}\\
+i_{t-1} +
+\end{array}\right] +\underbrace{\underbrace{
+\left[
+\begin{array}{ccc}
+0 & \bullet & 0 \\
+\bullet & \bullet & 0 \\
+\bullet & \bullet & \bullet
+\end{array}
+\right]}_{=B} \eta_t}_{=\varepsilon_t}\label{eq:BBBB}
+\end{equation}
+
+This is the \textbf{reduced-form} of the model. This representation suggests three additional restrictions on the entries of \(B\); the latter matrix is therefore identified (up to the signs of its columns) as soon as \(\Omega = BB'\) is known.
+
+There are particular cases in which some well-known matrix decompositions of \(\mathbb{V}ar(\varepsilon_t)=\Omega_\varepsilon\) can be used to easily estimate some specific SVAR.
+
+Consider the following context:
+
+\begin{itemize}
+\tightlist
+\item
+  A first shock (say, \(\eta_{n_1,t}\)) can affect instantaneously
+  (i.e., on date \(t\)) only one of the endogenous variable (say, \(y_{n_1,t}\));
+\item
+  A second shock (say, \(\eta_{n_2,t}\)) can affect instantaneously
+  (i.e., on date \(t\)) the first two endogenous variables (say, \(y_{n_1,t}\)
+  and \(y_{n_2,t}\));
+\item
+  \ldots{}
+\end{itemize}
+
+This implies (1) that column \(n_1\) of \(B\) has only 1 non-zero entry (this is the \(n_1^{th}\) entry), (2) that column \(n_2\) of \(B\) has 2 non-zero entries (the \(n_1^{th}\) and the \(n_2^{th}\) ones), \ldots{}
+
+Without loss of generality, we can set \(n_1=n\), \(n_2=n-1\), \ldots{} In this context, matrix \(B\) is lower triangular.
+
+The Cholesky decomposition of \(\Omega_{\varepsilon}\) then provides an appropriate estimate of \(B\), that is a lower triangular matrix \(B\) that is such that:
+\[
+\Omega_\varepsilon = BB'.
+\]
+
+For instance, \citet{DEDOLA20051543} estimate 5 structural VAR models for the US, the UK, Germany, France and Italy to analyse the monetary-policy transmission mechanisms. They estimate SVAR(5) models over the period 1975-1997. The shock-identification scheme is based on Cholesky decompositions, the ordering of the endogenous variables being: the industrial production, the consumer price index, a commodity price index, the short-term rate, monetary aggregate and the effective exchange rate (except for the US). This ordering implies that monetary policy reacts to the shocks affecting
+the first three variables but that the latter react to monetary policy shocks with a one-period lag.
+
+Importantly, the Cholesky approach can be useful if you are essentially interested in one structural shock. This was the case, e.g., of \citet{Christiano_Eichenbaum_Evans_1996}. Their identification is based on the following relationship between \(\varepsilon_t\) and \(\eta_t\):
+\[
+\left[\begin{array}{c}
+\boldsymbol\varepsilon_{S,t}\\
+\varepsilon_{r,t}\\
+\boldsymbol\varepsilon_{F,t}
+\end{array}\right] =
+\left[\begin{array}{ccc}
+B_{SS} & 0 & 0 \\
+B_{rS} & B_{rr} & 0 \\
+B_{FS} & B_{Fr} & B_{FF}
+\end{array}\right]
+\left[\begin{array}{c}
+\boldsymbol\eta_{S,t}\\
+\eta_{r,t}\\
+\boldsymbol\eta_{F,t}
+\end{array}\right],
+\]
+where \(S\), \(r\) and \(F\) respectively correspond to \emph{slow-moving variables}, the policy variable (short-term rate) and \emph{fast-moving variables}. While \(\eta_{r,t}\) is scalar, \(\boldsymbol\eta_{S,t}\) and \(\boldsymbol\eta_{F,t}\) may be vectors. The space spanned by \(\boldsymbol\varepsilon_{S,t}\) is the same as that spanned by \(\boldsymbol\eta_{S,t}\). As a result, because \(\varepsilon_{r,t}\) is a linear combination of \(\eta_{r,t}\) and \(\boldsymbol\eta_{S,t}\) (which are \(\perp\)), it comes that the \(B_{rr}\eta_{r,t}\)'s are the (population) residuals in the regression of \(\varepsilon_{r,t}\) on \(\boldsymbol\varepsilon_{S,t}\). Because \(\mathbb{V}ar(\eta_{r,t})=1\), \(B_{rr}\) is given by the square root of the variance of \(B_{rr}\eta_{r,t}\). \(B_{F,r}\) is finally obtained by regressing the components of \(\boldsymbol\varepsilon_{F,t}\) on \(\eta_{r,t}\).
+
+An equivalent approach consists in computing the Cholesky decomposition of \(BB'\) and keep only the column corresponding to the policy variable.
+
+\textbf{Long-run restrictions}
+
+A second type of restriction relates to the long-run influence of a shock on an endogenous variable. Let us consider for instance a structural shock that is assumed to have no ``long-run influence'' on GDP. How to express this? The long-run change in GDP can be expressed as \(GDP_{t+h} - GDP_t\), with \(h\) large. Note further that:
+\[
+GDP_{t+h} - GDP_t = \Delta GDP_{t+h} +\Delta GDP_{t+h-1} + \dots + \Delta GDP_{t+1}.
+\]
+Hence, the fact that a given structural shock (\(\eta_{i,t}\), say) has no long-run influence on GDP means that
+\[
+\lim_{h\rightarrow\infty}\frac{\partial GDP_{t+h}}{\partial \eta_{i,t}} = \lim_{h\rightarrow\infty} \frac{\partial}{\partial \eta_{i,t}}\left(\sum_{k=1}^h \Delta  GDP_{t+k}\right)= 0.
+\]
+
+This can be easily formulated as a function of \(B\) when \(y_t\) (including \(\Delta GDP_t\)) follows a VAR(MA) process.
+
+As was shown previously (Eq. \eqref{eq:ystarVAR}), one can always write a VAR(\(p\)) as a VAR(1). Consequently, let us focus on the VAR(1) case:
+\begin{eqnarray}
+y_{t} &=& c+\Phi y_{t-1}+\varepsilon_{t}\\
+& = & c+\varepsilon_{t}+\Phi(c+\varepsilon_{t-1})+\ldots+\Phi^{k}(c+\varepsilon_{t-k})+\ldots \nonumber \\
+& = & \mu +\varepsilon_{t}+\Phi\varepsilon_{t-1}+\ldots+\Phi^{k}\varepsilon_{t-k}+\ldots \\
+& = & \mu +B\eta_{t}+\Phi B\eta_{t-1}+\ldots+\Phi^{k}B\eta_{t-k}+\ldots,
+\end{eqnarray}
+
+The sequence of shocks \(\{\eta_t\}\) determines the sequence \(\{y_t\}\). What if \(\{\eta_t\}\) is replaced by \(\{\tilde{\eta}_t\}\), where \(\tilde{\eta}_t=\eta_t\) if \(t \ne s\) and \(\tilde{\eta}_s=\eta_s + \gamma\)?
+
+Assume \(\{\tilde{y}_t\}\) is the associated ``perturbated'' sequence. We have \(\tilde{y}_t = y_t\) if \(t<s\). For \(t \ge s\), the Wold decomposition of \(\{\tilde{y}_t\}\) implies:
+\[
+\tilde{y}_t = y_t + \Phi^{t-s} B \gamma.
+\]
+
+Therefore, the cumulative impact of \(\gamma\) on \(\tilde{y}_t\) will be (for \(t \ge s\)):
+\begin{eqnarray}
+(\tilde{y}_t - y_t) +  (\tilde{y}_{t-1} - y_{t-1}) + \dots +  (\tilde{y}_s - y_s) &=& \nonumber \\
+(Id + \Phi + \Phi^2 + \dots + \Phi^{t-s}) B \gamma.&& \label{eq:cumul}
+\end{eqnarray}
+
+Consider a shock on \(\eta_{1,t}\), with a magnitude of \(1\). This shock is \(\gamma = [1,0,\dots,0]'\). Given Eq. @ref\{eq:cumul), the long-run cumulative effect of this shock on the endogenous variables is given by:
+\[
+(Id+\Phi+\ldots+\Phi^{k}+\ldots)B\left[\begin{array}{c}
+1\\
+0\\
+\vdots\\
+0\end{array}\right],
+\]
+that is the first column of \(\Theta \equiv (I+\Phi+\ldots+\Phi^{k}+\ldots)B\).
+
+In this context, consider the following long-run restriction: \emph{``\(j^{th}\) structural shock has no cumulative impact on the \(i^{th}\) endogenous variable''} is equivalent to
+\[
+\Theta_{ij}=0,
+\]
+where \(\Theta_{ij}\) is the element \((i,j)\) of \(\Theta\).
+
+\citet{Blanchard_Quah_1989} implement long-run restrictions in a small-scale VAR. Two variables are considered: GDP and unemployment. Consequently, the VAR is affected by two types of shocks. The authors want to identify \textbf{supply shocks} (that can have a permanent effect on output) and \textbf{demand shocks} (that cannot have a permanent effect on output).
+
+The motivation of the authors regarding their long-run restrictions can be obtained from a traditional Keynesian view of fluctuations. The authors propose a variant of a model from \citet{Fischer_1977}:
+\begin{eqnarray}
+Y_{t} & = & M_{t}-P_{t}+a.\theta_{t}\label{eq:demand}\\
+Y_{t} & = & N_{t}+\theta_{t}\label{eq:prodfunct}\\
+P_{t} & = & W_{t}-\theta_{t}\label{eq:PS}\\
+W_{t} & = & W\mid\left\{ \mathbb{E}_{t-1}N_{t}=\overline{N}\right\}. \label{eq:WS}
+\end{eqnarray}
+To close the model, the authors assume the following dynamics for the money supply and the productivity:
+\begin{eqnarray*}
+M_{t} & = & M_{t-1}+\varepsilon_{t}^{d}\\
+\theta_{t} & = & \theta_{t-1}+\varepsilon_{t}^{s}.
+\end{eqnarray*}
+In this context, it can be shown that
+\begin{eqnarray*}
+\Delta Y_{t} & = & (\varepsilon_{t}^{d}-\varepsilon_{t-1}^{d})+a.(\varepsilon_{t}^{s}-\varepsilon_{t-1}^{s})+\varepsilon_{t}^{s}\\
+u_{t} & = & -\varepsilon_{t}^{d}-a\varepsilon_{t}^{s}
+\end{eqnarray*}
+Then, it appears that the demand shocks have no long-run cumulative impact on \(\Delta Y_{t}\), the GDP growth, i.e.~no long-term impact on output \(Y_t\). The vector of endogenous variables is \(y_t = [\Delta Y_{t} \quad u_{t}]'\) where \(\Delta Y_{t}\) denotes the GDP growth. Estimation data are quarterly, and span the period from 1950:2 to 1987:4; 8 lags are used in the VAR model.
 
 \hypertarget{appendix}{%
 \chapter{Appendix}\label{appendix}}
@@ -1166,8 +1170,8 @@ alpha = 0.99 &  &  &  &  &  &  &  &  &  & \\
 \end{tabular}
 \end{table}
 
-\hypertarget{statistics-defintitions-and-results}{%
-\section{Statistics: defintitions and results}\label{statistics-defintitions-and-results}}
+\hypertarget{statistics-definitions-and-results}{%
+\section{Statistics: definitions and results}\label{statistics-definitions-and-results}}
 
 \begin{definition}[Skewness and kurtosis]
 \protect\hypertarget{def:skewnesskurtosis}{}\label{def:skewnesskurtosis}
@@ -1177,12 +1181,12 @@ Let \(Y\) be a random variable whose fourth moment exists. The expectation of \(
 \begin{itemize}
 \tightlist
 \item
-  The \{\color{blue}skewness\} of \(Y\) is given by:
+  The \color{blue}{skewness} of \(Y\) is given by:
   \[
   \frac{\mathbb{E}[(Y-\mu)^3]}{\{\mathbb{E}[(Y-\mu)^2]\}^{3/2}}.
   \]
 \item
-  The \{\color{blue}kurtosis\} of \(Y\) is given by:
+  The \color{blue}{kurtosis} of \(Y\) is given by:
   \[
   \frac{\mathbb{E}[(Y-\mu)^4]}{\{\mathbb{E}[(Y-\mu)^2]\}^{2}}.
   \]
@@ -1353,7 +1357,7 @@ It is denoted as: \(x_n \overset{a.s.}{\rightarrow} c\).
 \end{definition}
 
 \begin{definition}[Convergence in distribution]
-\protect\hypertarget{def:cvgcedistri}{}\label{def:cvgcedistri}\(x_n\) is said to converge in distribution (or in law) to \(x\) if
+\protect\hypertarget{def:cvgceDistri}{}\label{def:cvgceDistri}\(x_n\) is said to converge in distribution (or in law) to \(x\) if
 \[
 \lim_{n \rightarrow \infty} F_{x_n}(s) = F_{x}(s)
 \]
@@ -1564,7 +1568,7 @@ We have:
 \end{proposition}
 
 \begin{definition}[Asymptotic level]
-\protect\hypertarget{def:asmyptlevel}{}\label{def:asmyptlevel}An asymptotic test with critical region \(\Omega_n\) has an \{\color{blue}asymptotic level\} equal to \(\alpha\) if:
+\protect\hypertarget{def:asmyptlevel}{}\label{def:asmyptlevel}An asymptotic test with critical region \(\Omega_n\) has an \color{blue}{asymptotic level} equal to \(\alpha\) if:
 \[
 \underset{\theta \in \Theta}{\mbox{sup}} \quad \underset{n \rightarrow \infty}{\mbox{lim}} \mathbb{P}_\theta (S_n \in \Omega_n) = \alpha,
 \]
@@ -1608,6 +1612,114 @@ We have:
 \begin{proof}
 \(x \rightarrow -\log(x)\) is a convex function. Therefore \(\mathbb{E}^*(-\log f(Y)/f^*(Y)) \ge -\log \mathbb{E}^*(f(Y)/f^*(Y)) = 0\) (proves (i)). Since \(x \rightarrow -\log(x)\) is strictly convex, equality in (i) holds if and only if \(f(Y)/f^*(Y)\) is constant (proves (ii)).
 \end{proof}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{proposition}[Square and absolute summability]
+\protect\hypertarget{prp:absMs}{}\label{prp:absMs}We have:
+\[
+\underbrace{\sum_{i=0}^{\infty}|\theta_i| < + \infty}_{\mbox{Absolute summability}} \Rightarrow \underbrace{\sum_{i=0}^{\infty} \theta_i^2 < + \infty}_{\mbox{Square summability}}.
+\]
+\end{proposition}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{proof}
+See Appendix 3.A in Hamilton. Idea: Absolute summability implies that there exist \(N\) such that, for \(j>N\), \(|\theta_j| < 1\) (deduced from Cauchy criterion, Theorem \ref{thm:cauchycritstatic} and therefore \(\theta_j^2 < |\theta_j|\).
+\end{proof}
+
+\hypertarget{GaussianVar}{%
+\section{Some properties of Gaussian variables}\label{GaussianVar}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{proposition}[Bayesian update in a vector of Gaussian variables]
+\protect\hypertarget{prp:update}{}\label{prp:update}If
+\[
+\left[
+\begin{array}{c}
+Y_1\\
+Y_2
+\end{array}
+\right]
+\sim \mathcal{N}
+\left(0,
+\left[\begin{array}{cc}
+\Omega_{11} & \Omega_{12}\\
+\Omega_{21} & \Omega_{22}
+\end{array}\right]
+\right),
+\]
+then
+\[
+Y_{2}|Y_{1} \sim \mathcal{N}
+\left(
+\Omega_{21}\Omega_{11}^{-1}Y_{1},\Omega_{22}-\Omega_{21}\Omega_{11}^{-1}\Omega_{12}
+\right).
+\]
+\[
+Y_{1}|Y_{2} \sim \mathcal{N}
+\left(
+\Omega_{12}\Omega_{22}^{-1}Y_{2},\Omega_{11}-\Omega_{12}\Omega_{22}^{-1}\Omega_{21}
+\right).
+\]
+\end{proposition}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{proposition}[Truncated distributions]
+\protect\hypertarget{prp:truncated}{}\label{prp:truncated}If \(X\) is a random variable distributed according to some p.d.f. \(f\), with c.d.f. \(F\), with infinite support. Then the p.d.f. of \(X|a \le X < b\) is
+\[
+g(x) = \frac{f(x)}{F(b)-F(a)}\mathbb{I}_{\{a \le x < b\}},
+\]
+for any \(a<b\).
+
+In partiucular, for a Gaussian variable \(X \sim \mathcal{N}(\mu,\sigma^2)\), we have
+\[
+f(X=x|a\le X<b) = \dfrac{\dfrac{1}{\sigma}\phi\left(\dfrac{x - \mu}{\sigma}\right)}{Z}.
+\]
+with \(Z = \Phi(\beta)-\Phi(\alpha)\), where \(\alpha = \dfrac{a - \mu}{\sigma}\) and \(\beta = \dfrac{b - \mu}{\sigma}\).
+
+Moreover:
+\begin{eqnarray}
+\mathbb{E}(X|a\le X<b) &=& \mu - \frac{\phi\left(\beta\right)-\phi\left(\alpha\right)}{Z}\sigma. \label{eq:Etrunc}
+\end{eqnarray}
+
+We also have:
+\begin{eqnarray}
+&& \mathbb{V}ar(X|a\le X<b) \nonumber\\
+&=& \sigma^2\left[
+1 -  \frac{\beta\phi\left(\beta\right)-\alpha\phi\left(\alpha\right)}{Z} -  \left(\frac{\phi\left(\beta\right)-\phi\left(\alpha\right)}{Z}\right)^2 \right] \label{eq:Vtrunc}
+\end{eqnarray}
+
+In particular, for \(b \rightarrow \infty\), we get:
+\begin{equation}
+\mathbb{V}ar(X|a < X) = \sigma^2\left[1 + \alpha\lambda(-\alpha) - \lambda(-\alpha)^2 \right], \label{eq:Vtrunc2}
+\end{equation}
+with \(\lambda(x)=\dfrac{\phi(x)}{\Phi(x)}\) is called the \textbf{inverse Mills ratio}.
+\end{proposition}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Consider the case where \(a \rightarrow - \infty\) (i.e.~the conditioning set is \(X<b\)) and \(\mu=0\), \(\sigma=1\). Then Eq. \eqref{eq:Etrunc} gives \(\mathbb{E}(X|X<b) = - \lambda(b) = - \dfrac{\phi(b)}{\Phi(b)}\), where \(\lambda\) is the function computing the inverse Mills ratio.
+
+\begin{figure}
+
+{\centering \includegraphics{AdvECTS_files/figure-latex/inverseMills-1} 
+
+}
+
+\caption{$\mathbb{E}(X|X<b)$ as a function of $b$ when $X\sim \mathcal{N}(0,1)$ (in black).}\label{fig:inverseMills}
+\end{figure}
+
+\begin{proposition}[p.d.f. of a multivariate Gaussian variable]
+\protect\hypertarget{prp:pdfMultivarGaussian}{}\label{prp:pdfMultivarGaussian}If \(Y \sim \mathcal{N}(\mu,\Omega)\) and if \(Y\) is a \(n\)-dimensional vector, then the density function of \(Y\) is:
+\[
+\frac{1}{(2 \pi)^{n/2}|\Omega|^{1/2}}\exp\left[-\frac{1}{2}\left(Y-\mu\right)'\Omega^{-1}\left(Y-\mu\right)\right].
+\]
+\end{proposition}
 
 \hypertarget{proofs}{%
 \section{Proofs}\label{proofs}}
@@ -1814,6 +1926,220 @@ Let's show that the test is consistent. For this, note that:
 \]
 where \(\boldsymbol\theta_\infty\), the pseudo true value, is such that \(h(\boldsymbol\theta_\infty) \ne 0\) (by definition of \(H_1\)). From the Kullback inequality and the asymptotic identifiability of \(\boldsymbol\theta_0\), it follows that \(\mathbb{E}_0[\log f(Y;\boldsymbol\theta_0) - \log f(Y;\boldsymbol\theta_\infty)] >0\). Therefore \(\xi_n^{LR} \rightarrow + \infty\) under \(H_1\).
 \end{proof}
+
+\hypertarget{proofTVTCL}{%
+\subsection{Proof of Eq. \eqref{eq:TCL2}}\label{proofTVTCL}}
+
+\begin{proof}
+We have:
+\begin{eqnarray*}
+&&T\mathbb{E}\left[(\bar{y}_T - \mu)^2\right]\\
+&=& T\mathbb{E}\left[\left(\frac{1}{T}\sum_{t=1}^T(y_t - \mu)\right)^2\right] = \frac{1}{T} \mathbb{E}\left[\sum_{t=1}^T(y_t - \mu)^2+2\sum_{s<t\le T}(y_t - \mu)(y_s - \mu)\right]\\
+&=& \gamma_0 +\frac{2}{T}\left(\sum_{t=2}^{T}\mathbb{E}\left[(y_t - \mu)(y_{t-1} - \mu)\right]\right) +\frac{2}{T}\left(\sum_{t=3}^{T}\mathbb{E}\left[(y_t - \mu)(y_{t-2} - \mu)\right]\right) + \dots \\
+&&+ \frac{2}{T}\left(\sum_{t=T-1}^{T}\mathbb{E}\left[(y_t - \mu)(y_{t-(T-2)} - \mu)\right]\right) + \frac{2}{T}\mathbb{E}\left[(y_t - \mu)(y_{t-(T-1)} - \mu)\right]\\
+&=&  \gamma_0 + 2 \frac{T-1}{T}\gamma_1 + \dots + 2 \frac{1}{T}\gamma_{T-1} .
+\end{eqnarray*}
+Therefore:
+\begin{eqnarray*}
+T\mathbb{E}\left[(\bar{y}_T - \mu)^2\right] - \sum_{j=-\infty}^{+\infty} \gamma_j &=& - 2\frac{1}{T}\gamma_1 - 2\frac{2}{T}\gamma_2 - \dots - 2\frac{T-1}{T}\gamma_{T-1} - 2\gamma_T - 2 \gamma_{T+1} + \dots
+\end{eqnarray*}
+And then:
+\[
+\left|T\mathbb{E}\left[(\bar{y}_T - \mu)^2\right] - \sum_{j=-\infty}^{+\infty} \gamma_j\right| \le 2\frac{1}{T}|\gamma_1| + 2\frac{2}{T}|\gamma_2| + \dots + 2\frac{T-1}{T}|\gamma_{T-1}| + 2|\gamma_T| + 2 |\gamma_{T+1}| + \dots
+\]
+
+For any \(q \le T\), we have:
+\begin{eqnarray*}
+\left|T\mathbb{E}\left[(\bar{y}_T - \mu)^2\right] - \sum_{j=-\infty}^{+\infty} \gamma_j\right| &\le& 2\frac{1}{T}|\gamma_1| + 2\frac{2}{T}|\gamma_2| + \dots + 2\frac{q-1}{T}|\gamma_{q-1}| +2\frac{q}{T}|\gamma_q| +\\
+&&2\frac{q+1}{T}|\gamma_{q+1}| + \dots  + 2\frac{T-1}{T}|\gamma_{T-1}| + 2|\gamma_T| + 2 |\gamma_{T+1}| + \dots\\
+&\le& \frac{2}{T}\left(|\gamma_1| + 2|\gamma_2| + \dots + (q-1)|\gamma_{q-1}| +q|\gamma_q|\right) +\\
+&&2|\gamma_{q+1}| + \dots  + 2|\gamma_{T-1}| + 2|\gamma_T| + 2 |\gamma_{T+1}| + \dots
+\end{eqnarray*}
+
+Consider \(\varepsilon > 0\). The fact that the autocovariances are absolutely summable implies that there exists \(q_0\) such that (Cauchy criterion, Theorem \ref{thm:cauchycritstatic}):
+\[
+2|\gamma_{q_0+1}|+2|\gamma_{q_0+2}|+2|\gamma_{q_0+3}|+\dots < \varepsilon/2.
+\]
+Then, if \(T > q_0\), it comes that:
+\[
+\left|T \mathbb{E}\left[(\bar{y}_T - \mu)^2\right] - \sum_{j=-\infty}^{+\infty} \gamma_j\right|\le \frac{2}{T}\left(|\gamma_1| + 2|\gamma_2| + \dots + (q_0-1)|\gamma_{q_0-1}| +q_0|\gamma_{q_0}|\right) + \varepsilon/2.
+\]
+If \(T \ge 2\left(|\gamma_1| + 2|\gamma_2| + \dots + (q_0-1)|\gamma_{q_0-1}| +q_0|\gamma_{q_0}|\right)/(\varepsilon/2)\) (\(= f(q_0)\), say) then
+\[
+\frac{2}{T}\left(|\gamma_1| + 2|\gamma_2| + \dots + (q_0-1)|\gamma_{q_0-1}| +q_0|\gamma_{q_0}|\right) \le \varepsilon/2.
+\]
+Then, if \(T>f(q_0)\) and \(T>q_0\), i.e.~if \(T>\max(f(q_0),q_0)\), we have:
+\[
+\left|T \mathbb{E}\left[(\bar{y}_T - \mu)^2\right] - \sum_{j=-\infty}^{+\infty} \gamma_j\right|\le \varepsilon.
+\]
+\end{proof}
+
+\hypertarget{smallestMSE}{%
+\subsection{Proof of Proposition \ref{prp:smallestMSE}}\label{smallestMSE}}
+
+\begin{proof}
+We have:
+\begin{eqnarray}
+\mathbb{E}([y_{t+1} - y^*_{t+1}]^2) &=& \mathbb{E}\left([\color{blue}{\{y_{t+1} - \mathbb{E}(y_{t+1}|x_t)\}} + \color{red}{\{\mathbb{E}(y_{t+1}|x_t)  - y^*_{t+1}\}}]^2\right)\nonumber\\
+&=&  \mathbb{E}\left(\color{blue}{[y_{t+1} - \mathbb{E}(y_{t+1}|x_t)]}^2\right) + \mathbb{E}\left(\color{red}{[\mathbb{E}(y_{t+1}|x_t)  - y^*_{t+1}]}^2\right)\nonumber\\
+&& + 2\mathbb{E}\left( \color{blue}{[y_{t+1} - \mathbb{E}(y_{t+1}|x_t)]}\color{red}{ [\mathbb{E}(y_{t+1}|x_t)  - y^*_{t+1}]}\right). \label{eq:1}
+\end{eqnarray}
+Let us focus on the last term. We have:
+\begin{eqnarray*}
+&&\mathbb{E}\left(\color{blue}{[y_{t+1} - \mathbb{E}(y_{t+1}|x_t)]}\color{red}{ [\mathbb{E}(y_{t+1}|x_t)  - y^*_{t+1}]}\right)\\
+&=& \mathbb{E}( \mathbb{E}( \color{blue}{[y_{t+1} - \mathbb{E}(y_{t+1}|x_t)]}\color{red}{ \underbrace{[\mathbb{E}(y_{t+1}|x_t)  - y^*_{t+1}]}_{\mbox{function of $x_t$}}}|x_t))\\
+&=& \mathbb{E}( \color{red}{ [\mathbb{E}(y_{t+1}|x_t)  - y^*_{t+1}]} \mathbb{E}( \color{blue}{[y_{t+1} - \mathbb{E}(y_{t+1}|x_t)]}|x_t))\\
+&=& \mathbb{E}( \color{red}{ [\mathbb{E}(y_{t+1}|x_t)  - y^*_{t+1}]} \color{blue}{\underbrace{[\mathbb{E}(y_{t+1}|x_t) - \mathbb{E}(y_{t+1}|x_t)]}_{=0}})=0.
+\end{eqnarray*}
+
+Therefore, Eq. \eqref{eq:1} becomes:
+\begin{eqnarray*}
+&&\mathbb{E}([y_{t+1} - y^*_{t+1}]^2) \\
+&=&  \underbrace{\mathbb{E}\left(\color{blue}{[y_{t+1} - \mathbb{E}(y_{t+1}|x_t)]}^2\right)}_{\mbox{$\ge 0$ and does not depend on $y^*_{t+1}$}} + \underbrace{\mathbb{E}\left(\color{red}{[\mathbb{E}(y_{t+1}|x_t)  - y^*_{t+1}]}^2\right)}_{\mbox{$\ge 0$ and depends on $y^*_{t+1}$}}.
+\end{eqnarray*}
+This implies that \(\mathbb{E}([y_{t+1} - y^*_{t+1}]^2)\) is always larger than \(\color{blue}{\mathbb{E}([y_{t+1} - \mathbb{E}(y_{t+1}|x_t)]^2)}\), and is therefore minimized if the second term is equal to zero, that is if \(\mathbb{E}(y_{t+1}|x_t) = y^*_{t+1}\).
+\end{proof}
+
+\hypertarget{estimVARGaussian}{%
+\subsection{Proof of Proposition \ref{prp:estimVARGaussian}}\label{estimVARGaussian}}
+
+\begin{proof}
+Using Proposition \ref{prp:multivarG} (in Appendix \ref{XXX}), we obtain that, conditionally on \(x_1\), the log-likelihood is given by
+\begin{eqnarray*}
+\log\mathcal{L}(Y_{T};\theta) & = & -(Tn/2)\log(2\pi)+(T/2)\log\left|\Omega^{-1}\right|\\
+&  & -\frac{1}{2}\sum_{t=1}^{T}\left[\left(y_{t}-\Pi'x_{t}\right)'\Omega^{-1}\left(y_{t}-\Pi'x_{t}\right)\right].
+\end{eqnarray*}
+Let's rewrite the last term of the log-likelihood:
+\begin{eqnarray*}
+\sum_{t=1}^{T}\left[\left(y_{t}-\Pi'x_{t}\right)'\Omega^{-1}\left(y_{t}-\Pi'x_{t}\right)\right] & =\\
+\sum_{t=1}^{T}\left[\left(y_{t}-\hat{\Pi}'x_{t}+\hat{\Pi}'x_{t}-\Pi'x_{t}\right)'\Omega^{-1}\left(y_{t}-\hat{\Pi}'x_{t}+\hat{\Pi}'x_{t}-\Pi'x_{t}\right)\right] & =\\
+\sum_{t=1}^{T}\left[\left(\hat{\varepsilon}_{t}+(\hat{\Pi}-\Pi)'x_{t}\right)'\Omega^{-1}\left(\hat{\varepsilon}_{t}+(\hat{\Pi}-\Pi)'x_{t}\right)\right],
+\end{eqnarray*}
+where the \(j^{th}\) element of the \((n\times1)\) vector \(\hat{\varepsilon}_{t}\) is the sample residual, for observation \(t\), from an OLS regression of \(y_{j,t}\) on \(x_{t}\). Expanding the previous equation, we get:
+\begin{eqnarray*}
+&&\sum_{t=1}^{T}\left[\left(y_{t}-\Pi'x_{t}\right)'\Omega^{-1}\left(y_{t}-\Pi'x_{t}\right)\right]  = \sum_{t=1}^{T}\hat{\varepsilon}_{t}'\Omega^{-1}\hat{\varepsilon}_{t}\\
+&&+2\sum_{t=1}^{T}\hat{\varepsilon}_{t}'\Omega^{-1}(\hat{\Pi}-\Pi)'x_{t}+\sum_{t=1}^{T}x'_{t}(\hat{\Pi}-\Pi)\Omega^{-1}(\hat{\Pi}-\Pi)'x_{t}.
+\end{eqnarray*}
+Let's apply the trace operator on the second term (that is a scalar):
+\begin{eqnarray*}
+\sum_{t=1}^{T}\hat{\varepsilon}_{t}'\Omega^{-1}(\hat{\Pi}-\Pi)'x_{t} & = & Tr\left(\sum_{t=1}^{T}\hat{\varepsilon}_{t}'\Omega^{-1}(\hat{\Pi}-\Pi)'x_{t}\right)\\
+=  Tr\left(\sum_{t=1}^{T}\Omega^{-1}(\hat{\Pi}-\Pi)'x_{t}\hat{\varepsilon}_{t}'\right) & = & Tr\left(\Omega^{-1}(\hat{\Pi}-\Pi)'\sum_{t=1}^{T}x_{t}\hat{\varepsilon}_{t}'\right).
+\end{eqnarray*}
+Given that, by construction (property of OLS estimates), the sample residuals are orthogonal to the explanatory variables, this term is zero. Introducing \(\tilde{x}_{t}=(\hat{\Pi}-\Pi)'x_{t}\), we have
+\begin{eqnarray*}
+\sum_{t=1}^{T}\left[\left(y_{t}-\Pi'x_{t}\right)'\Omega^{-1}\left(y_{t}-\Pi'x_{t}\right)\right] =\sum_{t=1}^{T}\hat{\varepsilon}_{t}'\Omega^{-1}\hat{\varepsilon}_{t}+\sum_{t=1}^{T}\tilde{x}'_{t}\Omega^{-1}\tilde{x}_{t}.
+\end{eqnarray*}
+Since \(\Omega\) is a positive definite matrix, \(\Omega^{-1}\) is as well. Consequently, the smallest value that the last term can take is obtained for \(\tilde{x}_{t}=0\), i.e.~when \(\Pi=\hat{\Pi}.\)
+
+The MLE of \(\Omega\) is the matrix \(\hat{\Omega}\) that maximizes \(\Omega\overset{\ell}{\rightarrow}L(Y_{T};\hat{\Pi},\Omega)\). We have:
+\begin{eqnarray*}
+\log\mathcal{L}(Y_{T};\hat{\Pi},\Omega) & = & -(Tn/2)\log(2\pi)+(T/2)\log\left|\Omega^{-1}\right| -\frac{1}{2}\sum_{t=1}^{T}\left[\hat{\varepsilon}_{t}'\Omega^{-1}\hat{\varepsilon}_{t}\right].
+\end{eqnarray*}
+
+Matrix \(\hat{\Omega}\) is a symmetric positive definite. It is easily checked that the (unrestricted) matrix that maximizes the latter expression is symmetric positive definite matrix. Indeed:
+\[
+\frac{\partial \log\mathcal{L}(Y_{T};\hat{\Pi},\Omega)}{\partial\Omega}=\frac{T}{2}\Omega'-\frac{1}{2}\sum_{t=1}^{T}\hat{\varepsilon}_{t}\hat{\varepsilon}'_{t}\Rightarrow\hat{\Omega}'=\frac{1}{T}\sum_{t=1}^{T}\hat{\varepsilon}_{t}\hat{\varepsilon}'_{t},
+\]
+which leads to the result.
+\end{proof}
+
+\hypertarget{OLSVAR}{%
+\subsection{Proof of Proposition \ref{prp:OLSVAR}}\label{OLSVAR}}
+
+\begin{proof}
+Let us drop the \(i\) subscript. Rearranging Eq. \eqref{eq:olsar1}, we have:
+\[
+\sqrt{T}(\mathbf{b}-\boldsymbol{\beta}) =  (X'X/T)^{-1}\sqrt{T}(X'\boldsymbol\varepsilon/T).
+\]
+Let us consider the autocovariances of \(\mathbf{v}_t = x_t \varepsilon_t\), denoted by \(\gamma^v_j\). Using the fact that \(x_t\) is a linear combination of past \(\varepsilon_t\)s and that \(\varepsilon_t\) is a white noise, we get that \(\mathbb{E}(\varepsilon_t x_t)=0\). Therefore
+\[
+\gamma^v_j = \mathbb{E}(\varepsilon_t\varepsilon_{t-j}x_tx_{t-j}').
+\]
+If \(j>0\), we have \(\mathbb{E}(\varepsilon_t\varepsilon_{t-j}x_tx_{t-j}')=\mathbb{E}(\mathbb{E}[\varepsilon_t\varepsilon_{t-j}x_tx_{t-j}'|\varepsilon_{t-j},x_t,x_{t-j}])=\) \(\mathbb{E}(\varepsilon_{t-j}x_tx_{t-j}'\mathbb{E}[\varepsilon_t|\varepsilon_{t-j},x_t,x_{t-j}])=0\). Note that we have \(\mathbb{E}[\varepsilon_t|\varepsilon_{t-j},x_t,x_{t-j}]=0\) because \(\{\varepsilon_t\}\) is an i.i.d. white noise sequence. If \(j=0\), we have:
+\[
+\gamma^v_0 = \mathbb{E}(\varepsilon_t^2x_tx_{t}')= \mathbb{E}(\varepsilon_t^2) \mathbb{E}(x_tx_{t}')=\sigma^2\mathbf{Q}.
+\]
+The convergence in distribution of \(\sqrt{T}(X'\boldsymbol\varepsilon/T)=\sqrt{T}\frac{1}{T}\sum_{t=1}^Tv_t\) results from the Central Limit Theorem for covariance-stationary processes, using the \(\gamma_j^v\) computed above.
+\end{proof}
+
+\hypertarget{additional-codes}{%
+\section{Additional codes}\label{additional-codes}}
+
+\hypertarget{App:GEV}{%
+\subsection{Simulating GEV distributions}\label{App:GEV}}
+
+The following lines of code have been used to generate Figure \ref{fig:GEV}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n.sim }\OtherTok{\textless{}{-}} \DecValTok{4000}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{),}
+    \AttributeTok{plt=}\FunctionTok{c}\NormalTok{(.}\DecValTok{2}\NormalTok{,.}\DecValTok{95}\NormalTok{,.}\DecValTok{2}\NormalTok{,.}\DecValTok{85}\NormalTok{))}
+\NormalTok{all.rhos }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(.}\DecValTok{3}\NormalTok{,.}\DecValTok{6}\NormalTok{,.}\DecValTok{95}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(all.rhos))\{}
+\NormalTok{  theta }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{/}\NormalTok{all.rhos[j]}
+\NormalTok{  v1 }\OtherTok{\textless{}{-}} \FunctionTok{runif}\NormalTok{(n.sim)}
+\NormalTok{  v2 }\OtherTok{\textless{}{-}} \FunctionTok{runif}\NormalTok{(n.sim)}
+\NormalTok{  w }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(.}\DecValTok{000001}\NormalTok{,n.sim)}
+  \CommentTok{\# solve for f(w) = w*(1 {-} log(w)/theta) {-} v2 = 0}
+  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{20}\NormalTok{)\{}
+\NormalTok{    f.i }\OtherTok{\textless{}{-}}\NormalTok{ w }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{log}\NormalTok{(w)}\SpecialCharTok{/}\NormalTok{theta) }\SpecialCharTok{{-}}\NormalTok{ v2}
+\NormalTok{    f.prime }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{log}\NormalTok{(w)}\SpecialCharTok{/}\NormalTok{theta }\SpecialCharTok{{-}} \DecValTok{1}\SpecialCharTok{/}\NormalTok{theta}
+\NormalTok{    w }\OtherTok{\textless{}{-}}\NormalTok{ w }\SpecialCharTok{{-}}\NormalTok{ f.i}\SpecialCharTok{/}\NormalTok{f.prime}
+\NormalTok{  \}}
+\NormalTok{  u1 }\OtherTok{\textless{}{-}} \FunctionTok{exp}\NormalTok{(v1}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{theta) }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(w))}
+\NormalTok{  u2 }\OtherTok{\textless{}{-}} \FunctionTok{exp}\NormalTok{((}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{v1)}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{theta) }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(w))}
+
+  \CommentTok{\# Get eps1 and eps2 using the inverse of the Gumbel distribution\textquotesingle{}s cdf:}
+\NormalTok{  eps1 }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\FunctionTok{log}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{log}\NormalTok{(u1))}
+\NormalTok{  eps2 }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\FunctionTok{log}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{log}\NormalTok{(u2))}
+  \FunctionTok{cbind}\NormalTok{(}\FunctionTok{cor}\NormalTok{(eps1,eps2),}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{all.rhos[j]}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+  \FunctionTok{plot}\NormalTok{(eps1,eps2,}\AttributeTok{pch=}\DecValTok{19}\NormalTok{,}\AttributeTok{col=}\StringTok{"\#FF000044"}\NormalTok{,}
+       \AttributeTok{main=}\FunctionTok{paste}\NormalTok{(}\StringTok{"rho = "}\NormalTok{,}\FunctionTok{toString}\NormalTok{(all.rhos[j]),}\AttributeTok{sep=}\StringTok{""}\NormalTok{),}
+       \AttributeTok{xlab=}\FunctionTok{expression}\NormalTok{(epsilon[}\DecValTok{1}\NormalTok{]),}
+       \AttributeTok{ylab=}\FunctionTok{expression}\NormalTok{(epsilon[}\DecValTok{2}\NormalTok{]),}
+       \AttributeTok{cex.lab=}\DecValTok{2}\NormalTok{,}\AttributeTok{cex.main=}\FloatTok{1.5}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{IRFDELTA}{%
+\subsection{Computing the covariance matrix of IRF using the delta method}\label{IRFDELTA}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{irf.function }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(THETA)\{}
+\NormalTok{  c }\OtherTok{\textless{}{-}}\NormalTok{ THETA[}\DecValTok{1}\NormalTok{]}
+\NormalTok{  phi }\OtherTok{\textless{}{-}}\NormalTok{ THETA[}\DecValTok{2}\SpecialCharTok{:}\NormalTok{(p}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)]}
+  \ControlFlowTok{if}\NormalTok{(q}\SpecialCharTok{\textgreater{}}\DecValTok{0}\NormalTok{)\{}
+\NormalTok{    theta }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,THETA[(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{p}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}\SpecialCharTok{:}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{p}\SpecialCharTok{+}\NormalTok{q)])}
+\NormalTok{  \}}\ControlFlowTok{else}\NormalTok{\{}
+\NormalTok{    theta }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{  \}}
+\NormalTok{  sigma }\OtherTok{\textless{}{-}}\NormalTok{ THETA[}\DecValTok{1}\SpecialCharTok{+}\NormalTok{p}\SpecialCharTok{+}\NormalTok{q}\SpecialCharTok{+}\DecValTok{1}\NormalTok{]}
+\NormalTok{  r }\OtherTok{\textless{}{-}} \FunctionTok{dim}\NormalTok{(Matrix.of.Exog)[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{{-}} \DecValTok{1}
+\NormalTok{  beta }\OtherTok{\textless{}{-}}\NormalTok{ THETA[(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{p}\SpecialCharTok{+}\NormalTok{q}\SpecialCharTok{+}\DecValTok{1}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}\SpecialCharTok{:}\NormalTok{(}\DecValTok{1}\SpecialCharTok{+}\NormalTok{p}\SpecialCharTok{+}\NormalTok{q}\SpecialCharTok{+}\DecValTok{1}\SpecialCharTok{+}\NormalTok{(r}\SpecialCharTok{+}\DecValTok{1}\NormalTok{))]}
+  
+\NormalTok{  irf }\OtherTok{\textless{}{-}} \FunctionTok{sim.arma}\NormalTok{(}\DecValTok{0}\NormalTok{,phi,beta,}\AttributeTok{sigma=}\FunctionTok{sd}\NormalTok{(Ramey}\SpecialCharTok{$}\NormalTok{ED3\_TC,}\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{),}\AttributeTok{T=}\DecValTok{60}\NormalTok{,}\AttributeTok{y.0=}\FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FunctionTok{length}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{phi)),}\AttributeTok{nb.sim=}\DecValTok{1}\NormalTok{,}\AttributeTok{make.IRF=}\DecValTok{1}\NormalTok{,}
+                  \AttributeTok{X=}\ConstantTok{NaN}\NormalTok{,}\AttributeTok{beta=}\ConstantTok{NaN}\NormalTok{)}
+  \FunctionTok{return}\NormalTok{(irf)}
+\NormalTok{\}}
+
+\NormalTok{IRF}\FloatTok{.0} \OtherTok{\textless{}{-}} \DecValTok{100}\SpecialCharTok{*}\FunctionTok{irf.function}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{THETA)}
+\NormalTok{eps }\OtherTok{\textless{}{-}}\NormalTok{ .}\DecValTok{00000001}
+\NormalTok{d.IRF }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{THETA))\{}
+\NormalTok{  THETA.i }\OtherTok{\textless{}{-}}\NormalTok{ x}\SpecialCharTok{$}\NormalTok{THETA}
+\NormalTok{  THETA.i[i] }\OtherTok{\textless{}{-}}\NormalTok{ THETA.i[i] }\SpecialCharTok{+}\NormalTok{ eps}
+\NormalTok{  IRF.i }\OtherTok{\textless{}{-}} \DecValTok{100}\SpecialCharTok{*}\FunctionTok{irf.function}\NormalTok{(THETA.i)}
+\NormalTok{  d.IRF }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(d.IRF,}
+\NormalTok{                 (IRF.i }\SpecialCharTok{{-}}\NormalTok{ IRF}\FloatTok{.0}\NormalTok{)}\SpecialCharTok{/}\NormalTok{eps}
+\NormalTok{                 )}
+\NormalTok{\}}
+\NormalTok{mat.var.cov.IRF }\OtherTok{\textless{}{-}}\NormalTok{ d.IRF }\SpecialCharTok{\%*\%}\NormalTok{ x}\SpecialCharTok{$}\NormalTok{I }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(d.IRF)}
+\end{Highlighting}
+\end{Shaded}
+
 
   \bibliography{book.bib,packages.bib}
 

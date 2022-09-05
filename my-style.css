@@ -12,3 +12,20 @@ pre {
 pre code {
   white-space: inherit;
 }
+
+
+.theorem {
+  background: Linen;
+}
+
+.proposition {
+  background: FloralWhite;
+}
+
+.definition {
+  background: GhostWhite;
+}
+
+.hypothesis {
+  background: WhiteSmoke;
+}

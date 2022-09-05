@@ -1,11 +1,11 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.8.8)  29 AUG 2022 14:16
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.9.1)  5 SEP 2022 18:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **AdvECTS.tex
 (./AdvECTS.tex
 LaTeX2e <2022-06-01> patch level 5
-L3 programming layer <2022-08-05> (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/base/book.cls
+L3 programming layer <2022-08-30> (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/base/book.cls
 Document Class: book 2021/10/04 v1.4n Standard LaTeX document class
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/base/bk10.clo
 File: bk10.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
@@ -131,9 +131,9 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2022/02/03 v1.0f TeX engine tests
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math.sty (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2022-08-05 L3 programming layer (loader) 
+Package: expl3 2022-08-30 L3 programming layer (loader) 
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
-File: l3backend-xetex.def 2022-08-05 L3 backend support: XeTeX
+File: l3backend-xetex.def 2022-08-30 L3 backend support: XeTeX
 \g__graphics_track_int=\count268
 \l__pdf_internal_box=\box53
 \g__pdf_backend_object_int=\count269
@@ -723,21 +723,21 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 ] (./AdvECTS.toc
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.0pt on input line 4.
+(Font)              scaled to size 7.0pt on input line 5.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 4.
+(Font)              scaled to size 5.0pt on input line 5.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.00092pt on input line 4.
+(Font)              scaled to size 10.00092pt on input line 5.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.00064pt on input line 4.
+(Font)              scaled to size 7.00064pt on input line 5.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00046pt on input line 4.
+(Font)              scaled to size 5.00046pt on input line 5.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 9.99893pt on input line 4.
+(Font)              scaled to size 9.99893pt on input line 5.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 6.99925pt on input line 4.
+(Font)              scaled to size 6.99925pt on input line 5.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 4.
+(Font)              scaled to size 4.99947pt on input line 5.
 )
 \tf@toc=\write5
 \openout5 = `AdvECTS.toc'.
@@ -763,257 +763,223 @@ LaTeX Font Warning: Font shape `TU/lmtt/bx/it' in size <10> not available
 
 [7] [8] [9] [10]
 Chapter 3.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 10.0pt on input line 346.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 7.0pt on input line 346.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 5.0pt on input line 346.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 10.00092pt on input line 346.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 7.00064pt on input line 346.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 5.00046pt on input line 346.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 9.99893pt on input line 346.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 6.99925pt on input line 346.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 4.99947pt on input line 346.
 
-LaTeX Warning: Reference `hyp:exogeneity' on page 11 undefined on input line 378.
+Overfull \hbox (75.0pt too wide) in paragraph at lines 361--361
+[]\TU/lmtt/m/n/10 ##         inv(-1)   inc(-1)  con(-1)    inv(-2)   inc(-2)   con(-2)       const[] 
+ []
 
 
-LaTeX Warning: Reference `hyp:noncorrelResid' on page 11 undefined on input line 378.
+Overfull \hbox (75.0pt too wide) in paragraph at lines 361--361
+[]\TU/lmtt/m/n/10 ## [1,] -0.3177971 0.1318571 1.016190 -0.1310161 0.1495442 0.9587964 -0.01935124[] 
+ []
 
 
-LaTeX Warning: Reference `hyp:homoskedasticity' on page 11 undefined on input line 378.
+Overfull \hbox (75.0pt too wide) in paragraph at lines 361--361
+[]\TU/lmtt/m/n/10 ## [2,] -0.3196310 0.1459888 0.961219 -0.1605511 0.1146050 0.9343938 -0.01672199[] 
+ []
+
+
+Overfull \hbox (75.0pt too wide) in paragraph at lines 361--361
+[]\TU/lmtt/m/n/10 ## [3,] -0.3196310 0.1459888 0.961219 -0.1605511 0.1146050 0.9343938 -0.01672199[] 
+ []
+
+
+Overfull \hbox (36.45743pt too wide) in alignment at lines 367--372
+ [][][] []
+ []
 
 [11
 
 ]
-File: AdvECTS_files/figure-latex/LPM-1.pdf Graphic file (type pdf)
-<use AdvECTS_files/figure-latex/LPM-1.pdf>
-
-Overfull \hbox (6.87851pt too wide) in paragraph at lines 396--397
-[]\TU/lmr/m/n/10 Model  
- []
-
-
-Overfull \hbox (6.87851pt too wide) in paragraph at lines 406--407
-[]\TU/lmr/m/n/10 Model  
- []
-
-
-Overfull \hbox (7.60852pt too wide) in paragraph at lines 414--414
-[]|\TU/lmr/m/n/10 Probit|  
- []
-
-
-Overfull \hbox (2.56851pt too wide) in paragraph at lines 415--415
-[]|\TU/lmr/m/n/10 Logit|  
- []
-
-
-Overfull \hbox (14.88777pt too wide) in paragraph at lines 416--417
-[]|$[][][] [][][][][] [][][][]$|  
- []
-
-
-Overfull \hbox (4.12851pt too wide) in paragraph at lines 417--417
-[]|\TU/lmr/m/n/10 linear|  
+Overfull \hbox (27.54008pt too wide) in paragraph at lines 389--390
+[]\TU/lmr/m/n/10 Using []Hamilton[] ([]1994[])’s notations, denote with $[]$ the matrix $[][]$
  []
 
 [12]
-File: AdvECTS_files/figure-latex/ProbLogit-1.pdf Graphic file (type pdf)
-<use AdvECTS_files/figure-latex/ProbLogit-1.pdf>
-File: AdvECTS_files/figure-latex/LPM2-1.pdf Graphic file (type pdf)
-<use AdvECTS_files/figure-latex/LPM2-1.pdf>
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
+(Font)              scaled to size 10.0pt on input line 425.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
+(Font)              scaled to size 7.0pt on input line 425.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
+(Font)              scaled to size 5.0pt on input line 425.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
+(Font)              scaled to size 10.00092pt on input line 425.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
+(Font)              scaled to size 7.00064pt on input line 425.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
+(Font)              scaled to size 5.00046pt on input line 425.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
+(Font)              scaled to size 9.99893pt on input line 425.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
+(Font)              scaled to size 6.99925pt on input line 425.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
+(Font)              scaled to size 4.99947pt on input line 425.
+[13] [14]
 
-Underfull \hbox (badness 1360) in paragraph at lines 458--458
-[]\TU/lmr/bx/n/12 Interpretation in terms of latent variable, and
+LaTeX Warning: Reference `def:infocriteria' on page 15 undefined on input line 541.
+
+[15]
+
+LaTeX Warning: Reference `eq:InfMA' on page 16 undefined on input line 603.
+
+[16] [17] [18]
+Overfull \hbox (68.94452pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/10 3.1.  IDENTIFICATION PROBLEM AND STANDARD IDENTIFICATION TECHNIQUES \TU/lmr/m/n/10 19
  []
 
-File: AdvECTS_files/figure-latex/Latent-1.pdf Graphic file (type pdf)
-<use AdvECTS_files/figure-latex/Latent-1.pdf>
-[13] [14] [15]
-
-LaTeX Warning: Reference `secMLE' on page 16 undefined on input line 570.
-
-[16]
-
-LaTeX Warning: Reference `def:likFunction' on page 17 undefined on input line 583.
-
-
-LaTeX Warning: Reference `hyp:MLEregularity' on page 17 undefined on input line 592.
-
-
-LaTeX Warning: Reference `prp:MLEproperties' on page 17 undefined on input line 592.
-
-
-LaTeX Warning: Reference `eq:III1' on page 17 undefined on input line 601.
-
-[17] [18]
-File: AdvECTS_files/figure-latex/Probitlending-1.pdf Graphic file (type pdf)
-<use AdvECTS_files/figure-latex/Probitlending-1.pdf>
-[19] [20] [21]
-
-LaTeX Warning: Reference `def:LR' on page 22 undefined on input line 810.
-
-[22]
-Overfull \hbox (6.75pt too wide) in paragraph at lines 879--879
-[]\TU/lmtt/m/n/10 ## ================================================================[] 
+[19] [20]
+Overfull \hbox (68.94452pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/10 3.1.  IDENTIFICATION PROBLEM AND STANDARD IDENTIFICATION TECHNIQUES \TU/lmr/m/n/10 21
  []
 
-
-Overfull \hbox (6.75pt too wide) in paragraph at lines 879--879
-[]\TU/lmtt/m/n/10 ##                     --------------------------------------------[] 
- []
-
-
-Overfull \hbox (6.75pt too wide) in paragraph at lines 879--879
-[]\TU/lmtt/m/n/10 ## ----------------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (6.75pt too wide) in paragraph at lines 879--879
-[]\TU/lmtt/m/n/10 ## ----------------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (6.75pt too wide) in paragraph at lines 879--879
-[]\TU/lmtt/m/n/10 ## F Statistic                             542.123*** (df = 1; 628)[] 
- []
-
-
-Overfull \hbox (6.75pt too wide) in paragraph at lines 879--879
-[]\TU/lmtt/m/n/10 ## ================================================================[] 
- []
-
-
-Overfull \hbox (6.75pt too wide) in paragraph at lines 879--879
-[]\TU/lmtt/m/n/10 ## Note:                                *p<0.1; **p<0.05; ***p<0.01[] 
- []
-
-[23]
-File: AdvECTS_files/figure-latex/fishing3-1.pdf Graphic file (type pdf)
-<use AdvECTS_files/figure-latex/fishing3-1.pdf>
-
-Overfull \hbox (1812.75pt too wide) in paragraph at lines 925--925
-[]\TU/lmtt/m/n/10 ## roc.default(response = data.reduced$y, predictor = predict_model,     percent = T, ci = TRUE, plot = TRUE, boot.n = 1000, ci.alpha = 0.9,     stratified = T, grid = TRUE, show.thres = TRUE, legacy.axes = TRUE,     reuse.auc = TRUE, print.auc = TRUE, print.thres.col = "blue",     ci.type = "bars", print.thres.cex = 0.7, col = "red", main = paste("ROC curve using",         "(N = ", nrow(data.reduced), ")"))[] 
- []
-
-
-Overfull \hbox (122.25pt too wide) in paragraph at lines 925--925
-[]\TU/lmtt/m/n/10 ## Data: predict_model in 178 controls (data.reduced$y 0) < 452 cases (data.reduced$y 1).[] 
- []
-
-[24]
+[21] [22]
 Chapter 4.
 
-Overfull \hbox (81.5801pt too wide) in paragraph at lines 937--1002
+Overfull \hbox (81.5801pt too wide) in paragraph at lines 941--1006
  [][] 
  []
 
 
-Overfull \hbox (43.44008pt too wide) in paragraph at lines 1061--1108
+Overfull \hbox (43.44008pt too wide) in paragraph at lines 1065--1112
  [][] 
  []
 
 
-Overfull \hbox (124.92009pt too wide) in paragraph at lines 1114--1167
+Overfull \hbox (124.92009pt too wide) in paragraph at lines 1118--1171
  [][] 
  []
 
-[25
+[23
 
-] [26] [27] [28] [29] [30] [31]
-Overfull \hbox (10.47379pt too wide) detected at line 1398
+] [24] [25] [26] [27] [28] [29]
+Overfull \hbox (10.47379pt too wide) detected at line 1402
 [][][][][][][] [] [][][][] [] [][] [] [] [] [] [][] [] [][][][] [] [][] [] [] [] [] [][] [] [][][] [] [][] [] [][][][][] [] [][] [] [][][]
  []
 
 
-Overfull \hbox (10.47379pt too wide) detected at line 1402
+Overfull \hbox (10.47379pt too wide) detected at line 1406
 [][][] [] [][] [] [][][] [] [] [] [][] [][] [] [][] [] [][][] [] [] [] [][] [][] [] [][] [] [][][][][] [] [][][][][] [] [][] [] [][][]
  []
 
-[32] [33]
-Overfull \hbox (54.01816pt too wide) in alignment at lines 1481--1484
+[30] [31]
+Overfull \hbox (54.01816pt too wide) in alignment at lines 1485--1488
  [][][] []
  []
 
-[34] [35]
+[32] [33] [34] [35]
+File: AdvECTS_files/figure-latex/inverseMills-1.pdf Graphic file (type pdf)
+<use AdvECTS_files/figure-latex/inverseMills-1.pdf>
 
-LaTeX Warning: Reference `prp:MLEproperties' on page 36 undefined on input line 1616.
+LaTeX Warning: Reference `prp:MLEproperties' on page 36 undefined on input line 1728.
 
 
-LaTeX Warning: Reference `hyp:MLEregularity' on page 36 undefined on input line 1619.
+LaTeX Warning: Reference `hyp:MLEregularity' on page 36 undefined on input line 1731.
 
 [36]
 
-LaTeX Warning: Reference `prp:Walddistri' on page 37 undefined on input line 1658.
+LaTeX Warning: Reference `prp:Walddistri' on page 37 undefined on input line 1770.
 
 
-LaTeX Warning: Reference `(' on page 37 undefined on input line 1661.
+LaTeX Warning: Reference `(' on page 37 undefined on input line 1773.
 
 [37]
 
-LaTeX Warning: Reference `prp:LMdistri' on page 38 undefined on input line 1686.
+LaTeX Warning: Reference `prp:LMdistri' on page 38 undefined on input line 1798.
 
 [38]
 
-LaTeX Warning: Reference `eq:xiLM' on page 39 undefined on input line 1748.
+LaTeX Warning: Reference `eq:xiLM' on page 39 undefined on input line 1860.
 
 
-LaTeX Warning: Reference `prp:equivWaldLM' on page 39 undefined on input line 1752.
+LaTeX Warning: Reference `prp:equivWaldLM' on page 39 undefined on input line 1864.
 
 
-LaTeX Warning: Reference `(' on page 39 undefined on input line 1755.
-
-[39]
-
-LaTeX Warning: Reference `prp:equivLRLM' on page 40 undefined on input line 1772.
+LaTeX Warning: Reference `(' on page 39 undefined on input line 1867.
 
 
-Overfull \hbox (24.00679pt too wide) in alignment at lines 1776--1783
+LaTeX Warning: Reference `prp:equivLRLM' on page 39 undefined on input line 1884.
+
+
+Overfull \hbox (24.00679pt too wide) in alignment at lines 1888--1895
  [][][] []
  []
 
-
-Overfull \hbox (10.22447pt too wide) detected at line 1788
+[39]
+Overfull \hbox (10.22447pt too wide) detected at line 1900
 [][] [] [][][][][] [] [][][] [] [][][][] [] [][][][][][][][][][][][] [] [][][] [] [][][][] [] [][][][][][][][][][][][] [] [][][][]
  []
 
 
-Overfull \hbox (18.24805pt too wide) detected at line 1795
+Overfull \hbox (18.24805pt too wide) detected at line 1907
 [][] [] [][][][][] [] [][][][][][][][][][][][] [] [][][] [] [][][][] [] [][][][][][][][][][][][] [] [][][] [] [][][][] [] [][][][][][][][][][][][] [] [][][][]
  []
 
 
-LaTeX Warning: Reference `(' on page 40 undefined on input line 1805.
+LaTeX Warning: Reference `(' on page 40 undefined on input line 1917.
 
 
-Overfull \hbox (63.53732pt too wide) detected at line 1814
+Overfull \hbox (63.53732pt too wide) detected at line 1926
 [] [] [] [][][] [][][][][] [][][] [] [] [][][][][] [][][][] [] [][][][] [][][][] [][][] [] [] [][][][] [][][][][]
  []
 
-[40] (./AdvECTS.bbl [41] [42
 
-]) [43] (./AdvECTS.aux)
+LaTeX Warning: Reference `eq:TCL2' on page 40 undefined on input line 1931.
+
+
+Overfull \hbox (12.50836pt too wide) in alignment at lines 1935--1941
+ [][][] []
+ []
+
+[40]
+Overfull \hbox (32.42497pt too wide) in alignment at lines 1943--1945
+ [][][] []
+ []
+
+
+Overfull \hbox (16.89204pt too wide) detected at line 1949
+[] [] [][][][][][] [] [][][][][][] [] [] [] [][][][][][] [] [][][][][] [] [][][][][] [] []
+ []
+
+
+Overfull \hbox (41.4278pt too wide) in alignment at lines 1952--1957
+ [][][] []
+ []
+
+
+Overfull \hbox (11.61316pt too wide) detected at line 1966
+[] [] [] [] [] [][][][]
+ []
+
+[41]
+
+LaTeX Warning: Reference `prp:smallestMSE' on page 42 undefined on input line 1978.
+
+
+LaTeX Warning: Reference `prp:multivarG' on page 42 undefined on input line 2007.
+
+
+LaTeX Warning: Reference `XXX' on page 42 undefined on input line 2007.
+
+[42] [43]
+
+LaTeX Warning: Reference `fig:GEV' on page 44 undefined on input line 2071.
+
+[44] [45] (./AdvECTS.bbl [46] [47
+
+] [48]) [49] (./AdvECTS.aux)
 
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `AdvECTS.out' has not changed.
-(rerunfilecheck)             Checksum: FE119B94E41253014FDCB11E99425677;1053.
+(rerunfilecheck)             Checksum: B524841C767AE0573BACC23AF9A9CDB3;1759.
  ) 
 Here is how much of TeX's memory you used:
- 17790 strings out of 477855
- 327087 string characters out of 5845862
- 847281 words of memory out of 5000000
- 38461 multiletter control sequences out of 15000+600000
+ 17822 strings out of 477747
+ 326568 string characters out of 5843253
+ 880134 words of memory out of 5000000
+ 38605 multiletter control sequences out of 15000+600000
  477235 words of font info for 99 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 86i,13n,121p,648b,474s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 86i,13n,121p,947b,487s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on AdvECTS.pdf (43 pages).
+Output written on AdvECTS.pdf (49 pages).

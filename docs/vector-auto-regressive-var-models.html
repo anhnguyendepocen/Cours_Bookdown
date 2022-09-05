@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 3 Vector Auto-Regressive (VAR) models | Advanced Econometrics</title>
+<meta name="author" content="Jean-Paul Renne">
+<meta name="description" content="Kilian (1998) See this page Sign restrictions: package, Danne (2015). Pfaff (2008) Hlavac (2022) library(VAR.etp) library(vars) #standard VAR models data(dat) # part of VAR.etp package a &lt;-...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 3 Vector Auto-Regressive (VAR) models | Advanced Econometrics">
+<meta property="og:type" content="book">
+<meta property="og:description" content="Kilian (1998) See this page Sign restrictions: package, Danne (2015). Pfaff (2008) Hlavac (2022) library(VAR.etp) library(vars) #standard VAR models data(dat) # part of VAR.etp package a &lt;-...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 3 Vector Auto-Regressive (VAR) models | Advanced Econometrics">
+<meta name="twitter:description" content="Kilian (1998) See this page Sign restrictions: package, Danne (2015). Pfaff (2008) Hlavac (2022) library(VAR.etp) library(vars) #standard VAR models data(dat) # part of VAR.etp package a &lt;-...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+<link rel="stylesheet" href="my-style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Advanced Econometrics</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Prerequisites</a></li>
+<li><a class="" href="intro.html"><span class="header-section-number">2</span> Introduction</a></li>
+<li><a class="active" href="vector-auto-regressive-var-models.html"><span class="header-section-number">3</span> Vector Auto-Regressive (VAR) models</a></li>
+<li><a class="" href="appendix.html"><span class="header-section-number">4</span> Appendix</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="vector-auto-regressive-var-models" class="section level1" number="3">
+<h1>
+<span class="header-section-number">3</span> Vector Auto-Regressive (VAR) models<a class="anchor" aria-label="anchor" href="#vector-auto-regressive-var-models"><i class="fas fa-link"></i></a>
+</h1>
+<p><span class="citation">Kilian (<a href="references.html#ref-Kilian_1998" role="doc-biblioref">1998</a>)</span> See <a href="https://rdrr.io/cran/VAR.etp/man/VAR.Boot.html">this page</a></p>
+<p>Sign restrictions: <a href="https://github.com/chrstdanne/VARsignR">package</a>, <span class="citation">Danne (<a href="references.html#ref-Danne_2015" role="doc-biblioref">2015</a>)</span>.</p>
+<p><span class="citation">Pfaff (<a href="references.html#ref-vars" role="doc-biblioref">2008</a>)</span>
+<!-- toBibtex(citation("vars")) --></p>
+<p><span class="citation">Hlavac (<a href="references.html#ref-Stargazer" role="doc-biblioref">2022</a>)</span></p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">VAR.etp</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.pfaffikus.de">vars</a></span><span class="op">)</span> <span class="co">#standard VAR models</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="co"># part of VAR.etp package</span></span>
+<span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VAR.etp/man/VAR.Boot.html">VAR.Boot</a></span><span class="op">(</span><span class="va">dat</span>,p<span class="op">=</span><span class="fl">2</span>,nb<span class="op">=</span><span class="fl">200</span>,type<span class="op">=</span><span class="st">"const"</span><span class="op">)</span></span>
+<span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/vars/man/VAR.html">VAR</a></span><span class="op">(</span><span class="va">dat</span>,p<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">a</span><span class="op">$</span><span class="va">coef</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span>,<span class="op">(</span><span class="va">a</span><span class="op">$</span><span class="va">coef</span><span class="op">+</span><span class="va">a</span><span class="op">$</span><span class="va">Bias</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span>,<span class="va">b</span><span class="op">$</span><span class="va">varresult</span><span class="op">$</span><span class="va">inv</span><span class="op">$</span><span class="va">coefficients</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##        inv(-1)    inc(-1)  con(-1)    inv(-2)  inc(-2)   con(-2)       const
+## [1,] -0.311982 0.08913291 0.951436 -0.1418598 0.143103 1.0466672 -0.01891006
+## [2,] -0.319631 0.14598883 0.961219 -0.1605511 0.114605 0.9343938 -0.01672199
+## [3,] -0.319631 0.14598883 0.961219 -0.1605511 0.114605 0.9343938 -0.01672199</code></pre>
+<p>VARs are widely used in macroeconomic analysis. While simple and easy to estimate, they make it possible to conveniently capture the dynamics of complex multivariate systems. VAR popularity is notably due to <span class="citation">Sims (<a href="references.html#ref-Sims_1980" role="doc-biblioref">1980</a>)</span>’s influential work. In economics, VAR models are often employed in order to identify <em>structural</em> shocks. First, we will present VAR models. Second, we will study its <em>structural</em> extension (SVAR models).</p>
+<div class="definition">
+<p><span id="def:SVAR" class="definition"><strong>Definition 3.1  ((S)VAR model) </strong></span>Let <span class="math inline">\(y_{t}\)</span> denote a <span class="math inline">\(n \times1\)</span> vector of random variables. Process <span class="math inline">\(y_{t}\)</span> follows a <span class="math inline">\(p^{th}\)</span>-order VAR if, for all <span class="math inline">\(t\)</span>, we have
+<span class="math display" id="eq:yVAR">\[\begin{eqnarray}
+\begin{array}{rllll}
+VAR:&amp; y_t &amp;=&amp; c + \Phi_1 y_{t-1} + \dots + \Phi_p y_{t-p} + \varepsilon_t,&amp; \varepsilon_t:\mbox{ (correlated) innovation}\\
+SVAR:&amp; y_t &amp;=&amp; c + \Phi_1 y_{t-1} + \dots + \Phi_p y_{t-p} + B \eta_t,&amp; \eta_t:\mbox{ ($\bot$) structural shock},
+\end{array}\tag{3.1}
+\end{eqnarray}\]</span>
+with <span class="math inline">\(\varepsilon_t = B\eta_t\)</span>. We assume that <span class="math inline">\(\{\eta_{t}\}\)</span> is a white noise sequence whose components are are mutually and serially independent.</p>
+</div>
+<p>The first line of Eq. <a href="vector-auto-regressive-var-models.html#eq:yVAR">(3.1)</a> corresponds to the <strong>reduced-form</strong> of the VAR model (<strong>structural form</strong> for the second line).</p>
+<p>Eq. <a href="vector-auto-regressive-var-models.html#eq:yVAR">(3.1)</a> can also be written:
+<span class="math display">\[
+y_{t}=c+\Phi(L)y_{t-1}+\varepsilon_{t},
+\]</span>
+with <span class="math inline">\(\Phi(L) = \Phi_1 + \Phi_2 L + \dots + \Phi_p L^{p-1}\)</span>.</p>
+<p>Consequently:
+<span class="math display">\[
+y_{t}\mid y_{t-1},y_{t-2},\ldots,y_{-p+1}\sim \mathcal{N}(c+\Phi_{1}y_{t-1}+\ldots\Phi_{p}y_{t-p},\Omega).
+\]</span></p>
+<p>Using <span class="citation">Hamilton (<a href="references.html#ref-Hamilton_1994" role="doc-biblioref">1994</a>)</span>’s notations, denote with <span class="math inline">\(\Pi\)</span> the matrix <span class="math inline">\(\left[\begin{array}{ccccc} c &amp; \Phi_{1} &amp; \Phi_{2} &amp; \ldots &amp; \Phi_{p}\end{array}\right]'\)</span> and with <span class="math inline">\(x_{t}\)</span> the vector <span class="math inline">\(\left[\begin{array}{ccccc} 1 &amp; y'_{t-1} &amp; y'_{t-2} &amp; \ldots &amp; y'_{t-p}\end{array}\right]'\)</span>, we have:
+<span class="math display" id="eq:PIVAR">\[\begin{equation}
+y_{t}= \Pi'x_{t} + \varepsilon_{t}. \tag{3.2}
+\end{equation}\]</span>
+The previous representation is convenient to discuss the estimation of the VAR model, as parameters are gathered in two matrices only: <span class="math inline">\(\Pi\)</span> and <span class="math inline">\(\Omega\)</span>.</p>
+<div id="var-estimation" class="section level3" number="3.0.1">
+<h3>
+<span class="header-section-number">3.0.1</span> VAR estimation<a class="anchor" aria-label="anchor" href="#var-estimation"><i class="fas fa-link"></i></a>
+</h3>
+<p>Let us start with the case where the shocks are Gaussian.</p>
+<div class="proposition">
+<p><span id="prp:estimVARGaussian" class="proposition"><strong>Proposition 3.1  (MLE of a Gaussian VAR) </strong></span>If <span class="math inline">\(y_t\)</span> follows a VAR(p) (see Definition <a href="vector-auto-regressive-var-models.html#def:SVAR">3.1</a>), and if <span class="math inline">\(\varepsilon_t \sim \,i.i.d.\,\mathcal{N}(0,\Omega)\)</span>, then the ML estimate of <span class="math inline">\(\Pi\)</span>, denoted by <span class="math inline">\(\hat{\Pi}\)</span> (see Eq. <a href="vector-auto-regressive-var-models.html#eq:PIVAR">(3.2)</a>), is given by
+<span class="math display" id="eq:Pi">\[\begin{equation}
+\hat{\Pi}=\left[\sum_{t=1}^{T}x_{t}x'_{t}\right]^{-1}\left[\sum_{t=1}^{T}y_{t}'x_{t}\right]= (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y},\tag{3.3}
+\end{equation}\]</span>
+where <span class="math inline">\(\mathbf{X}\)</span> is the <span class="math inline">\(T \times (np)\)</span> matrix whose <span class="math inline">\(t^{th}\)</span> row is <span class="math inline">\(x_t\)</span> and where <span class="math inline">\(\mathbf{y}\)</span> is the <span class="math inline">\(T \times n\)</span> matrix whose <span class="math inline">\(t^{th}\)</span> row is <span class="math inline">\(y_{t}'\)</span>.</p>
+<p>That is, the <span class="math inline">\(i^{th}\)</span> column of <span class="math inline">\(\hat{\Pi}\)</span> (<span class="math inline">\(b_i\)</span>, say) is the OLS estimate of <span class="math inline">\(\beta_i\)</span>, where:
+<span class="math display" id="eq:betayx">\[\begin{equation}
+y_{i,t} = \beta_i'x_t + \varepsilon_{i,t},\tag{3.4}
+\end{equation}\]</span>
+(i.e., <span class="math inline">\(\beta_i' = [c_i,\phi_{i,1}',\dots,\phi_{i,p}']'\)</span>).</p>
+<p>The ML estimate of <span class="math inline">\(\Omega\)</span>, denoted by <span class="math inline">\(\hat{\Omega}\)</span>, coincides with the sample covariance matrix of the <span class="math inline">\(n\)</span> series of the OLS residuals in Eq. <a href="vector-auto-regressive-var-models.html#eq:betayx">(3.4)</a>, i.e.:
+<span class="math display">\[\begin{equation}
+\hat{\Omega} = \frac{1}{T} \sum_{i=1}^T \hat{\varepsilon}_t\hat{\varepsilon}_t',\quad\mbox{with } \hat{\varepsilon}_t= y_t - \hat{\Pi}'x_t.
+\end{equation}\]</span></p>
+<p>The asymptotic distributions of these estimators are the ones resulting from standard OLS formula.</p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-1" class="proof"><em>Proof</em>. </span>See Appendix <a href="appendix.html#estimVARGaussian">4.4.8</a>.</p>
+</div>
+<p>As stated by Proposition <a href="appendix.html#OLSVAR">4.4.9</a>, when the shocks are not Gaussian, then the OLS regressions still provide consistent estimates of the model parameters. However, since <span class="math inline">\(x_t\)</span> correlates to <span class="math inline">\(\varepsilon_s\)</span> for <span class="math inline">\(s&lt;t\)</span>, the OLS estimator <span class="math inline">\(\mathbf{b}_i\)</span> of <span class="math inline">\(\boldsymbol\beta_i\)</span> is biased in small sample. (That is also the case for the ML estimator.)</p>
+<p>Indeed, denoting by <span class="math inline">\(\boldsymbol\varepsilon_i\)</span> the <span class="math inline">\(T \times 1\)</span> vector of <span class="math inline">\(\varepsilon_{i,t}\)</span>’s, and using the notations of <span class="math inline">\(b_i\)</span> and <span class="math inline">\(\beta_i\)</span> introduced in Proposition <a href="vector-auto-regressive-var-models.html#prp:estimVARGaussian">3.1</a>, we have:
+<span class="math display" id="eq:olsar1">\[\begin{equation}
+\mathbf{b}_i = \beta_i + (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol\varepsilon_i.\tag{3.5}
+\end{equation}\]</span>
+We have non-zero correlation between <span class="math inline">\(x_t\)</span> and <span class="math inline">\(\varepsilon_{i,s}\)</span> for <span class="math inline">\(s&lt;t\)</span> and, therefore, <span class="math inline">\(\mathbb{E}[(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\boldsymbol\varepsilon_i] \ne 0\)</span>.</p>
+<p>However, when <span class="math inline">\(y_t\)</span> is covariance stationary, then <span class="math inline">\(\frac{1}{n}\mathbf{X}'\mathbf{X}\)</span> converges to a positive definite matrix <span class="math inline">\(\mathbf{Q}\)</span>, and <span class="math inline">\(\frac{1}{n}X'\boldsymbol\varepsilon_i\)</span> converges to 0. Hence <span class="math inline">\(\mathbf{b}_i \overset{p}{\rightarrow} \beta_i\)</span>. More precisely:</p>
+<div class="proposition">
+<p><span id="prp:OLSVAR" class="proposition"><strong>Proposition 3.2  (Asymptotic distribution of the OLS estimate of $\beta_i$) </strong></span>If <span class="math inline">\(y_t\)</span> follows a VAR model, as defined in Definition <a href="vector-auto-regressive-var-models.html#def:SVAR">3.1</a>, we have:
+<span class="math display">\[
+\sqrt{T}(\mathbf{b}_i-\beta_i) =  \underbrace{\left[\frac{1}{T}\sum_{t=p}^T x_t x_t' \right]^{-1}}_{\overset{p}{\rightarrow} \mathbf{Q}^{-1}}
+\underbrace{\sqrt{T} \left[\frac{1}{T}\sum_{t=1}^T x_t\varepsilon_{i,t} \right]}_{\overset{d}{\rightarrow} \mathcal{N}(0,\sigma_i^2\mathbf{Q})},
+\]</span>
+where <span class="math inline">\(\sigma_i = \mathbb{V}ar(\varepsilon_{i,t})\)</span> and where <span class="math inline">\(\mathbf{Q} = \mbox{plim }\frac{1}{T}\sum_{t=p}^T x_t x_t'\)</span> is given by:
+<span class="math display" id="eq:Qols">\[\begin{equation}
+\mathbf{Q} = \left[
+\begin{array}{ccccc}
+1 &amp; \mu' &amp;\mu' &amp; \dots &amp; \mu' \\
+\mu &amp; \gamma_0 + \mu\mu' &amp; \gamma_1 + \mu\mu' &amp; \dots &amp; \gamma_{p-1} + \mu\mu'\\
+\mu &amp; \gamma_1 + \mu\mu' &amp; \gamma_0 + \mu\mu' &amp; \dots &amp; \gamma_{p-2} + \mu\mu'\\
+\vdots &amp;\vdots &amp;\vdots &amp;\dots &amp;\vdots \\
+\mu &amp; \gamma_{p-1} + \mu\mu' &amp; \gamma_{p-2} + \mu\mu' &amp; \dots &amp; \gamma_{0} + \mu\mu'
+\end{array}
+\right].\tag{3.6}
+\end{equation}\]</span></p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-2" class="proof"><em>Proof</em>. </span>See Appendix <a href="appendix.html#OLSVAR">4.4.9</a>.</p>
+</div>
+<p>The following proposition extends the previous proposition and includes covariances between different <span class="math inline">\(\beta_i\)</span>’s as well as the asymptotic distribution of the ML estimates of <span class="math inline">\(\Omega\)</span>.</p>
+<div class="proposition">
+<p><span id="prp:OLSVAR2" class="proposition"><strong>Proposition 3.3  (Asymptotic distribution of the OLS estimates) </strong></span>If <span class="math inline">\(y_t\)</span> follows a VAR model, as defined in Definition <a href="vector-auto-regressive-var-models.html#def:SVAR">3.1</a>, we have:
+<span class="math display" id="eq:asymptPi">\[\begin{equation}
+\sqrt{T}\left[
+\begin{array}{c}
+vec(\hat\Pi - \Pi)\\
+vec(\hat\Omega - \Omega)
+\end{array}
+\right]
+\sim \mathcal{N}\left(0,
+\left[
+\begin{array}{cc}
+\Omega \otimes \mathbf{Q}^{-1} &amp; 0\\
+0 &amp; \Sigma_{22}
+\end{array}
+\right]\right),\tag{3.7}
+\end{equation}\]</span>
+where the component of <span class="math inline">\(\Sigma_{22}\)</span> corresponding to the covariance between <span class="math inline">\(\hat\sigma_{i,j}\)</span> and <span class="math inline">\(\hat\sigma_{k,l}\)</span> (for <span class="math inline">\(i,j,l,m \in \{1,\dots,n\}^4\)</span>) is equal to <span class="math inline">\(\sigma_{i,l}\sigma_{j,m}+\sigma_{i,m}\sigma_{j,l}\)</span>.</p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-3" class="proof"><em>Proof</em>. </span>See <span class="citation">Hamilton (<a href="references.html#ref-Hamilton_1994" role="doc-biblioref">1994</a>)</span>, Appendix of Chapter 11.</p>
+</div>
+<p>Naturally, in practice, <span class="math inline">\(\Omega\)</span> is replaced by <span class="math inline">\(\hat{\Omega}\)</span>, <span class="math inline">\(Q\)</span> is replaced with <span class="math inline">\(\hat{\mathbf{Q}} = \frac{1}{T}\sum_{t=p}^T x_t x_t'\)</span> and <span class="math inline">\(\Sigma\)</span> with the matrix whose components are of the form <span class="math inline">\(\hat\sigma_{i,l}\hat\sigma_{j,m}+\hat\sigma_{i,m}\hat\sigma_{j,l}\)</span>, where the <span class="math inline">\(\hat\sigma_{i,l}\)</span>’s are the components of <span class="math inline">\(\hat\Omega\)</span>.</p>
+<p>The simplicity of the VAR framework and the tractability of its MLE open the way to convenient econometric testing. Let’s illustrate this with the likelihood ratio test. The maximum value achieved by the MLE is
+<span class="math display">\[
+\log\mathcal{L}(Y_{T};\hat{\Pi},\hat{\Omega}) = -\frac{Tn}{2}\log(2\pi)+\frac{T}{2}\log\left|\hat{\Omega}^{-1}\right| -\frac{1}{2}\sum_{t=1}^{T}\left[\hat{\varepsilon}_{t}'\hat{\Omega}^{-1}\hat{\varepsilon}_{t}\right].
+\]</span>
+The last term is:
+<span class="math display">\[\begin{eqnarray*}
+\sum_{t=1}^{T}\hat{\varepsilon}_{t}'\hat{\Omega}^{-1}\hat{\varepsilon}_{t} &amp;=&amp; \mbox{Tr}\left[\sum_{t=1}^{T}\hat{\varepsilon}_{t}'\hat{\Omega}^{-1}\hat{\varepsilon}_{t}\right] = \mbox{Tr}\left[\sum_{t=1}^{T}\hat{\Omega}^{-1}\hat{\varepsilon}_{t}\hat{\varepsilon}_{t}'\right]\\
+&amp;=&amp;\mbox{Tr}\left[\hat{\Omega}^{-1}\sum_{t=1}^{T}\hat{\varepsilon}_{t}\hat{\varepsilon}_{t}'\right] = \mbox{Tr}\left[\hat{\Omega}^{-1}\left(T\hat{\Omega}\right)\right]=Tn.
+\end{eqnarray*}\]</span>
+Therefore, the optimized log-likelihood is simply obtained by:
+<span class="math display" id="eq:optimzedLogL">\[\begin{equation}
+\log\mathcal{L}(Y_{T};\hat{\Pi},\hat{\Omega})=-(Tn/2)\log(2\pi)+(T/2)\log\left|\hat{\Omega}^{-1}\right|-Tn/2.\tag{3.8}
+\end{equation}\]</span></p>
+<p>Assume that we want to test the null hypothesis that a set of variables follows a VAR(<span class="math inline">\(p_{0}\)</span>) against the alternative
+specification of <span class="math inline">\(p_{1}\)</span> (<span class="math inline">\(&gt;p_{0}\)</span>).</p>
+<p>Let us denote by <span class="math inline">\(\hat{L}_{0}\)</span> and <span class="math inline">\(\hat{L}_{1}\)</span> the maximum log-likelihoods obtained with <span class="math inline">\(p_{0}\)</span> and <span class="math inline">\(p_{1}\)</span> lags, respectively.</p>
+<p>Under the null hypothesis (<span class="math inline">\(H_0\)</span>: <span class="math inline">\(p=p_0\)</span>), we have:
+<span class="math display">\[\begin{eqnarray*}
+2\left(\hat{L}_{1}-\hat{L}_{0}\right)&amp;=&amp;T\left(\log\left|\hat{\Omega}_{1}^{-1}\right|-\log\left|\hat{\Omega}_{0}^{-1}\right|\right)  \sim \chi^2(n^{2}(p_{1}-p_{0})).
+\end{eqnarray*}\]</span></p>
+<p><strong>Block exogeneity</strong></p>
+<p>Let’s decompose <span class="math inline">\(y_t\)</span> into two subvectors <span class="math inline">\(y^{(1)}_{t}\)</span> (<span class="math inline">\(n_1 \times 1\)</span>) and <span class="math inline">\(y^{(2)}_{t}\)</span> (<span class="math inline">\(n_2 \times 1\)</span>), with <span class="math inline">\(y_t' = [{y^{(1)}_{t}}',{y^{(2)}_{t}}']\)</span> (and therefore <span class="math inline">\(n=n_1 +n_2\)</span>), such that:
+<span class="math display">\[
+\left[
+\begin{array}{c}
+y^{(1)}_{t}\\
+y^{(2)}_{t}
+\end{array}
+\right] = \left[
+\begin{array}{cc}
+\Phi^{(1,1)} &amp; \Phi^{(1,2)}\\
+\Phi^{(2,1)} &amp; \Phi^{(2,2)}
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+y^{(1)}_{t-1}\\
+y^{(2)}_{t-1}
+\end{array}
+\right] + \varepsilon_t.
+\]</span>
+One can easily test for block exogeneity of <span class="math inline">\(y_t^{(2)}\)</span> (say). The null assumption ca n be expressed as <span class="math inline">\(\Phi^{(2,1)}=0\)</span> and <span class="math inline">\(\Sigma^{(2,1)}=0\)</span>.</p>
+<p><strong>Lag selection</strong></p>
+<p>In a VAR, adding lags consumes numerous degrees of freedom: with <span class="math inline">\(p\)</span> lags, each of the <span class="math inline">\(n\)</span> equations in the VAR contains <span class="math inline">\(n\times p\)</span> coefficients plus the intercept term.</p>
+<p>Adding lags improve in-sample fit, but is likely to result in over-parameterization and affect the {out-of-sample} prediction performance.</p>
+<p>To select appropriate lag length, so-called <strong>selection criteria</strong> can be used (see Definition <a href="#def:infocriteria"><strong>??</strong></a>). These criteria have to be minimized. That is, the best specification is the one giving the lowest criteria.</p>
+<p>In the context of VAR models, using Eq. <a href="vector-auto-regressive-var-models.html#eq:optimzedLogL">(3.8)</a>, we have:
+<span class="math display">\[\begin{eqnarray*}
+AIC &amp; = &amp; cst + \log\left|\hat{\Omega}\right|+\frac{2}{T}N\\
+BIC &amp; = &amp; cst + \log\left|\hat{\Omega}\right|+\frac{\log T}{T}N,
+\end{eqnarray*}\]</span>
+where <span class="math inline">\(N=p \times n^{2}\)</span>.</p>
+<p><strong>Companion Form and Stability of a VAR process</strong></p>
+<p>Let us introduce vector <span class="math inline">\(y_{t}^{*}\)</span>, whihc stacks the last <span class="math inline">\(p\)</span> values of <span class="math inline">\(y_t\)</span>:
+<span class="math display">\[
+y_{t}^{*}=\left[\begin{array}{cccc}
+y'_{t} &amp; y'_{t-1} &amp; \ldots &amp; y'_{t-p+1}\end{array}\right]^{'},
+\]</span>
+Eq. <a href="vector-auto-regressive-var-models.html#eq:yVAR">(3.1)</a> can then be rewritten in its companion form:
+<span class="math display" id="eq:ystarVAR">\[\begin{equation}
+y_{t}^{*} =
+\underbrace{\left[\begin{array}{c}
+c\\
+0\\
+\vdots\\
+0\end{array}\right]}_{=c^*}+
+\underbrace{\left[\begin{array}{cccc}
+\Phi_{1} &amp; \Phi_{2} &amp; \cdots &amp; \Phi_{p}\\
+I &amp; 0 &amp; \cdots &amp; 0\\
+0 &amp; \ddots &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; I &amp; 0\end{array}\right]}_{=\Phi}
+y_{t-1}^{*}+
+\underbrace{\left[\begin{array}{c}
+\varepsilon_{t}\\
+0\\
+\vdots\\
+0\end{array}\right]}_{\varepsilon_t^*}\tag{3.9}
+\end{equation}\]</span></p>
+<p>Matrices <span class="math inline">\(\Phi\)</span> and <span class="math inline">\(\Sigma^* = \mathbb{V}ar(\varepsilon_t^*)\)</span> are of dimension <span class="math inline">\(np \times np\)</span>. <span class="math inline">\(\Sigma^*\)</span> is filled with zeros, except the <span class="math inline">\(n\times n\)</span> upper-left block that is equal to <span class="math inline">\(\Sigma = \mathbb{V}ar(\varepsilon_t)\)</span>.</p>
+<p>We then have:
+<span class="math display">\[\begin{eqnarray*}
+y_{t}^{*} &amp; = &amp; c^{*}+\Phi\left(c^{*}+\Phi y_{t-2}^{*}+\varepsilon_{t-1}^{*}\right)+\varepsilon_{t}^{*} \nonumber \\
+&amp; = &amp; c^{*}+\varepsilon_{t}^{*}+\Phi(c^{*}+\varepsilon_{t-1}^{*})+\ldots+\Phi^{k}(c^{*}+\varepsilon_{t-k}^{*})+\Phi^k y_{t-k}^{*}.
+\end{eqnarray*}\]</span></p>
+<p>If the eigenvalues of <span class="math inline">\(\Phi\)</span> are strictly within the unit circle, then <span class="math inline">\(\Phi^k\)</span> geometrically decays to the zero matrix and we get the following Wold decomposition for <span class="math inline">\(y_t\)</span>:
+<span class="math display" id="eq:VARstar">\[\begin{eqnarray}
+y_{t}^{*}  &amp; = &amp; c^{*}+\varepsilon_{t}^{*}+\Phi(c^{*}+\varepsilon_{t-1}^{*})+\ldots+\Phi^{k}(c^{*}+\varepsilon_{t-k}^{*})+\ldots \nonumber \\
+&amp; = &amp; \mu^{*} +\varepsilon_{t}^{*}+\Phi\varepsilon_{t-1}^{*}+\ldots+\Phi^{k}\varepsilon_{t-k}^{*}+\ldots,\tag{3.10}
+\end{eqnarray}\]</span>
+where <span class="math inline">\(\mu^* = (I - \Phi)^{-1} c^*\)</span>.</p>
+<p>(It can also be seen that <span class="math inline">\(\mu^{*} = [\mu',\dots,\mu']'\)</span>, where <span class="math inline">\(\mu = (I - \Phi_1 - \dots - \Phi_p)^{-1}c\)</span>).</p>
+<p>The unconditional variance of <span class="math inline">\(y_t\)</span> can be derived from Eq. <a href="vector-auto-regressive-var-models.html#eq:VARstar">(3.10)</a>, exploiting the fact that the <span class="math inline">\(\varepsilon_{t}^{*}\)</span> are serially uncorrelated:
+<span class="math display">\[
+\mathbb{V}ar(y_t^*)=\Omega^*+\Phi\Omega^*\Phi'+\ldots+\Phi^{k}\Omega^*\Phi'^{k}+\ldots,
+\]</span>
+with <span class="math inline">\(\mathbb{V}ar(\varepsilon_t^*)=\Omega^*\)</span>.</p>
+<p>The unconditional variance of <span class="math inline">\(y_t\)</span> is the upper-left <span class="math inline">\(n\times n\)</span> block of matrix <span class="math inline">\(\mathbb{V}ar(y_t^*)\)</span>.</p>
+<p>Eq. <a href="vector-auto-regressive-var-models.html#eq:VARstar">(3.10)</a> also implies that the <span class="math inline">\(\Psi_k\)</span> matrices defining the IRFs (see Eq. <a href="#eq:InfMA">(<strong>??</strong>)</a>) are given by: <span class="math inline">\(\Psi_k = \widetilde{\Phi^k}B\)</span>, where <span class="math inline">\(\widetilde{\Phi^k}\)</span> is the upper-left matrix block of <span class="math inline">\(\Phi^k\)</span>.</p>
+<p><strong>Granger Causality</strong></p>
+<p><span class="citation">Granger (<a href="references.html#ref-Granger_1969" role="doc-biblioref">1969</a>)</span> developed a method to explore <strong>causal relationships</strong> among variables. The approach consists in determining whether the past values of <span class="math inline">\(y_{1,t}\)</span> can help explain the current <span class="math inline">\(y_{2,t}\)</span> (beyond the information already included in the past values of <span class="math inline">\(y_{2,t}\)</span>).</p>
+<p>Formally, let us denote three information sets:
+<span class="math display">\[\begin{eqnarray*}
+\mathcal{I}_{1,t} &amp; = &amp; \left\{ y_{1,t},y_{1,t-1},\ldots\right\} \\
+\mathcal{I}_{2,t} &amp; = &amp; \left\{ y_{2,t},y_{2,t-1},\ldots\right\} \\
+\mathcal{I}_{t} &amp; = &amp; \left\{ y_{1,t},y_{1,t-1},\ldots y_{2,t},y_{2,t-1},\ldots\right\}.
+\end{eqnarray*}\]</span>
+We say that <span class="math inline">\(y_{1,t}\)</span> Granger-causes <span class="math inline">\(y_{2,t}\)</span> if
+<span class="math display">\[
+\mathbb{E}\left[y_{2,t}\mid \mathcal{I}_{2,t-1}\right]\neq \mathbb{E}\left[y_{2,t}\mid \mathcal{I}_{t-1}\right].
+\]</span></p>
+<p>To get the intuition behind the testing procedure, consider the following
+bivariate VAR(<span class="math inline">\(p\)</span>) process:
+<span class="math display">\[\begin{eqnarray*}
+y_{1,t} &amp; = &amp; c_1+\Sigma_{i=1}^{p}\Phi_i^{(11)}y_{1,t-i}+\Sigma_{i=1}^{p}\Phi_i^{(12)}y_{2,t-i}+\varepsilon_{1,t}\\
+y_{2,t} &amp; = &amp; c_2+\Sigma_{i=1}^{p}\Phi_i^{(21)}y_{1,t-i}+\Sigma_{i=1}^{p}\Phi_i^{(22)}y_{2,t-i}+\varepsilon_{2,t},
+\end{eqnarray*}\]</span>
+where <span class="math inline">\(\Phi_k^{(ij)}\)</span> denotes the element <span class="math inline">\((i,j)\)</span> of <span class="math inline">\(\Phi_k\)</span>.</p>
+<p>Then, <span class="math inline">\(y_{1,t}\)</span> is said not to Granger-cause <span class="math inline">\(y_{2,t}\)</span> if
+<span class="math display">\[
+\Phi_1^{(21)}=\Phi_2^{(21)}=\ldots=\Phi_p^{(21)}=0.
+\]</span>
+Therefore the hypothesis testing is
+<span class="math display">\[
+\begin{cases}
+H_{0}: &amp; \Phi_1^{(21)}=\Phi_2^{(21)}=\ldots=\Phi_p^{(21)}=0\\
+H_{1}: &amp; \Phi_1^{(21)}\neq0\mbox{ or }\Phi_2^{(21)}\neq0\mbox{ or}\ldots\Phi_p^{(21)}\neq0.\end{cases}
+\]</span>
+Loosely speaking, we reject <span class="math inline">\(H_{0}\)</span> if some of the coefficients on the lagged <span class="math inline">\(y_{1,t}\)</span>’s are statistically significant. Formally, this can be tested using the <span class="math inline">\(F\)</span>-test or asymptotic chi-square test. The <span class="math inline">\(F\)</span>-statistic is
+<span class="math display">\[
+F=\frac{(RSS-USS)/p}{USS/(T-2p-1)},
+\]</span>
+where RSS is the Restricted sum of squared residuals and USS is the Unrestricted sum of squared residuals. Under <span class="math inline">\(H_{0}\)</span>, the <span class="math inline">\(F\)</span>-statistic is distributed as <span class="math inline">\(\mathcal{F}(p,T-2p-1)\)</span>.</p>
+<p>Note that <span class="math inline">\(pF\underset{T \rightarrow \infty}{\rightarrow}\chi^{2}(p)\)</span>. Therefore, for large samples and under <span class="math inline">\(H_0\)</span>:
+<span class="math display">\[
+F \sim \chi^{2}(p)/p.
+\]</span></p>
+<p><strong>Factor-Augmented VAR (FAVAR)</strong></p>
+<p>VAR models are subject to the curse of dimensionality: If <span class="math inline">\(n\)</span>, is large, then the number of parameters (in <span class="math inline">\(n^2\)</span>) explodes.</p>
+<p>In the case where one suspects that the <span class="math inline">\(y_{i,t}\)</span>’s are mainly driven by a small number of random sources, a <strong>factor structure</strong> may be imposed (<span class="citation">Bernanke, Boivin, and Eliasz (<a href="references.html#ref-Bernanke_Boivin_Eliasz_2005" role="doc-biblioref">2005</a>)</span>).</p>
+<p>Let us denote by <span class="math inline">\(f_t\)</span> a <span class="math inline">\(k\)</span>-dimensional vector of latent factors accounting for important shares of the variances of the <span class="math inline">\(y_{i,t}\)</span>’s (with <span class="math inline">\(k \ll n\)</span>) and by <span class="math inline">\(x_t\)</span> is a small <span class="math inline">\(q\)</span>-dimensional subset of <span class="math inline">\(y_t\)</span> (with <span class="math inline">\(q \ll n\)</span>). The following factor structure is posited:
+<span class="math display">\[
+y_t = \Lambda^f f_t + \Lambda^x x_t + e_t,
+\]</span>
+where the <span class="math inline">\(e_t\)</span> are ``small’’ serially and mutually i.i.d. error terms.</p>
+<p>The model is complemented by positing a VAR dynamics for <span class="math inline">\([f_t',x_t']'\)</span>:
+<span class="math display" id="eq:FAVAR">\[\begin{equation}
+\left[\begin{array}{c}f_t\\x_t\end{array}\right] = \Phi(L)\left[\begin{array}{c}f_{t-1}\\x_{t-1}\end{array}\right] + v_t.\tag{3.11}
+\end{equation}\]</span></p>
+<p><span class="math inline">\(f_t\)</span> e.g. <span class="math inline">\(\equiv\)</span> the first <span class="math inline">\(k\)</span> principal components of <span class="math inline">\(y_t\)</span>.</p>
+<p>Standard identification techniques of structural shocks can be employed in Eq. <a href="vector-auto-regressive-var-models.html#eq:FAVAR">(3.11)</a>: Cholesky approach can be used for instance if the last component of <span class="math inline">\(x_t\)</span> is the short-term interest rate and if it is assumed that a MP shock has no contemporaneous impact on other macro-variables (in <span class="math inline">\(y_t\)</span>).</p>
+</div>
+<div id="identification-problem-and-standard-identification-techniques" class="section level2" number="3.1">
+<h2>
+<span class="header-section-number">3.1</span> Identification Problem and Standard Identification Techniques<a class="anchor" aria-label="anchor" href="#identification-problem-and-standard-identification-techniques"><i class="fas fa-link"></i></a>
+</h2>
+<p><strong>The Identification Issue</strong>*</p>
+<p>In the previous section, we have seen how to estimate <span class="math inline">\(\Omega\)</span> and the <span class="math inline">\(\Phi_k\)</span> matrices in the context of a VAR model. But the IRFs are functions of <span class="math inline">\(B\)</span> and the <span class="math inline">\(\Phi_k\)</span>’s, not of <span class="math inline">\(\Omega\)</span> the <span class="math inline">\(\Phi_k\)</span>’s. We have <span class="math inline">\(\Omega = BB'\)</span>, but this is not sufficient to recover <span class="math inline">\(B\)</span>.</p>
+<p>Indeed, seen a system of equations whose unknowns are the <span class="math inline">\(b_{i,j}\)</span>’s (components of <span class="math inline">\(B\)</span>), the system <span class="math inline">\(\Omega = BB'\)</span> contains only <span class="math inline">\(n(n+1)/2\)</span> linearly independent equations. Example for <span class="math inline">\(n=2\)</span>:
+<span class="math display">\[\begin{eqnarray*}
+&amp;&amp;\left[
+\begin{array}{cc}
+\omega_{11} &amp; \omega_{12} \\
+\omega_{12} &amp; \omega_{22}
+\end{array}
+\right] = \left[
+\begin{array}{cc}
+b_{11} &amp; b_{12} \\
+b_{21} &amp; b_{22}
+\end{array}
+\right]\left[
+\begin{array}{cc}
+b_{11} &amp; b_{21} \\
+b_{12} &amp; b_{22}
+\end{array}
+\right]\\
+&amp;\Leftrightarrow&amp;\left[
+\begin{array}{cc}
+\omega_{11} &amp; \omega_{12} \\
+\omega_{12} &amp; \omega_{22}
+\end{array}
+\right] = \left[
+\begin{array}{cc}
+b_{11}^2+b_{12}^2 &amp; {\color{red}b_{11}b_{21}+b_{12}b_{22}} \\
+{\color{red}b_{11}b_{21}+b_{12}b_{22}} &amp; b_{22}^2 + b_{21}^2
+\end{array}
+\right].
+\end{eqnarray*}\]</span></p>
+<p>We have 3 linearly independent equations but 4 unknowns. Therefore, <span class="math inline">\(B\)</span> is not identified based on second-order moments. Additional restrictions are required to identify <span class="math inline">\(B\)</span>.</p>
+<p>This section covers two standard identification schemes: <strong>short-run</strong> and <strong>long-run</strong> restrictions:</p>
+<ol style="list-style-type: decimal">
+<li>a <strong>short-run restriction (SRR)</strong> prevents a structural shock from affecting an endogenous variable contemporaneously.</li>
+</ol>
+<ul>
+<li>Easy to implement: the appropriate entries of <span class="math inline">\(B\)</span> are set to 0.</li>
+<li>Particular case: <strong>Cholesky, or recursive approach</strong>.</li>
+<li>Examples: <span class="citation">Bernanke (<a href="references.html#ref-BERNANKE198649" role="doc-biblioref">1986</a>)</span>, <span class="citation">Sims (<a href="references.html#ref-Sims_1986" role="doc-biblioref">1986</a>)</span>, <span class="citation">Galí (<a href="references.html#ref-Gali_1992" role="doc-biblioref">1992</a>)</span>, <span class="citation">Ruibio-Ramírez, Waggoner, and Zha (<a href="references.html#ref-RubioRamirez_et_al_2010" role="doc-biblioref">2010</a>)</span>.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>a <strong>long-run restriction (LRR)</strong> prevents a structural shock from having a cumulative impact on one of the endogenous variables.</li>
+</ol>
+<ul>
+<li>Additional computations are required to implement this. One needs to compute the cumulative effect of one of the structural shocks <span class="math inline">\(u_{t}\)</span> on one of the endogenous variable.</li>
+<li>Examples: <span class="citation">Blanchard and Quah (<a href="references.html#ref-Blanchard_Quah_1989" role="doc-biblioref">1989</a>)</span>, <span class="citation">Faust and Leeper (<a href="references.html#ref-Faust_Leeper_1997" role="doc-biblioref">1997</a>)</span>, <span class="citation">Galí (<a href="references.html#ref-Gali_1999" role="doc-biblioref">1999</a>)</span>, <span class="citation">Erceg, Guerrieri, and Gust (<a href="references.html#ref-Erceg_et_al_2005" role="doc-biblioref">2005</a>)</span>, <span class="citation">Christiano, Eichenbaum, and Vigfusson (<a href="references.html#ref-NBERc11177" role="doc-biblioref">2007</a>)</span>.</li>
+</ul>
+<p>The two approaches can be combined (see, e.g., <span class="citation">Gerlach and Smets (<a href="references.html#ref-Gerlach_Smets_1995" role="doc-biblioref">1995</a>)</span>).</p>
+<p><strong>A Simple Example</strong></p>
+<p>Consider the following stylized economic dynamics:
+<span class="math display" id="eq:systemI">\[\begin{equation}
+\begin{array}{clll}
+g_{t}&amp;=&amp; \bar{g}-\lambda(i_{t-1}-\mathbb{E}_{t-1}\pi_{t})+ \underbrace{{\color{blue}\sigma_d \eta_{d,t}}}_{\mbox{demand shock}}&amp; (\mbox{IS curve})\\
+\Delta \pi_{t} &amp; = &amp; \beta (g_{t} - \bar{g})+ \underbrace{{\color{blue}\sigma_{\pi} \eta_{\pi,t}}}_{\mbox{cost push shock}} &amp; (\mbox{Phillips curve})\\
+i_{t} &amp; = &amp; \rho i_{t-1} + \left[ \gamma_\pi \mathbb{E}_{t}\pi_{t+1}  + \gamma_g (g_{t} - \bar{g}) \right]\\
+&amp;&amp; \qquad \qquad+\underbrace{{\color{blue}\sigma_{mp} \eta_{mp,t}}}_{\mbox{Mon. Pol. shock}} &amp; (\mbox{Taylor rule}),
+\end{array}\tag{3.12}
+\end{equation}\]</span>
+where:
+<span class="math display" id="eq:covU">\[\begin{equation}
+\eta_t =
+\left[
+\begin{array}{c}
+\eta_{\pi,t}\\
+\eta_{d,t}\\
+\eta_{mp,t}
+\end{array}
+\right]
+\sim i.i.d.\,\mathcal{N}(0,I).\tag{3.13}
+\end{equation}\]</span></p>
+<p>Vector <span class="math inline">\(\eta_t\)</span> is a vector of Gaussian {structural shocks}, mutually and serially independent.</p>
+<p>On date <span class="math inline">\(t\)</span>:</p>
+<ul>
+<li>
+<span class="math inline">\(g_t\)</span> is contemporaneously affected by <span class="math inline">\(\eta_{d,t}\)</span> only;</li>
+<li>
+<span class="math inline">\(\pi_t\)</span> is contemporaneously affected by <span class="math inline">\(\eta_{\pi,t}\)</span> and <span class="math inline">\(\eta_{d,t}\)</span>;</li>
+<li>
+<span class="math inline">\(i_t\)</span> is contemporaneously affected by <span class="math inline">\(\eta_{mp,t}\)</span>, <span class="math inline">\(\eta_{\pi,t}\)</span> and <span class="math inline">\(\eta_{d,t}\)</span>.</li>
+</ul>
+<p>System <a href="vector-auto-regressive-var-models.html#eq:systemI">(3.12)</a> could be rewritten in the form:
+<span class="math display" id="eq:BBBB">\[\begin{equation}
+\left[\begin{array}{c}
+d_t\\
+\pi_t\\
+i_t
+\end{array}\right]
+= \Phi(L)
+\left[\begin{array}{c}
+d_{t-1}\\
+\pi_{t-1}\\
+i_{t-1} +
+\end{array}\right] +\underbrace{\underbrace{
+\left[
+\begin{array}{ccc}
+0 &amp; \bullet &amp; 0 \\
+\bullet &amp; \bullet &amp; 0 \\
+\bullet &amp; \bullet &amp; \bullet
+\end{array}
+\right]}_{=B} \eta_t}_{=\varepsilon_t}\tag{3.14}
+\end{equation}\]</span></p>
+<p>This is the <strong>reduced-form</strong> of the model. This representation suggests three additional restrictions on the entries of <span class="math inline">\(B\)</span>; the latter matrix is therefore identified (up to the signs of its columns) as soon as <span class="math inline">\(\Omega = BB'\)</span> is known.</p>
+<p>There are particular cases in which some well-known matrix decompositions of <span class="math inline">\(\mathbb{V}ar(\varepsilon_t)=\Omega_\varepsilon\)</span> can be used to easily estimate some specific SVAR.</p>
+<p>Consider the following context:</p>
+<ul>
+<li>A first shock (say, <span class="math inline">\(\eta_{n_1,t}\)</span>) can affect instantaneously
+(i.e., on date <span class="math inline">\(t\)</span>) only one of the endogenous variable (say, <span class="math inline">\(y_{n_1,t}\)</span>);</li>
+<li>A second shock (say, <span class="math inline">\(\eta_{n_2,t}\)</span>) can affect instantaneously
+(i.e., on date <span class="math inline">\(t\)</span>) the first two endogenous variables (say, <span class="math inline">\(y_{n_1,t}\)</span>
+and <span class="math inline">\(y_{n_2,t}\)</span>);</li>
+<li>…</li>
+</ul>
+<p>This implies (1) that column <span class="math inline">\(n_1\)</span> of <span class="math inline">\(B\)</span> has only 1 non-zero entry (this is the <span class="math inline">\(n_1^{th}\)</span> entry), (2) that column <span class="math inline">\(n_2\)</span> of <span class="math inline">\(B\)</span> has 2 non-zero entries (the <span class="math inline">\(n_1^{th}\)</span> and the <span class="math inline">\(n_2^{th}\)</span> ones), …</p>
+<p>Without loss of generality, we can set <span class="math inline">\(n_1=n\)</span>, <span class="math inline">\(n_2=n-1\)</span>, … In this context, matrix <span class="math inline">\(B\)</span> is lower triangular.</p>
+<p>The Cholesky decomposition of <span class="math inline">\(\Omega_{\varepsilon}\)</span> then provides an appropriate estimate of <span class="math inline">\(B\)</span>, that is a lower triangular matrix <span class="math inline">\(B\)</span> that is such that:
+<span class="math display">\[
+\Omega_\varepsilon = BB'.
+\]</span></p>
+<p>For instance, <span class="citation">Dedola and Lippi (<a href="references.html#ref-DEDOLA20051543" role="doc-biblioref">2005</a>)</span> estimate 5 structural VAR models for the US, the UK, Germany, France and Italy to analyse the monetary-policy transmission mechanisms. They estimate SVAR(5) models over the period 1975-1997. The shock-identification scheme is based on Cholesky decompositions, the ordering of the endogenous variables being: the industrial production, the consumer price index, a commodity price index, the short-term rate, monetary aggregate and the effective exchange rate (except for the US). This ordering implies that monetary policy reacts to the shocks affecting
+the first three variables but that the latter react to monetary policy shocks with a one-period lag.</p>
+<p>Importantly, the Cholesky approach can be useful if you are essentially interested in one structural shock. This was the case, e.g., of <span class="citation">Christiano, Eichenbaum, and Evans (<a href="references.html#ref-Christiano_Eichenbaum_Evans_1996" role="doc-biblioref">1996</a>)</span>. Their identification is based on the following relationship between <span class="math inline">\(\varepsilon_t\)</span> and <span class="math inline">\(\eta_t\)</span>:
+<span class="math display">\[
+\left[\begin{array}{c}
+\boldsymbol\varepsilon_{S,t}\\
+\varepsilon_{r,t}\\
+\boldsymbol\varepsilon_{F,t}
+\end{array}\right] =
+\left[\begin{array}{ccc}
+B_{SS} &amp; 0 &amp; 0 \\
+B_{rS} &amp; B_{rr} &amp; 0 \\
+B_{FS} &amp; B_{Fr} &amp; B_{FF}
+\end{array}\right]
+\left[\begin{array}{c}
+\boldsymbol\eta_{S,t}\\
+\eta_{r,t}\\
+\boldsymbol\eta_{F,t}
+\end{array}\right],
+\]</span>
+where <span class="math inline">\(S\)</span>, <span class="math inline">\(r\)</span> and <span class="math inline">\(F\)</span> respectively correspond to <em>slow-moving variables</em>, the policy variable (short-term rate) and <em>fast-moving variables</em>. While <span class="math inline">\(\eta_{r,t}\)</span> is scalar, <span class="math inline">\(\boldsymbol\eta_{S,t}\)</span> and <span class="math inline">\(\boldsymbol\eta_{F,t}\)</span> may be vectors. The space spanned by <span class="math inline">\(\boldsymbol\varepsilon_{S,t}\)</span> is the same as that spanned by <span class="math inline">\(\boldsymbol\eta_{S,t}\)</span>. As a result, because <span class="math inline">\(\varepsilon_{r,t}\)</span> is a linear combination of <span class="math inline">\(\eta_{r,t}\)</span> and <span class="math inline">\(\boldsymbol\eta_{S,t}\)</span> (which are <span class="math inline">\(\perp\)</span>), it comes that the <span class="math inline">\(B_{rr}\eta_{r,t}\)</span>’s are the (population) residuals in the regression of <span class="math inline">\(\varepsilon_{r,t}\)</span> on <span class="math inline">\(\boldsymbol\varepsilon_{S,t}\)</span>. Because <span class="math inline">\(\mathbb{V}ar(\eta_{r,t})=1\)</span>, <span class="math inline">\(B_{rr}\)</span> is given by the square root of the variance of <span class="math inline">\(B_{rr}\eta_{r,t}\)</span>. <span class="math inline">\(B_{F,r}\)</span> is finally obtained by regressing the components of <span class="math inline">\(\boldsymbol\varepsilon_{F,t}\)</span> on <span class="math inline">\(\eta_{r,t}\)</span>.</p>
+<p>An equivalent approach consists in computing the Cholesky decomposition of <span class="math inline">\(BB'\)</span> and keep only the column corresponding to the policy variable.</p>
+<p><strong>Long-run restrictions</strong></p>
+<p>A second type of restriction relates to the long-run influence of a shock on an endogenous variable. Let us consider for instance a structural shock that is assumed to have no “long-run influence” on GDP. How to express this? The long-run change in GDP can be expressed as <span class="math inline">\(GDP_{t+h} - GDP_t\)</span>, with <span class="math inline">\(h\)</span> large. Note further that:
+<span class="math display">\[
+GDP_{t+h} - GDP_t = \Delta GDP_{t+h} +\Delta GDP_{t+h-1} + \dots + \Delta GDP_{t+1}.
+\]</span>
+Hence, the fact that a given structural shock (<span class="math inline">\(\eta_{i,t}\)</span>, say) has no long-run influence on GDP means that
+<span class="math display">\[
+\lim_{h\rightarrow\infty}\frac{\partial GDP_{t+h}}{\partial \eta_{i,t}} = \lim_{h\rightarrow\infty} \frac{\partial}{\partial \eta_{i,t}}\left(\sum_{k=1}^h \Delta  GDP_{t+k}\right)= 0.
+\]</span></p>
+<p>This can be easily formulated as a function of <span class="math inline">\(B\)</span> when <span class="math inline">\(y_t\)</span> (including <span class="math inline">\(\Delta GDP_t\)</span>) follows a VAR(MA) process.</p>
+<p>As was shown previously (Eq. <a href="vector-auto-regressive-var-models.html#eq:ystarVAR">(3.9)</a>), one can always write a VAR(<span class="math inline">\(p\)</span>) as a VAR(1). Consequently, let us focus on the VAR(1) case:
+<span class="math display">\[\begin{eqnarray}
+y_{t} &amp;=&amp; c+\Phi y_{t-1}+\varepsilon_{t}\\
+&amp; = &amp; c+\varepsilon_{t}+\Phi(c+\varepsilon_{t-1})+\ldots+\Phi^{k}(c+\varepsilon_{t-k})+\ldots \nonumber \\
+&amp; = &amp; \mu +\varepsilon_{t}+\Phi\varepsilon_{t-1}+\ldots+\Phi^{k}\varepsilon_{t-k}+\ldots \\
+&amp; = &amp; \mu +B\eta_{t}+\Phi B\eta_{t-1}+\ldots+\Phi^{k}B\eta_{t-k}+\ldots,
+\end{eqnarray}\]</span></p>
+<p>The sequence of shocks <span class="math inline">\(\{\eta_t\}\)</span> determines the sequence <span class="math inline">\(\{y_t\}\)</span>. What if <span class="math inline">\(\{\eta_t\}\)</span> is replaced by <span class="math inline">\(\{\tilde{\eta}_t\}\)</span>, where <span class="math inline">\(\tilde{\eta}_t=\eta_t\)</span> if <span class="math inline">\(t \ne s\)</span> and <span class="math inline">\(\tilde{\eta}_s=\eta_s + \gamma\)</span>?</p>
+<p>Assume <span class="math inline">\(\{\tilde{y}_t\}\)</span> is the associated “perturbated” sequence. We have <span class="math inline">\(\tilde{y}_t = y_t\)</span> if <span class="math inline">\(t&lt;s\)</span>. For <span class="math inline">\(t \ge s\)</span>, the Wold decomposition of <span class="math inline">\(\{\tilde{y}_t\}\)</span> implies:
+<span class="math display">\[
+\tilde{y}_t = y_t + \Phi^{t-s} B \gamma.
+\]</span></p>
+<p>Therefore, the cumulative impact of <span class="math inline">\(\gamma\)</span> on <span class="math inline">\(\tilde{y}_t\)</span> will be (for <span class="math inline">\(t \ge s\)</span>):
+<span class="math display" id="eq:cumul">\[\begin{eqnarray}
+(\tilde{y}_t - y_t) +  (\tilde{y}_{t-1} - y_{t-1}) + \dots +  (\tilde{y}_s - y_s) &amp;=&amp; \nonumber \\
+(Id + \Phi + \Phi^2 + \dots + \Phi^{t-s}) B \gamma.&amp;&amp; \tag{3.15}
+\end{eqnarray}\]</span></p>
+<p>Consider a shock on <span class="math inline">\(\eta_{1,t}\)</span>, with a magnitude of <span class="math inline">\(1\)</span>. This shock is <span class="math inline">\(\gamma = [1,0,\dots,0]'\)</span>. Given Eq. @ref{eq:cumul), the long-run cumulative effect of this shock on the endogenous variables is given by:
+<span class="math display">\[
+(Id+\Phi+\ldots+\Phi^{k}+\ldots)B\left[\begin{array}{c}
+1\\
+0\\
+\vdots\\
+0\end{array}\right],
+\]</span>
+that is the first column of <span class="math inline">\(\Theta \equiv (I+\Phi+\ldots+\Phi^{k}+\ldots)B\)</span>.</p>
+<p>In this context, consider the following long-run restriction: <em>“<span class="math inline">\(j^{th}\)</span> structural shock has no cumulative impact on the <span class="math inline">\(i^{th}\)</span> endogenous variable”</em> is equivalent to
+<span class="math display">\[
+\Theta_{ij}=0,
+\]</span>
+where <span class="math inline">\(\Theta_{ij}\)</span> is the element <span class="math inline">\((i,j)\)</span> of <span class="math inline">\(\Theta\)</span>.</p>
+<p><span class="citation">Blanchard and Quah (<a href="references.html#ref-Blanchard_Quah_1989" role="doc-biblioref">1989</a>)</span> implement long-run restrictions in a small-scale VAR. Two variables are considered: GDP and unemployment. Consequently, the VAR is affected by two types of shocks. The authors want to identify <strong>supply shocks</strong> (that can have a permanent effect on output) and <strong>demand shocks</strong> (that cannot have a permanent effect on output).</p>
+<p>The motivation of the authors regarding their long-run restrictions can be obtained from a traditional Keynesian view of fluctuations. The authors propose a variant of a model from <span class="citation">Fischer (<a href="references.html#ref-Fischer_1977" role="doc-biblioref">1977</a>)</span>:
+<span class="math display" id="eq:WS">\[\begin{eqnarray}
+Y_{t} &amp; = &amp; M_{t}-P_{t}+a.\theta_{t}\tag{3.16}\\
+Y_{t} &amp; = &amp; N_{t}+\theta_{t}\tag{3.17}\\
+P_{t} &amp; = &amp; W_{t}-\theta_{t}\tag{3.18}\\
+W_{t} &amp; = &amp; W\mid\left\{ \mathbb{E}_{t-1}N_{t}=\overline{N}\right\}. \tag{3.19}
+\end{eqnarray}\]</span>
+To close the model, the authors assume the following dynamics for the money supply and the productivity:
+<span class="math display">\[\begin{eqnarray*}
+M_{t} &amp; = &amp; M_{t-1}+\varepsilon_{t}^{d}\\
+\theta_{t} &amp; = &amp; \theta_{t-1}+\varepsilon_{t}^{s}.
+\end{eqnarray*}\]</span>
+In this context, it can be shown that
+<span class="math display">\[\begin{eqnarray*}
+\Delta Y_{t} &amp; = &amp; (\varepsilon_{t}^{d}-\varepsilon_{t-1}^{d})+a.(\varepsilon_{t}^{s}-\varepsilon_{t-1}^{s})+\varepsilon_{t}^{s}\\
+u_{t} &amp; = &amp; -\varepsilon_{t}^{d}-a\varepsilon_{t}^{s}
+\end{eqnarray*}\]</span>
+Then, it appears that the demand shocks have no long-run cumulative impact on <span class="math inline">\(\Delta Y_{t}\)</span>, the GDP growth, i.e. no long-term impact on output <span class="math inline">\(Y_t\)</span>. The vector of endogenous variables is <span class="math inline">\(y_t = [\Delta Y_{t} \quad u_{t}]'\)</span> where <span class="math inline">\(\Delta Y_{t}\)</span> denotes the GDP growth. Estimation data are quarterly, and span the period from 1950:2 to 1987:4; 8 lags are used in the VAR model.</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="intro.html"><span class="header-section-number">2</span> Introduction</a></div>
+<div class="next"><a href="appendix.html"><span class="header-section-number">4</span> Appendix</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li>
+<a class="nav-link" href="#vector-auto-regressive-var-models"><span class="header-section-number">3</span> Vector Auto-Regressive (VAR) models</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#var-estimation"><span class="header-section-number">3.0.1</span> VAR estimation</a></li></ul>
+</li>
+<li><a class="nav-link" href="#identification-problem-and-standard-identification-techniques"><span class="header-section-number">3.1</span> Identification Problem and Standard Identification Techniques</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Advanced Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-09-05.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

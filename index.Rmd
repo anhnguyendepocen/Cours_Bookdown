@@ -10,11 +10,17 @@ biblio-style: apalike
 link-citations: yes
 github-repo: rstudio/bookdown-demo
 description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
+css: "my-style.css"
 ---
 
 <!-- Declare new latex code: -->
 \newcommand{\bv}[1]{\mathbf{#1}} 
 
+<!-- \usepackage{mdframed} -->
+<!-- \mdfdefinestyle{theoremSty}{backgroundcolor=yellow!10, linewidth=0pt, innerleftmargin=1ex, innerrightmargin=1ex, innertopmargin=1ex, innerbottommargin=1ex, innermargin =+0cm, outermargin =+0cm} -->
+<!-- \mdfdefinestyle{DefSty}{backgroundcolor=gray!10, linewidth=0pt, innerleftmargin=1ex, innerrightmargin=1ex, innertopmargin=1ex, innerbottommargin=1ex, innermargin =+0cm, outermargin =+0cm} -->
+<!-- \newmdtheoremenv[style=theoremSty]{proposition}{Proposition} -->
+<!-- \newmdtheoremenv[style=theoremSty]{definition}{Definition} -->
 
 # Prerequisites
 

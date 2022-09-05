@@ -449,7 +449,7 @@ and therefore use $s^2_{pooled} - \hat{\sigma}_e^2$ as an approximation to $\sig
 
 ### Example: Macro-History database
 
-Date from @JST_2017 [see website](https://www.macrohistory.net).
+Date from @JST_2017 [see website](https://www.macrohistory.net). This is version 6.
 
 ```{r JSTpanel, warning=FALSE}
 JST <- read.csv("https://raw.githubusercontent.com/jrenne/Data4courses/master/JST/JSTdatasetR6.csv")

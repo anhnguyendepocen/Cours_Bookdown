@@ -74,16 +74,16 @@ rownames(table_F) <- RowNames
 knitr::kable(table_F, caption = "Quantiles of the $\\mathcal{F}$ distribution. The columns and rows correspond to different degrees of freedom (resp. $n_1$ and $n_2$). The different panels correspond to different probabilities ($\\alpha$) The corresponding cell gives $z$ that is s.t. $\\mathbb{P}(X \\le z)=\\alpha$, with $X \\sim \\mathcal{F}(n_1,n_2)$.", digits=3)
 ```
 
-## Statistics: defintitions and results
+## Statistics: definitions and results
 
 :::{.definition #skewnesskurtosis name="Skewness and kurtosis"}
 Let $Y$ be a random variable whose fourth moment exists. The expectation of $Y$ is denoted by $\mu$.
 
-* The {\color{blue}skewness} of $Y$ is given by:
+* The \color{blue}{skewness} of $Y$ is given by:
 $$
 \frac{\mathbb{E}[(Y-\mu)^3]}{\{\mathbb{E}[(Y-\mu)^2]\}^{3/2}}.
 $$
-* The {\color{blue}kurtosis} of $Y$ is given by:
+* The \color{blue}{kurtosis} of $Y$ is given by:
 $$
 \frac{\mathbb{E}[(Y-\mu)^4]}{\{\mathbb{E}[(Y-\mu)^2]\}^{2}}.
 $$
@@ -221,7 +221,7 @@ The random variable sequence $x_n$ converges almost surely to $c$ if $\mathbb{P}
 It is denoted as: $x_n \overset{a.s.}{\rightarrow} c$.
 :::
 
-:::{.definition #cvgcedistri name="Convergence in distribution"}
+:::{.definition #cvgceDistri name="Convergence in distribution"}
 $x_n$ is said to converge in distribution (or in law) to $x$ if
 $$
 \lim_{n \rightarrow \infty} F_{x_n}(s) = F_{x}(s)
@@ -419,7 +419,7 @@ We have:
 :::
 
 :::{.definition #asmyptlevel name="Asymptotic level"}
-An asymptotic test with critical region $\Omega_n$ has an {\color{blue}asymptotic level} equal to $\alpha$ if:
+An asymptotic test with critical region $\Omega_n$ has an \color{blue}{asymptotic level} equal to $\alpha$ if:
 $$
 \underset{\theta \in \Theta}{\mbox{sup}} \quad \underset{n \rightarrow \infty}{\mbox{lim}} \mathbb{P}_\theta (S_n \in \Omega_n) = \alpha,
 $$
@@ -455,6 +455,112 @@ ii. $I(f,f^*) = 0$ iff $f \equiv f^*$.
 :::{.proof}
 $x \rightarrow -\log(x)$ is a convex function. Therefore $\mathbb{E}^*(-\log f(Y)/f^*(Y)) \ge -\log \mathbb{E}^*(f(Y)/f^*(Y)) = 0$ (proves (i)). Since $x \rightarrow -\log(x)$ is strictly convex, equality in (i) holds if and only if $f(Y)/f^*(Y)$ is constant (proves (ii)).
 :::
+
+***
+:::{.proposition #absMs name="Square and absolute summability"}
+We have:
+$$
+\underbrace{\sum_{i=0}^{\infty}|\theta_i| < + \infty}_{\mbox{Absolute summability}} \Rightarrow \underbrace{\sum_{i=0}^{\infty} \theta_i^2 < + \infty}_{\mbox{Square summability}}.
+$$
+:::
+***
+:::{.proof}
+See Appendix 3.A in Hamilton. Idea: Absolute summability implies that there exist $N$ such that, for $j>N$, $|\theta_j| < 1$ (deduced from Cauchy criterion, Theorem \@ref(thm:cauchycritstatic) and therefore $\theta_j^2 < |\theta_j|$.
+:::
+
+## Some properties of Gaussian variables {#GaussianVar}
+
+***
+:::{.proposition #update name="Bayesian update in a vector of Gaussian variables"}
+If
+$$
+\left[
+\begin{array}{c}
+Y_1\\
+Y_2
+\end{array}
+\right]
+\sim \mathcal{N}
+\left(0,
+\left[\begin{array}{cc}
+\Omega_{11} & \Omega_{12}\\
+\Omega_{21} & \Omega_{22}
+\end{array}\right]
+\right),
+$$
+then
+$$
+Y_{2}|Y_{1} \sim \mathcal{N}
+\left(
+\Omega_{21}\Omega_{11}^{-1}Y_{1},\Omega_{22}-\Omega_{21}\Omega_{11}^{-1}\Omega_{12}
+\right).
+$$
+$$
+Y_{1}|Y_{2} \sim \mathcal{N}
+\left(
+\Omega_{12}\Omega_{22}^{-1}Y_{2},\Omega_{11}-\Omega_{12}\Omega_{22}^{-1}\Omega_{21}
+\right).
+$$
+:::
+***
+
+***
+:::{.proposition #truncated name="Truncated distributions"}
+
+If $X$ is a random variable distributed according to some p.d.f. $f$, with c.d.f. $F$, with infinite support. Then the p.d.f. of $X|a \le X < b$ is
+$$
+g(x) = \frac{f(x)}{F(b)-F(a)}\mathbb{I}_{\{a \le x < b\}},
+$$
+for any $a<b$.
+
+In partiucular, for a Gaussian variable $X \sim \mathcal{N}(\mu,\sigma^2)$, we have
+$$
+f(X=x|a\le X<b) = \dfrac{\dfrac{1}{\sigma}\phi\left(\dfrac{x - \mu}{\sigma}\right)}{Z}.
+$$
+with $Z = \Phi(\beta)-\Phi(\alpha)$, where $\alpha = \dfrac{a - \mu}{\sigma}$ and $\beta = \dfrac{b - \mu}{\sigma}$.
+
+Moreover:
+\begin{eqnarray}
+\mathbb{E}(X|a\le X<b) &=& \mu - \frac{\phi\left(\beta\right)-\phi\left(\alpha\right)}{Z}\sigma. (\#eq:Etrunc)
+\end{eqnarray}
+
+We also have:
+\begin{eqnarray}
+&& \mathbb{V}ar(X|a\le X<b) \nonumber\\
+&=& \sigma^2\left[
+1 -  \frac{\beta\phi\left(\beta\right)-\alpha\phi\left(\alpha\right)}{Z} -  \left(\frac{\phi\left(\beta\right)-\phi\left(\alpha\right)}{Z}\right)^2 \right] (\#eq:Vtrunc)
+\end{eqnarray}
+
+In particular, for $b \rightarrow \infty$, we get:
+\begin{equation}
+\mathbb{V}ar(X|a < X) = \sigma^2\left[1 + \alpha\lambda(-\alpha) - \lambda(-\alpha)^2 \right], (\#eq:Vtrunc2)
+\end{equation}
+with $\lambda(x)=\dfrac{\phi(x)}{\Phi(x)}$ is called the **inverse Mills ratio**.
+:::
+***
+
+Consider the case where $a \rightarrow - \infty$ (i.e. the conditioning set is $X<b$) and $\mu=0$, $\sigma=1$. Then Eq. \@ref(eq:Etrunc) gives $\mathbb{E}(X|X<b) = - \lambda(b) = - \dfrac{\phi(b)}{\Phi(b)}$, where $\lambda$ is the function computing the inverse Mills ratio.
+
+```{r inverseMills, echo=FALSE, fig.cap="$\\mathbb{E}(X|X<b)$ as a function of $b$ when $X\\sim \\mathcal{N}(0,1)$ (in black).", fig.align = 'center'}
+x <- seq(-10,10,by=.01)
+par(mfrow=c(1,1))
+par(plt=c(.15,.95,.25,.95))
+plot(x,-dnorm(x)/pnorm(x),type="l",lwd=2,
+     xlab="b",ylab="inverse Mills ratio",
+     ylim=c(-10,5))
+lines(c(-20,20),c(-20,20),col="red")
+abline(h=0,col="grey")
+lines(x,-dnorm(x)/pnorm(x),lwd=2)
+```
+
+
+:::{.proposition #pdfMultivarGaussian name="p.d.f. of a multivariate Gaussian variable"}
+If $Y \sim \mathcal{N}(\mu,\Omega)$ and if $Y$ is a $n$-dimensional vector, then the density function of $Y$ is:
+$$
+\frac{1}{(2 \pi)^{n/2}|\Omega|^{1/2}}\exp\left[-\frac{1}{2}\left(Y-\mu\right)'\Omega^{-1}\left(Y-\mu\right)\right].
+$$
+:::
+
 
 ## Proofs
 
@@ -660,3 +766,206 @@ $$
 where $\boldsymbol\theta_\infty$, the pseudo true value, is such that $h(\boldsymbol\theta_\infty) \ne 0$ (by definition of $H_1$). From the Kullback inequality and the asymptotic identifiability of $\boldsymbol\theta_0$, it follows that $\mathbb{E}_0[\log f(Y;\boldsymbol\theta_0) - \log f(Y;\boldsymbol\theta_\infty)] >0$. Therefore $\xi_n^{LR} \rightarrow + \infty$ under $H_1$.
 :::
 
+
+### Proof of Eq. \@ref(eq:TCL2) {#proofTVTCL}
+
+:::{.proof}
+We have:
+\begin{eqnarray*}
+&&T\mathbb{E}\left[(\bar{y}_T - \mu)^2\right]\\
+&=& T\mathbb{E}\left[\left(\frac{1}{T}\sum_{t=1}^T(y_t - \mu)\right)^2\right] = \frac{1}{T} \mathbb{E}\left[\sum_{t=1}^T(y_t - \mu)^2+2\sum_{s<t\le T}(y_t - \mu)(y_s - \mu)\right]\\
+&=& \gamma_0 +\frac{2}{T}\left(\sum_{t=2}^{T}\mathbb{E}\left[(y_t - \mu)(y_{t-1} - \mu)\right]\right) +\frac{2}{T}\left(\sum_{t=3}^{T}\mathbb{E}\left[(y_t - \mu)(y_{t-2} - \mu)\right]\right) + \dots \\
+&&+ \frac{2}{T}\left(\sum_{t=T-1}^{T}\mathbb{E}\left[(y_t - \mu)(y_{t-(T-2)} - \mu)\right]\right) + \frac{2}{T}\mathbb{E}\left[(y_t - \mu)(y_{t-(T-1)} - \mu)\right]\\
+&=&  \gamma_0 + 2 \frac{T-1}{T}\gamma_1 + \dots + 2 \frac{1}{T}\gamma_{T-1} .
+\end{eqnarray*}
+Therefore:
+\begin{eqnarray*}
+T\mathbb{E}\left[(\bar{y}_T - \mu)^2\right] - \sum_{j=-\infty}^{+\infty} \gamma_j &=& - 2\frac{1}{T}\gamma_1 - 2\frac{2}{T}\gamma_2 - \dots - 2\frac{T-1}{T}\gamma_{T-1} - 2\gamma_T - 2 \gamma_{T+1} + \dots
+\end{eqnarray*}
+And then:
+$$
+\left|T\mathbb{E}\left[(\bar{y}_T - \mu)^2\right] - \sum_{j=-\infty}^{+\infty} \gamma_j\right| \le 2\frac{1}{T}|\gamma_1| + 2\frac{2}{T}|\gamma_2| + \dots + 2\frac{T-1}{T}|\gamma_{T-1}| + 2|\gamma_T| + 2 |\gamma_{T+1}| + \dots
+$$
+
+For any $q \le T$, we have:
+\begin{eqnarray*}
+\left|T\mathbb{E}\left[(\bar{y}_T - \mu)^2\right] - \sum_{j=-\infty}^{+\infty} \gamma_j\right| &\le& 2\frac{1}{T}|\gamma_1| + 2\frac{2}{T}|\gamma_2| + \dots + 2\frac{q-1}{T}|\gamma_{q-1}| +2\frac{q}{T}|\gamma_q| +\\
+&&2\frac{q+1}{T}|\gamma_{q+1}| + \dots  + 2\frac{T-1}{T}|\gamma_{T-1}| + 2|\gamma_T| + 2 |\gamma_{T+1}| + \dots\\
+&\le& \frac{2}{T}\left(|\gamma_1| + 2|\gamma_2| + \dots + (q-1)|\gamma_{q-1}| +q|\gamma_q|\right) +\\
+&&2|\gamma_{q+1}| + \dots  + 2|\gamma_{T-1}| + 2|\gamma_T| + 2 |\gamma_{T+1}| + \dots
+\end{eqnarray*}
+
+Consider $\varepsilon > 0$. The fact that the autocovariances are absolutely summable implies that there exists $q_0$ such that (Cauchy criterion, Theorem \@ref(thm:cauchycritstatic)):
+$$
+2|\gamma_{q_0+1}|+2|\gamma_{q_0+2}|+2|\gamma_{q_0+3}|+\dots < \varepsilon/2.
+$$
+Then, if $T > q_0$, it comes that:
+$$
+\left|T \mathbb{E}\left[(\bar{y}_T - \mu)^2\right] - \sum_{j=-\infty}^{+\infty} \gamma_j\right|\le \frac{2}{T}\left(|\gamma_1| + 2|\gamma_2| + \dots + (q_0-1)|\gamma_{q_0-1}| +q_0|\gamma_{q_0}|\right) + \varepsilon/2.
+$$
+If $T \ge 2\left(|\gamma_1| + 2|\gamma_2| + \dots + (q_0-1)|\gamma_{q_0-1}| +q_0|\gamma_{q_0}|\right)/(\varepsilon/2)$ ($= f(q_0)$, say) then
+$$
+\frac{2}{T}\left(|\gamma_1| + 2|\gamma_2| + \dots + (q_0-1)|\gamma_{q_0-1}| +q_0|\gamma_{q_0}|\right) \le \varepsilon/2.
+$$
+Then, if $T>f(q_0)$ and $T>q_0$, i.e. if $T>\max(f(q_0),q_0)$, we have:
+$$
+\left|T \mathbb{E}\left[(\bar{y}_T - \mu)^2\right] - \sum_{j=-\infty}^{+\infty} \gamma_j\right|\le \varepsilon.
+$$
+:::
+
+### Proof of Proposition \@ref(prp:smallestMSE) {#smallestMSE}
+
+:::{.proof}
+We have:
+\begin{eqnarray}
+\mathbb{E}([y_{t+1} - y^*_{t+1}]^2) &=& \mathbb{E}\left([\color{blue}{\{y_{t+1} - \mathbb{E}(y_{t+1}|x_t)\}} + \color{red}{\{\mathbb{E}(y_{t+1}|x_t)  - y^*_{t+1}\}}]^2\right)\nonumber\\
+&=&  \mathbb{E}\left(\color{blue}{[y_{t+1} - \mathbb{E}(y_{t+1}|x_t)]}^2\right) + \mathbb{E}\left(\color{red}{[\mathbb{E}(y_{t+1}|x_t)  - y^*_{t+1}]}^2\right)\nonumber\\
+&& + 2\mathbb{E}\left( \color{blue}{[y_{t+1} - \mathbb{E}(y_{t+1}|x_t)]}\color{red}{ [\mathbb{E}(y_{t+1}|x_t)  - y^*_{t+1}]}\right). (\#eq:1)
+\end{eqnarray}
+Let us focus on the last term. We have:
+\begin{eqnarray*}
+&&\mathbb{E}\left(\color{blue}{[y_{t+1} - \mathbb{E}(y_{t+1}|x_t)]}\color{red}{ [\mathbb{E}(y_{t+1}|x_t)  - y^*_{t+1}]}\right)\\
+&=& \mathbb{E}( \mathbb{E}( \color{blue}{[y_{t+1} - \mathbb{E}(y_{t+1}|x_t)]}\color{red}{ \underbrace{[\mathbb{E}(y_{t+1}|x_t)  - y^*_{t+1}]}_{\mbox{function of $x_t$}}}|x_t))\\
+&=& \mathbb{E}( \color{red}{ [\mathbb{E}(y_{t+1}|x_t)  - y^*_{t+1}]} \mathbb{E}( \color{blue}{[y_{t+1} - \mathbb{E}(y_{t+1}|x_t)]}|x_t))\\
+&=& \mathbb{E}( \color{red}{ [\mathbb{E}(y_{t+1}|x_t)  - y^*_{t+1}]} \color{blue}{\underbrace{[\mathbb{E}(y_{t+1}|x_t) - \mathbb{E}(y_{t+1}|x_t)]}_{=0}})=0.
+\end{eqnarray*}
+
+Therefore, Eq. \@ref(eq:1) becomes:
+\begin{eqnarray*}
+&&\mathbb{E}([y_{t+1} - y^*_{t+1}]^2) \\
+&=&  \underbrace{\mathbb{E}\left(\color{blue}{[y_{t+1} - \mathbb{E}(y_{t+1}|x_t)]}^2\right)}_{\mbox{$\ge 0$ and does not depend on $y^*_{t+1}$}} + \underbrace{\mathbb{E}\left(\color{red}{[\mathbb{E}(y_{t+1}|x_t)  - y^*_{t+1}]}^2\right)}_{\mbox{$\ge 0$ and depends on $y^*_{t+1}$}}.
+\end{eqnarray*}
+This implies that $\mathbb{E}([y_{t+1} - y^*_{t+1}]^2)$ is always larger than $\color{blue}{\mathbb{E}([y_{t+1} - \mathbb{E}(y_{t+1}|x_t)]^2)}$, and is therefore minimized if the second term is equal to zero, that is if $\mathbb{E}(y_{t+1}|x_t) = y^*_{t+1}$.
+:::
+
+### Proof of Proposition \@ref(prp:estimVARGaussian) {#estimVARGaussian}
+
+:::{.proof}
+Using Proposition \@ref(prp:multivarG) (in Appendix \@ref(XXX)), we obtain that, conditionally on $x_1$, the log-likelihood is given by
+\begin{eqnarray*}
+\log\mathcal{L}(Y_{T};\theta) & = & -(Tn/2)\log(2\pi)+(T/2)\log\left|\Omega^{-1}\right|\\
+&  & -\frac{1}{2}\sum_{t=1}^{T}\left[\left(y_{t}-\Pi'x_{t}\right)'\Omega^{-1}\left(y_{t}-\Pi'x_{t}\right)\right].
+\end{eqnarray*}
+Let's rewrite the last term of the log-likelihood:
+\begin{eqnarray*}
+\sum_{t=1}^{T}\left[\left(y_{t}-\Pi'x_{t}\right)'\Omega^{-1}\left(y_{t}-\Pi'x_{t}\right)\right] & =\\
+\sum_{t=1}^{T}\left[\left(y_{t}-\hat{\Pi}'x_{t}+\hat{\Pi}'x_{t}-\Pi'x_{t}\right)'\Omega^{-1}\left(y_{t}-\hat{\Pi}'x_{t}+\hat{\Pi}'x_{t}-\Pi'x_{t}\right)\right] & =\\
+\sum_{t=1}^{T}\left[\left(\hat{\varepsilon}_{t}+(\hat{\Pi}-\Pi)'x_{t}\right)'\Omega^{-1}\left(\hat{\varepsilon}_{t}+(\hat{\Pi}-\Pi)'x_{t}\right)\right],
+\end{eqnarray*}
+where the $j^{th}$ element of the $(n\times1)$ vector $\hat{\varepsilon}_{t}$ is the sample residual, for observation $t$, from an OLS regression of $y_{j,t}$ on $x_{t}$. Expanding the previous equation, we get:
+\begin{eqnarray*}
+&&\sum_{t=1}^{T}\left[\left(y_{t}-\Pi'x_{t}\right)'\Omega^{-1}\left(y_{t}-\Pi'x_{t}\right)\right]  = \sum_{t=1}^{T}\hat{\varepsilon}_{t}'\Omega^{-1}\hat{\varepsilon}_{t}\\
+&&+2\sum_{t=1}^{T}\hat{\varepsilon}_{t}'\Omega^{-1}(\hat{\Pi}-\Pi)'x_{t}+\sum_{t=1}^{T}x'_{t}(\hat{\Pi}-\Pi)\Omega^{-1}(\hat{\Pi}-\Pi)'x_{t}.
+\end{eqnarray*}
+Let's apply the trace operator on the second term (that is a scalar):
+\begin{eqnarray*}
+\sum_{t=1}^{T}\hat{\varepsilon}_{t}'\Omega^{-1}(\hat{\Pi}-\Pi)'x_{t} & = & Tr\left(\sum_{t=1}^{T}\hat{\varepsilon}_{t}'\Omega^{-1}(\hat{\Pi}-\Pi)'x_{t}\right)\\
+=  Tr\left(\sum_{t=1}^{T}\Omega^{-1}(\hat{\Pi}-\Pi)'x_{t}\hat{\varepsilon}_{t}'\right) & = & Tr\left(\Omega^{-1}(\hat{\Pi}-\Pi)'\sum_{t=1}^{T}x_{t}\hat{\varepsilon}_{t}'\right).
+\end{eqnarray*}
+Given that, by construction (property of OLS estimates), the sample residuals are orthogonal to the explanatory variables, this term is zero. Introducing $\tilde{x}_{t}=(\hat{\Pi}-\Pi)'x_{t}$, we have
+\begin{eqnarray*}
+\sum_{t=1}^{T}\left[\left(y_{t}-\Pi'x_{t}\right)'\Omega^{-1}\left(y_{t}-\Pi'x_{t}\right)\right] =\sum_{t=1}^{T}\hat{\varepsilon}_{t}'\Omega^{-1}\hat{\varepsilon}_{t}+\sum_{t=1}^{T}\tilde{x}'_{t}\Omega^{-1}\tilde{x}_{t}.
+\end{eqnarray*}
+Since $\Omega$ is a positive definite matrix, $\Omega^{-1}$ is as well. Consequently, the smallest value that the last term can take is obtained for $\tilde{x}_{t}=0$, i.e. when $\Pi=\hat{\Pi}.$
+
+The MLE of $\Omega$ is the matrix $\hat{\Omega}$ that maximizes $\Omega\overset{\ell}{\rightarrow}L(Y_{T};\hat{\Pi},\Omega)$. We have:
+\begin{eqnarray*}
+\log\mathcal{L}(Y_{T};\hat{\Pi},\Omega) & = & -(Tn/2)\log(2\pi)+(T/2)\log\left|\Omega^{-1}\right| -\frac{1}{2}\sum_{t=1}^{T}\left[\hat{\varepsilon}_{t}'\Omega^{-1}\hat{\varepsilon}_{t}\right].
+\end{eqnarray*}
+
+Matrix $\hat{\Omega}$ is a symmetric positive definite. It is easily checked that the (unrestricted) matrix that maximizes the latter expression is symmetric positive definite matrix. Indeed:
+$$
+\frac{\partial \log\mathcal{L}(Y_{T};\hat{\Pi},\Omega)}{\partial\Omega}=\frac{T}{2}\Omega'-\frac{1}{2}\sum_{t=1}^{T}\hat{\varepsilon}_{t}\hat{\varepsilon}'_{t}\Rightarrow\hat{\Omega}'=\frac{1}{T}\sum_{t=1}^{T}\hat{\varepsilon}_{t}\hat{\varepsilon}'_{t},
+$$
+which leads to the result.
+:::
+
+### Proof of Proposition \@ref(prp:OLSVAR) {#OLSVAR}
+
+:::{.proof}
+Let us drop the $i$ subscript. Rearranging Eq. \@ref(eq:olsar1), we have:
+$$
+\sqrt{T}(\bv{b}-\boldsymbol{\beta}) =  (X'X/T)^{-1}\sqrt{T}(X'\boldsymbol\varepsilon/T).
+$$
+Let us consider the autocovariances of $\bv{v}_t = x_t \varepsilon_t$, denoted by $\gamma^v_j$. Using the fact that $x_t$ is a linear combination of past $\varepsilon_t$s and that $\varepsilon_t$ is a white noise, we get that $\mathbb{E}(\varepsilon_t x_t)=0$. Therefore
+$$
+\gamma^v_j = \mathbb{E}(\varepsilon_t\varepsilon_{t-j}x_tx_{t-j}').
+$$
+If $j>0$, we have $\mathbb{E}(\varepsilon_t\varepsilon_{t-j}x_tx_{t-j}')=\mathbb{E}(\mathbb{E}[\varepsilon_t\varepsilon_{t-j}x_tx_{t-j}'|\varepsilon_{t-j},x_t,x_{t-j}])=$ $\mathbb{E}(\varepsilon_{t-j}x_tx_{t-j}'\mathbb{E}[\varepsilon_t|\varepsilon_{t-j},x_t,x_{t-j}])=0$. Note that we have $\mathbb{E}[\varepsilon_t|\varepsilon_{t-j},x_t,x_{t-j}]=0$ because $\{\varepsilon_t\}$ is an i.i.d. white noise sequence. If $j=0$, we have:
+$$
+\gamma^v_0 = \mathbb{E}(\varepsilon_t^2x_tx_{t}')= \mathbb{E}(\varepsilon_t^2) \mathbb{E}(x_tx_{t}')=\sigma^2\bv{Q}.
+$$
+The convergence in distribution of $\sqrt{T}(X'\boldsymbol\varepsilon/T)=\sqrt{T}\frac{1}{T}\sum_{t=1}^Tv_t$ results from the Central Limit Theorem for covariance-stationary processes, using the $\gamma_j^v$ computed above.
+:::
+
+## Additional codes
+
+### Simulating GEV distributions {#App:GEV}
+
+The following lines of code have been used to generate Figure \@ref(fig:GEV).
+
+```{r #GEV, eval=FALSE}
+n.sim <- 4000
+par(mfrow=c(1,3),
+    plt=c(.2,.95,.2,.85))
+all.rhos <- c(.3,.6,.95)
+for(j in 1:length(all.rhos)){
+  theta <- 1/all.rhos[j]
+  v1 <- runif(n.sim)
+  v2 <- runif(n.sim)
+  w <- rep(.000001,n.sim)
+  # solve for f(w) = w*(1 - log(w)/theta) - v2 = 0
+  for(i in 1:20){
+    f.i <- w * (1 - log(w)/theta) - v2
+    f.prime <- 1 - log(w)/theta - 1/theta
+    w <- w - f.i/f.prime
+  }
+  u1 <- exp(v1^(1/theta) * log(w))
+  u2 <- exp((1-v1)^(1/theta) * log(w))
+
+  # Get eps1 and eps2 using the inverse of the Gumbel distribution's cdf:
+  eps1 <- -log(-log(u1))
+  eps2 <- -log(-log(u2))
+  cbind(cor(eps1,eps2),1-all.rhos[j]^2)
+  plot(eps1,eps2,pch=19,col="#FF000044",
+       main=paste("rho = ",toString(all.rhos[j]),sep=""),
+       xlab=expression(epsilon[1]),
+       ylab=expression(epsilon[2]),
+       cex.lab=2,cex.main=1.5)
+}
+```
+
+
+### Computing the covariance matrix of IRF using the delta method {#IRFDELTA}
+
+```{r #IRFDELTA, eval=FALSE}
+irf.function <- function(THETA){
+  c <- THETA[1]
+  phi <- THETA[2:(p+1)]
+  if(q>0){
+    theta <- c(1,THETA[(1+p+1):(1+p+q)])
+  }else{
+    theta <- 1
+  }
+  sigma <- THETA[1+p+q+1]
+  r <- dim(Matrix.of.Exog)[2] - 1
+  beta <- THETA[(1+p+q+1+1):(1+p+q+1+(r+1))]
+  
+  irf <- sim.arma(0,phi,beta,sigma=sd(Ramey$ED3_TC,na.rm=TRUE),T=60,y.0=rep(0,length(x$phi)),nb.sim=1,make.IRF=1,
+                  X=NaN,beta=NaN)
+  return(irf)
+}
+
+IRF.0 <- 100*irf.function(x$THETA)
+eps <- .00000001
+d.IRF <- NULL
+for(i in 1:length(x$THETA)){
+  THETA.i <- x$THETA
+  THETA.i[i] <- THETA.i[i] + eps
+  IRF.i <- 100*irf.function(THETA.i)
+  d.IRF <- cbind(d.IRF,
+                 (IRF.i - IRF.0)/eps
+                 )
+}
+mat.var.cov.IRF <- d.IRF %*% x$I %*% t(d.IRF)
+```
