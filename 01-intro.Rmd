@@ -1,61 +1,33 @@
-# Introduction {#intro}
+# Before starting {#intro}
 
-You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods).
+This course covers various econometric topics, including linear regression models, discrete-choice models, and time series analysis. It provides examples or simulations based on R codes.
 
-Figures and tables with captions will be placed in `figure` and `table` environments, respectively.
+The R codes use various packages that can be obtained from [CRAN](https://cran.r-project.org). Several pieces of code also involve procedures and data from my `AEC` package. The latter is available on GitHub. To install it, one need to employ the `devtools` library:
 
-```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
-par(mar = c(4, 4, .1, .1))
-plot(pressure, type = 'b', pch = 19)
+```{r installAEC, eval=FALSE}
+library(devtools)
+install_github("jrenne/AEC")
+library(AEC)
 ```
 
-Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).
+**Useful (R) links:**
 
-```{r nice-tab, tidy=FALSE}
-knitr::kable(
-  head(iris, 20), caption = 'Here is a nice table!',
-  booktabs = TRUE
-)
-```
+* Download R:
 
-You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015].
+    *	R software: https://cran.r-project.org (the basic R software)
+    *	RStudio: https://www.rstudio.com (a convenient R editor)
 
-Below is an example borrowed from [Petersen](https://www.kellogg.northwestern.edu/faculty/petersen/htm/papers/se/test_data.htm).
+* Tutorials:
 
-```{r essaiCL}
-library(sandwich)
-## Petersen's data
-data("PetersenCL", package = "sandwich")
-m <- lm(y ~ x, data = PetersenCL)
+    *	Rstudio: https://dss.princeton.edu/training/RStudio101.pdf (by Oscar Torres-Reyna)
+    *	R: https://cran.r-project.org/doc/contrib/Paradis-rdebuts_en.pdf (by Emmanuel Paradis)
+    * My own tutorial: https://jrenne.shinyapps.io/Rtuto_publiShiny/
 
-## clustered covariances
-## one-way
-vcovCL(m, cluster = ~ firm)
-vcovCL(m, cluster = PetersenCL$firm) ## same
-## one-way with HC2
-vcovCL(m, cluster = ~ firm, type = "HC2")
-## two-way
-vcovCL(m, cluster = ~ firm + year)
-vcovCL(m, cluster = PetersenCL[, c("firm", "year")]) ## same
 
-```
 
-XXXX
 
-Sargan-Hansen () test. @Sargan_1958 and @Hansen_1982
 
-Durbin-Wu-Hausman test: @Durbin_1954 / @Wu_1973 / @Hausman_1978
 
-[Use R!](https://www.hds.utc.fr/~tdenoeux/dokuwiki/_media/en/kleibzeil_-_aer.pdf) is an excellent tutorial.
-(notably for `plm` and the Arellano-Bond example, 140 UK firms)
 
-Program evaluation (very good survey): @Abadie_Cattaneo_2018
-Mostly harmless: @angrist_mostly_2008
-
-Diff-in-Diff: [Card and Krueger (1994)](https://towardsdatascience.com/analyze-causal-effect-using-diff-in-diff-model-85e07b17e7b7)
-
-Diff-in-Diff:
-@Meyer_Viscusi_Durbin_1995
-with data in the `wooldridge` package. See [this page](https://evalf20.classes.andrewheiss.com/example/diff-in-diff/)
 
 

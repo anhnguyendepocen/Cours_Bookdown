@@ -18,8 +18,16 @@ pre code {
   background: Linen;
 }
 
-.proposition {
+.lemma {
+  background: Linen;
+}
+
+.example {
   background: FloralWhite;
+}
+
+.proposition {
+  background: Linen;
 }
 
 .definition {

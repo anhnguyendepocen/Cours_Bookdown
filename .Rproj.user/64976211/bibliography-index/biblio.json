@@ -1,6 +1,209 @@
 {
     "sources": [
         {
+            "ISSN": "00129682, 14680262",
+            "URL": "http://www.jstor.org/stable/1912934",
+            "abstract": "This paper presents a parameter covariance matrix estimator which is consistent even when the disturbances of a linear regression model are heteroskedastic. This estimator does not depend on a formal model of the structure of the heteroskedasticity. By comparing the elements of the new estimator to those of the usual covariance estimator, one obtains a direct test for heteroskedasticity, since in the absence of heteroskedasticity, the two estimators will be approximately equal, but will generally diverge otherwise. The test has an appealing least squares interpretation.",
+            "accessed": {
+                "date-parts": [
+                    [
+                        2022,
+                        9,
+                        9
+                    ]
+                ]
+            },
+            "author": [
+                {
+                    "family": "White",
+                    "given": "Halbert"
+                }
+            ],
+            "container-title": "Econometrica",
+            "id": "White_1980",
+            "issue": "4",
+            "issued": {
+                "date-parts": [
+                    [
+                        1980
+                    ]
+                ]
+            },
+            "page": "817-838",
+            "publisher": "[Wiley, Econometric Society]",
+            "title": "A heteroskedasticity-consistent covariance matrix estimator and a direct test for heteroskedasticity",
+            "type": "article-journal",
+            "volume": "48"
+        },
+        {
+            "DOI": "10.1080/01621459.1949.10483290",
+            "URL": "https://doi.org/10.1080/01621459.1949.10483290",
+            "author": [
+                {
+                    "family": "Cochrane",
+                    "given": "D."
+                },
+                {
+                    "family": "Orcutt",
+                    "given": "G. H."
+                }
+            ],
+            "container-title": "Journal of the American Statistical Association",
+            "id": "Cochrane_Orcutt_1949",
+            "issue": "245",
+            "issued": {
+                "date-parts": [
+                    [
+                        1949
+                    ]
+                ]
+            },
+            "page": "32-61",
+            "publisher": "Taylor & Francis",
+            "title": "Application of least squares regression to relationships containing auto-correlated error terms",
+            "type": "article-journal",
+            "volume": "44"
+        },
+        {
+            "URL": "http://pages.stern.nyu.edu/~wgreene/Text/econometricanalysis.htm",
+            "author": [
+                {
+                    "family": "Greene",
+                    "given": "William H."
+                }
+            ],
+            "edition": "Fifth",
+            "id": "Greene2003Econometric",
+            "issued": {
+                "date-parts": [
+                    [
+                        2003
+                    ]
+                ]
+            },
+            "keyword": "textbook statistics economics",
+            "publisher": "Pearson Education",
+            "title": "Econometric analysis",
+            "type": "book"
+        },
+        {
+            "DOI": "10.1017/CBO9780511614491.006",
+            "author": [
+                {
+                    "family": "Stock",
+                    "given": "James H."
+                },
+                {
+                    "family": "Yogo",
+                    "given": "Motohiro"
+                }
+            ],
+            "container-title": "Identification and inference for econometric models: Essays in honor of thomas rothenberg",
+            "editor": [
+                {
+                    "family": "Andrews",
+                    "given": "Donald W. K."
+                },
+                {
+                    "family": "Stock",
+                    "given": "James H.Editors"
+                }
+            ],
+            "id": "stock_yogo_2005",
+            "issued": {
+                "date-parts": [
+                    [
+                        2005
+                    ]
+                ]
+            },
+            "page": "80-108",
+            "publisher": "Cambridge University Press",
+            "title": "Testing for weak instruments in linear IV regression",
+            "type": "chapter"
+        },
+        {
+            "URL": "https://ideas.repec.org/p/ecm/nawm04/636.html",
+            "author": [
+                {
+                    "family": "Uhlig",
+                    "given": "Harald"
+                }
+            ],
+            "genre": "Econometric Society 2004 North American Winter Meetings",
+            "id": "Uhlig_2004",
+            "issued": {
+                "date-parts": [
+                    [
+                        2004,
+                        8
+                    ]
+                ]
+            },
+            "number": "636",
+            "publisher": "Econometric Society",
+            "title": "What moves GNP?",
+            "type": "report"
+        },
+        {
+            "DOI": "https://doi.org/10.3982/ECTA14468",
+            "URL": "https://onlinelibrary.wiley.com/doi/abs/10.3982/ECTA14468",
+            "author": [
+                {
+                    "family": "Arias",
+                    "given": "Jonas E."
+                },
+                {
+                    "family": "Rubio-Ramírez",
+                    "given": "Juan F."
+                },
+                {
+                    "family": "Waggoner",
+                    "given": "Daniel F."
+                }
+            ],
+            "container-title": "Econometrica",
+            "id": "Arias_et_al_2018",
+            "issue": "2",
+            "issued": {
+                "date-parts": [
+                    [
+                        2018
+                    ]
+                ]
+            },
+            "page": "685-720",
+            "title": "Inference based on structural vector autoregressions identified with sign and zero restrictions: Theory and applications",
+            "title-short": "Inference based on structural vector autoregressions identified with sign and zero restrictions",
+            "type": "article-journal",
+            "volume": "86"
+        },
+        {
+            "DOI": "https://doi.org/10.1016/j.jmoneco.2004.05.007",
+            "ISSN": "0304-3932",
+            "URL": "https://www.sciencedirect.com/science/article/pii/S0304393205000073",
+            "author": [
+                {
+                    "family": "Uhlig",
+                    "given": "Harald"
+                }
+            ],
+            "container-title": "Journal of Monetary Economics",
+            "id": "Uhlig_2005",
+            "issue": "2",
+            "issued": {
+                "date-parts": [
+                    [
+                        2005
+                    ]
+                ]
+            },
+            "page": "381-419",
+            "title": "What are the effects of monetary policy on output? Results from an agnostic identification procedure",
+            "type": "article-journal",
+            "volume": "52"
+        },
+        {
             "author": [
                 {
                     "family": "Box",
@@ -370,6 +573,35 @@
             "title-short": "Technology, employment, and the business cycle",
             "type": "article-journal",
             "volume": "89"
+        },
+        {
+            "DOI": "https://doi.org/10.1016/j.jmoneco.2011.03.001",
+            "ISSN": "0304-3932",
+            "URL": "https://www.sciencedirect.com/science/article/pii/S0304393211000158",
+            "author": [
+                {
+                    "family": "Barsky",
+                    "given": "Robert B."
+                },
+                {
+                    "family": "Sims",
+                    "given": "Eric R."
+                }
+            ],
+            "container-title": "Journal of Monetary Economics",
+            "id": "BARSKY2011273",
+            "issue": "3",
+            "issued": {
+                "date-parts": [
+                    [
+                        2011
+                    ]
+                ]
+            },
+            "page": "273-289",
+            "title": "News shocks and business cycles",
+            "type": "article-journal",
+            "volume": "58"
         },
         {
             "URL": "https://www.tandfonline.com/doi/abs/10.1080/07350015.1997.10524712",

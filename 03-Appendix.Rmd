@@ -1,4 +1,4 @@
-# Appendix
+# Appendix {#append}
 
 ## Statistical Tables
 
@@ -74,7 +74,18 @@ rownames(table_F) <- RowNames
 knitr::kable(table_F, caption = "Quantiles of the $\\mathcal{F}$ distribution. The columns and rows correspond to different degrees of freedom (resp. $n_1$ and $n_2$). The different panels correspond to different probabilities ($\\alpha$) The corresponding cell gives $z$ that is s.t. $\\mathbb{P}(X \\le z)=\\alpha$, with $X \\sim \\mathcal{F}(n_1,n_2)$.", digits=3)
 ```
 
-## Statistics: definitions and results
+## Statistics: definitions and results {#variousResults}
+
+
+:::{.definition #partialcorrel name="Partial correlation"}
+The **partial correlation** between $y$ and $z$, controlling for some variables $\bv{X}$ is the sample correlation between $y^*$ and $z^*$, where the latter two variables are the residuals in regressions of $y$ on $\bv{X}$ and of $z$ on $\bv{X}$, respectively.
+
+This correlation is denoted by $r_{yz}^\bv{X}$. By definition, we have:
+\begin{equation}
+r_{yz}^\bv{X} = \frac{\bv{z^*}'\bv{y^*}}{\sqrt{(\bv{z^*}'\bv{z^*})(\bv{y^*}'\bv{y^*})}}.(\#eq:pc)
+\end{equation}
+:::
+
 
 :::{.definition #skewnesskurtosis name="Skewness and kurtosis"}
 Let $Y$ be a random variable whose fourth moment exists. The expectation of $Y$ is denoted by $\mu$.

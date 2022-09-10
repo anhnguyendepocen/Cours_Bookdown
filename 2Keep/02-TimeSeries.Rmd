@@ -1,4 +1,4 @@
-# Time Series
+# Time Series {#TS}
 
 ## Introduction to time series
 

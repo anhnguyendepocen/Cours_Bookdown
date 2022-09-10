@@ -108,6 +108,8 @@ asymptotically follows a $\chi^2$ distribution. The number of degrees of freedom
 $$
 J_n \sim \chi^2(r-K).
 $$
+XXX Sargan-Hansen test @Sargan_1958 and @Hansen_1982 XXX
+
 
 The GMM framework also allows to easily test linear restrictions on the parameters. Fist, given Eq. \@ref(eq:asymptGMM), Wald tests (see Eq. \@ref(eq:W1) in Section \@ref(Ftest)) are readily available. Second, one can also resort to a test equivalent to the *likelihood ratio tests* (see Definition \@ref(def:LR)). More precisely, consider an unconstrained model and a constrained version of this model, the number of restrictions being equal to $k$. If the two models are estimated by considering the same moment constraints, and the same weighting matrix (using Eq. \@ref(eq:VGMM), based on the unrestricted model), then we have that:
 $$
