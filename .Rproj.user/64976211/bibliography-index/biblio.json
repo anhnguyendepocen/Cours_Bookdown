@@ -1,6 +1,326 @@
 {
     "sources": [
         {
+            "DOI": "https://doi.org/10.1016/S0304-3932(01)00055-1",
+            "ISSN": "0304-3932",
+            "URL": "https://www.sciencedirect.com/science/article/pii/S0304393201000551",
+            "author": [
+                {
+                    "family": "Kuttner",
+                    "given": "Kenneth N"
+                }
+            ],
+            "container-title": "Journal of Monetary Economics",
+            "id": "KUTTNER2001523",
+            "issue": "3",
+            "issued": {
+                "date-parts": [
+                    [
+                        2001
+                    ]
+                ]
+            },
+            "page": "523-544",
+            "title": "Monetary policy surprises and interest rates: Evidence from the fed funds futures market",
+            "title-short": "Monetary policy surprises and interest rates",
+            "type": "article-journal",
+            "volume": "47"
+        },
+        {
+            "DOI": "https://doi.org/10.1111/ecoj.12593",
+            "URL": "https://onlinelibrary.wiley.com/doi/abs/10.1111/ecoj.12593",
+            "author": [
+                {
+                    "family": "Stock",
+                    "given": "James H."
+                },
+                {
+                    "family": "Watson",
+                    "given": "Mark W."
+                }
+            ],
+            "container-title": "The Economic Journal",
+            "id": "Stock_Watson_2018",
+            "issue": "610",
+            "issued": {
+                "date-parts": [
+                    [
+                        2018
+                    ]
+                ]
+            },
+            "page": "917-948",
+            "title": "Identification and estimation of dynamic causal effects in macroeconomics using external instruments",
+            "type": "article-journal",
+            "volume": "128"
+        },
+        {
+            "URL": "https://ideas.repec.org/a/aea/aecrev/v94y2004i4p1055-1084.html",
+            "author": [
+                {
+                    "family": "Romer",
+                    "given": "Christina D."
+                },
+                {
+                    "family": "Romer",
+                    "given": "David H."
+                }
+            ],
+            "container-title": "American Economic Review",
+            "id": "Romer_Romer_2004",
+            "issue": "4",
+            "issued": {
+                "date-parts": [
+                    [
+                        2004
+                    ]
+                ]
+            },
+            "page": "1055-1084",
+            "title": "A New Measure of Monetary Shocks: Derivation and Implications",
+            "type": "article-journal",
+            "volume": "94"
+        },
+        {
+            "URL": "https://ideas.repec.org/a/eee/moneco/v55y2008i4p677-691.html",
+            "author": [
+                {
+                    "family": "Piazzesi",
+                    "given": "Monika"
+                },
+                {
+                    "family": "Swanson",
+                    "given": "Eric T."
+                }
+            ],
+            "container-title": "Journal of Monetary Economics",
+            "id": "Piazzesi_Swanson_2008",
+            "issue": "4",
+            "issued": {
+                "date-parts": [
+                    [
+                        2008
+                    ]
+                ]
+            },
+            "page": "677-691",
+            "title": "Futures prices as risk-adjusted forecasts of monetary policy",
+            "type": "article-journal",
+            "volume": "55"
+        },
+        {
+            "URL": "https://ideas.repec.org/a/ijc/ijcjou/y2005q2a2.html",
+            "author": [
+                {
+                    "family": "Gürkaynak",
+                    "given": "Refet S"
+                },
+                {
+                    "family": "Sack",
+                    "given": "Brian"
+                },
+                {
+                    "family": "Swanson",
+                    "given": "Eric"
+                }
+            ],
+            "container-title": "International Journal of Central Banking",
+            "id": "Gurkaynak_et_al_2005",
+            "issue": "1",
+            "issued": {
+                "date-parts": [
+                    [
+                        2005
+                    ]
+                ]
+            },
+            "title": "Do Actions Speak Louder Than Words? The Response of Asset Prices to Monetary Policy Actions and Statements",
+            "type": "article-journal",
+            "volume": "1"
+        },
+        {
+            "URL": "https://ideas.repec.org/a/aea/aecrev/v92y2002i2p90-95.html",
+            "author": [
+                {
+                    "family": "Cochrane",
+                    "given": "John H"
+                },
+                {
+                    "family": "Piazzesi",
+                    "given": "Monika"
+                }
+            ],
+            "container-title": "American Economic Review",
+            "id": "Cochrane_Piazzesi_2002",
+            "issue": "2",
+            "issued": {
+                "date-parts": [
+                    [
+                        2002
+                    ]
+                ]
+            },
+            "page": "90-95",
+            "title": "The Fed and Interest Rates - A High-Frequency Identification",
+            "type": "article-journal",
+            "volume": "92"
+        },
+        {
+            "DOI": "10.1016/bs.hesmac.2016.04",
+            "URL": "https://ideas.repec.org/h/eee/macchp/v2-415.html",
+            "author": [
+                {
+                    "family": "Stock",
+                    "given": "J. H."
+                },
+                {
+                    "family": "Watson",
+                    "given": "M. W."
+                }
+            ],
+            "chapter-number": "0",
+            "collection-title": "Handbook of macroeconomics",
+            "container-title": "Handbook of Macroeconomics",
+            "editor": [
+                {
+                    "family": "Taylor",
+                    "given": "J. B."
+                },
+                {
+                    "family": "Uhlig",
+                    "given": "Harald"
+                }
+            ],
+            "id": "Stock_Watson_2016",
+            "issued": {
+                "date-parts": [
+                    [
+                        2016
+                    ]
+                ]
+            },
+            "page": "415-525",
+            "publisher": "Elsevier",
+            "title": "Dynamic Factor Models, Factor-Augmented Vector Autoregressions, and Structural Vector Autoregressions in Macroeconomics",
+            "type": "chapter",
+            "volume": "2"
+        },
+        {
+            "DOI": "10.1080/07350015.2015.108",
+            "URL": "https://ideas.repec.org/a/taf/jnlbes/v34y2016i4p574-589.html",
+            "author": [
+                {
+                    "family": "McCracken",
+                    "given": "Michael W."
+                },
+                {
+                    "family": "Ng",
+                    "given": "Serena"
+                }
+            ],
+            "container-title": "Journal of Business & Economic Statistics",
+            "id": "McCracken_Ng_2016",
+            "issue": "4",
+            "issued": {
+                "date-parts": [
+                    [
+                        2016
+                    ]
+                ]
+            },
+            "page": "574-589",
+            "title": "FRED-MD: A Monthly Database for Macroeconomic Research",
+            "type": "article-journal",
+            "volume": "34"
+        },
+        {
+            "URL": "https://EconPapers.repec.org/RePEc:eee:econom:v:29:y:1985:i:3:p:305-325",
+            "author": [
+                {
+                    "family": "MacKinnon",
+                    "given": "James"
+                },
+                {
+                    "family": "White",
+                    "given": "Halbert"
+                }
+            ],
+            "container-title": "Journal of Econometrics",
+            "id": "MacKinnon_White_1985",
+            "issue": "3",
+            "issued": {
+                "date-parts": [
+                    [
+                        1985
+                    ]
+                ]
+            },
+            "page": "305-325",
+            "title": "Some heteroskedasticity-consistent covariance matrix estimators with improved finite sample properties",
+            "type": "article-journal",
+            "volume": "29"
+        },
+        {
+            "DOI": "10.1093/biomet/37.3-4.409",
+            "ISSN": "0006-3444",
+            "URL": "https://doi.org/10.1093/biomet/37.3-4.409",
+            "author": [
+                {
+                    "family": "Durbin",
+                    "given": "J."
+                },
+                {
+                    "family": "Watson",
+                    "given": "G. S."
+                }
+            ],
+            "container-title": "Biometrika",
+            "id": "Durbin_Watson_1950",
+            "issue": "3-4",
+            "issued": {
+                "date-parts": [
+                    [
+                        1950,
+                        12
+                    ]
+                ]
+            },
+            "page": "409-428",
+            "title": "Testing for Serial Correlation in Least Squares Regression. I",
+            "type": "article-journal",
+            "volume": "37"
+        },
+        {
+            "DOI": "10.1093/biomet/38.1-2.159",
+            "ISSN": "0006-3444",
+            "URL": "https://doi.org/10.1093/biomet/38.1-2.159",
+            "author": [
+                {
+                    "family": "Durbin",
+                    "given": "J."
+                },
+                {
+                    "family": "Watson",
+                    "given": "G. S."
+                }
+            ],
+            "container-title": "Biometrika",
+            "id": "Durbin_Watson_1951",
+            "issue": "1-2",
+            "issued": {
+                "date-parts": [
+                    [
+                        1951,
+                        6
+                    ]
+                ]
+            },
+            "page": "159-178",
+            "title": "Testing for Serial Correlation in Least Squares Regression. II",
+            "type": "article-journal",
+            "volume": "38"
+        },
+        {
             "ISSN": "00129682, 14680262",
             "URL": "http://www.jstor.org/stable/1912934",
             "abstract": "This paper presents a parameter covariance matrix estimator which is consistent even when the disturbances of a linear regression model are heteroskedastic. This estimator does not depend on a formal model of the structure of the heteroskedasticity. By comparing the elements of the new estimator to those of the usual covariance estimator, one obtains a direct test for heteroskedasticity, since in the absence of heteroskedasticity, the two estimators will be approximately equal, but will generally diverge otherwise. The test has an appealing least squares interpretation.",
@@ -837,6 +1157,60 @@
             "volume": "10"
         },
         {
+            "URL": "https://ideas.repec.org/a/eee/econom/v135y2006i1-2p499-526.html",
+            "author": [
+                {
+                    "family": "Marcellino",
+                    "given": "Massimiliano"
+                },
+                {
+                    "family": "Stock",
+                    "given": "James H."
+                },
+                {
+                    "family": "Watson",
+                    "given": "Mark W."
+                }
+            ],
+            "container-title": "Journal of Econometrics",
+            "id": "Marcellino_et_al_2006",
+            "issue": "1-2",
+            "issued": {
+                "date-parts": [
+                    [
+                        2006
+                    ]
+                ]
+            },
+            "page": "499-526",
+            "title": "A comparison of direct and iterated multistep AR methods for forecasting macroeconomic time series",
+            "type": "article-journal",
+            "volume": "135"
+        },
+        {
+            "URL": "https://ideas.repec.org/a/aea/aecrev/v95y2005i1p161-182.html",
+            "author": [
+                {
+                    "family": "Jordà",
+                    "given": "Òscar"
+                }
+            ],
+            "container-title": "American Economic Review",
+            "id": "Jorda_2005",
+            "issue": "1",
+            "issued": {
+                "date-parts": [
+                    [
+                        2005
+                    ]
+                ]
+            },
+            "page": "161-182",
+            "title": "Estimation and Inference of Impulse Responses by Local Projections",
+            "type": "article-journal",
+            "volume": "95"
+        },
+        {
             "DOI": "10.1162/0033553053327452",
             "URL": "https://doi.org/10.1162/0033553053327452",
             "author": [
@@ -934,6 +1308,61 @@
             "title": "Macroeconomics and reality",
             "type": "article-journal",
             "volume": "48"
+        },
+        {
+            "DOI": "10.1002/jae.1271",
+            "author": [
+                {
+                    "family": "Korobilis",
+                    "given": "D."
+                }
+            ],
+            "container-title": "Journal of Applied Econometrics",
+            "id": "bvartools",
+            "issue": "2",
+            "issued": {
+                "date-parts": [
+                    [
+                        2013
+                    ]
+                ]
+            },
+            "page": "204-230",
+            "title": "VAR forecasting using bayesian variable selection",
+            "type": "article-journal",
+            "volume": "28"
+        },
+        {
+            "URL": "https://ideas.repec.org/a/oup/restud/v87y2020i4p1915-1953..html",
+            "author": [
+                {
+                    "family": "Gouriéroux",
+                    "given": "Christian"
+                },
+                {
+                    "family": "Monfort",
+                    "given": "Alain"
+                },
+                {
+                    "family": "Renne",
+                    "given": "Jean-Paul"
+                }
+            ],
+            "container-title": "Review of Economic Studies",
+            "id": "Gourieroux_Monfort_Renne_2020",
+            "issue": "4",
+            "issued": {
+                "date-parts": [
+                    [
+                        2020
+                    ]
+                ]
+            },
+            "keyword": "Structural VARMA; Fundamental Representation; Identification; Structural Shocks; Impulse Response Fu",
+            "page": "1915-1953",
+            "title": "Identification and Estimation in Non-Fundamental Structural VARMA Models",
+            "type": "article-journal",
+            "volume": "87"
         },
         {
             "URL": "https://ideas.repec.org/a/aea/aejmac/v7y2015i1p44-76.html",
