@@ -1,104 +1,108 @@
 # Appendix {#append}
 
-## Statistical Tables
-
-```{r Normal,echo=FALSE}
-columns <- (0:9)/100
-rows    <- (0:30)/10
-
-max <- 3
-table_N01 <- pnorm(seq(0,max-.01,by=.01))
-table_N01 <- matrix(table_N01,ncol=10)
-colnames(table_N01) <- (0:9)/100
-rownames(table_N01) <- seq(0,max-.01,by=.1)
-knitr::kable(table_N01, caption = "Quantiles of the $\\mathcal{N}(0,1)$ distribution. If $a$ and $b$ are respectively the row and column number; then the corresponding cell gives $\\mathbb{P}(0<X\\le a+b)$, where $X \\sim \\mathcal{N}(0,1)$.", digits=4)
-```
 
 
-```{r Student,echo=FALSE}
-all.alpha <- c(.05,.1,.75,.90,.95,.975,.99,.999)
-all.df <- c(1:10,10*(2:10),200,500)
 
-table_Student <- NULL
-i <- 0
-for(df in all.df){
-  i <- i + 1
-  table_Student <- rbind(table_Student,qt(1-(1-all.alpha)/2,df=all.df[i]))
-}
-colnames(table_Student) <- all.alpha
-rownames(table_Student) <- all.df
-knitr::kable(table_Student, caption = "Quantiles of the Student-$t$ distribution. The rows correspond to different degrees of freedom ($\\nu$, say); the columns correspond to different probabilities ($z$, say). The cell gives $q$ that is s.t. $\\mathbb{P}(-q<X<q)=z$, with $X \\sim t(\\nu)$.", digits=3)
-```
+## Principal component analysis (PCA) {#PCAapp}
 
+**Principal component analysis (PCA)** is a classical and easy-to-use statistical method to reduce the dimension of large datasets containing variables that are linearly driven by a relatively small number of factors. This approach is widely used in data analysis and image compression.
 
-```{r Chi2,echo=FALSE}
-all.alpha <- c(.05,.1,.75,.90,.95,.975,.99,.999)
-all.df <- c(1:10,10*(2:10),200,500)
+Suppose that we have $T$ observations of a $n$-dimensional random vector $x$, denoted by $x_{1},x_{2},\ldots,x_{T}$. We suppose that each component of $x$ is of mean zero.
 
-table_chi2 <- NULL
-i <- 0
-for(df in all.df){
-  i <- i + 1
-  table_chi2 <- rbind(table_chi2,qchisq(all.alpha,df=all.df[i]))
-}
-colnames(table_chi2) <- all.alpha
-rownames(table_chi2) <- all.df
-knitr::kable(table_chi2, caption = "Quantiles of the $\\chi^2$ distribution. The rows correspond to different degrees of freedom; the columns correspond to different probabilities.", digits=3)
-```
+Let denote with $X$ the matrix given by $\left[\begin{array}{cccc}
+x_{1} & x_{2} & \ldots & x_{T}\end{array}\right]'$. Denote the $j^{th}$ column of $X$ by $X_{j}$.
 
-
-```{r Fstat,echo=FALSE}
-all.alpha <- c(.90,.95,.99)
-max.n1 <- 10
-all.n2 <- c(seq(5,20,by=5),50,100,500)
-
-table_F <- matrix(NaN,(length(all.n2)+1)*length(all.alpha),max.n1)
-
-opts <- options(knitr.kable.NA = "") # set options s.t. missing values are not shown
-
-RowNames <- NULL
-i <- 0
-for(alpha in all.alpha){
-  #  table_F[i*(length(all.n2)+1)+1,1] <- alpha
-  table_aux <- NULL
-  for(n1 in 1:max.n1){
-    table_aux <- cbind(table_aux,qf(alpha,df1=n1,df2=all.n2))
-  }
-  table_F[(i*(length(all.n2)+1)+2):((i+1)*(length(all.n2)+1)),] <- table_aux
-  i <- i+1
-  RowNames <- c(RowNames,
-                paste("alpha = ",alpha,sep=""),all.n2)
-}
-colnames(table_F) <- 1:max.n1
-rownames(table_F) <- RowNames
-knitr::kable(table_F, caption = "Quantiles of the $\\mathcal{F}$ distribution. The columns and rows correspond to different degrees of freedom (resp. $n_1$ and $n_2$). The different panels correspond to different probabilities ($\\alpha$) The corresponding cell gives $z$ that is s.t. $\\mathbb{P}(X \\le z)=\\alpha$, with $X \\sim \\mathcal{F}(n_1,n_2)$.", digits=3)
-```
-
-## Statistics: definitions and results {#variousResults}
-
-
-:::{.definition #partialcorrel name="Partial correlation"}
-The **partial correlation** between $y$ and $z$, controlling for some variables $\bv{X}$ is the sample correlation between $y^*$ and $z^*$, where the latter two variables are the residuals in regressions of $y$ on $\bv{X}$ and of $z$ on $\bv{X}$, respectively.
-
-This correlation is denoted by $r_{yz}^\bv{X}$. By definition, we have:
+We want to find the linear combination of the $x_{i}$'s ($x.u$), with $\left\Vert u\right\Vert =1$, with "maximum variance." That is, we want to solve:
 \begin{equation}
-r_{yz}^\bv{X} = \frac{\bv{z^*}'\bv{y^*}}{\sqrt{(\bv{z^*}'\bv{z^*})(\bv{y^*}'\bv{y^*})}}.(\#eq:pc)
+\begin{array}{clll}
+\underset{u}{\arg\max} & u'X'Xu. \\
+\mbox{s.t. } & \left| u\right| =1
+\end{array}(\#eq:PCA11)
 \end{equation}
-:::
+
+Since $X'X$ is a positive definite matrix, it admits the following decomposition:
+\begin{eqnarray*}
+X'X & = & PDP'\\
+& = & P\left[\begin{array}{ccc}
+\lambda_{1}\\
+& \ddots\\
+&  & \lambda_{n}
+\end{array}\right]P',
+\end{eqnarray*}
+where $P$ is an orthogonal matrix whose columns are the eigenvectors of $X'X$.
+
+We can order the eigenvalues such that $\lambda_{1}\geq\ldots\geq\lambda_{n}$. (Since $X'X$ is positive definite, all these eigenvalues are positive.)
+
+Since $P$ is orthogonal, we have $u'X'Xu=u'PDP'u=y'Dy$ where $\left\Vert y\right\Vert =1$. Therefore, we have $y_{i}^{2}\leq 1$ for any $i\leq n$.
+
+As a consequence:
+\[
+y'Dy=\sum_{i=1}^{n}y_{i}^{2}\lambda_{i}\leq\lambda_{1}\sum_{i=1}^{n}y_{i}^{2}=\lambda_{1}.
+\]
+
+It is easily seen that the maximum is reached for $y=\left[1,0,\cdots,0\right]'$. Therefore, the maximum of the optimization program (Eq. \@ref(eq:PCA11)) is obtained for $u=P\left[1,0,\cdots,0\right]'$. That is, $u$ is the eigenvector of $X'X$ that is associated with its larger eigenvalue (first column of $P$).
+
+Let us denote with $F$ the vector that is given by the matrix product $XP$ (note that its last column is equal to $Xu$). The columns of $F$, denoted by $F_{j}$, are called **factors**. We have:
+\[
+F'F=P'X'XP=D.
+\]
+Therefore, in particular, the $F_{j}$'s are orthogonal.
+
+Since $X=FP'$, the $X_{j}$'s are linear combinations of the factors. Let us then denote with $\hat{X}_{i,j}$ the part of $X_{i}$ that is explained by factor $F_{j}$, we have:
+\begin{eqnarray*}
+\hat{X}_{i,j} & = & p_{ij}F_{j}\\
+X_{i} & = & \sum_{j}\hat{X}_{i,j}=\sum_{j}p_{ij}F_{j}.
+\end{eqnarray*}
+
+Consider the share of variance that is explained --through the $n$ variables ($X_{1},\ldots,X_{n}$)-- by the first factor $F_{1}$:
+\begin{eqnarray*}
+\frac{\sum_{i}\hat{X}_{i,1}\hat{X}'_{i,1}}{\sum_{i}X_{i}X'_{i}} & = & \frac{\sum_{i}p_{i1}F_{1}F'_{1}p_{i1}}{tr(X'X)} = \frac{\sum_{i}p_{i1}^{2}\lambda_{1}}{tr(X'X)} = \frac{\lambda_{1}}{\sum_{i}\lambda_{i}}.
+\end{eqnarray*}
+
+Intuitively, if the first eigenvalue is large, it means that the first factor embed a large share of the fluctutaions of the $n$ $X_{i}$'s.
+
+Let us illustrate PCA on the term structure of yields. The term strucutre of yields (or yield curve) is know to be driven by only a small number of factors (e.g., @Litterman_Scheinkman_1991). One can typically employ PCA to recover such factors. The data used in the example below are taken from the [Fred database](https://fred.stlouisfed.org) (tickers: "DGS6MO","DGS1", ...). The second plot shows the factor loardings, that indicate that the first factor is a level factor (loadings = black line), the second factor is a slope factor (loadings = blue line), the third factor is a curvature factor (loadings = red line).
+
+To run a PCA, one simply has to apply function `prcomp` to a matrix of data:
+
+```{r USydsPCA0, warning=FALSE,message=FALSE}
+library(AEC)
+USyields <- USyields[complete.cases(USyields),]
+yds <- USyields[c("Y1","Y2","Y3","Y5","Y7","Y10","Y20","Y30")]
+PCA.yds <- prcomp(yds,center=TRUE,scale. = TRUE)
+```
 
 
-:::{.definition #skewnesskurtosis name="Skewness and kurtosis"}
-Let $Y$ be a random variable whose fourth moment exists. The expectation of $Y$ is denoted by $\mu$.
+Let us know visualize some results. The first plot of Figure \@ref(fig:USydsPCA1) shows the share of total variance explained by the different principal components (PCs). The second plot shows the facotr loadings. The two bottom plots show how yields (in black) are fitted by linear combinations of the first two PCs only.
 
-* The \color{blue}{skewness} of $Y$ is given by:
-$$
-\frac{\mathbb{E}[(Y-\mu)^3]}{\{\mathbb{E}[(Y-\mu)^2]\}^{3/2}}.
-$$
-* The \color{blue}{kurtosis} of $Y$ is given by:
-$$
-\frac{\mathbb{E}[(Y-\mu)^4]}{\{\mathbb{E}[(Y-\mu)^2]\}^{2}}.
-$$
-:::
+```{r USydsPCA1, warning=FALSE,message=FALSE, fig.cap="Some PCA results. The dataset contains 8 time series of U.S. interest rates of different maturities.", fig.align = 'left-aligned'}
+par(mfrow=c(2,2))
+par(plt=c(.1,.95,.2,.8))
+barplot(PCA.yds$sdev^2/sum(PCA.yds$sdev^2),
+        main="Share of variance expl. by PC's")
+axis(1, at=1:dim(yds)[2], labels=colnames(PCA.yds$x))
+nb.PC <- 2
+plot(-PCA.yds$rotation[,1],type="l",lwd=2,ylim=c(-1,1),
+     main="Factor loadings (1st 3 PCs)",xaxt="n",xlab="")
+axis(1, at=1:dim(yds)[2], labels=colnames(yds))
+lines(PCA.yds$rotation[,2],type="l",lwd=2,col="blue")
+lines(PCA.yds$rotation[,3],type="l",lwd=2,col="red")
+Y1.hat <- PCA.yds$x[,1:nb.PC] %*% PCA.yds$rotation["Y1",1:2]
+Y1.hat <- mean(USyields$Y1) + sd(USyields$Y1) * Y1.hat
+plot(USyields$date,USyields$Y1,type="l",lwd=2,
+     main="Fit of 1-year yields (2 PCs)",
+     ylab="Obs (black) / Fitted by 2PCs (dashed blue)")
+lines(USyields$date,Y1.hat,col="blue",lty=2,lwd=2)
+Y10.hat <- PCA.yds$x[,1:nb.PC] %*% PCA.yds$rotation["Y10",1:2]
+Y10.hat <- mean(USyields$Y10) + sd(USyields$Y10) * Y10.hat
+plot(USyields$date,USyields$Y10,type="l",lwd=2,
+     main="Fit of 10-year yields (2 PCs)",
+     ylab="Obs (black) / Fitted by 2PCs (dashed blue)")
+lines(USyields$date,Y10.hat,col="blue",lty=2,lwd=2)
+```
+
+
+## Linear algebra: definitions and results {#LinAlgebra}
 
 :::{.definition #determinant name="Eigenvalues"}
 
@@ -134,28 +138,6 @@ iii. $(M M^*)'=M M^*$
 * If $M$ is invertible then $M^* = M^{-1}$.
 * The pseudo-inverse of a zero matrix is its transpose.
 *\item* The pseudo-inverse of the pseudo-inverse is the original matrix.
-:::
-
-
-:::{.definition #fstatistics name="F distribution"}
-Consider $n=n_1+n_2$ i.i.d. $\mathcal{N}(0,1)$ r.v. $X_i$. If the r.v. $F$ is defined by:
-$$
-F = \frac{\sum_{i=1}^{n_1} X_i^2}{\sum_{j=n_1+1}^{n_1+n_2} X_j^2}\frac{n_2}{n_1}
-$$
-then $F \sim \mathcal{F}(n_1,n_2)$. (See Table \@ref(tab:Fstat) for quantiles.)
-:::
-
-:::{.definition #tStudent name="Student-t distribution"}
-$Z$ follows a Student-t (or $t$) distribution with $\nu$ degrees of freedom (d.f.) if:
-$$
-Z = X_0 \bigg/ \sqrt{\frac{\sum_{i=1}^{\nu}X_i^2}{\nu}}, \quad X_i \sim i.i.d. \mathcal{N}(0,1).
-$$
-We have $\mathbb{E}(Z)=0$, and $\mathbb{V}ar(Z)=\frac{\nu}{\nu-2}$ if $\nu>2$. (See Table \@ref(tab:Student) for quantiles.)
-:::
-
-:::{.definition #chi2 name="Chi-square distribution"}
-$Z$ follows a $\chi^2$ distribution with $\nu$ d.f. if $Z = \sum_{i=1}^{\nu}X_i^2$ where $X_i \sim i.i.d. \mathcal{N}(0,1)$.
-We have $\mathbb{E}(Z)=\nu$. (See Table \@ref(tab:Chi2) for quantiles.)
 :::
 
 :::{.definition #idempotent name="Idempotent matrix"}
@@ -195,6 +177,200 @@ where $\boldsymbol\beta_0=(\bv{X}'\bv{X})^{-1}\bv{X}'\bv{y}$.
 :::{.proof}
 See for instance [Jackman, 2007](http://jackman.stanford.edu/classes/350B/07/ftestforWeb.pdf).
 :::
+
+
+
+:::{.proposition #inversepartitioned name="Inverse of a partitioned matrix"}
+We have:
+\begin{eqnarray*}
+&&\left[ \begin{array}{cc} \bv{A}_{11} & \bv{A}_{12} \\ \bv{A}_{21} & \bv{A}_{22} \end{array}\right]^{-1} = \\
+&&\left[ \begin{array}{cc} (\bv{A}_{11} - \bv{A}_{12}\bv{A}_{22}^{-1}\bv{A}_{21})^{-1} & - \bv{A}_{11}^{-1}\bv{A}_{12}(\bv{A}_{22} - \bv{A}_{21}\bv{A}_{11}^{-1}\bv{A}_{12})^{-1} \\
+-(\bv{A}_{22} - \bv{A}_{21}\bv{A}_{11}^{-1}\bv{A}_{12})^{-1}\bv{A}_{21}\bv{A}_{11}^{-1} & (\bv{A}_{22} - \bv{A}_{21}\bv{A}_{11}^{-1}\bv{A}_{12})^{-1} \end{array} \right].
+\end{eqnarray*}
+:::
+
+
+
+:::{.definition #FOD name="Matrix derivatives"}
+Consider a fonction $f: \mathbb{R}^K \rightarrow \mathbb{R}$. Its first-order derivative is:
+$$
+\frac{\partial f}{\partial \bv{b}}(\bv{b}) =
+\left[\begin{array}{c}
+\frac{\partial f}{\partial b_1}(\bv{b})\\
+\vdots\\
+\frac{\partial f}{\partial b_K}(\bv{b})
+\end{array}
+\right].
+$$
+We use the notation:
+$$
+\frac{\partial f}{\partial \bv{b}'}(\bv{b}) = \left(\frac{\partial f}{\partial \bv{b}}(\bv{b})\right)'.
+$$
+:::
+
+:::{.proposition #partial}
+We have:
+
+* If $f(\bv{b}) = A' \bv{b}$ where $A$ is a $K \times 1$ vector then $\frac{\partial f}{\partial \bv{b}}(\bv{b}) = A$.
+* If $f(\bv{b}) = \bv{b}'A\bv{b}$ where $A$ is a $K \times K$ matrix, then $\frac{\partial f}{\partial \bv{b}}(\bv{b}) = 2A\bv{b}$.
+:::
+
+
+
+:::{.proposition #absMs name="Square and absolute summability"}
+We have:
+$$
+\underbrace{\sum_{i=0}^{\infty}|\theta_i| < + \infty}_{\mbox{Absolute summability}} \Rightarrow \underbrace{\sum_{i=0}^{\infty} \theta_i^2 < + \infty}_{\mbox{Square summability}}.
+$$
+:::
+
+:::{.proof}
+See Appendix 3.A in Hamilton. Idea: Absolute summability implies that there exist $N$ such that, for $j>N$, $|\theta_j| < 1$ (deduced from Cauchy criterion, Theorem \@ref(thm:cauchycritstatic) and therefore $\theta_j^2 < |\theta_j|$.
+:::
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Statistical analysis: definitions and results {#variousResults}
+
+### Moments and statistics
+
+:::{.definition #partialcorrel name="Partial correlation"}
+The **partial correlation** between $y$ and $z$, controlling for some variables $\bv{X}$ is the sample correlation between $y^*$ and $z^*$, where the latter two variables are the residuals in regressions of $y$ on $\bv{X}$ and of $z$ on $\bv{X}$, respectively.
+
+This correlation is denoted by $r_{yz}^\bv{X}$. By definition, we have:
+\begin{equation}
+r_{yz}^\bv{X} = \frac{\bv{z^*}'\bv{y^*}}{\sqrt{(\bv{z^*}'\bv{z^*})(\bv{y^*}'\bv{y^*})}}.(\#eq:pc)
+\end{equation}
+:::
+
+:::{.definition #skewnesskurtosis name="Skewness and kurtosis"}
+Let $Y$ be a random variable whose fourth moment exists. The expectation of $Y$ is denoted by $\mu$.
+
+* The skewness of $Y$ is given by:
+$$
+\frac{\mathbb{E}[(Y-\mu)^3]}{\{\mathbb{E}[(Y-\mu)^2]\}^{3/2}}.
+$$
+* The kurtosis of $Y$ is given by:
+$$
+\frac{\mathbb{E}[(Y-\mu)^4]}{\{\mathbb{E}[(Y-\mu)^2]\}^{2}}.
+$$
+:::
+
+
+:::{.theorem #CauchySchwarz name="Cauchy-Schwarz inequality"}
+We have:
+$$
+|\mathbb{C}ov(X,Y)| \le \sqrt{\mathbb{V}ar(X)\mathbb{V}ar(Y)}
+$$
+and, if $X \ne =$ and $Y \ne 0$, the equality holds iff $X$ and $Y$ are the same up to an affine transformation.
+:::
+:::{.proof}
+If $\mathbb{V}ar(X)=0$, this is trivial. If this is not the case, then let's define $Z$ as $Z = Y - \frac{\mathbb{C}ov(X,Y)}{\mathbb{V}ar(X)}X$. It is easily seen that $\mathbb{C}ov(X,Z)=0$. Then, the variance of $Y=Z+\frac{\mathbb{C}ov(X,Y)}{\mathbb{V}ar(X)}X$ is equal to the sum of the variance of $Z$ and of the variance of $\frac{\mathbb{C}ov(X,Y)}{\mathbb{V}ar(X)}X$, that is:
+$$
+\mathbb{V}ar(Y) = \mathbb{V}ar(Z) + \left(\frac{\mathbb{C}ov(X,Y)}{\mathbb{V}ar(X)}\right)^2\mathbb{V}ar(X) \ge \left(\frac{\mathbb{C}ov(X,Y)}{\mathbb{V}ar(X)}\right)^2\mathbb{V}ar(X).
+$$
+The equality holds iff $\mathbb{V}ar(Z)=0$, i.e. iff $Y = \frac{\mathbb{C}ov(X,Y)}{\mathbb{V}ar(X)}X+cst$.
+:::
+
+
+
+:::{.definition #asmyptlevel name="Asymptotic level"}
+An asymptotic test with critical region $\Omega_n$ has an asymptotic level equal to $\alpha$ if:
+$$
+\underset{\theta \in \Theta}{\mbox{sup}} \quad \underset{n \rightarrow \infty}{\mbox{lim}} \mathbb{P}_\theta (S_n \in \Omega_n) = \alpha,
+$$
+where $S_n$ is the test statistic and $\Theta$ is such that the null hypothesis $H_0$ is equivalent to $\theta \in \Theta$.
+:::
+
+:::{.definition #asmyptconsisttest name="Asymptotically consistent test"}
+An asymptotic test with critical region $\Omega_n$ is consistent if:
+$$
+\forall \theta \in \Theta^c, \quad \mathbb{P}_\theta (S_n \in \Omega_n) \rightarrow 1,
+$$
+where $S_n$ is the test statistic and $\Theta^c$ is such that the null hypothesis $H_0$ is equivalent to $\theta \notin \Theta^c$.
+:::
+
+
+:::{.definition #Kullback name="Kullback discrepancy"}
+Given two p.d.f. $f$ and $f^*$, the Kullback discrepancy is defined by:
+$$
+I(f,f^*) = \mathbb{E}^* \left( \log \frac{f^*(Y)}{f(Y)} \right) = \int \log \frac{f^*(y)}{f(y)} f^*(y) dy.
+$$
+:::
+
+
+:::{.proposition #Kullback name="Properties of the Kullback discrepancy"}
+We have:
+
+i. $I(f,f^*) \ge 0$
+ii. $I(f,f^*) = 0$ iff $f \equiv f^*$.
+:::
+:::{.proof}
+$x \rightarrow -\log(x)$ is a convex function. Therefore $\mathbb{E}^*(-\log f(Y)/f^*(Y)) \ge -\log \mathbb{E}^*(f(Y)/f^*(Y)) = 0$ (proves (i)). Since $x \rightarrow -\log(x)$ is strictly convex, equality in (i) holds if and only if $f(Y)/f^*(Y)$ is constant (proves (ii)).
+:::
+
+
+
+:::{.definition #characteristic name="Characteristic function"}
+For any real-valued random variable $X$, the characteristic function is defined by:
+$$
+\phi_X: u \rightarrow \mathbb{E}[\exp(iuX)].
+$$
+:::
+
+
+
+
+### Standard distributions
+
+:::{.definition #fstatistics name="F distribution"}
+Consider $n=n_1+n_2$ i.i.d. $\mathcal{N}(0,1)$ r.v. $X_i$. If the r.v. $F$ is defined by:
+$$
+F = \frac{\sum_{i=1}^{n_1} X_i^2}{\sum_{j=n_1+1}^{n_1+n_2} X_j^2}\frac{n_2}{n_1}
+$$
+then $F \sim \mathcal{F}(n_1,n_2)$. (See Table \@ref(tab:Fstat) for quantiles.)
+:::
+
+:::{.definition #tStudent name="Student-t distribution"}
+$Z$ follows a Student-t (or $t$) distribution with $\nu$ degrees of freedom (d.f.) if:
+$$
+Z = X_0 \bigg/ \sqrt{\frac{\sum_{i=1}^{\nu}X_i^2}{\nu}}, \quad X_i \sim i.i.d. \mathcal{N}(0,1).
+$$
+We have $\mathbb{E}(Z)=0$, and $\mathbb{V}ar(Z)=\frac{\nu}{\nu-2}$ if $\nu>2$. (See Table \@ref(tab:Student) for quantiles.)
+:::
+
+:::{.definition #chi2 name="Chi-square distribution"}
+$Z$ follows a $\chi^2$ distribution with $\nu$ d.f. if $Z = \sum_{i=1}^{\nu}X_i^2$ where $X_i \sim i.i.d. \mathcal{N}(0,1)$.
+We have $\mathbb{E}(Z)=\nu$. (See Table \@ref(tab:Chi2) for quantiles.)
+:::
+
+:::{.proposition #waldtypeproduct name="Inner product of a multivariate Gaussian variable"}
+Let $X$ be a $n$-dimensional multivariate Gaussian variable: $X \sim \mathcal{N}(0,\Sigma)$. We have:
+$$
+X' \Sigma^{-1}X \sim \chi^2(n).
+$$
+:::
+:::{.proof}
+Because $\Sigma$ is a symmetrical definite positive matrix, it admits the spectral decomposition $PDP'$ where $P$ is an orthogonal matrix (i.e. $PP'=Id$) and D is a diagonal matrix with non-negative entries. Denoting by $\sqrt{D^{-1}}$ the diagonal matrix whose diagonal entries are the inverse of those of $D$, it is easily checked that the covariance matrix of $Y:=\sqrt{D^{-1}}P'X$ is $Id$. Therefore $Y$ is a vector of uncorrelated Gaussian variables. The properties of Gaussian variables imply that the components of $Y$ are then also independent. Hence $Y'Y=\sum_i Y_i^2 \sim \chi^2(n)$.
+
+It remains to note that $Y'Y=X'PD^{-1}P'X=X'\mathbb{V}ar(X)^{-1}X$ to conclude.
+:::
+
+
+
+### Stochastic convergences
 
 :::{.proposition #chebychev name="Chebychev's inequality"}
 If $\mathbb{E}(|X|^r)$ is finite for some $r>0$ then:
@@ -289,8 +465,6 @@ The result is then obtained by taking limits as $\varepsilon \rightarrow 0$ (if 
 :::
 
 
-
-
 :::{.proposition #cvgce11 name="Convergence in distribution to a constant"}
 If $X_n$ converges in distribution to a constant $c$, then $X_n$ converges in probability to $c$.
 :::
@@ -299,14 +473,16 @@ If $\varepsilon>0$, we have $\mathbb{P}(X_n < c - \varepsilon) \underset{n \righ
 which gives the result.
 :::
 
-**Example of $plim$ but not $L^r$ convergence**: Let $\{x_n\}_{n \in \mathbb{N}}$ be a series of random variables defined by:
+
+:::{.example #plimButNotLr name="Convergence in probability but not $L^r$"}
+Let $\{x_n\}_{n \in \mathbb{N}}$ be a series of random variables defined by:
 $$
 x_n = n u_n,
 $$
 where $u_n$ are independent random variables s.t. $u_n \sim \mathcal{B}(1/n)$.
 
 We have $x_n \overset{p}{\rightarrow} 0$ but $x_n \overset{L^r}{\nrightarrow} 0$ because $\mathbb{E}(|X_n-0|)=\mathbb{E}(X_n)=1$.
-
+:::
 
 :::{.theorem #cauchycritstatic name="Cauchy criterion (non-stochastic case)"}
 We have that $\sum_{i=0}^{T} a_i$ converges ($T \rightarrow \infty$) iff, for any $\eta > 0$, there exists an integer $N$ such that, for all $M\ge N$,
@@ -322,12 +498,12 @@ $$
 $$
 :::
 
-:::{.definition #characteristic name="Characteristic function"}
-For any real-valued random variable $X$, the characteristic function is defined by:
-$$
-\phi_X: u \rightarrow \mathbb{E}[\exp(iuX)].
-$$
-:::
+
+
+
+
+
+### Central limit theorem
 
 :::{.theorem #LLNappendix name="Law of large numbers"}
 The sample mean is a consistent estimator of the population mean.
@@ -360,14 +536,16 @@ Therefore $\phi_{Y_n}(u) \underset{n \rightarrow \infty}{\rightarrow} \exp \left
 :::
 
 
-:::{.proposition #inversepartitioned name="Inverse of a partitioned matrix"}
-We have:
-\begin{eqnarray*}
-&&\left[ \begin{array}{cc} \bv{A}_{11} & \bv{A}_{12} \\ \bv{A}_{21} & \bv{A}_{22} \end{array}\right]^{-1} = \\
-&&\left[ \begin{array}{cc} (\bv{A}_{11} - \bv{A}_{12}\bv{A}_{22}^{-1}\bv{A}_{21})^{-1} & - \bv{A}_{11}^{-1}\bv{A}_{12}(\bv{A}_{22} - \bv{A}_{21}\bv{A}_{11}^{-1}\bv{A}_{12})^{-1} \\
--(\bv{A}_{22} - \bv{A}_{21}\bv{A}_{11}^{-1}\bv{A}_{12})^{-1}\bv{A}_{21}\bv{A}_{11}^{-1} & (\bv{A}_{22} - \bv{A}_{21}\bv{A}_{11}^{-1}\bv{A}_{12})^{-1} \end{array} \right].
-\end{eqnarray*}
-:::
+
+
+
+
+
+
+
+
+
+## Some properties of Gaussian variables {#GaussianVar}
 
 
 :::{.proposition #bandsindependent}
@@ -377,111 +555,7 @@ If $\bv{A}$ is idempotent and if $\bv{x}$ is Gaussian, $\bv{L}\bv{x}$ and $\bv{x
 If $\bv{L}\bv{A}=\bv{0}$, then the two Gaussian vectors $\bv{L}\bv{x}$ and  $\bv{A}\bv{x}$ are independent. This implies the independence of any function of $\bv{L}\bv{x}$ and any function of $\bv{A}\bv{x}$. The results then follows from the observation that $\bv{x}'\bv{A}\bv{x}=(\bv{A}\bv{x})'(\bv{A}\bv{x})$, which is a function of $\bv{A}\bv{x}$.
 :::
 
-:::{.proposition #waldtypeproduct name="Inner product of a multivariate Gaussian variable"}
-Let $X$ be a $n$-dimensional multivariate Gaussian variable: $X \sim \mathcal{N}(0,\Sigma)$. We have:
-$$
-X' \Sigma^{-1}X \sim \chi^2(n).
-$$
-:::
 
-:::{.proof}
-Because $\Sigma$ is a symmetrical definite positive matrix, it admits the spectral decomposition $PDP'$ where $P$ is an orthogonal matrix (i.e. $PP'=Id$) and D is a diagonal matrix with non-negative entries. Denoting by $\sqrt{D^{-1}}$ the diagonal matrix whose diagonal entries are the inverse of those of $D$, it is easily checked that the covariance matrix of $Y:=\sqrt{D^{-1}}P'X$ is $Id$. Therefore $Y$ is a vector of uncorrelated Gaussian variables. The properties of Gaussian variables imply that the components of $Y$ are then also independent. Hence $Y'Y=\sum_i Y_i^2 \sim \chi^2(n)$.
-
-It remains to note that $Y'Y=X'PD^{-1}P'X=X'\mathbb{V}ar(X)^{-1}X$ to conclude.
-:::
-
-:::{.theorem #CauchySchwarz name="Cauchy-Schwarz inequality"}
-We have:
-$$
-|\mathbb{C}ov(X,Y)| \le \sqrt{\mathbb{V}ar(X)\mathbb{V}ar(Y)}
-$$
-and, if $X \ne =$ and $Y \ne 0$, the equality holds iff $X$ and $Y$ are the same up to an affine transformation.
-:::
-:::{.proof}
-If $\mathbb{V}ar(X)=0$, this is trivial. If this is not the case, then let's define $Z$ as $Z = Y - \frac{\mathbb{C}ov(X,Y)}{\mathbb{V}ar(X)}X$. It is easily seen that $\mathbb{C}ov(X,Z)=0$. Then, the variance of $Y=Z+\frac{\mathbb{C}ov(X,Y)}{\mathbb{V}ar(X)}X$ is equal to the sum of the variance of $Z$ and of the variance of $\frac{\mathbb{C}ov(X,Y)}{\mathbb{V}ar(X)}X$, that is:
-$$
-\mathbb{V}ar(Y) = \mathbb{V}ar(Z) + \left(\frac{\mathbb{C}ov(X,Y)}{\mathbb{V}ar(X)}\right)^2\mathbb{V}ar(X) \ge \left(\frac{\mathbb{C}ov(X,Y)}{\mathbb{V}ar(X)}\right)^2\mathbb{V}ar(X).
-$$
-The equality holds iff $\mathbb{V}ar(Z)=0$, i.e. iff $Y = \frac{\mathbb{C}ov(X,Y)}{\mathbb{V}ar(X)}X+cst$.
-:::
-
-:::{.definition #FOD name="Matrix derivatives"}
-Consider a fonction $f: \mathbb{R}^K \rightarrow \mathbb{R}$. Its first-order derivative is:
-$$
-\frac{\partial f}{\partial \bv{b}}(\bv{b}) =
-\left[\begin{array}{c}
-\frac{\partial f}{\partial b_1}(\bv{b})\\
-\vdots\\
-\frac{\partial f}{\partial b_K}(\bv{b})
-\end{array}
-\right].
-$$
-We use the notation:
-$$
-\frac{\partial f}{\partial \bv{b}'}(\bv{b}) = \left(\frac{\partial f}{\partial \bv{b}}(\bv{b})\right)'.
-$$
-:::
-
-:::{.proposition #partial}
-We have:
-
-* If $f(\bv{b}) = A' \bv{b}$ where $A$ is a $K \times 1$ vector then $\frac{\partial f}{\partial \bv{b}}(\bv{b}) = A$.
-* If $f(\bv{b}) = \bv{b}'A\bv{b}$ where $A$ is a $K \times K$ matrix, then $\frac{\partial f}{\partial \bv{b}}(\bv{b}) = 2A\bv{b}$.
-:::
-
-:::{.definition #asmyptlevel name="Asymptotic level"}
-An asymptotic test with critical region $\Omega_n$ has an \color{blue}{asymptotic level} equal to $\alpha$ if:
-$$
-\underset{\theta \in \Theta}{\mbox{sup}} \quad \underset{n \rightarrow \infty}{\mbox{lim}} \mathbb{P}_\theta (S_n \in \Omega_n) = \alpha,
-$$
-where $S_n$ is the test statistic and $\Theta$ is such that the null hypothesis $H_0$ is equivalent to $\theta \in \Theta$.
-:::
-
-:::{.definition #asmyptconsisttest name="Asymptotically consistent test"}
-An asymptotic test with critical region $\Omega_n$ is consistent if:
-$$
-\forall \theta \in \Theta^c, \quad \mathbb{P}_\theta (S_n \in \Omega_n) \rightarrow 1,
-$$
-where $S_n$ is the test statistic and $\Theta^c$ is such that the null hypothesis $H_0$ is equivalent to $\theta \notin \Theta^c$.
-:::
-
-
-
-:::{.definition #Kullback name="Kullback discrepancy"}
-Given two p.d.f. $f$ and $f^*$, the Kullback discrepancy is defined by:
-$$
-I(f,f^*) = \mathbb{E}^* \left( \log \frac{f^*(Y)}{f(Y)} \right) = \int \log \frac{f^*(y)}{f(y)} f^*(y) dy.
-$$
-:::
-
-***
-:::{.proposition #Kullback name="Properties of the Kullback discrepancy"}
-We have:
-
-i. $I(f,f^*) \ge 0$
-
-ii. $I(f,f^*) = 0$ iff $f \equiv f^*$.
-:::
-***
-:::{.proof}
-$x \rightarrow -\log(x)$ is a convex function. Therefore $\mathbb{E}^*(-\log f(Y)/f^*(Y)) \ge -\log \mathbb{E}^*(f(Y)/f^*(Y)) = 0$ (proves (i)). Since $x \rightarrow -\log(x)$ is strictly convex, equality in (i) holds if and only if $f(Y)/f^*(Y)$ is constant (proves (ii)).
-:::
-
-***
-:::{.proposition #absMs name="Square and absolute summability"}
-We have:
-$$
-\underbrace{\sum_{i=0}^{\infty}|\theta_i| < + \infty}_{\mbox{Absolute summability}} \Rightarrow \underbrace{\sum_{i=0}^{\infty} \theta_i^2 < + \infty}_{\mbox{Square summability}}.
-$$
-:::
-***
-:::{.proof}
-See Appendix 3.A in Hamilton. Idea: Absolute summability implies that there exist $N$ such that, for $j>N$, $|\theta_j| < 1$ (deduced from Cauchy criterion, Theorem \@ref(thm:cauchycritstatic) and therefore $\theta_j^2 < |\theta_j|$.
-:::
-
-## Some properties of Gaussian variables {#GaussianVar}
-
-***
 :::{.proposition #update name="Bayesian update in a vector of Gaussian variables"}
 If
 $$
@@ -513,11 +587,10 @@ Y_{1}|Y_{2} \sim \mathcal{N}
 \right).
 $$
 :::
-***
 
-***
+
+
 :::{.proposition #truncated name="Truncated distributions"}
-
 If $X$ is a random variable distributed according to some p.d.f. $f$, with c.d.f. $F$, with infinite support. Then the p.d.f. of $X|a \le X < b$ is
 $$
 g(x) = \frac{f(x)}{F(b)-F(a)}\mathbb{I}_{\{a \le x < b\}},
@@ -548,11 +621,11 @@ In particular, for $b \rightarrow \infty$, we get:
 \end{equation}
 with $\lambda(x)=\dfrac{\phi(x)}{\Phi(x)}$ is called the **inverse Mills ratio**.
 :::
-***
+
 
 Consider the case where $a \rightarrow - \infty$ (i.e. the conditioning set is $X<b$) and $\mu=0$, $\sigma=1$. Then Eq. \@ref(eq:Etrunc) gives $\mathbb{E}(X|X<b) = - \lambda(b) = - \dfrac{\phi(b)}{\Phi(b)}$, where $\lambda$ is the function computing the inverse Mills ratio.
 
-```{r inverseMills, echo=FALSE, fig.cap="$\\mathbb{E}(X|X<b)$ as a function of $b$ when $X\\sim \\mathcal{N}(0,1)$ (in black).", fig.align = 'center'}
+```{r inverseMills, echo=FALSE, fig.cap="$\\mathbb{E}(X|X<b)$ as a function of $b$ when $X\\sim \\mathcal{N}(0,1)$ (in black).", fig.align = 'left-aligned'}
 x <- seq(-10,10,by=.01)
 par(mfrow=c(1,1))
 par(plt=c(.15,.95,.25,.95))
@@ -573,9 +646,15 @@ $$
 :::
 
 
-## Proofs
 
-### Proof of Proposition \@ref(prp:MLEproperties) {#MLEproperties}
+
+
+
+
+
+## Proofs {#AppendixProof}
+
+**Proof of Proposition \@ref(prp:MLEproperties)**
 
 :::{.proof}
 
@@ -617,7 +696,7 @@ which converges to $\mathcal{N}(0,\mathcal{I}_Y(\boldsymbol\theta_0))$ by the CL
 Collecting the preceding results leads to (b). The fact that $\boldsymbol\theta_{MLE}$ achieves the FDCR bound proves (c).
 :::
 
-### Proof of Proposition \@ref(prp:Walddistri) {#Walddistri}
+**Proof of Proposition \@ref(prp:Walddistri)**
 
 :::{.proof}
 We have $\sqrt{n}(\hat{\boldsymbol\theta}_{n} - \boldsymbol\theta_{0}) \overset{d}{\rightarrow} \mathcal{N}(0,\mathcal{I}(\boldsymbol\theta_0)^{-1})$ (Eq. \ref(eq:normMLE)). A Taylor expansion around $\boldsymbol\theta_0$ yields to:
@@ -645,7 +724,7 @@ The fact that the test has asymptotic level $\alpha$ directly stems from what pr
 :::
 
 
-### Proof of Proposition \@ref(prp:LMdistri) {#LMdistri}
+**Proof of Proposition \@ref(prp:LMdistri)**
 
 :::{.proof}
 Notations: "$\approx$" means "equal up to a term that converges to 0 in probability". We are under $H_0$. $\hat{\boldsymbol\theta}^0$ is the constrained ML estimator; $\hat{\boldsymbol\theta}$ denotes the unconstrained one.
@@ -711,7 +790,7 @@ Using Eq. \@ref(eq:multiplier), it appears that the left-hand side term of the l
 :::
 
 
-### Proof of Proposition \@ref(prp:equivLRLMW) {#equivLRLMW}
+**Proof of Proposition \@ref(prp:equivLRLMW)**
 
 :::{.proof}
 Let us first demonstrate the asymptotic equivalence of $\xi^{LM}$ and $\xi^{LR}$.
@@ -781,8 +860,7 @@ which gives the result.
 
 
 
-
-### Proof of Eq. \@ref(eq:TCL2) {#proofTVTCL}
+**Proof of Eq. \@ref(eq:TCL2)**
 
 :::{.proof}
 We have:
@@ -828,7 +906,7 @@ $$
 $$
 :::
 
-### Proof of Proposition \@ref(prp:smallestMSE) {#smallestMSE}
+**Proof of Proposition \@ref(prp:smallestMSE)**
 
 :::{.proof}
 We have:
@@ -853,7 +931,7 @@ Therefore, Eq. \@ref(eq:1) becomes:
 This implies that $\mathbb{E}([y_{t+1} - y^*_{t+1}]^2)$ is always larger than $\color{blue}{\mathbb{E}([y_{t+1} - \mathbb{E}(y_{t+1}|x_t)]^2)}$, and is therefore minimized if the second term is equal to zero, that is if $\mathbb{E}(y_{t+1}|x_t) = y^*_{t+1}$.
 :::
 
-### Proof of Proposition \@ref(prp:estimVARGaussian) {#estimVARGaussian}
+**Proof of Proposition \@ref(prp:estimVARGaussian)**
 
 :::{.proof}
 Using Proposition \@ref(prp:multivarG) (in Appendix \@ref(XXX)), we obtain that, conditionally on $x_1$, the log-likelihood is given by
@@ -895,7 +973,7 @@ $$
 which leads to the result.
 :::
 
-### Proof of Proposition \@ref(prp:OLSVAR) {#OLSVAR}
+**Proof of Proposition \@ref(prp:OLSVAR)**
 
 :::{.proof}
 Let us drop the $i$ subscript. Rearranging Eq. \@ref(eq:olsar1), we have:
@@ -912,6 +990,7 @@ $$
 $$
 The convergence in distribution of $\sqrt{T}(X'\boldsymbol\varepsilon/T)=\sqrt{T}\frac{1}{T}\sum_{t=1}^Tv_t$ results from the Central Limit Theorem for covariance-stationary processes, using the $\gamma_j^v$ computed above.
 :::
+
 
 ## Additional codes
 
@@ -938,7 +1017,8 @@ for(j in 1:length(all.rhos)){
   u1 <- exp(v1^(1/theta) * log(w))
   u2 <- exp((1-v1)^(1/theta) * log(w))
 
-  # Get eps1 and eps2 using the inverse of the Gumbel distribution's cdf:
+  # Get eps1 and eps2 using the inverse of
+  # the Gumbel distribution's cdf:
   eps1 <- -log(-log(u1))
   eps2 <- -log(-log(u2))
   cbind(cor(eps1,eps2),1-all.rhos[j]^2)
@@ -966,7 +1046,8 @@ irf.function <- function(THETA){
   r <- dim(Matrix.of.Exog)[2] - 1
   beta <- THETA[(1+p+q+1+1):(1+p+q+1+(r+1))]
   
-  irf <- sim.arma(0,phi,beta,sigma=sd(Ramey$ED3_TC,na.rm=TRUE),T=60,y.0=rep(0,length(x$phi)),nb.sim=1,make.IRF=1,
+  irf <- sim.arma(0,phi,beta,sigma=sd(Ramey$ED3_TC,na.rm=TRUE),T=60,
+                  y.0=rep(0,length(x$phi)),nb.sim=1,make.IRF=1,
                   X=NaN,beta=NaN)
   return(irf)
 }
@@ -984,3 +1065,79 @@ for(i in 1:length(x$THETA)){
 }
 mat.var.cov.IRF <- d.IRF %*% x$I %*% t(d.IRF)
 ```
+
+## Statistical Tables
+
+```{r Normal,echo=FALSE}
+columns <- (0:9)/100
+rows    <- (0:30)/10
+
+max <- 3
+table_N01 <- pnorm(seq(0,max-.01,by=.01))
+table_N01 <- matrix(table_N01,ncol=10)
+colnames(table_N01) <- (0:9)/100
+rownames(table_N01) <- seq(0,max-.01,by=.1)
+knitr::kable(table_N01, caption = "Quantiles of the $\\mathcal{N}(0,1)$ distribution. If $a$ and $b$ are respectively the row and column number; then the corresponding cell gives $\\mathbb{P}(0<X\\le a+b)$, where $X \\sim \\mathcal{N}(0,1)$.", digits=4)
+```
+
+
+```{r Student,echo=FALSE}
+all.alpha <- c(.05,.1,.75,.90,.95,.975,.99,.999)
+all.df <- c(1:10,10*(2:10),200,500)
+
+table_Student <- NULL
+i <- 0
+for(df in all.df){
+  i <- i + 1
+  table_Student <- rbind(table_Student,qt(1-(1-all.alpha)/2,df=all.df[i]))
+}
+colnames(table_Student) <- all.alpha
+rownames(table_Student) <- all.df
+knitr::kable(table_Student, caption = "Quantiles of the Student-$t$ distribution. The rows correspond to different degrees of freedom ($\\nu$, say); the columns correspond to different probabilities ($z$, say). The cell gives $q$ that is s.t. $\\mathbb{P}(-q<X<q)=z$, with $X \\sim t(\\nu)$.", digits=3)
+```
+
+
+```{r Chi2,echo=FALSE}
+all.alpha <- c(.05,.1,.75,.90,.95,.975,.99,.999)
+all.df <- c(1:10,10*(2:10),200,500)
+
+table_chi2 <- NULL
+i <- 0
+for(df in all.df){
+  i <- i + 1
+  table_chi2 <- rbind(table_chi2,qchisq(all.alpha,df=all.df[i]))
+}
+colnames(table_chi2) <- all.alpha
+rownames(table_chi2) <- all.df
+knitr::kable(table_chi2, caption = "Quantiles of the $\\chi^2$ distribution. The rows correspond to different degrees of freedom; the columns correspond to different probabilities.", digits=3)
+```
+
+
+```{r Fstat,echo=FALSE}
+all.alpha <- c(.90,.95,.99)
+max.n1 <- 10
+all.n2 <- c(seq(5,20,by=5),50,100,500)
+
+table_F <- matrix(NaN,(length(all.n2)+1)*length(all.alpha),max.n1)
+
+opts <- options(knitr.kable.NA = "") # set options s.t. missing values are not shown
+
+RowNames <- NULL
+i <- 0
+for(alpha in all.alpha){
+  #  table_F[i*(length(all.n2)+1)+1,1] <- alpha
+  table_aux <- NULL
+  for(n1 in 1:max.n1){
+    table_aux <- cbind(table_aux,qf(alpha,df1=n1,df2=all.n2))
+  }
+  table_F[(i*(length(all.n2)+1)+2):((i+1)*(length(all.n2)+1)),] <- table_aux
+  i <- i+1
+  RowNames <- c(RowNames,
+                paste("alpha = ",alpha,sep=""),all.n2)
+}
+colnames(table_F) <- 1:max.n1
+rownames(table_F) <- RowNames
+knitr::kable(table_F, caption = "Quantiles of the $\\mathcal{F}$ distribution. The columns and rows correspond to different degrees of freedom (resp. $n_1$ and $n_2$). The different panels correspond to different probabilities ($\\alpha$) The corresponding cell gives $z$ that is s.t. $\\mathbb{P}(X \\le z)=\\alpha$, with $X \\sim \\mathcal{F}(n_1,n_2)$.", digits=3)
+```
+
+

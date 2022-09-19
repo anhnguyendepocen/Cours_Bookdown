@@ -540,7 +540,7 @@ c. **Asymptotically efficient**: $\boldsymbol\theta_{MLE}$ is asymptotically eff
 d. **Invariant**: The MLE of $g(\boldsymbol\theta_0)$ is $g(\boldsymbol\theta_{MLE})$ if $g$ is a continuous and continuously differentiable function.
 :::
 :::{.proof}
-See Appendix \@ref(MLEproperties).
+See Appendix \@ref(AppendixProof).
 :::
 
 
@@ -805,7 +805,7 @@ where $\chi^2_{1-\alpha}(r)$ denotes the quantile of level $1-\alpha$ of the $\c
 [^FootnoteDefAsymptLevel]: See Defs. \@ref(def:asmyptlevel) and  \@ref(def:asmyptconsisttest) for definitions of the asymptotic levels and consistency of tests.
 
 :::{.proof}
-See Appendix \@ref(Walddistri).
+See Appendix \@ref(AppendixProof).
 :::
 
 In practice, in Eq. \@ref(eq:varinWald), $\mathbb{V}ar[\hat{\boldsymbol\theta}]$ is replaced by an estimate given, e.g., by  Eq. \@ref(eq:III1), Eq. \@ref(eq:I2), or Eq. \@ref(eq:III3).
@@ -830,7 +830,7 @@ has asymptotic level $\alpha$ and is consistent (see Defs. \@ref(def:asmyptlevel
 This test is called *Score* or *Lagrange Multiplier (LM)* test.
 :::
 :::{.proof}
-See Appendix \@ref(LMdistri).
+See Appendix \@ref(AppendixProof).
 :::
 
 
@@ -852,7 +852,7 @@ $$
 $$
 :::
 :::{.proof}
-See Appendix \@ref(equivLRLMW).
+See Appendix \@ref(AppendixProof).
 :::
 
 

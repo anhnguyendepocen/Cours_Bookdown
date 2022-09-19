@@ -1,7 +1,6 @@
 
 # Time Series {#TS}
 
-
 ## Multivariate models {#VAR}
 
 This section presents Vector Auto-Regressive Moving-Average (SVARMA) models. These models are widely used in macroeconomic analysis. While simple and easy to estimate, they make it possible to conveniently capture the dynamics of complex multivariate systems. VAR popularity is notably due to @Sims_1980's influential work. A nice survey if proposed by @Stock_Watson_2016.
@@ -19,15 +18,6 @@ Sign restrictions: [package](https://github.com/chrstdanne/VARsignR), @Danne_201
 <!-- toBibtex(citation("vars")) -->
 
 @bvartools: R package to estimate Bayesian VAR models.
-
-```{r VARBoot, message=FALSE, warning=FALSE}
-library(VAR.etp)
-library(vars) #standard VAR models
-data(dat) # part of VAR.etp package
-a <- VAR.Boot(dat,p=2,nb=200,type="const")
-b <- VAR(dat,p=2)
-rbind(a$coef[1,],(a$coef+a$Bias)[1,],b$varresult$inv$coefficients)
-```
 
 
 
@@ -63,7 +53,7 @@ with $\varepsilon_t = B_0\eta_t$ (and $B_j = \Theta_j B_0$, for $j \ge 0$). We a
 :::
 
 
-### IRFs SVARMA {#IRFSVARMA}
+### IRFs in SVARMA {#IRFSVARMA}
 
 One of the main objectives of macro-econometrics is to derive IRFs, that represent the dynamic effects of structural shocks (components of $\eta_t$) though the system of variables $y_t$.
 
@@ -691,6 +681,7 @@ An equivalent approach consists in computing the Cholesky decomposition of $BB'$
 
 ```{r CEE, fig.align = 'left-aligned', out.width = "95%", fig.cap = "Response to a monetary-policy shock. Identification approach of Christiano, Eichenbaum and Evans (1996)."}
 library(AEC)
+library(vars)
 data("USmonthly")
 # Select sample period:
 First.date <- "1965-01-01"
@@ -804,6 +795,7 @@ where $\Theta_{ij}$ is the element $(i,j)$ of $\Theta$.
 
 ```{r BQ1}
 library(AEC)
+data(BQ)
 par(mfrow=c(1,2))
 plot(BQ$Date,BQ$Dgdp,type="l",main="GDP quarterly growth rate",xlab="",ylab="",lwd=2)
 plot(BQ$Date,BQ$unemp,type="l",ylim=c(-3,6),main="Unemployment rate (gap)",xlab="",ylab="",lwd=2)
@@ -890,8 +882,8 @@ Equipped with this procedure, the sign-restriction is based on the following alg
 2. Compute $B = PQ$ where $P$ is the Cholesky decomposition of the reduced form residuals $\Omega_{\varepsilon}$.
 3. Compute the impulse response associated with $B$ $y_{t,t+k}=\Phi^kB$ or the cumulated response $\bar y_{t,t+k}=\sum_{j=0}^{k}\Phi^jB$.
 4. Are the sign restrictions satisfied?
-    a. **Yes**. Store the impulse response in the set of admissible response.
-    b. **No**. Discard the impulse response.
+a. **Yes**. Store the impulse response in the set of admissible response.
+b. **No**. Discard the impulse response.
 5. Perform $N$ replications and report the median impulse response (and its "confidence" intervals).
 
 Note: to take into account the uncertainty in $B$ and $\Phi$, you can draw $B$ and $\Phi$ in Steps 2 and 3 using an inference method.
@@ -1161,20 +1153,19 @@ where $D$ is diagonal matrix whose entries are the (ordered) eigenvalues: $\lamb
 
 
 
-### Identificagtion based on non-normality of the shocks {#NonGaussian}
+### Identification based on non-normality of the shocks {#NonGaussian}
 
-In this section, we show that the non-identification of the structural shocks ($\eta_t$) is very specific to the Gaussian case. We propose consistent estimation approaches in the context of non-Gaussian shocks. In a first part, we focus on non-Gaussian SVAR models; in a second part, we discuss the case of non-Gaussian SVARMA models.
+In this section, we show that the non-identification of the structural shocks ($\eta_t$) is specific to the Gaussian case. We propose consistent estimation approaches for SVAR in the context of non-Gaussian shocks.
 
-**Non-Gaussian SVAR models**
+<!-- In a first part, we focus on non-Gaussian SVAR models; in a second part, we discuss the case of non-Gaussian SVARMA models. -->
 
-The estimation of (S)VARs is more common than that of (S)VARMAs. (Simpler estimation of $\Phi_k$'s). We have seen in what precedes that, in the Gaussian case, we cannot identify $B$ in the Gaussian case. That is, even if we observe an infinite number of i.i.d. $B \eta_t$, we cannot recover $B$ is the $\eta_t$'s are Gaussian. Indeed, if $\eta_t \sim \mathcal{N}(0,Id)$, then the distribution of $\varepsilon_t \equiv B \eta_t$ is $\mathcal{N}(0,BB')$.
+We have seen in what precedes that we cannot identify $B$ based on first and second moments only. Since a Gaussian distribution is perfectly determined by the first two moments, it comes that one cannot achieve identification when the structural shocks are Gaussian. That is, even if we observe an infinite number of i.i.d. $B \eta_t$, we cannot recover $B$ is the $\eta_t$'s are Gaussian.
 
-Hence $\Omega = B B'$ is observed (in the population), but for any orthogonal matrix $Q$ (i.e. $QQ'=Id$), we also have $BQ \eta_t \sim \mathcal{N}(0,\Omega)$.
+Indeed, if $\eta_t \sim \mathcal{N}(0,Id)$, then the distribution of $\varepsilon_t \equiv B \eta_t$ is $\mathcal{N}(0,BB')$. Hence $\Omega = B B'$ is observed (in the population), but for any orthogonal matrix $Q$ (i.e. $QQ'=Id$), we also have $BQ \eta_t \sim \mathcal{N}(0,\Omega)$.
 
+To illustrate, consider the following bivariate Gaussian situations, with $\Theta_1=0$):
 
-Example: Bivariate Gaussian case (Eq. \@ref(eq:VARMA111), with $\Theta_1=0$)
-
-$\left[\begin{array}{c}\eta_{1,t}\\ \eta_{2,t}\end{array}\right]\sim \mathcal{N}(0,Id)$,
+$\left[\begin{array}{c}\eta_{1,t}\\ \eta_{2,t}\end{array}\right]\sim \mathcal{N}(0,Id)$, with 
 $B = \left[\begin{array}{cc}
 1 & 2 \\
 -1 & 1
@@ -1184,10 +1175,10 @@ $Q = \left[\begin{array}{cc}
 \sin(\pi/3) & \cos(\pi/3)
 \end{array}\right]$ (rotation).
 
-$\Rightarrow$ Distribution of $B \eta_t$ versus that of $BQ\eta_t$?
+Figure \@ref(fig:preMadeFigureICA) shows that the distributions of $B \eta_t$ and of $BQ\eta_t$ are identical. However, the impulse response functions associated with one of the other impulse matrix ($B$ or $BQ$) are different. This is illustrated by Figure \@ref(fig:preMadeFigureICA2), that shows the IRFs associated with two identical models (defined by Eq. \@ref(eq:VARMA111)), the only difference being the impulse matrix ($B$ or $BQ$).
 
 
-```{r simulGaussian, eval=FALSE}
+```{r simulGaussian, eval=FALSE, echo=FALSE}
 theta.angle <- pi/3
 Q <- matrix(c(cos(theta.angle),sin(theta.angle),-sin(theta.angle),cos(theta.angle)),2,2)
 #nb.sim <- 10^4
@@ -1233,12 +1224,13 @@ levels <- c(.01,.1,.3,.6,.9)*max.z
 contour(x.points,y.points,z,levels=levels,xlim=x.lim,ylim=y.lim,col="red",lwd=2)
 ```
 
-```{r preMadeFigureICA, fig.align = 'left-aligned', out.width = "95%", fig.cap = "XXXX.", echo=FALSE}
+```{r preMadeFigureICA, fig.align = 'left-aligned', out.width = "95%", fig.cap = "This figure compares the distributions of two Gaussian bivariate vectors, $B \\eta_t$ and $BQ\\eta_t$, where $\\eta_{t} \\sim \\mathcal{N}(0,Id)$ (therefore $\\eta_{1,t}$ and $\\eta_{2,t}$ are independent), and $Q$  is an orthogonal matrix.", echo=FALSE}
 knitr::include_graphics("images/Figure_A.png")
 ```
 
 
-```{r preMadeFigureICA2, fig.align = 'left-aligned', out.width = "95%", fig.cap = "XXXX.", echo=FALSE}
+
+```{r preMadeFigureICA2, fig.align = 'left-aligned', out.width = "95%", fig.cap = "This figure shows that the impulse response functions associated with an impulse matrix equal to $B$ (black line) or $BQ$ (red line) are different (even if $BB'=BQ(BQ)'$).", echo=FALSE}
 library(AEC)
 nb.sim <- 12
 n <- 2
@@ -1309,18 +1301,9 @@ abline(h=0,col="grey",lty=3)
 ```
 
 
+Hence, in the Gaussian case, external restrictions (economic hypotheses) are needed to identify $B$ (see previous sections). But such restrictions may not be necessary if the structural shocks are not Gaussian. That is, the identification problem is very specific to normally-distributed $\eta_t$'s (@Rigobon_2003, @NORMANDIN20041217, @Lanne_Lutkepohl_2008).
 
-External restrictions (economic hypotheses) are needed to identify $B$ (see previous sections). But such restrictions may not be necessary if the structural shocks are not Gaussian.
-
-That is, the identification problem is very specific to normally-distributed $\eta_t$'s.
-
-[Rigobon (2003)](https://www.mitpressjournals.org/doi/abs/10.1162/003465303772815727?journalCode=rest)
-[Normandin and Phaneuf (2004)](https://www.sciencedirect.com/science/article/abs/pii/S0304393204000698)
-[Lanne and Lutkepohl (2008)](https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1538-4616.2008.00151.x)
-
-
-Example: Bivariate Gaussian + Student (5) case:
-
+To better see why this can be the case, consider again a bivariate vector of independent structural shocks   ($\eta_{1,t}$ and $\eta_{2,t}$) but, now, assume that one of them is not Gaussian any more. Specifically, assume that $\eta_{2,t}$ is drawn from a Student distribution with 5 degrees of freedom:
 $\eta_{1,t} \sim \mathcal{N}(0,1)$, $\eta_{2,t} \sim t(5)$,
 $B = \left[\begin{array}{cc}
 1 & 2 \\
@@ -1331,11 +1314,10 @@ $Q = \left[\begin{array}{cc}
 \sin(\pi/3) & \cos(\pi/3)
 \end{array}\right]$.
 
-Distribution of $B \eta_t$ versus that of $BQ\eta_t$?
+Figure \@ref(fig:preMadeFigureICAGaussianStudent) shows that, in this case, $B \eta_t$ and $BQ\eta_t$ do not have the same distribution any more (in spite of the fact that, in both cases, we have $\mathbb{V}ar(\varepsilon_t)=BB'$). This opens the door to the identification of the impulse matrix ($BQ$) in the non-Gaussian case.
 
 
-
-```{r simulGaussianStudent, eval=FALSE}
+```{r simulGaussianStudent, eval=FALSE,echo=FALSE}
 theta.angle <- pi/3
 Q <- matrix(c(cos(theta.angle),sin(theta.angle),-sin(theta.angle),cos(theta.angle)),2,2)
 #nb.sim <- 10^4
@@ -1381,102 +1363,94 @@ levels <- c(.01,.1,.3,.6,.9)*max.z
 contour(x.points,y.points,z,levels=levels,xlim=x.lim,ylim=y.lim,col="red",lwd=2)
 ```
 
-```{r preMadeFigureICAGaussianStudent, fig.align = 'left-aligned', out.width = "95%", fig.cap = "XXXX.", echo=FALSE}
+
+```{r preMadeFigureICAGaussianStudent, fig.align = 'left-aligned', out.width = "95%", fig.cap = "This figure compares the distributions of two Gaussian bivariate vectors, $B \\eta_t$ and $BQ\\eta_t$, where $\\eta_t{1,t} \\sim \\mathcal{N}(0,1)$, $\\eta_t{2,t} \\sim t(5)$, and $Q$  is an orthogonal matrix.", echo=FALSE}
 knitr::include_graphics("images/Figure_C.png")
 ```
 
 
 
-NB: In both cases, we have $\mathbb{V}ar(\varepsilon_t)=BB'$.
+<!-- NB: In both cases, we have $\mathbb{V}ar(\varepsilon_t)=BB'$. -->
 
 
-Example: Bivariate Student (5) case
+<!-- Example: Bivariate Student (5) case -->
 
-$\eta_{1,t} \sim t(5)$, $\eta_{2,t} \sim t(5)$,
-$B = \left[\begin{array}{cc}
-1 & 2 \\
--1 & 1
-\end{array}\right]$ and
-$Q = \left[\begin{array}{cc}
-\cos(\pi/3) & -\sin(\pi/3) \\
-\sin(\pi/3) & \cos(\pi/3)
-\end{array}\right]$.
+<!-- $\eta_{1,t} \sim t(5)$, $\eta_{2,t} \sim t(5)$, -->
+<!-- $B = \left[\begin{array}{cc} -->
+<!-- 1 & 2 \\ -->
+<!-- -1 & 1 -->
+<!-- \end{array}\right]$ and -->
+<!-- $Q = \left[\begin{array}{cc} -->
+<!-- \cos(\pi/3) & -\sin(\pi/3) \\ -->
+<!-- \sin(\pi/3) & \cos(\pi/3) -->
+<!-- \end{array}\right]$. -->
 
-$\Rightarrow$ Distribution of $B \eta_t$ versus that of $BQ\eta_t$?
-
-
-
-```{r simulStudentStudent, eval=FALSE}
-theta.angle <- pi/3
-Q <- matrix(c(cos(theta.angle),sin(theta.angle),-sin(theta.angle),cos(theta.angle)),2,2)
-#nb.sim <- 10^4
-nb.sim <- 10^2
-distri.1 <- list(type=c("gaussian"),name="Panel (a) Gaussian",name.4.table="Gaussian")
-distri.2 <- list(type=c("mixt.gaussian"),mu=0,sigma=5,p=.03,name="Panel (b) Mixture of Gaussian",name.4.table="Mixture of Gaussian")
-distri.3 <- list(type=c("student"),df=c(5),name="Panel (c) Student (df: 5)",name.4.table="Student (df: 5)")
-distri.4 <- list(type=c("student"),df=c(10),name="Panel (d) Student (df: 10)",name.4.table="Student (df: 10)")
-x.lim <- c(-7,7)
-y.lim <- c(-5,5)
-nb.points <- 100
-x.points <- seq(x.lim[1],x.lim[2],length.out=nb.points)
-y.points <- x.points
-all.x <- c(matrix(x.points,nb.points,nb.points))
-all.y <- c(t(matrix(x.points,nb.points,nb.points)))
-eps <- cbind(all.x,all.y)
-par(plt=c(.25,.9,.25,.8))
-eta.1 <- simul.distri(distri.3,nb.sim)
-eta.2 <- simul.distri(distri.3,nb.sim)
-epsilon.C <- cbind(eta.1,eta.2) %*% t(C)
-epsilon.CQ <- cbind(eta.1,eta.2) %*% t(C %*% Q)
-Model$distri <- list(type=c("student","student"),df=c(5,5))
-par(mfrow=c(1,2))
-plot(epsilon.C[,1],epsilon.C[,2],pch=19,
-     xlim=x.lim,ylim=y.lim,col="#00000044",
-     xlab=expression(epsilon[1]),
-     ylab=expression(epsilon[2]),cex.lab=1.6,cex.main=1.6,
-     main=expression(paste("Distribution of ",epsilon[t]," = ",B,eta[t],sep="")))
-z <- matrix(exp(g(eps,Model)),nb.points,nb.points)
-par(new=TRUE)
-max.z <- max(z)
-levels <- c(.01,.1,.3,.6,.9)*max.z
-contour(x.points,y.points,z,levels=levels,xlim=x.lim,ylim=y.lim,col="red",lwd=2)
-plot(epsilon.CQ[,1],epsilon.CQ[,2],pch=19,
-     xlim=x.lim,ylim=y.lim,col="#00000044",
-     xlab=expression(epsilon[1]),
-     ylab=expression(epsilon[2]),cex.lab=1.6,cex.main=1.6,
-     main=expression(paste("Distribution of ",epsilon[t]," = ",BQ,eta[t],sep="")))
-z <- matrix(exp(g(eps,Model)),nb.points,nb.points)
-par(new=TRUE)
-max.z <- max(z)
-levels <- c(.01,.1,.3,.6,.9)*max.z
-contour(x.points,y.points,z,levels=levels,xlim=x.lim,ylim=y.lim,col="red",lwd=2)
-```
+<!-- $\Rightarrow$ Distribution of $B \eta_t$ versus that of $BQ\eta_t$? -->
 
 
-NB: In both cases, we have $\mathbb{V}ar(\varepsilon_t)=BB'$.
+
+<!-- ```{r simulStudentStudent, eval=FALSE} -->
+<!-- theta.angle <- pi/3 -->
+<!-- Q <- matrix(c(cos(theta.angle),sin(theta.angle),-sin(theta.angle),cos(theta.angle)),2,2) -->
+<!-- #nb.sim <- 10^4 -->
+<!-- nb.sim <- 10^2 -->
+<!-- distri.1 <- list(type=c("gaussian"),name="Panel (a) Gaussian",name.4.table="Gaussian") -->
+<!-- distri.2 <- list(type=c("mixt.gaussian"),mu=0,sigma=5,p=.03,name="Panel (b) Mixture of Gaussian",name.4.table="Mixture of Gaussian") -->
+<!-- distri.3 <- list(type=c("student"),df=c(5),name="Panel (c) Student (df: 5)",name.4.table="Student (df: 5)") -->
+<!-- distri.4 <- list(type=c("student"),df=c(10),name="Panel (d) Student (df: 10)",name.4.table="Student (df: 10)") -->
+<!-- x.lim <- c(-7,7) -->
+<!-- y.lim <- c(-5,5) -->
+<!-- nb.points <- 100 -->
+<!-- x.points <- seq(x.lim[1],x.lim[2],length.out=nb.points) -->
+<!-- y.points <- x.points -->
+<!-- all.x <- c(matrix(x.points,nb.points,nb.points)) -->
+<!-- all.y <- c(t(matrix(x.points,nb.points,nb.points))) -->
+<!-- eps <- cbind(all.x,all.y) -->
+<!-- par(plt=c(.25,.9,.25,.8)) -->
+<!-- eta.1 <- simul.distri(distri.3,nb.sim) -->
+<!-- eta.2 <- simul.distri(distri.3,nb.sim) -->
+<!-- epsilon.C <- cbind(eta.1,eta.2) %*% t(C) -->
+<!-- epsilon.CQ <- cbind(eta.1,eta.2) %*% t(C %*% Q) -->
+<!-- Model$distri <- list(type=c("student","student"),df=c(5,5)) -->
+<!-- par(mfrow=c(1,2)) -->
+<!-- plot(epsilon.C[,1],epsilon.C[,2],pch=19, -->
+<!--      xlim=x.lim,ylim=y.lim,col="#00000044", -->
+<!--      xlab=expression(epsilon[1]), -->
+<!--      ylab=expression(epsilon[2]),cex.lab=1.6,cex.main=1.6, -->
+<!--      main=expression(paste("Distribution of ",epsilon[t]," = ",B,eta[t],sep=""))) -->
+<!-- z <- matrix(exp(g(eps,Model)),nb.points,nb.points) -->
+<!-- par(new=TRUE) -->
+<!-- max.z <- max(z) -->
+<!-- levels <- c(.01,.1,.3,.6,.9)*max.z -->
+<!-- contour(x.points,y.points,z,levels=levels,xlim=x.lim,ylim=y.lim,col="red",lwd=2) -->
+<!-- plot(epsilon.CQ[,1],epsilon.CQ[,2],pch=19, -->
+<!--      xlim=x.lim,ylim=y.lim,col="#00000044", -->
+<!--      xlab=expression(epsilon[1]), -->
+<!--      ylab=expression(epsilon[2]),cex.lab=1.6,cex.main=1.6, -->
+<!--      main=expression(paste("Distribution of ",epsilon[t]," = ",BQ,eta[t],sep=""))) -->
+<!-- z <- matrix(exp(g(eps,Model)),nb.points,nb.points) -->
+<!-- par(new=TRUE) -->
+<!-- max.z <- max(z) -->
+<!-- levels <- c(.01,.1,.3,.6,.9)*max.z -->
+<!-- contour(x.points,y.points,z,levels=levels,xlim=x.lim,ylim=y.lim,col="red",lwd=2) -->
+<!-- ``` -->
 
 
-```{r preMadeFigureICAStudentStudent, fig.align = 'left-aligned', out.width = "95%", fig.cap = "XXXX.", echo=FALSE}
-knitr::include_graphics("images/Figure_D.png")
-```
+<!-- NB: In both cases, we have $\mathbb{V}ar(\varepsilon_t)=BB'$. -->
 
 
-**Relationship with Signal Processing Literature**
+<!-- ```{r preMadeFigureICAStudentStudent, fig.align = 'left-aligned', out.width = "95%", fig.cap = "XXXX.", echo=FALSE} -->
+<!-- knitr::include_graphics("images/Figure_D.png") -->
+<!-- ``` -->
 
-Task to be performed:
 
-you observe $n$ linear combinations of $n$ **independent signals**; you want to estimate these linear combinations ($\Leftrightarrow$ recover independent signals).
+The exercise that consists in identifying non-Gaussian independent shocks out of linear combinations of these shocks is a well-known problem of the signal-processingliterature, called **independent component analysis (ICA)**. Without loss of generality, we can assume that $BB' = Id$ (i.e. $B$ is orthogonal). (If this is not the case, i.e. if $\mathbb{V}ar(\varepsilon_t)=\Omega \ne Id$, then one can pre-multiply the data by $\Omega^{-1/2}$.) The classical ICA problem is as follows: Find $B$ such that $\varepsilon_t = B \eta_t$ (or $\eta_t= B' \varepsilon_t $) given that
 
-Without loss of generality, we can assume that $BB' = Id$ (i.e. $B$ is orthogonal)
-
-(If not the case, i.e. if $\mathbb{V}ar(\varepsilon_t)=\Omega \ne Id$, pre-multiply the data by $\Omega^{-1/2}$).
-
-**Classical signal processing problem: Independent Component Analysis (ICA)**
-
-Find $B$ such that $\varepsilon_t = B \eta_t$ (or $\eta_t= B' \varepsilon_t $) given that
-i. you observe the $\varepsilon_t$'s,
+i. We observe the $\varepsilon_t$'s,
 ii. The components of $\eta_t$ are independent,
-iii. $BB'=Id$ ($B$ is orthogonal).
+iii. $BB'=Id$ (i.e., $B$ is orthogonal).
+
+Figure \@ref(fig:ThreePlots) represents again some bivariate distributions. The black (red) lines correspond to the distributions of $\eta_t$ ($B\eta_t$). It is important to note that the two components of vector $B \eta_t$ are not independent (contrary to those of $\eta_t$).
 
 
 ```{r ThreePlotsCode, fig.asp = .8,eval=FALSE,echo=FALSE}
@@ -1581,165 +1555,165 @@ contour(x.points,y.points,z,levels=levels,xlim=x.lim,ylim=y.lim,col="red",lwd=2)
 ```
 
 
-```{r ThreePlots, fig.align = 'left-aligned', out.width = "95%", fig.cap = "XXXX.", echo=FALSE}
+```{r ThreePlots, fig.align = 'left-aligned', out.width = "95%", fig.cap = "The three plots represent the bivariate distributions of $\\eta_t$ (black) and of $B\\eta_t$ (red), where the two components of $\\eta_t$ are independent, of unit variance, and $B$ is orthogonal. Hence, for each of the three plots, $\\mathbb{V}ar(B\\eta_t)=Id$.", echo=FALSE}
 knitr::include_graphics("images/Figure_E.png")
 ```
 
-In all cases, we have $\mathbb{V}ar(\varepsilon_t)=\mathbb{V}ar(\eta_t)=Id$. Assume you observe the distribution of $\varepsilon_t$ (in \color{red}{red}). How to rotate $\varepsilon_t$ to get obtain *independent signals* ($\eta_t = B'\varepsilon_t$)?
+In all cases, we have $\mathbb{V}ar(\varepsilon_t)=\mathbb{V}ar(\eta_t)=Id$. But the two components of $\varepsilon_t$ are not independent. For instance: We have $\mathbb{E}(\varepsilon_{2,t}|\varepsilon_{1,t}>4)<0$ (whereas $\mathbb{E}(\eta_{2,t}|\eta_{1,t}>4)=0$). The objctive of ICA is to rotate $\varepsilon_t$ to retrieve independent components ($\eta_t$).
 
-NB: $\varepsilon_{1,t}$ and $\varepsilon_{2,t}$ are not independent.
-
-For instance: We have $\mathbb{E}(\varepsilon_{2,t}|\varepsilon_{1,t}>4)<0$ (whereas $\mathbb{E}(\eta_{2,t}|\eta_{1,t}>4)=0$).
 
 :::{.hypothesis #NonGauss}
-We have:
+Process $\eta_t$ satisfies:
 
-i. The shocks $\eta_t$ are i.i.d. with $\mathbb{E}(\eta_t) = 0$ and $\mathbb{V}ar(\eta_t) = Id.$
+i. The $\eta_t$'s are i.i.d. (across time) with $\mathbb{E}(\eta_t) = 0$ and $\mathbb{V}ar(\eta_t) = Id.$
 ii. The components $\eta_{1,t}, \ldots, \eta_{n,t}$ are mutually independent.
 iii We have
 $$
-\boxed{Y_t = B_0 \eta_t,}
+\boxed{\varepsilon_t = B_0 \eta_t,}
 $$
-with $\mathbb{E}(Y_t) = Id$ (i.e. $B_0$ is orthogonal).
+with $\mathbb{V}ar(\varepsilon_t) = Id$ (i.e. $B_0$ is orthogonal).
 :::
 
 :::{.theorem #EK2004 name="Eriksson, Koivunen (2004)"}
 If Hypothesis \@ref(hyp:NonGauss) is satisfied and if at most one of the components of $\eta$ is Gaussian, then matrix $B_0$ is identifiable up to the post multiplication by $DP$, where $P$ is a permutation matrix and $D$ is a diagonal matrix whose diagonal entries are 1 or $-1$.}
 :::
 
-**The PML approach**
-
-We introduce a set of p.d.f. $g_i (\eta_i), i=1,\ldots,n,$ and consider the **pseudo log-likelihood function**:
+Hence, the structural shocks are identifiable. But how to estimate them based on observations of the $\varepsilon_t$'s? @Gourieroux_Monfort_Renne_2017 have proposed a **Pseudo-Maximum Likelihood (PML)** approach.  This approach consists in maximizing a so-called **pseudo log-likelihood function**, based on a set of p.d.f. $g_i (\eta_i), i=1,\ldots,n$ (that may be different from the true p.d.f. of the $\eta_{i,t}$'s):
 \begin{equation}
 \log \mathcal{L}_T (B) = \sum^T_{t=1} \sum^n_{i=1} \log g_i (b'_i Y_t),(\#eq:pseudolog)
 \end{equation}
 where $b_i$ is the $i^{th}$ column of matrix $B$ (or $b'_i$ is the $i^{th}$ row of $B^{-1}$ since $B^{-1}=B'$).
 
-The log-likelihood function \@ref(eq:pseudolog) is computed as if the errors $\eta_{i,t}$ had the p.d.f.  $g_i (\eta_i)$.
-
-A **pseudo maximum likelihood (PML) estimator** of matrix $B$ maximizes the pseudo log-likelihood function:
+The log-likelihood function \@ref(eq:pseudolog) is computed as if the errors $\eta_{i,t}$ had the p.d.f.  $g_i (\eta_i)$. The PML estimator of matrix $B$ maximizes the pseudo log-likelihood function:
 \begin{equation}
-\widehat{B_T} = \arg \max_B \sum^T_{t=1} \sum^n_{i=1} \log g_i (b'_i Y_t),(\#eq:optimprob)
+\widehat{B_T} = \arg \max_B \sum^T_{t=1} \sum^n_{i=1} \log g_i (b'_i \varepsilon_t),(\#eq:optimprob)
 \end{equation}
 \centerline{$s.t. \;B'B = Id.$}
 
-The restrictions $B'B = Id$ can be eliminated by parameterizing $B$.
-
-**Cayley's representation:**
-
-Any orthogonal matrix with no eigenvalue equal to $-1$ can be written as
+The restrictions $B'B = Id$ can be eliminated by parameterizing $B$ in such a way that, whatever the consider parameters, $B$ is orthogonal. @Gourieroux_Monfort_Renne_2017 propose to use, for that, the Cayley's representation: any orthogonal matrix with no eigenvalue equal to $-1$ can be written as
 \begin{equation}
 B(A) = (Id+A) (Id-A)^{-1},
 \end{equation}
-where $A$ is a skew symmetric (or antisymmetric) matrix, such that $A'=-A$.
-
-There is a one-to-one relationship with $A$, since:
+where $A$ is a skew symmetric (or antisymmetric) matrix, such that $A'=-A$. There is a one-to-one relationship with $A$, since:
 \begin{equation}
 A = (B(A)+Id)^{-1} (B(A)-Id).
 \end{equation}
 
-PML estimator of matrix $B$: $\widehat{B_T} = B(\hat{A}_T),$ where:
+Hence, the PML estimator of matrix $B$ is obtained as $\widehat{B_T} = B(\hat{A}_T),$ where:
 \begin{equation}
-\hat{A}_T = \arg \max_{a_{i,j}, i>j} \sum^T_{t=1} \sum^n_{i=1} \log g_i [b_i (A)' Y_t].(\#eq:optimprob2)
+\hat{A}_T = \arg \max_{a_{i,j}, i>j} \sum^T_{t=1} \sum^n_{i=1} \log g_i [b_i (A)' \varepsilon_t].(\#eq:optimprob2)
 \end{equation}
 
-**Asymptotic properties of the PML approach**
 
-:::{.hypothesis #NonGauss2}
-We have:
+<!-- The asymptotic properties of the PML estimator are derived  -->
 
-i. The functions $\log g_i$, $i=1,\ldots,n$, are twice continuously differentiable.
-ii. $sup_{B: B'B = Id} \left|\sum^n_{i=1} \log g_i (b'_i y)\right| \leq h(y),$ where $\mathbb{E}_0 [h (Y)] < \infty$.
-:::
+<!-- **Asymptotic properties of the PML approach** -->
 
-:::{.hypothesis #NonGauss3 name="Identification from the asymptotic FOC"}
-The only solutions of the system of equations:
-$$
-\left\{
-\begin{array}{l} \mathbb{E}_0 \left[b'_j Y_t \frac{d\log g_i}{d\eta} (b'_i Y_t)\right] = 0,\;  i \neq j, \\
-B' B = Id,
-\end{array}
-\right.
-$$
-are the elements of $\mathcal{P}_0 \equiv \mathcal{P}(B_0)$, which is the set of matrices obtained by permutation and sign change of the columns of $B_0$.
-:::
+<!-- :::{.hypothesis #NonGauss2} -->
+<!-- We have: -->
 
+<!-- i. The functions $\log g_i$, $i=1,\ldots,n$, are twice continuously differentiable. -->
+<!-- ii. $sup_{B: B'B = Id} \left|\sum^n_{i=1} \log g_i (b'_i y)\right| \leq h(y),$ where $\mathbb{E}_0 [h (Y)] < \infty$. -->
+<!-- ::: -->
 
-:::{.hypothesis #NonGauss4 name="Local concavity"}
-The asymptotic objective function is locally concave in a neighbourhood of a matrix $B$ of $\mathcal{P}(B_0)$, which is the case if and only if
-$$
-\mathbb{E}_0 \left[ \frac{d^2 \log g_i (\eta_{i,t})}{d\eta^2} + \frac{d^2 \log g_j (\eta_{j,t})}{d\eta^2} - \eta_{j,t} \frac{d\log g_j (\eta_{j,t})}{d\eta}- \eta_{i,t} \frac{d\log g_i (\eta_{i,t})}{d\eta} \right] < 0, \forall i<j,
-$$
-where $\eta_{i,t}$ is the $i^{th}$ component of the $\eta_t$ associated with this particular element $B$ of $\mathcal{P}(B_0)$.
-:::
-
-This condition is in particular satisfied under the following set of conditions: derived in Hyvarinen (1997) XXX
-\begin{equation}
-\mathbb{E}_0 \left[\frac{d^2 \log g_i(\eta_{i,t})}{d\eta^2} - \eta_{i,t} \frac{d\log g_i(\eta_{i,t})}{d\eta}\right] <0,\quad  i=1,\ldots, n. (\#eq:HKO)
-\end{equation}
-
-Hyperbolic secant and the subgaussian distributions (see table on next slide): either one, or the other satisfy the inequality \@ref(eq:HKO) [Hyvarinen, Karhunen, Oja, 2001 XXXX].
-
-XXXXXXXXXXXXXXX
-<!-- \begin{table} -->
-<!-- \begin{center} -->
-<!-- \caption{Zero-mean unit-variance distributions}\label{tab:distri}%\vspace{-0.2in} -->
-<!-- \begin{tabular}{lccccc} -->
-<!-- \hline -->
-<!-- & $\log g(x)$ & $\dfrac{d \log g(x)}{d x}$ & $\dfrac{d^2 \log g(x)}{d x^2}$ -->
-<!-- \\ -->
-<!-- %& (a) & (b) & (c) \\ -->
-<!-- \hline -->
-<!-- \\ -->
-<!-- Gaussian & $cst - x^2/2$& $-x$ &$-1$\\%&$0$\\ -->
-<!-- \\ -->
-<!-- Student $t(\nu>4)$ & $-\dfrac{1-\nu}{2}\log\left( 1 +\dfrac{x^2}{\nu-2} \right)$&$-\dfrac{x(1+\nu)}{\nu - 2 + x^2}$\\ %$- (1+\nu)  \dfrac{\nu - 2 - x^2}{\nu - 2 + x^2}$&$\dfrac{6}{\nu-4}$ if $\nu>4$\\ -->
-<!-- Hyperbolic secant &$cst - \log\left( \cosh\left\{\dfrac{\pi}{2}x\right\} \right)$&$-\dfrac{\pi}{2}\tanh\left(\dfrac{\pi}{2}x\right)$&$ -->
-<!-- -\left(\dfrac{\pi}{2}\dfrac{1}{\cosh\left(\dfrac{\pi}{2}x\right)}\right)^2 -->
-<!-- $\\%$2$\\ -->
-<!-- Subgaussian &$cst + \pi x^2 + \log \left(\cosh\left\{\dfrac{\pi}{2}x\right\}\right)$& -->
-<!-- $2\pi x+\dfrac{\pi}{2}\tanh\left(x \dfrac{\pi}{2}\right)$& -->
-<!-- $2\pi + \left(\dfrac{\pi}{2}\dfrac{1}{\cosh\left(\dfrac{\pi}{2}x\right)}\right)^2$\\%$\dfrac{-2\pi^2 + 8\pi - 8}{\pi^2}<0$\\ -->
-<!-- \hline -->
-<!-- \end{tabular} -->
-<!-- \end{center} -->
-<!-- \end{table} -->
-
-Note: Except for the Gaussian distribution, we have $E[d^2 \log g(X)/d \varepsilon^2 - X d\log g(X)/d \varepsilon] < 0$ (i.e. Assumption\,4 is satisfied) when these pseudo distributions coincide to the distribution of $X$. The subGaussian distribution is a mixture of Gaussian distributions: $X$ is drawn from this distribution if it is equal to $BY - (1-B)Y$, where $B$ is drawn from a Bernoulli distribution of parameter $1/2$ and $Y \sim \mathcal{N}(\sqrt{(\pi-2)/\pi},2/\pi)$.
+<!-- :::{.hypothesis #NonGauss3 name="Identification from the asymptotic FOC"} -->
+<!-- The only solutions of the system of equations: -->
+<!-- $$ -->
+<!-- \left\{ -->
+<!-- \begin{array}{l} \mathbb{E}_0 \left[b'_j \varepsilon_t \frac{d\log g_i}{d\eta} (b'_i \varepsilon_t)\right] = 0,\;  i \neq j, \\ -->
+<!-- B' B = Id, -->
+<!-- \end{array} -->
+<!-- \right. -->
+<!-- $$ -->
+<!-- are the elements of $\mathcal{P}_0 \equiv \mathcal{P}(B_0)$, which is the set of matrices obtained by permutation and sign change of the columns of $B_0$. -->
+<!-- ::: -->
 
 
-Under Hypotheses \@ref(NonGauss)-\@ref(NonGauss4), the PML estimator $\widehat{B_T}$ of $B_0$ is consistent (in $\mathcal{P}_0$) and asymptotically normal, with speed of convergence $1/\sqrt{T}$.
+<!-- :::{.hypothesis #NonGauss4 name="Local concavity"} -->
+<!-- The asymptotic objective function is locally concave in a neighbourhood of a matrix $B$ of $\mathcal{P}(B_0)$, which is the case if and only if -->
+<!-- $$ -->
+<!-- \mathbb{E}_0 \left[ \frac{d^2 \log g_i (\eta_{i,t})}{d\eta^2} + \frac{d^2 \log g_j (\eta_{j,t})}{d\eta^2} - \eta_{j,t} \frac{d\log g_j (\eta_{j,t})}{d\eta}- \eta_{i,t} \frac{d\log g_i (\eta_{i,t})}{d\eta} \right] < 0, \forall i<j, -->
+<!-- $$ -->
+<!-- where $\eta_{i,t}$ is the $i^{th}$ component of the $\eta_t$ associated with this particular element $B$ of $\mathcal{P}(B_0)$. -->
+<!-- ::: -->
 
-The asymptotic variance-covariance matrix of $vec \sqrt{T} (\widehat{B_T} - B_0)$ is $A^{-1} \left[\begin{array}{cc} \Gamma & 0 \\ 0 & 0 \end{array} \right] (A')^{-1}$, where matrices $A$ and $\Gamma$ are detailed in Gouri\'eroux, Monfort and Renne (2017) XXX.
+<!-- This condition is in particular satisfied under the following set of conditions: derived in Hyvarinen (1997) XXX -->
+<!-- \begin{equation} -->
+<!-- \mathbb{E}_0 \left[\frac{d^2 \log g_i(\eta_{i,t})}{d\eta^2} - \eta_{i,t} \frac{d\log g_i(\eta_{i,t})}{d\eta}\right] <0,\quad  i=1,\ldots, n. (\#eq:HKO) -->
+<!-- \end{equation} -->
 
-The potential misspecification of pseudo-distributions $g_i$ has no effect on the consistency of these specific PML estimators.
-
-The previous proposition can be exploited to build a test whose null hypothesis is:
-
-*$H_0$: $B$ belongs to $\mathcal{P}_0$, where $\mathcal{P}_0$ is the set of orthogonal matrices obtained by permuting and changing the signs of the columns of a given orthogonal matrix $B_0$.*
+<!-- Hyperbolic secant and the subgaussian distributions (see Table \@ref(tab:distriICA)): either one, or the other satisfy the inequality \@ref(eq:HKO) (see @Hyvarinen_Karhunen_Oja_2001). -->
 
 
-**Application: Structural VAR model**
+Table: (\#tab:distriICA) This table reports usual p.d.f. and their derivatives.
 
-Three dependent variables: inflation ($\pi_t$), economic activity ($z_t$) and the nominal  short-term interest rate ($r_t$).
+|                    | $\log g(x)$                                                             | $\dfrac{d \log g(x)}{d x}$                                | $\dfrac{d^2 \log g(x)}{d x^2}$                                                    |
+|--------------------|-------------------------------------------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------------------------------|
+| Gaussian           | $cst - x^2/2$                                                           | $-x$                                                      | $-1$  |
+| Student $t(\nu>4)$ | $-\dfrac{1-\nu}{2}\log\left( 1 +\dfrac{x^2}{\nu-2} \right)$             | $-\dfrac{x(1+\nu)}{\nu - 2 + x^2}$  | $- (1+\nu)  \dfrac{\nu - 2 - x^2}{\nu - 2 + x^2}$ |
+| Hyperbolic secant  | $cst - \log\left( \cosh\left\{\dfrac{\pi}{2}x\right\} \right)$          | $-\dfrac{\pi}{2}	anh\left(\dfrac{\pi}{2}x\right)$         | $-\left(\dfrac{\pi}{2}\dfrac{1}{\cosh\left(\dfrac{\pi}{2}x\right)}\right)^2$      |
+| Subgaussian        | $cst + \pi x^2 + \log \left(\cosh\left\{\dfrac{\pi}{2}x\right\}\right)$ | $2\pi x+\dfrac{\pi}{2}\tanh\left(x \dfrac{\pi}{2}\right)$ | $2\pi +\left(\dfrac{\pi}{2}\dfrac{1}{\cosh\left(\dfrac{\pi}{2}x\right)}\right)^2$ |
 
-Structural shocks are posited monetary-policy, demand and supply shocks.
 
-$W_t$: set of information made of the past values of $y_t= [\pi_t,z_t,r_t]$, that is $\{y_{t-1},y_{t-2},\dots\}$, and of exogenous variables $\{x_{t},x_{t-1},\dots\}$.
+<!-- Note: Except for the Gaussian distribution, we have $\mathbb{E}[d^2 \log g(X)/d \varepsilon^2 - X d\log g(X)/d \varepsilon] < 0$ (i.e. Assumption\,4 is satisfied) when these pseudo-distributions coincide to the distribution of $X$. The subGaussian distribution is a mixture of Gaussian distributions: $X$ is drawn from this distribution if it is equal to $BY - (1-B)Y$, where $B$ is drawn from a Bernoulli distribution of parameter $1/2$ and $Y \sim \mathcal{N}(\sqrt{(\pi-2)/\pi},2/\pi)$. -->
 
-The reduced-form VAR model reads:
+
+<!-- Under Hypotheses \@ref(hyp:NonGauss)-\@ref(hyp:NonGauss4), -->
+
+Under assumptions on the $g_i$ functions (excluding the Gaussian distributions), @Gourieroux_Monfort_Renne_2017 derive the asymptotic properties of the PML estimator. Specifically, the PML estimator $\widehat{B_T}$ of $B_0$ is consistent (in $\mathcal{P}_0$, the set of matrices obtained by permutation and sign change of the columns of $B_0$) and asymptotically normal, with speed of convergence $1/\sqrt{T}$.
+
+The asymptotic variance-covariance matrix of $vec \sqrt{T} (\widehat{B_T} - B_0)$ is $A^{-1} \left[\begin{array}{cc} \Gamma & 0 \\ 0 & 0 \end{array} \right] (A')^{-1}$, where matrices $A$ and $\Gamma$ are detailed in @Gourieroux_Monfort_Renne_2017.
+
+Note that the potential misspecification of pseudo-distributions $g_i$ has no effect on the consistency of these specific PML estimators.
+
+Let us apply the PML-ICA approach on U.S. data coerving the period 1959:IV to 2015:I at the quarterly frequency ($T=224$). We consider three dependent variables: inflation ($\pi_t$), economic activity ($z_t$, the output gap) and the nominal  short-term interest rate ($r_t$). Changes in the log of oil prices added as an exogenous variable ($x_t$).
+
+
+```{r ICA0}
+library(AEC)
+First.date <- "1959-04-01"
+Last.date  <- "2015-01-01"
+data <- US3var
+data <- data[(data$Date>=First.date)&(data$Date<=Last.date),]
+Y <- as.matrix(data[c("infl","y.gdp.gap","r")])
+names.var <- c("inflation","real activity","short-term rate")
+T <- dim(Y)[1]
+n <- dim(Y)[2]
+```
+
+
+Let us denote by $W_t$ the set of information made of the past values of $y_t= [\pi_t,z_t,r_t]$, that is $\{y_{t-1},y_{t-2},\dots\}$, and of exogenous variables $\{x_{t},x_{t-1},\dots\}$. The reduced-form VAR model reads:
 $$
 y_t  = \underbrace{\mu + \sum_{i=1}^{p} \Phi_i y_{t-i} + \Theta x_t}_{a(W_t;\theta)} + u_t
 $$
 where the $u_t$'s are assumed to be serially independent, with zero mean and variance-covariance matrix $\Sigma$.
 
-U.S. data. 1959:IV to 2015:I at the quarterly frequency ($T=224$). Source: Federal Reserve Economic Database (FRED).
+Matrices $\mu$, $\Phi_i$, $\Theta$ and $\Sigma$ are consistently estimated by OLS. Jarque-Bera tests support the hypothesis of non-normality for all residuals. 
 
-Two different measures of economic activity are considered: the output gap and the unemployment gap. Change in the log of oil prices added as an exogenous variable ($x_t$).
 
-$\mu$, $\Phi_i$, $\Theta$ and $\Sigma$ are consistently estimated by OLS.
+```{r ICA1}
+nb.lags <- 6 # number of lags used in the VAR model
+X <- NULL
+for(i in 1:nb.lags){
+  lagged.Y <- rbind(matrix(NaN,i,n),Y[1:(T-i),])
+  X <- cbind(X,lagged.Y)}
+X <- cbind(X,data$commo) # add exogenous variables
+Phi <- matrix(0,n,n*nb.lags);mu <- rep(0,n)
+effect.commo <- rep(0,n)
+U <- NULL # Eta is the matrix of OLS residuals
+for(i in 1:n){
+  eq <- lm(Y[,i] ~ X)
+  Phi[i,] <- eq$coef[2:(dim(Phi)[2]+1)]
+  mu[i] <- eq$coef[1]
+  U <- cbind(U,eq$residuals)
+  effect.commo[i] <- eq$coef[length(eq$coef)]
+}
+Omega <- var(U) # Omega_1 is the covariance matrix of the OLS residuals.
+B <- t(chol(Omega)) # B_1 is the Cholesky matrix associated with Omega_1 (lower triangular)
+Eps <- U %*% t(solve(B)) # Recover associated structural shocks
+```
 
-Jarque-Bera tests support the hypothesis of non-normality for all residuals.
+
 
 We want to estimate the orthogonal matrix $B$ such that $u_t=SB \eta_t$, where
 
@@ -1748,122 +1722,260 @@ We want to estimate the orthogonal matrix $B$ such that $u_t=SB \eta_t$, where
 
 The PML approach is applied on standardized VAR residuals given by:
 $$
-\hat{S}_T^{-1}\underbrace{[y_t - a(W_t;\hat\theta_T)]}_{\mbox{VAR residuals}}.
+\hat\varepsilon_t = \hat{S}_T^{-1}\underbrace{[y_t - a(W_t;\hat\theta_T)]}_{\mbox{VAR residuals}}.
 $$
 By construction of $\hat{S}_T^{-1}$, it comes that the covariance matrix of these residuals is $Id$.
 
-Pseudo density functions: Distinct and asymmetric mixtures of Gaussian distributions.
-
-Once $B$ has been estimated, it remains to associate the structural shocks (monetary-policy, supply or demand) with the different components of $\eta_{t}$.
-
-* Contractionary **monetary-policy shocks**: negative impact on real activity and on inflation.
-* **Supply shock**: influences of opposite signs on economic activity and on inflation.
-* **Demand shock**: influences of same signs on economic activity and on inflation.
-
-Important: This method does not rely on the assumption that specific impacts  (e.g. contemporaneous or long-run) are null.
-
-<!-- \begin{frame}{} -->
-<!-- \begin{footnotesize} -->
-<!-- \begin{figure} -->
-<!-- \includegraphics[width=.8\linewidth]{figures/ICA/figSVAR1.pdf} -->
-<!-- \end{figure} -->
-<!-- \end{footnotesize} -->
-<!-- \end{frame} -->
-
-<!-- \begin{frame}{} -->
-<!-- \begin{footnotesize} -->
-<!-- \begin{figure} -->
-<!-- \includegraphics[width=.8\linewidth]{figures/ICA/figSVAR2.pdf} -->
-<!-- \end{figure} -->
-<!-- \end{footnotesize} -->
-<!-- \end{frame} -->
-
-Comparison of the previous IRFs with those stemming from "recursive" identification approaches based on specific short-run restrictions (SRRs).
-
-SRRs approach (Section\,\ref{Section:Standard}) are based on the assumptions that
-
-a. $Cov(\eta_t)=Id$,
-b. the $k^{th}$ structural shock does not contemporaneously affects the first $k-1$ endogenous variables and
-c. the contemporaneous effect of the $k^{th}$ structural shock on the $k^{th}$ dependent variable is positive.
-
-Under these assumptions, the structural shocks are given by $S^{-1}u_t$.
-
-SRR approaches assume --potentially wrongly-- that the contemporaneous impacts of some structural shocks on given variables are null.
-
-The null hypothesis of these tests is $H_0= (P \in \mathcal{P}(Id))$.
-The null hypothesis $H_0$ stating that the true value of $B$ belongs to $\mathcal{P}_0$ is not standard since it is a finite union of simple hypotheses $H_{0,j} = (B = B_{j,0})$.
-
-**First testing procedure:**
-
-* Define the Wald statistics $\hat\xi_{j,T}$, $j \in J$:
-\begin{equation}
-\hat\xi_{j,T} = T [vec\hat{B}_T-vec B_{j,0}]'\hat{A}_T'
-\left[
-\begin{array}{cc}
-\hat{\Omega}^{-1}_T & 0\\
-0&0
-\end{array}
-\right]\hat{A}_T
-[vec\hat{B}_T-vec B_{j,0}],
-\end{equation}
-$\hat{A}_T$ and $\hat{\Omega}_T$ being consistent estimators of the matrices $A$ and $\Omega$.
-
-Since the dimension of the asymptotic distribution of $\sqrt{T}[vec\hat{B}_T-vec B_{j,0}]$ is $\frac{1}{2}n(n-1)$, the asymptotic distribution of $\hat\xi_{j,T}$ under $H_{0,j}$ is $\chi^2\left(\frac{1}{2}n(n-1)\right)$.
-
-* Define $\hat\xi_T = \underset{j \in J}{\min} \hat\xi_{j,T}$ as the test statistic for $H_0$.
-* Under $H_0$, $\hat{B}_T$ converges to $B_{j_0,0}$ (say).
-* By the asymptotic properties of the Wald statistics for simple hypotheses:
-\begin{equation}
-\hat\xi_{j_0,T} \overset{D}{\rightarrow} \chi^2\left(\frac{n(n-1)}{2}\right) \quad \mbox{and}\quad  \hat\xi_{j,T} \rightarrow \infty, \mbox{ if } j \ne j_0.
-\end{equation}
+The pseudo density functions are distinct and asymmetric mixtures of Gaussian distributions.
 
 
-Under the null hypothesis, $\hat\xi_T = \underset{j}{\min}$ $\hat\xi_{j,T}$ is asymptotically equal to $\hat\xi_{j_0,T}$  and its asymptotic distribution, $\chi^2\left(\frac{1}{2}n(n-1)\right)$, does not depend on $j_0$. Therefore $\hat\xi_T$ is asymptotically a pivotal statistic for the null hypothesis $H_0$ and the test of critical region $\hat\xi_T \ge \chi^2_{1-\alpha}\left(\frac{1}{2}n(n-1)\right)$ is of asymptotic level $\alpha$ and is consistent.
+```{r ICA2}
+distri <- list(
+  type=c("mixt.gaussian","mixt.gaussian","mixt.gaussian"),
+  df=c(NaN,NaN,NaN),
+  p=c(0.5,.5,.5),mu=c(.1,.1,.1),sigma=c(.5,.7,1.3))
+AA.0 <- c(0,0,0)
+res.optim <- optim(AA.0,func.2.minimize,
+                   Y = Eps, distri = distri,
+                   gr = d.func.2.minimize,
+                   method="Nelder-Mead",
+                   control=list(trace=FALSE,maxit=1000))
+AA.0 <- res.optim$par
+res.optim <- optim(AA.0,func.2.minimize,d.func.2.minimize,
+                   Y = Eps, distri = distri,
+                   method="BFGS",
+                   control=list(trace=FALSE))
+AA.est <- res.optim$par
+n <- ncol(Y)
+M <- make.M(n)
+A.est <- matrix(M %*% AA.est,n,n)
+C.PML <- (diag(n) + A.est) %*% solve(diag(n) - A.est)
+
+eta.PML <- Eps %*% C.PML # eta.PML are the ICA-estimated structural shocks
+
+A <- make.A.matrix(eta.PML,distri,C.PML)
+Omega <- make.Omega(eta.PML,distri)
+# Compute asymptotic covariance matrix of C.PML:
+V <- make.Asympt.Cov.delta(eta.PML,distri,C.PML)
+param <- c(C.PML)
+st.dev <- sqrt(diag(V))
+t.stat <- c(C.PML)/sqrt(diag(V))
+cbind(param,st.dev,t.stat) # print results of PML estimation
+```
+(Note: it is always useful to combine two optimization algorithms, such as `Nelder-Mead` and `BFGS`.)
+
+We would obtain close results by neglecting commodity prices. In  that case, one can simply use the function `estim.SVAR.ICA` of the `AEC` package. Let us compare the $C$ matrix obtained in the two cases (with or without commodity prices):
+
+```{r ICAcompareC}
+ICA.res.no.commo <- estim.SVAR.ICA(Y,distri = distri,p=6)
+round(cbind(ICA.res.no.commo$C.PML,NaN,C.PML),3)
+```
+
+Once $B$ has been estimated, it remains to label the resulting structural shocks (components of $\eta_{t}$). Postulated shocks are monetary-policy, supply, and demand shocks. This labelling can be based on the following considerations:
+
+* Contractionary **monetary-policy shocks** have a negative impact on real activity and on inflation.
+* **Supply shock** have influences of opposite signs on economic activity and on inflation.
+* **Demand shock** have influences of same signs on economic activity and on inflation.
+
+Let us compute the IRFs associated with the three structural shocks. (For the sake of comparison, the first line of plots shows the IRFs to a monetary-policy shock obtained from a Cholesky-based approach where the short-term rate is ordered last.)
+
+```{r ICA3}
+IRF.Chol <- array(NaN,c(n,41,n))
+IRF.ICA  <- array(NaN,c(n,41,n))
+PHI <- list();for(i in 1:nb.lags){PHI[[i]]<-array(Phi,c(3,3,nb.lags))[,,i]}
+for(jjjj in 1:n){
+  u.shock <- rep(0,n)
+  u.shock[jjjj] <- 1
+  IRF.Chol[,,jjjj] <- t(simul.VAR(c=rep(0,3),Phi=PHI,B=B,nb.sim=41,
+                                  y0.star=rep(0,3*nb.lags),indic.IRF = 1,u.shock = u.shock))
+  IRF.ICA[,,jjjj]  <- t(simul.VAR(c=rep(0,3),Phi=PHI,B=B%*%C.PML,nb.sim=41,
+                                  y0.star=rep(0,3*nb.lags),indic.IRF = 1,u.shock = u.shock))
+}
+```
 
 
-**Second testing procedure**
+```{r ICAFigIRF, fig.align = 'left-aligned', out.width = "95%", fig.cap = "The first row of plots shows the responses of the three endogenous variables to the monetary policy shock in the context of a Cholesky-idendtified SVAR (ordering: inflation, output gap, interest rate). The next three rows of plots show the repsonses of the endogenous variables to the three structural shocks identified by ICA. The last one (Shock 3) is close to the Cholesky-identified monetary policy shock.", echo=FALSE}
+# Plot Cholesky-based IRFs:
+par(mfrow=c((n+1),n))
+par(plt=c(.25,.9,.1,.7))
+for(i in 1:n){
+  par(mfg=c(1,i))
+  plot(IRF.Chol[i,,3],type="l",col="red",lwd=2,
+       main=paste("Response of ",names.var[i],sep=""),ylab="MP shock (Chol.)")
+  abline(h=0,col="grey")
+}
+for(shock in 1:n){
+  for(iii in 1:n){
+    par(mfg=c(shock+1,iii))
+    plot(IRF.ICA[iii,,shock],type="l",lwd=2,ylab=paste("Shock ",shock," (ICA)",sep=""))
+    abline(h=0,col="grey")
+  }
+}
+```
 
-Define $B_{0,T} = \underset{B \in \mathcal{P}_0}{\mbox{Argmin }} d(\hat{B}_T,B)$ where $d$ is any distance, for instance the Euclidean one.
 
-Under the null hypothesis $H_0$: $(B \in \mathcal{P}_0)$, $\hat{B}_T$ converges almost surely to an element of $\mathcal{P}_0$ denoted by $B_{j_0,0}$ and it is also the case for $B_{0,T}$ since, asymptotically, we have $B_{0,T}=B_{j_0,0}$.
+According to Figure \@ref(fig:ICAFigIRF), Shock 1 is a supply shock, Shock 2 is a demand shock, and Shock 3 is a monetary-policy shock. Note that Shock 3 is close to the one resulting from the Cholesky approach.
 
-Moreover:
-$$
-\sqrt{T}(\hat{B}_T - B_{0,T})=\sqrt{T}(\hat{B}_T - B_{j_0,0}) + \sqrt{T}(B_{j_0,0} - B_{0,T}),
-$$
-and, since $B_{0,T}$ is almost surely asymptotically equal to $B_{j_0,0}$, the asymptotic distribution of $\sqrt{T}(\hat{B}_T - B_{0,T})$ under $H_0$ is the same as that of $\sqrt{T}(\hat{B}_T - B_{j_0,0})$.
 
-This implies that
-$$
-\tilde\xi_{T} = T [vec\hat{B}_T-vec B_{0,T}]'\hat{A}_T'
-\left[
-\begin{array}{cc}
-\hat{\Omega}^{-1}_T & 0\\
-0&0
-\end{array}
-\right]\hat{A}_T
-[vec\hat{B}_T-vec B_{0,T}]
-$$
-is asymptotically distributed as $\chi^2\left(\frac{1}{2}n(n-1)\right)$ under $H_0$.
+<!-- @Gourieroux_Monfort_Renne_2017 show that the asymptotic propoerties of the PML estimator can be exploited to build a test whose null hypothesis is: -->
 
-An advantage of this second method is that it necessitates the computation of only one Wald test statistic.
+<!-- *$H_0$: $B$ belongs to $\mathcal{P}_0$, where $\mathcal{P}_0$ is the set of orthogonal matrices obtained by permuting and changing the signs of the columns of a given orthogonal matrix $B_0$.* -->
 
-We consider two specific SRR schemes:
-* In both of them, it is assumed that the monetary-policy shock has no contemporaneous impact on $\pi_t$ and $y_t$.
-* In SRR Scheme 1: Inflation is contemporaneously impacted by one structural shock only.
-* In SRR Scheme 2: Economic activity is contemporaneously impacted by one structural shock only.
-\end{itemize}
-* When economic activity is measured by means of the output gap, both SRRs are rejected at the 5\% level.
+<!-- Wald test: -->
+
+<!-- ```{r ICA4, echo=FALSE, warning=FALSE, message=FALSE} -->
+
+<!-- BB.Chol <- B -->
+
+<!-- # all.permut contains all transformations of identity -->
+<!-- # (up to permutations and sign changes of columns) -->
+<!-- # i.e. 48 matrices (= layers): -->
+<!-- all.permut <- do.signs(do.permut(n)) -->
+
+<!-- p.value.W.best <- 0 -->
+<!-- ksi.value.W.best <- 0 -->
+<!-- dist.C.S.best <- 100000000 -->
+
+<!-- V_1 <- make.Asympt.Cov.delta_1(eta.PML,distri,C.PML) -->
+
+<!-- # Look for permutation of C that provides the highest p-value of the Wald test: -->
+<!-- for(c.permut in 1:dim(all.permut)[3]){ -->
+
+<!--   P <- all.permut[,,c.permut] -->
+
+<!--   # Wald test: C = Id <=> C[2,1]=C[3,1]=C[3,2]=0 -->
+<!--   R <- matrix(0,n,n^2) -->
+<!--   R[1,2] <- 1 -->
+<!--   R[2,3] <- 1 -->
+<!--   R[3,6] <- 1 -->
+<!--   invV <- V_1 -->
+<!--   indices <- c(2,3,6) -->
+<!--   # Compute correl matrix: -->
+<!--   stdv.vec <- matrix(sqrt(diag(V)),ncol=1) -->
+<!--   corrV <- V * (1/(stdv.vec %*% t(stdv.vec))) -->
+<!--   # Visualize the pre-sum: -->
+<!--   vecC.S <- matrix(c(C.PML - P),ncol=1) -->
+<!--   # Compute distance between C.PML and Sigma.B.aux: -->
+<!--   dist.C.S <- sum(vecC.S^2) -->
+<!--   vec1 <- matrix(1,n^2,1) -->
+<!--   Vall <- (vecC.S %*% t(vec1)) * invV * t(vecC.S %*% t(vec1)) -->
+<!--   ksi.W <- t(vecC.S) %*% invV %*% vecC.S -->
+<!--   # detect the three elements of Sigma.B.aux with the highest modulus -->
+<!--   aux <- c(abs(P)) -->
+<!--   aux.sorted <- sort(aux) -->
+<!--   for(i in 1:n){ -->
+<!--     aux.indic <- which(aux>=aux.sorted[n^2-n+1]) -->
+<!--   } -->
+<!--   R <- matrix(0,n,n^2) -->
+<!--   R[1,aux.indic[1]] <- 1 -->
+<!--   R[2,aux.indic[2]] <- 1 -->
+<!--   R[3,aux.indic[3]] <- 1 -->
+<!--   MC <- M %*% C.PML -->
+
+<!--   mat.cov.Aronde <- make.Asympt.Cov.deltaAronde(eta.PML,distri,C.PML) -->
+<!--   p.value.W <- 1-pchisq(ksi.W,3) -->
+<!--   if(dist.C.S < dist.C.S.best){ -->
+<!--     dist.C.S.best <- dist.C.S -->
+<!--     p.value.W.best <- p.value.W -->
+<!--     ksi.W.best <- ksi.W -->
+<!--     B.permut.best <- t(all.permut[,,c.permut]) -->
+<!--     c.permut.best <- c.permut -->
+<!--     P.j.best <- P -->
+<!--     Vall.best <- Vall -->
+<!--     VecC.S.best <- vecC.S -->
+<!--     eigen.best <- eigen(C.PML %*% P - P)$value -->
+<!--   } -->
+<!-- } -->
+
+<!-- print(P.j.best) -->
+<!-- print(c(ksi.W.best,p.value.W.best,c.permut.best)) -->
+<!-- print(min(abs(eigen.best))) -->
+<!-- ``` -->
+
+
+
+<!-- Comparison of the previous IRFs with those stemming from "recursive" identification approaches based on specific short-run restrictions (SRRs). -->
+
+<!-- SRRs approach (Section\,\ref{Section:Standard}) are based on the assumptions that -->
+
+<!-- a. $Cov(\eta_t)=Id$, -->
+<!-- b. the $k^{th}$ structural shock does not contemporaneously affects the first $k-1$ endogenous variables and -->
+<!-- c. the contemporaneous effect of the $k^{th}$ structural shock on the $k^{th}$ dependent variable is positive. -->
+
+<!-- Under these assumptions, the structural shocks are given by $S^{-1}u_t$. -->
+
+<!-- SRR approaches assume --potentially wrongly-- that the contemporaneous impacts of some structural shocks on given variables are null. -->
+
+<!-- The null hypothesis of these tests is $H_0= (P \in \mathcal{P}(Id))$. -->
+<!-- The null hypothesis $H_0$ stating that the true value of $B$ belongs to $\mathcal{P}_0$ is not standard since it is a finite union of simple hypotheses $H_{0,j} = (B = B_{j,0})$. -->
+
+<!-- **First testing procedure:** -->
+
+<!-- * Define the Wald statistics $\hat\xi_{j,T}$, $j \in J$: -->
+<!-- \begin{equation} -->
+<!-- \hat\xi_{j,T} = T [vec\hat{B}_T-vec B_{j,0}]'\hat{A}_T' -->
+<!-- \left[ -->
+<!-- \begin{array}{cc} -->
+<!-- \hat{\Omega}^{-1}_T & 0\\ -->
+<!-- 0&0 -->
+<!-- \end{array} -->
+<!-- \right]\hat{A}_T -->
+<!-- [vec\hat{B}_T-vec B_{j,0}], -->
+<!-- \end{equation} -->
+<!-- $\hat{A}_T$ and $\hat{\Omega}_T$ being consistent estimators of the matrices $A$ and $\Omega$. -->
+
+<!-- Since the dimension of the asymptotic distribution of $\sqrt{T}[vec\hat{B}_T-vec B_{j,0}]$ is $\frac{1}{2}n(n-1)$, the asymptotic distribution of $\hat\xi_{j,T}$ under $H_{0,j}$ is $\chi^2\left(\frac{1}{2}n(n-1)\right)$. -->
+
+<!-- * Define $\hat\xi_T = \underset{j \in J}{\min} \hat\xi_{j,T}$ as the test statistic for $H_0$. -->
+<!-- * Under $H_0$, $\hat{B}_T$ converges to $B_{j_0,0}$ (say). -->
+<!-- * By the asymptotic properties of the Wald statistics for simple hypotheses: -->
+<!-- \begin{equation} -->
+<!-- \hat\xi_{j_0,T} \overset{D}{\rightarrow} \chi^2\left(\frac{n(n-1)}{2}\right) \quad \mbox{and}\quad  \hat\xi_{j,T} \rightarrow \infty, \mbox{ if } j \ne j_0. -->
+<!-- \end{equation} -->
+
+
+<!-- Under the null hypothesis, $\hat\xi_T = \underset{j}{\min}$ $\hat\xi_{j,T}$ is asymptotically equal to $\hat\xi_{j_0,T}$  and its asymptotic distribution, $\chi^2\left(\frac{1}{2}n(n-1)\right)$, does not depend on $j_0$. Therefore $\hat\xi_T$ is asymptotically a pivotal statistic for the null hypothesis $H_0$ and the test of critical region $\hat\xi_T \ge \chi^2_{1-\alpha}\left(\frac{1}{2}n(n-1)\right)$ is of asymptotic level $\alpha$ and is consistent. -->
+
+
+<!-- **Second testing procedure** -->
+
+<!-- Define $B_{0,T} = \underset{B \in \mathcal{P}_0}{\mbox{Argmin }} d(\hat{B}_T,B)$ where $d$ is any distance, for instance the Euclidean one. -->
+
+<!-- Under the null hypothesis $H_0$: $(B \in \mathcal{P}_0)$, $\hat{B}_T$ converges almost surely to an element of $\mathcal{P}_0$ denoted by $B_{j_0,0}$ and it is also the case for $B_{0,T}$ since, asymptotically, we have $B_{0,T}=B_{j_0,0}$. -->
+
+<!-- Moreover: -->
+<!-- $$ -->
+<!-- \sqrt{T}(\hat{B}_T - B_{0,T})=\sqrt{T}(\hat{B}_T - B_{j_0,0}) + \sqrt{T}(B_{j_0,0} - B_{0,T}), -->
+<!-- $$ -->
+<!-- and, since $B_{0,T}$ is almost surely asymptotically equal to $B_{j_0,0}$, the asymptotic distribution of $\sqrt{T}(\hat{B}_T - B_{0,T})$ under $H_0$ is the same as that of $\sqrt{T}(\hat{B}_T - B_{j_0,0})$. -->
+
+<!-- This implies that -->
+<!-- $$ -->
+<!-- \tilde\xi_{T} = T [vec\hat{B}_T-vec B_{0,T}]'\hat{A}_T' -->
+<!-- \left[ -->
+<!-- \begin{array}{cc} -->
+<!-- \hat{\Omega}^{-1}_T & 0\\ -->
+<!-- 0&0 -->
+<!-- \end{array} -->
+<!-- \right]\hat{A}_T -->
+<!-- [vec\hat{B}_T-vec B_{0,T}] -->
+<!-- $$ -->
+<!-- is asymptotically distributed as $\chi^2\left(\frac{1}{2}n(n-1)\right)$ under $H_0$. -->
+
+<!-- An advantage of this second method is that it necessitates the computation of only one Wald test statistic. -->
+
+<!-- We consider two specific SRR schemes: -->
+<!-- * In both of them, it is assumed that the monetary-policy shock has no contemporaneous impact on $\pi_t$ and $y_t$. -->
+<!-- * In SRR Scheme 1: Inflation is contemporaneously impacted by one structural shock only. -->
+<!-- * In SRR Scheme 2: Economic activity is contemporaneously impacted by one structural shock only. -->
+<!-- \end{itemize} -->
+<!-- * When economic activity is measured by means of the output gap, both SRRs are rejected at the 5\% level. -->
 
 
 
 **Relation with the Heteroskedasticity Identification**
 
-In some cases, where the $\varepsilon_t$'s are heteroskedastic, the $B$ matrix can be identified
-
-[Rigobon (2003)](\href{https://www.mitpressjournals.org/doi/10.1162/003465303772815727), 
-
-[Lanne, Lutkepohl and Maciejowska (2010)](https://www.sciencedirect.com/science/article/pii/S0165188909001481\#!)
+In some cases, where the $\varepsilon_t$'s are heteroskedastic, the $B$ matrix can be identified (@Rigobon_2003, @LANNE2010121).
 
 Consider the case where we still have $\varepsilon_t = B \eta_t$ but where $\eta_t$'s variance conditionally depends on a regime $s_t \in \{1,\dots,M\}$. That is:
 $$
@@ -1877,12 +1989,11 @@ $$
 
 Without loss of generality, it can be assumed that $\Lambda_1=Id$.
 
-In this context, $B$ is identified, apart from sign reversal of its columns if for all $k \ne j \in \{1,\dots,n\}$, there is a regime $i$ s.t. $\lambda_{i,k} \ne \lambda_{i,j}$. [Prop.1 in Lanne, L\"utkepohl and Maciejowska (2010)](https://www.sciencedirect.com/science/article/pii/S0165188909001481\#!).
+In this context, $B$ is identified, apart from sign reversal of its columns if for all $k \ne j \in \{1,\dots,n\}$, there is a regime $i$ s.t. $\lambda_{i,k} \ne \lambda_{i,j}$. (Prop.1 in @@LANNE2010121).
 
-Bivariate regime case ($M=2$): $B$ identified if the $\lambda_{2,k}$'s are all different. That is, identification is ensured if "there is sufficient heterogeneity in the volatility changes" [L\"utkepohl and Netsunajev (2017)(https://www.sciencedirect.com/science/article/pii/S2452306216300223).
+Bivariate regime case ($M=2$): $B$ identified if the $\lambda_{2,k}$'s are all different. That is, identification is ensured if "there is sufficient heterogeneity in the volatility changes" (@LUTKEPOHL20172).
 
-If the regimes $s_t$ are exogenous and serially independent, then this situation is consistent with the "non-Gaussian" situation described in this section.
-
+If the regimes $s_t$ are exogenous and serially independent, then this situation is consistent with the "non-Gaussian" situation described above.
 
 
 
@@ -2164,7 +2275,7 @@ If the regimes $s_t$ are exogenous and serially independent, then this situation
 
 VAR models are subject to the curse of dimensionality: If $n$, is large, then the number of parameters (in $n^2$) explodes.
 
-In the case where one suspects that the $y_{i,t}$'s are mainly driven by a small number of random sources, a factor structure may be imposed, and **principal component analysis** can be employed to estimate the relevant factors (@Bernanke_Boivin_Eliasz_2005).
+In the case where one suspects that the $y_{i,t}$'s are mainly driven by a small number of random sources, a factor structure may be imposed, and **principal component analysis** (PCA, see Appendix \@ref(PCAapp)) can be employed to estimate the relevant factors (@Bernanke_Boivin_Eliasz_2005).
 
 Let us denote by $F_t$ a $k$-dimensional vector of latent factors accounting for important shares of the variances of the $y_{i,t}$'s (with $K \ll n$) and by $x_t$ is a small $M$-dimensional subset of $y_t$ (with $M \ll n$). The following factor structure is posited:
 $$
@@ -2520,7 +2631,7 @@ As noted by @Stock_Watson_2018, the relevant variance is the long-run variance o
 
 
 
-```{r essaiIV, warning=FALSE,message=FALSE, fig.align = 'left-aligned', out.width = "95%", fig.cap = "Reponses to a monetary-policy shock, LP-IV approach."}
+```{r essaiIV, warning=FALSE,message=FALSE, fig.align = 'left-aligned', out.width = "95%", fig.cap = "Reponses to a monetary-policy shock, LP-IV approach.",eval=FALSE}
 res.LP.IV <- make.LPIV.irf(y,Z,
                            nb.periods.IRF = 20,
                            nb.lags.Y.4.control=4,
@@ -2528,6 +2639,155 @@ res.LP.IV <- make.LPIV.irf(y,Z,
                            indic.plot = 1, # Plots are displayed if = 1.
                            confidence.interval = 0.90)
 ```
+
+
+
+
+### Inference {#Inference}
+
+Consider the following SVAR model:
+\[y_t = \Phi_1 y_{t-1} + \dots + \Phi_p y_{t-p} + \varepsilon_t\]
+with $\varepsilon_t=B\eta_t$, $\Omega_\varepsilon=BB'$.
+
+The corresponding infinite MA representation (Eq. \@ref(eq:InfMA), or Wold theorem, Theorem \@ref(thm:Wold)) is:
+$$
+y_t = \sum_{h=0}^\infty\Psi_h \eta_{t-h},
+$$
+where $\Psi_0=B$ and for $h=1,2,\dots$:
+$$
+\Psi_h = \sum_{j=1}^h\Psi_{h-j}\Phi_j,
+$$
+with $\Phi_j=0$ for $j>p$ (see Prop. \@ref(prp:computPsi) for this recursive computation of the $\Psi_j$'s).
+
+Inference on the VAR coefficients $\{\Phi_j\}_{j=1,...,p}$ is straightforward (standard OLS inference). But inference is more complicated regarding IRF. Indeed, as shown by the previous equation, the (infinite) MA coefficients $\{\Psi_j\}_{j=1,...}$ are non-linear functions of the $\{\Phi_j\}_{j=1,...,p}$ and of $\Omega_\varepsilon$. An other issue pertain to small sample bias: typically, for persistent process, auto-regressive parameters are known to be downward biased.
+
+The main inference methods are the following:
+
+* Monte Carlo method (@Hamilton_1994)
+* Asymptotic normal approximation (@Lutkepohl_1990), or Delta method
+* Bootstrap method (Kilian_1998)
+
+
+
+**Monte Carlo method**
+
+We use Monte Carlo when we need to approximate the distribution of a variable whose distribution is unknown (here: the $\Psi_j$'s) but which is a function of another variable whose distribution is known (here, the $\Phi_j$'s).
+
+For instance, suppose we know the distribution of a random variable $X$, which takes values in $\mathbb{R}$, with density function $p$. Assume we want to compute the mean of $\varphi(X)$. We have:
+$$
+\mathbb{E}(\varphi(X))=\int_{-\infty}^{+\infty}\varphi(x)p(x)dx
+$$
+Suppose that the above integral does not have a simple expression. We cannot compute $\mathbb{E}(\varphi(X))$ but, by virtue of the law of large numbers (Theorem \@ref(LLNappendix)), we can approximate it as follows:
+$$
+\mathbb{E}(\varphi(X))\approx\frac{1}{N}\sum_{i=1}^N\varphi(X^{(i)}),
+$$
+where $\{X^{(i)}\}_{i=1,...,N}$ are $N$ independent draws of $X$. More generally, the distribution of $\varphi(X)$ can be approximated by the empirical distribution of the $\varphi(X^{(i)}$'s. Typically, if 10'000 values of $\varphi(X^{(i)}$ are drawn, the $5^{th}$ percentile of the p.d.f. of $\varphi(X)$ can be approximated by the $500^{th}$ value of the 10'000 draws of $\varphi(X^{(i)}$ (after arranging these values in ascending order).
+
+As regards the computation of confidence intervals around IRFs, one has to think of $\{\widehat{\Phi}_j\}_{j=1,...,p}$, and of $\widehat{\Omega}$ as $X$ and $\{\widehat{\Psi}_j\}_{j=1,...}$ as $\varphi(X)$. (Proposition \@ref(prp:OLSVAR2) provides us with the asymptotic distribution of the "$X$.")
+
+To summarize, here are the steps one can implement to derive confidence intervals for the IRFs using the Monte-Carlo approach:
+
+For each iteration $k$:
+
+1. Draw $\{\widehat{\Phi}_j^{(k)}\}_{j=1,...,p}$ and $\widehat{\Omega}^{(k)}$ from their asymptotic distribution (using Proposition \@ref(prp:OLSVAR2)).
+2. Compute the matrix $B^{(k)}$ so that $\widehat{\Omega}^{(k)}=B^{(k)}B^{(k)'}$, according to your identification strategy.
+4. Compute the associated IRFs $\{\widehat{\Psi}_j\}^{(k)}$.
+
+Perform $N$ replications and report the median impulse response (and its confidence intervals).
+
+
+
+**Delta method**
+
+Suppose $\beta$ is a vector of parameters and $\beta$ is an estimator such that
+$$
+\sqrt{T}(\hat\beta-\beta)\overset{d}{\rightarrow}\mathcal{N}(0,\Sigma_\beta),
+$$
+where $d$ denotes convergence in distribution, $N(0,\Sigma_\beta)$ denotes the multivariate normal distribution with mean vector 0 and covariance matrix $\Sigma_\beta$ and $T$ is the sample size used for estimation.
+
+Let $g(\beta) = (g_l(\beta),..., g_m(\beta))'$ be a continuously differentiable function with values in $\mathbb{R}^m$, and assume that $\partial g_i/\partial
+\beta' = (\partial g_i/\partial \beta_j)$ is nonzero at $\beta$ for $i = 1,\dots, m$. Then
+$$
+\sqrt{T}(\color{blue}{g}(\hat\beta)-\color{blue}{g}(\beta))\overset{d}{\rightarrow}\mathcal{N}\left(0,\color{blue}{\frac{\partial g}{\partial \beta'}}\Sigma_\beta\color{blue}{\frac{\partial g'}{\partial \beta}}\right).
+$$
+(This formula underlies the Delta method, see Eq. \@ref(eq:DeltaMethod).)
+
+Using this property, @Lutkepohl_1990 provides the asymptotic distributions of the $\Psi_j$'s.
+
+A limit of the last two approaches (Monte Carlo and the Delta method) is that they critically rely on asymptotic results. Boostrapping approaches are more robust in small-sample situations.
+
+
+**Bootstrap**
+
+IRFs' confidence intervals are intervals where 90\% (or 95\%,75\%,...) of the IRFs would lie, if we were to repeat the estimation a large number of times in similar conditions ($T$ observations). We obviously cannot do this, because we have only one sample: $\{y_t\}_{t=1,..,T}$. But we can try to *construct* such samples.
+
+Bootstrapping consists in:
+
+* re-sampling $N$ times, i.e., constructing $N$ samples of $T$ observations, using the estimated
+VAR coefficients and
+
+    a. a sample of residuals from the distribution $N(0,BB')$ (**parametric approach**), or
+    b. a sample of residuals drawn randomly from the set of the actual estimated residuals $\{\hat\varepsilon_t\}_{t=1,..,T}$. (**non-parametric approach**).
+
+* re-estimating the SVAR $N$ times.
+
+Here is the algorithm:
+
+1. Construct a sample
+$$
+y_t^{(k)}=\widehat{\Phi}_1 y_{t-1}^{(k)} + \dots + \widehat{\Phi}_p y_{t-p}^{(k)} + \hat\varepsilon_t^{(k)},
+$$
+with $\hat\varepsilon_{t}^{(k)}=\hat\varepsilon_{s_t^{(k)}}$, where $\{s_1^{(k)},..,s_T^{(k)}\}$ is a random set from $\{1,..,T\}^T$.
+2. Re-estimate the SVAR and compute the IRFs $\{\widehat{\Psi}_j\}^{(k)}$.
+
+Perform $N$ replications and report the median impulse response (and its confidence intervals).
+
+**Bootstrap-after-bootstrap** (@Kilian_1998)
+
+The previous simple bootstrapping procedure deals with non-normality and small sample distribution, since we use the actual residuals. However, it does not deal with the *small sample bias*, stemming, in particular, from small-sample bias associated with OLS coefficient estimates $\{\widehat{\Phi}_j\}_{j=1,..,p}$. The main idea of the bootstrap-after-bootstrap of @Kilian_1998 is to run two consecutive boostraps: the objective of the first is to compute the bias, which can further be used to correct the initial estimates of the $\Phi_i$'s. Further, these corrected estimates are used ---in the second boostrap--- to compute a set of IRFs (as in the standard boostrap).
+
+More formally, the algorithm is as follows:
+
+1. Estimate the SVAR coefficients $\{\widehat{\Phi}_j\}_{j=1,..,p}$ and $\widehat{\Omega}$
+2. **First bootstrap.** For each iteration $k$:
+    a. Construct a sample
+$$
+y_t^{(k)}=\widehat{\Phi}_1 y_{t-1}^{(k)} + \dots + \widehat{\Phi}_p y_{t-p}^{(k)} + \hat\varepsilon_t^{(k)},
+$$
+with $\hat\varepsilon_{t}^{(k)}=\hat\varepsilon_{s_t^{(k)}}$, where $\{s_1^{(k)},..,s_T^{(k)}\}$ is a random set from $\{1,..,T\}^T$.
+    b. Re-estimate the VAR and compute the coefficients $\{\widehat{\Phi}_j\}_{j=1,..,p}^{(k)}$.
+
+3. Perform $N$ replications and compute the median coefficients $\{\widehat{\Phi}_j\}_{j=1,..,p}^*$. 
+4. Approximate the bias terms by $\widehat{\Theta}_j=\widehat{\Phi}_j^*-\widehat{\Phi}_j$.
+5. Construct the bias-corrected terms $\widetilde{\Phi}_j=\widehat{\Phi}_j-\widehat{\Theta}_j$.
+6. **Second bootstrap.** For each iteration $k$:
+    a. Construct a sample now from 
+    $$y_t^{(k)}=\widetilde{\Phi}_1 y_{t-1}^{(k)} + \dots + \widetilde{\Phi}_p y_{t-p}^{(k)} + \hat\varepsilon_t^{(k)}.
+    $$
+    b. Re-estimate the VAR and compute the coefficients $\{\widehat{\Phi}^*_j\}_{j=1,..,p}^{(k)}$.
+    c. Construct the bias-corrected estimates $\widetilde{\Phi}_j^{*(k)}=\widehat{\Phi}_j^{*(k)}-\widehat{\Theta}_j$.
+    d. Compute the associated IRFs $\{\widetilde{\Psi}_j^{*(k)}\}_{j\ge 1}$.
+
+7. Perform $N$ replications and compute the median and the confidence interval of the set of IRFs.
+
+It should be noted that correcting for the bias can generate non-stationary results ($\tilde \Phi$ with eigenvalue with modulus $>1$). Solution (@Kilian_1998):
+
+In step 5, check if the largest eigenvalue of $\tilde\Phi$ is of modulus <1.
+If not, shrink the bias: for all $j$s, set $\widehat{\Theta}_j^{(i+1)}=\delta_{i+1}\widehat{\Theta}_j^{(i)}$, with $\delta_{i+1}=\delta_i-0.01$, starting with $\delta_1=1$ and $\widehat{\Theta}_j^{(1)} =\widehat{\Theta}_j$, and compute $\widetilde{\Phi}_j^{(i+1)}=\widehat{\Phi}_j-\widehat{\Theta}_j^{(i+1)}$ until the largest eigenvalue of $\tilde\Phi^{(i+1)}$ has modulus <1.
+
+Function `VAR.Boot` of package `VAR.etp` (@VARetp) can be used to operate the bias-correction approach of @Kilian_1998:
+
+```{r VARBoot, message=FALSE, warning=FALSE}
+library(VAR.etp)
+library(vars) #standard VAR models
+data(dat) # part of VAR.etp package
+corrected <- VAR.Boot(dat,p=2,nb=200,type="const")
+noncorrec <- VAR(dat,p=2)
+rbind(corrected$coef[1,],
+      (corrected$coef+corrected$Bias)[1,],
+      noncorrec$varresult$inv$coefficients)
+```
+
 
 
 

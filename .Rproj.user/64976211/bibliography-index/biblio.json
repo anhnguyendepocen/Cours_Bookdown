@@ -1,6 +1,177 @@
 {
     "sources": [
         {
+            "DOI": "10.1162/003465303772815727",
+            "URL": "https://doi.org/10.1162/003465303772815727",
+            "author": [
+                {
+                    "family": "Rigobon",
+                    "given": "Roberto"
+                }
+            ],
+            "container-title": "The Review of Economics and Statistics",
+            "id": "Rigobon_2003",
+            "issue": "4",
+            "issued": {
+                "date-parts": [
+                    [
+                        2003,
+                        11
+                    ]
+                ]
+            },
+            "page": "777-792",
+            "title": "Identification Through Heteroskedasticity",
+            "type": "article-journal",
+            "volume": "85"
+        },
+        {
+            "URL": "https://www.math.nyu.edu/~avellane/Litterman1991.pdf",
+            "author": [
+                {
+                    "family": "Litterman",
+                    "given": "Robert"
+                },
+                {
+                    "family": "Scheinkman",
+                    "given": "Jose"
+                }
+            ],
+            "container-title": "Journal of Fixed Income",
+            "id": "Litterman_Scheinkman_1991",
+            "issue": "1",
+            "issued": {
+                "date-parts": [
+                    [
+                        1991
+                    ]
+                ]
+            },
+            "page": "54-61",
+            "title": "Common Factors Affecting Bond Returns",
+            "type": "article-journal"
+        },
+        {
+            "DOI": "https://doi.org/10.1016/j.ecosta.2016.05.001",
+            "ISSN": "2452-3062",
+            "URL": "https://www.sciencedirect.com/science/article/pii/S2452306216300223",
+            "author": [
+                {
+                    "family": "Lütkepohl",
+                    "given": "Helmut"
+                },
+                {
+                    "family": "Netšunajev",
+                    "given": "Aleksei"
+                }
+            ],
+            "container-title": "Econometrics and Statistics",
+            "id": "LUTKEPOHL20172",
+            "issued": {
+                "date-parts": [
+                    [
+                        2017
+                    ]
+                ]
+            },
+            "page": "2-18",
+            "title": "Structural vector autoregressions with heteroskedasticity: A review of different volatility models",
+            "title-short": "Structural vector autoregressions with heteroskedasticity",
+            "type": "article-journal",
+            "volume": "1"
+        },
+        {
+            "DOI": "https://doi.org/10.1016/j.jedc.2009.08.002",
+            "ISSN": "0165-1889",
+            "URL": "https://www.sciencedirect.com/science/article/pii/S0165188909001481",
+            "author": [
+                {
+                    "family": "Lanne",
+                    "given": "Markku"
+                },
+                {
+                    "family": "Lütkepohl",
+                    "given": "Helmut"
+                },
+                {
+                    "family": "Maciejowska",
+                    "given": "Katarzyna"
+                }
+            ],
+            "container-title": "Journal of Economic Dynamics and Control",
+            "id": "LANNE2010121",
+            "issue": "2",
+            "issued": {
+                "date-parts": [
+                    [
+                        2010
+                    ]
+                ]
+            },
+            "page": "121-131",
+            "title": "Structural vector autoregressions with markov switching",
+            "type": "article-journal",
+            "volume": "34"
+        },
+        {
+            "DOI": "https://doi.org/10.1111/j.1538-4616.2008.00151.x",
+            "URL": "https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1538-4616.2008.00151.x",
+            "author": [
+                {
+                    "family": "Lanne",
+                    "given": "Markku"
+                },
+                {
+                    "family": "Lütkepohl",
+                    "given": "Helmut"
+                }
+            ],
+            "container-title": "Journal of Money, Credit and Banking",
+            "id": "Lanne_Lutkepohl_2008",
+            "issue": "6",
+            "issued": {
+                "date-parts": [
+                    [
+                        2008
+                    ]
+                ]
+            },
+            "page": "1131-1149",
+            "title": "Identifying monetary policy shocks via changes in volatility",
+            "type": "article-journal",
+            "volume": "40"
+        },
+        {
+            "DOI": "https://doi.org/10.1016/j.jmoneco.2003.11.002",
+            "ISSN": "0304-3932",
+            "URL": "https://www.sciencedirect.com/science/article/pii/S0304393204000698",
+            "author": [
+                {
+                    "family": "Normandin",
+                    "given": "Michel"
+                },
+                {
+                    "family": "Phaneuf",
+                    "given": "Louis"
+                }
+            ],
+            "container-title": "Journal of Monetary Economics",
+            "id": "NORMANDIN20041217",
+            "issue": "6",
+            "issued": {
+                "date-parts": [
+                    [
+                        2004
+                    ]
+                ]
+            },
+            "page": "1217-1243",
+            "title": "Monetary policy shocks:: Testing identification conditions under time-varying conditional volatility",
+            "title-short": "Monetary policy shocks",
+            "type": "article-journal",
+            "volume": "51"
+        },
+        {
             "DOI": "https://doi.org/10.1016/S0304-3932(01)00055-1",
             "ISSN": "0304-3932",
             "URL": "https://www.sciencedirect.com/science/article/pii/S0304393201000551",
@@ -548,6 +719,29 @@
             "type": "book"
         },
         {
+            "URL": "https://EconPapers.repec.org/RePEc:tpr:restat:v:72:y:1990:i:1:p:116-25",
+            "author": [
+                {
+                    "family": "Lütkepohl",
+                    "given": "Helmut"
+                }
+            ],
+            "container-title": "The Review of Economics and Statistics",
+            "id": "Lutkepohl_1990",
+            "issue": "1",
+            "issued": {
+                "date-parts": [
+                    [
+                        1990
+                    ]
+                ]
+            },
+            "page": "116-25",
+            "title": "Asymptotic distributions of impulse response functions and forecast error variance decompositions of vector autoregressive models",
+            "type": "article-journal",
+            "volume": "72"
+        },
+        {
             "URL": "https://www.worldcat.org/title/time-series-analysis/oclc/1194970663&referer=brief_results",
             "author": [
                 {
@@ -950,6 +1144,57 @@
             "title": "When do long-run identifying restrictions give reliable results?",
             "type": "article-journal",
             "volume": "15"
+        },
+        {
+            "DOI": "https://doi.org/10.1016/j.ijforecast.2006.01.001",
+            "ISSN": "0169-2070",
+            "URL": "https://www.sciencedirect.com/science/article/pii/S0169207006000021",
+            "author": [
+                {
+                    "family": "De Gooijer",
+                    "given": "Jan G."
+                },
+                {
+                    "family": "Hyndman",
+                    "given": "Rob J."
+                }
+            ],
+            "container-title": "International Journal of Forecasting",
+            "id": "DEGOOIJER2006443",
+            "issue": "3",
+            "issued": {
+                "date-parts": [
+                    [
+                        2006
+                    ]
+                ]
+            },
+            "note": "Twenty five years of forecasting",
+            "page": "443-473",
+            "title": "25 years of time series forecasting",
+            "type": "article-journal",
+            "volume": "22"
+        },
+        {
+            "URL": "https://CRAN.R-project.org/package=VAR.etp",
+            "author": [
+                {
+                    "family": "Kim",
+                    "given": "Jae. H."
+                }
+            ],
+            "id": "VARetp",
+            "issued": {
+                "date-parts": [
+                    [
+                        2022
+                    ]
+                ]
+            },
+            "note": "R package version 1.0",
+            "title": "VAR.etp: VAR modelling: Estimation, testing, and prediction",
+            "title-short": "VAR.etp",
+            "type": "book"
         },
         {
             "URL": "http://www.jstor.org/stable/2646633",
@@ -1363,6 +1608,68 @@
             "title": "Identification and Estimation in Non-Fundamental Structural VARMA Models",
             "type": "article-journal",
             "volume": "87"
+        },
+        {
+            "URL": "https://onlinelibrary.wiley.com/doi/book/10.1002/0471221317",
+            "author": [
+                {
+                    "family": "Hyvärinen",
+                    "given": "A."
+                },
+                {
+                    "family": "Karhunen",
+                    "given": "J."
+                },
+                {
+                    "family": "Oja",
+                    "given": "E."
+                }
+            ],
+            "edition": "Wiley, New York",
+            "id": "Hyvarinen_Karhunen_Oja_2001",
+            "issued": {
+                "date-parts": [
+                    [
+                        2001
+                    ]
+                ]
+            },
+            "title": "Independent Component Analysis",
+            "type": "book"
+        },
+        {
+            "DOI": "https://doi.org/10.1016/j.jeconom.2016.09.007",
+            "ISSN": "0304-4076",
+            "URL": "https://www.sciencedirect.com/science/article/pii/S0304407616301749",
+            "author": [
+                {
+                    "family": "Gouriéroux",
+                    "given": "Christian"
+                },
+                {
+                    "family": "Monfort",
+                    "given": "Alain"
+                },
+                {
+                    "family": "Renne",
+                    "given": "Jean-Paul"
+                }
+            ],
+            "container-title": "Journal of Econometrics",
+            "id": "Gourieroux_Monfort_Renne_2017",
+            "issue": "1",
+            "issued": {
+                "date-parts": [
+                    [
+                        2017
+                    ]
+                ]
+            },
+            "page": "111-126",
+            "title": "Statistical inference for independent component analysis: Application to structural VAR models",
+            "title-short": "Statistical inference for independent component analysis",
+            "type": "article-journal",
+            "volume": "196"
         },
         {
             "URL": "https://ideas.repec.org/a/aea/aejmac/v7y2015i1p44-76.html",

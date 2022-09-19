@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Inference | Advanced Econometrics</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Inference | Advanced Econometrics" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Inference | Advanced Econometrics" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Jean-Paul Renne" />
+
+
+<meta name="date" content="2022-09-18" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="append.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Advanced Econometrics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Before starting</a></li>
+<li class="chapter" data-level="2" data-path="Inference.html"><a href="Inference.html"><i class="fa fa-check"></i><b>2</b> Inference</a></li>
+<li class="chapter" data-level="3" data-path="append.html"><a href="append.html"><i class="fa fa-check"></i><b>3</b> Appendix</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="append.html"><a href="append.html#statistical-tables"><i class="fa fa-check"></i><b>3.1</b> Statistical Tables</a></li>
+<li class="chapter" data-level="3.2" data-path="append.html"><a href="append.html#PCAapp"><i class="fa fa-check"></i><b>3.2</b> Principal component analysis (PCA)</a></li>
+<li class="chapter" data-level="3.3" data-path="append.html"><a href="append.html#variousResults"><i class="fa fa-check"></i><b>3.3</b> Statistics: definitions and results</a></li>
+<li class="chapter" data-level="3.4" data-path="append.html"><a href="append.html#GaussianVar"><i class="fa fa-check"></i><b>3.4</b> Some properties of Gaussian variables</a></li>
+<li class="chapter" data-level="3.5" data-path="append.html"><a href="append.html#proofs"><i class="fa fa-check"></i><b>3.5</b> Proofs</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="append.html"><a href="append.html#MLEproperties"><i class="fa fa-check"></i><b>3.5.1</b> Proof of Proposition @ref(prp:MLEproperties)</a></li>
+<li class="chapter" data-level="3.5.2" data-path="append.html"><a href="append.html#Walddistri"><i class="fa fa-check"></i><b>3.5.2</b> Proof of Proposition @ref(prp:Walddistri)</a></li>
+<li class="chapter" data-level="3.5.3" data-path="append.html"><a href="append.html#LMdistri"><i class="fa fa-check"></i><b>3.5.3</b> Proof of Proposition @ref(prp:LMdistri)</a></li>
+<li class="chapter" data-level="3.5.4" data-path="append.html"><a href="append.html#equivLRLMW"><i class="fa fa-check"></i><b>3.5.4</b> Proof of Proposition @ref(prp:equivLRLMW)</a></li>
+<li class="chapter" data-level="3.5.5" data-path="append.html"><a href="append.html#proofTVTCL"><i class="fa fa-check"></i><b>3.5.5</b> Proof of Eq. @ref(eq:TCL2)</a></li>
+<li class="chapter" data-level="3.5.6" data-path="append.html"><a href="append.html#smallestMSE"><i class="fa fa-check"></i><b>3.5.6</b> Proof of Proposition @ref(prp:smallestMSE)</a></li>
+<li class="chapter" data-level="3.5.7" data-path="append.html"><a href="append.html#estimVARGaussian"><i class="fa fa-check"></i><b>3.5.7</b> Proof of Proposition @ref(prp:estimVARGaussian)</a></li>
+<li class="chapter" data-level="3.5.8" data-path="append.html"><a href="append.html#OLSVAR"><i class="fa fa-check"></i><b>3.5.8</b> Proof of Proposition @ref(prp:OLSVAR)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="append.html"><a href="append.html#additional-codes"><i class="fa fa-check"></i><b>3.6</b> Additional codes</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="append.html"><a href="append.html#App:GEV"><i class="fa fa-check"></i><b>3.6.1</b> Simulating GEV distributions</a></li>
+<li class="chapter" data-level="3.6.2" data-path="append.html"><a href="append.html#IRFDELTA"><i class="fa fa-check"></i><b>3.6.2</b> Computing the covariance matrix of IRF using the delta method</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Advanced Econometrics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="Inference" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Inference<a href="Inference.html#Inference" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Consider the following SVAR model:
+<span class="math display">\[y_t = \Phi_1 y_{t-1} + \dots + \Phi_p y_{t-p} + \varepsilon_t\]</span>
+with <span class="math inline">\(\varepsilon_t=B\eta_t\)</span>, <span class="math inline">\(\Omega_\varepsilon=BB&#39;\)</span>.</p>
+<p>The corresponding infinite MA representation (Eq. <a href="#eq:InfMA">(<strong>??</strong>)</a>, or Wold theorem, Theorem <a href="#thm:Wold"><strong>??</strong></a>) is:
+<span class="math display">\[
+y_t = \sum_{h=0}^\infty\Psi_h \eta_{t-h},
+\]</span>
+where <span class="math inline">\(\Psi_0=B\)</span> and for <span class="math inline">\(h=1,2,\dots\)</span>:
+<span class="math display">\[
+\Psi_h = \sum_{j=1}^h\Psi_{h-j}\Phi_j,
+\]</span>
+with <span class="math inline">\(\Phi_j=0\)</span> for <span class="math inline">\(j&gt;p\)</span> (see Prop. <a href="#prp:computPsi"><strong>??</strong></a> for this recursive computation of the <span class="math inline">\(\Psi_j\)</span>’s).</p>
+<p>Inference on the VAR coefficients <span class="math inline">\(\{\Phi_j\}_{j=1,...,p}\)</span> is straightforward (standard OLS inference). But inference is more complicated regarding IRF. Indeed, as shown by the previous equation, the (infinite) MA coefficients <span class="math inline">\(\{\Psi_j\}_{j=1,...}\)</span> are non-linear functions of the <span class="math inline">\(\{\Phi_j\}_{j=1,...,p}\)</span> and of <span class="math inline">\(\Omega_\varepsilon\)</span>. An other issue pertain to small sample bias: typically, for persistent process, auto-regressive parameters are known to be downward biased.</p>
+<p>The main inference methods are the following:</p>
+<ul>
+<li>Monte Carlo method (<span class="citation">Hamilton (<a href="#ref-Hamilton_1994" role="doc-biblioref">1994</a>)</span>)</li>
+<li>Asymptotic normal approximation (<span class="citation">Lütkepohl (<a href="#ref-Lutkepohl_1990" role="doc-biblioref">1990</a>)</span>), or Delta method</li>
+<li>Bootstrap method (Kilian_1998)</li>
+</ul>
+<p><strong>Monte Carlo method</strong></p>
+<p>We use Monte Carlo when we need to approximate the distribution of a variable whose distribution is unknown (here: the <span class="math inline">\(\Psi_j\)</span>’s) but which is a function of another variable whose distribution is known (here, the <span class="math inline">\(\Phi_j\)</span>’s).</p>
+<p>For instance, suppose we know the distribution of a random variable <span class="math inline">\(X\)</span>, which takes values in <span class="math inline">\(\mathbb{R}\)</span>, with density function <span class="math inline">\(p\)</span>. Assume we want to compute the mean of <span class="math inline">\(\varphi(X)\)</span>. We have:
+<span class="math display">\[
+\mathbb{E}(\varphi(X))=\int_{-\infty}^{+\infty}\varphi(x)p(x)dx
+\]</span>
+Suppose that the above integral does not have a simple expression. We cannot compute <span class="math inline">\(\mathbb{E}(\varphi(X))\)</span> but, by virtue of the law of large numbers (Theorem <a href="#LLNappendix"><strong>??</strong></a>), we can approximate it as follows:
+<span class="math display">\[
+\mathbb{E}(\varphi(X))\approx\frac{1}{N}\sum_{i=1}^N\varphi(X^{(i)}),
+\]</span>
+where <span class="math inline">\(\{X^{(i)}\}_{i=1,...,N}\)</span> are <span class="math inline">\(N\)</span> independent draws of <span class="math inline">\(X\)</span>. More generally, the distribution of <span class="math inline">\(\varphi(X)\)</span> can be approximated by the empirical distribution of the <span class="math inline">\(\varphi(X^{(i)}\)</span>’s. Typically, if 10’000 values of <span class="math inline">\(\varphi(X^{(i)}\)</span> are drawn, the <span class="math inline">\(5^{th}\)</span> percentile of the p.d.f. of <span class="math inline">\(\varphi(X)\)</span> can be approximated by the <span class="math inline">\(500^{th}\)</span> value of the 10’000 draws of <span class="math inline">\(\varphi(X^{(i)}\)</span> (after arranging these values in ascending order).</p>
+<p>As regards the computation of confidence intervals around IRFs, one has to think of <span class="math inline">\(\{\widehat{\Phi}_j\}_{j=1,...,p}\)</span>, and of <span class="math inline">\(\widehat{\Omega}\)</span> as <span class="math inline">\(X\)</span> and <span class="math inline">\(\{\widehat{\Psi}_j\}_{j=1,...}\)</span> as <span class="math inline">\(\varphi(X)\)</span>. (Proposition <a href="#prp:OLSVAR2"><strong>??</strong></a> provides us with the asymptotic distribution of the “<span class="math inline">\(X\)</span>.”)</p>
+<p>To summarize, here are the steps one can implement to derive confidence intervals for the IRFs using the Monte-Carlo approach:</p>
+<p>For each iteration <span class="math inline">\(k\)</span>:</p>
+<ol style="list-style-type: decimal">
+<li>Draw <span class="math inline">\(\{\widehat{\Phi}_j^{(k)}\}_{j=1,...,p}\)</span> and <span class="math inline">\(\widehat{\Omega}^{(k)}\)</span> from their asymptotic distribution (using Proposition <a href="#prp:OLSVAR2"><strong>??</strong></a>).</li>
+<li>Compute the matrix <span class="math inline">\(B^{(k)}\)</span> so that <span class="math inline">\(\widehat{\Omega}^{(k)}=B^{(k)}B^{(k)&#39;}\)</span>, according to your identification strategy.</li>
+<li>Compute the associated IRFs <span class="math inline">\(\{\widehat{\Psi}_j\}^{(k)}\)</span>.</li>
+</ol>
+<p>Perform <span class="math inline">\(N\)</span> replications and report the median impulse response (and its confidence intervals).</p>
+<p><strong>Delta method</strong></p>
+<p>Suppose <span class="math inline">\(\beta\)</span> is a vector of parameters and <span class="math inline">\(\beta\)</span> is an estimator such that
+<span class="math display">\[
+\sqrt{T}(\hat\beta-\beta)\overset{d}{\rightarrow}\mathcal{N}(0,\Sigma_\beta),
+\]</span>
+where <span class="math inline">\(d\)</span> denotes convergence in distribution, <span class="math inline">\(N(0,\Sigma_\beta)\)</span> denotes the multivariate normal distribution with mean vector 0 and covariance matrix <span class="math inline">\(\Sigma_\beta\)</span> and <span class="math inline">\(T\)</span> is the sample size used for estimation.</p>
+<p>Let <span class="math inline">\(g(\beta) = (g_l(\beta),..., g_m(\beta))&#39;\)</span> be a continuously differentiable function with values in <span class="math inline">\(\mathbb{R}^m\)</span>, and assume that <span class="math inline">\(\partial g_i/\partial \beta&#39; = (\partial g_i/\partial \beta_j)\)</span> is nonzero at <span class="math inline">\(\beta\)</span> for <span class="math inline">\(i = 1,\dots, m\)</span>. Then
+<span class="math display">\[
+\sqrt{T}(\color{blue}{g}(\hat\beta)-\color{blue}{g}(\beta))\overset{d}{\rightarrow}\mathcal{N}\left(0,\color{blue}{\frac{\partial g}{\partial \beta&#39;}}\Sigma_\beta\color{blue}{\frac{\partial g&#39;}{\partial \beta}}\right).
+\]</span>
+(This formula underlies the Delta method, see Eq. <a href="#eq:DeltaMethod">(<strong>??</strong>)</a>.)</p>
+<p>Using this property, <span class="citation">Lütkepohl (<a href="#ref-Lutkepohl_1990" role="doc-biblioref">1990</a>)</span> provides the asymptotic distributions of the <span class="math inline">\(\Psi_j\)</span>’s.</p>
+<p>A limit of the last two approaches (Monte Carlo and the Delta method) is that they critically rely on asymptotic results. Boostrapping approaches are more robust in small-sample situations.</p>
+<p><strong>Bootstrap</strong></p>
+<p>IRFs’ confidence intervals are intervals where 90% (or 95%,75%,…) of the IRFs would lie, if we were to repeat the estimation a large number of times in similar conditions (<span class="math inline">\(T\)</span> observations). We obviously cannot do this, because we have only one sample: <span class="math inline">\(\{y_t\}_{t=1,..,T}\)</span>. But we can try to <em>construct</em> such samples.</p>
+<p>Bootstrapping consists in:</p>
+<ul>
+<li><p>re-sampling <span class="math inline">\(N\)</span> times, i.e., constructing <span class="math inline">\(N\)</span> samples of <span class="math inline">\(T\)</span> observations, using the estimated
+VAR coefficients and</p>
+<ol style="list-style-type: lower-alpha">
+<li>a sample of residuals from the distribution <span class="math inline">\(N(0,BB&#39;)\)</span> (<strong>parametric approach</strong>), or</li>
+<li>a sample of residuals drawn randomly from the set of the actual estimated residuals <span class="math inline">\(\{\hat\varepsilon_t\}_{t=1,..,T}\)</span>. (<strong>non-parametric approach</strong>).</li>
+</ol></li>
+<li><p>re-estimating the SVAR <span class="math inline">\(N\)</span> times.</p></li>
+</ul>
+<p>Here is the algorithm:</p>
+<ol style="list-style-type: decimal">
+<li>Construct a sample
+<span class="math display">\[
+y_t^{(k)}=\widehat{\Phi}_1 y_{t-1}^{(k)} + \dots + \widehat{\Phi}_p y_{t-p}^{(k)} + \hat\varepsilon_t^{(k)},
+\]</span>
+with <span class="math inline">\(\hat\varepsilon_{t}^{(k)}=\hat\varepsilon_{s_t^{(k)}}\)</span>, where <span class="math inline">\(\{s_1^{(k)},..,s_T^{(k)}\}\)</span> is a random set from <span class="math inline">\(\{1,..,T\}^T\)</span>.</li>
+<li>Re-estimate the SVAR and compute the IRFs <span class="math inline">\(\{\widehat{\Psi}_j\}^{(k)}\)</span>.</li>
+</ol>
+<p>Perform <span class="math inline">\(N\)</span> replications and report the median impulse response (and its confidence intervals).</p>
+<p><strong>Bootstrap-after-bootstrap</strong> (<span class="citation">Kilian (<a href="#ref-Kilian_1998" role="doc-biblioref">1998</a>)</span>)</p>
+<p>The previous simple bootstrapping procedure deals with non-normality and small sample distribution, since we use the actual residuals. However, it does not deal with the <em>small sample bias</em>, stemming, in particular, from small-sample bias associated with OLS coefficient estimates <span class="math inline">\(\{\widehat{\Phi}_j\}_{j=1,..,p}\)</span>. The main idea of the bootstrap-after-bootstrap of <span class="citation">Kilian (<a href="#ref-Kilian_1998" role="doc-biblioref">1998</a>)</span> is to run two consecutive boostraps: the objective of the first is to compute the bias, which can further be used to correct the initial estimates of the <span class="math inline">\(\Phi_i\)</span>’s. Further, these corrected estimates are used —in the second boostrap— to compute a set of IRFs (as in the standard boostrap).</p>
+<p>More formally, the algorithm is as follows:</p>
+<ol style="list-style-type: decimal">
+<li>Estimate the SVAR coefficients <span class="math inline">\(\{\widehat{\Phi}_j\}_{j=1,..,p}\)</span> and <span class="math inline">\(\widehat{\Omega}\)</span></li>
+<li><strong>First bootstrap.</strong> For each iteration <span class="math inline">\(k\)</span>:
+<ol style="list-style-type: lower-alpha">
+<li>Construct a sample
+<span class="math display">\[
+y_t^{(k)}=\widehat{\Phi}_1 y_{t-1}^{(k)} + \dots + \widehat{\Phi}_p y_{t-p}^{(k)} + \hat\varepsilon_t^{(k)},
+\]</span>
+with <span class="math inline">\(\hat\varepsilon_{t}^{(k)}=\hat\varepsilon_{s_t^{(k)}}\)</span>, where <span class="math inline">\(\{s_1^{(k)},..,s_T^{(k)}\}\)</span> is a random set from <span class="math inline">\(\{1,..,T\}^T\)</span>.</li>
+<li>Re-estimate the VAR and compute the coefficients <span class="math inline">\(\{\widehat{\Phi}_j\}_{j=1,..,p}^{(k)}\)</span>.</li>
+</ol></li>
+<li>Perform <span class="math inline">\(N\)</span> replications and compute the median coefficients <span class="math inline">\(\{\widehat{\Phi}_j\}_{j=1,..,p}^*\)</span>.</li>
+<li>Approximate the bias terms by <span class="math inline">\(\widehat{\Theta}_j=\widehat{\Phi}_j^*-\widehat{\Phi}_j\)</span>.</li>
+<li>Construct the bias-corrected terms <span class="math inline">\(\widetilde{\Phi}_j=\widehat{\Phi}_j-\widehat{\Theta}_j\)</span>.</li>
+<li><strong>Second bootstrap.</strong> For each iteration <span class="math inline">\(k\)</span>:
+<ol style="list-style-type: lower-alpha">
+<li>Construct a sample now from
+<span class="math display">\[y_t^{(k)}=\widetilde{\Phi}_1 y_{t-1}^{(k)} + \dots + \widetilde{\Phi}_p y_{t-p}^{(k)} + \hat\varepsilon_t^{(k)}.
+\]</span></li>
+<li>Re-estimate the VAR and compute the coefficients <span class="math inline">\(\{\widehat{\Phi}^*_j\}_{j=1,..,p}^{(k)}\)</span>.</li>
+<li>Construct the bias-corrected estimates <span class="math inline">\(\widetilde{\Phi}_j^{*(k)}=\widehat{\Phi}_j^{*(k)}-\widehat{\Theta}_j\)</span>.</li>
+<li>Compute the associated IRFs <span class="math inline">\(\{\widetilde{\Psi}_j^{*(k)}\}_{j\ge 1}\)</span>.</li>
+</ol></li>
+<li>Perform <span class="math inline">\(N\)</span> replications and compute the median and the confidence interval of the set of IRFs.</li>
+</ol>
+<p>It should be noted that correcting for the bias can generate non-stationary results (<span class="math inline">\(\tilde \Phi\)</span> with eigenvalue with modulus <span class="math inline">\(&gt;1\)</span>). Solution (<span class="citation">Kilian (<a href="#ref-Kilian_1998" role="doc-biblioref">1998</a>)</span>):</p>
+<p>In step 5, check if the largest eigenvalue of <span class="math inline">\(\tilde\Phi\)</span> is of modulus &lt;1.
+If not, shrink the bias: for all <span class="math inline">\(j\)</span>s, set <span class="math inline">\(\widehat{\Theta}_j^{(i+1)}=\delta_{i+1}\widehat{\Theta}_j^{(i)}\)</span>, with <span class="math inline">\(\delta_{i+1}=\delta_i-0.01\)</span>, starting with <span class="math inline">\(\delta_1=1\)</span> and <span class="math inline">\(\widehat{\Theta}_j^{(1)} =\widehat{\Theta}_j\)</span>, and compute <span class="math inline">\(\widetilde{\Phi}_j^{(i+1)}=\widehat{\Phi}_j-\widehat{\Theta}_j^{(i+1)}\)</span> until the largest eigenvalue of <span class="math inline">\(\tilde\Phi^{(i+1)}\)</span> has modulus &lt;1.</p>
+<p>Function <code>VAR.Boot</code> of package <code>VAR.etp</code> (<span class="citation">Kim (<a href="#ref-VARetp" role="doc-biblioref">2022</a>)</span>) can be used to operate the bias-correction approach of <span class="citation">Kilian (<a href="#ref-Kilian_1998" role="doc-biblioref">1998</a>)</span>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="Inference.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(VAR.etp)</span>
+<span id="cb1-2"><a href="Inference.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vars) <span class="co">#standard VAR models</span></span>
+<span id="cb1-3"><a href="Inference.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(dat) <span class="co"># part of VAR.etp package</span></span>
+<span id="cb1-4"><a href="Inference.html#cb1-4" aria-hidden="true" tabindex="-1"></a>corrected <span class="ot">&lt;-</span> <span class="fu">VAR.Boot</span>(dat,<span class="at">p=</span><span class="dv">2</span>,<span class="at">nb=</span><span class="dv">200</span>,<span class="at">type=</span><span class="st">&quot;const&quot;</span>)</span>
+<span id="cb1-5"><a href="Inference.html#cb1-5" aria-hidden="true" tabindex="-1"></a>noncorrec <span class="ot">&lt;-</span> <span class="fu">VAR</span>(dat,<span class="at">p=</span><span class="dv">2</span>)</span>
+<span id="cb1-6"><a href="Inference.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(corrected<span class="sc">$</span>coef[<span class="dv">1</span>,],</span>
+<span id="cb1-7"><a href="Inference.html#cb1-7" aria-hidden="true" tabindex="-1"></a>      (corrected<span class="sc">$</span>coef<span class="sc">+</span>corrected<span class="sc">$</span>Bias)[<span class="dv">1</span>,],</span>
+<span id="cb1-8"><a href="Inference.html#cb1-8" aria-hidden="true" tabindex="-1"></a>      noncorrec<span class="sc">$</span>varresult<span class="sc">$</span>inv<span class="sc">$</span>coefficients)</span></code></pre></div>
+<pre><code>##         inv(-1)   inc(-1)   con(-1)    inv(-2)   inc(-2)   con(-2)       const
+## [1,] -0.3192912 0.1660462 0.9331555 -0.1451920 0.1359111 0.9847983 -0.01778574
+## [2,] -0.3196310 0.1459888 0.9612190 -0.1605511 0.1146050 0.9343938 -0.01672199
+## [3,] -0.3196310 0.1459888 0.9612190 -0.1605511 0.1146050 0.9343938 -0.01672199</code></pre>
+
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Hamilton_1994" class="csl-entry">
+Hamilton, James Douglas. 1994. <em>Time Series Analysis</em>. Princeton University Press. <a href="https://www.worldcat.org/title/time-series-analysis/oclc/1194970663&amp;referer=brief_results">https://www.worldcat.org/title/time-series-analysis/oclc/1194970663&amp;referer=brief_results</a>.
+</div>
+<div id="ref-Kilian_1998" class="csl-entry">
+Kilian, Lutz. 1998. <span>“Small-Sample Confidence Intervals for Impulse Response Functions.”</span> <em>The Review of Economics and Statistics</em> 80 (2): 218–30. <a href="http://www.jstor.org/stable/2646633">http://www.jstor.org/stable/2646633</a>.
+</div>
+<div id="ref-VARetp" class="csl-entry">
+Kim, Jae. H. 2022. <em>VAR.etp: VAR Modelling: Estimation, Testing, and Prediction</em>. <a href="https://CRAN.R-project.org/package=VAR.etp">https://CRAN.R-project.org/package=VAR.etp</a>.
+</div>
+<div id="ref-Lutkepohl_1990" class="csl-entry">
+Lütkepohl, Helmut. 1990. <span>“Asymptotic Distributions of Impulse Response Functions and Forecast Error Variance Decompositions of Vector Autoregressive Models.”</span> <em>The Review of Economics and Statistics</em> 72 (1): 116–25. <a href="https://EconPapers.repec.org/RePEc:tpr:restat:v:72:y:1990:i:1:p:116-25">https://EconPapers.repec.org/RePEc:tpr:restat:v:72:y:1990:i:1:p:116-25</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="append.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/01-Inference.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["AdvECTS.pdf", "AdvECTS.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
