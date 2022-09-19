@@ -368,6 +368,18 @@ Because $\Sigma$ is a symmetrical definite positive matrix, it admits the spectr
 It remains to note that $Y'Y=X'PD^{-1}P'X=X'\mathbb{V}ar(X)^{-1}X$ to conclude.
 :::
 
+:::{.definition #GEVdistri name="Generalized Extreme Value (GEV) distribution"}
+The vector of disturbances $\boldsymbol\varepsilon=[\varepsilon_{1,1},\dots,\varepsilon_{1,K_1},\dots,\varepsilon_{J,1},\dots,\varepsilon_{J,K_J}]'$ follows the Generalized Extreme Value (GEV) distribution if its c.d.f. is:
+$$
+F(\boldsymbol\varepsilon,\boldsymbol\rho) = \exp(-G(e^{-\varepsilon_{1,1}},\dots,e^{-\varepsilon_{J,K_J}};\boldsymbol\rho))
+$$
+with
+\begin{eqnarray*}
+G(\bv{Y};\boldsymbol\rho) &\equiv&  G(Y_{1,1},\dots,Y_{1,K_1},\dots,Y_{J,1},\dots,Y_{J,K_J};\boldsymbol\rho) \\
+&=& \sum_{j=1}^J\left(\sum_{k=1}^{K_j} Y_{jk}^{1/\rho_j}
+\right)^{\rho_j}
+\end{eqnarray*}
+:::
 
 
 ### Stochastic convergences

@@ -1559,7 +1559,7 @@ We simulate 1000 samples of the same model with \(n=200\). For each sample, we c
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.13711930 0.06659173 0.13676988
+## [1] 0.14364368 0.07093339 0.14687083
 \end{verbatim}
 
 The results show that the White formula yields, on average, an estimated standard deviation that is much closer to the ``true'' value than the standard OLS formula. The latter underestimate the standard deviation of \(b\).
@@ -1645,8 +1645,8 @@ We simulate 500 samples of the same model with \(n=200\). For each sample, we co
 \end{Shaded}
 
 \begin{verbatim}
-##         [,1]      [,2]       [,3]      [,4]
-## [1,] 0.22045 0.1014711 0.09696198 0.1490803
+##          [,1]      [,2]       [,3]      [,4]
+## [1,] 0.222183 0.1010145 0.09576821 0.1471962
 \end{verbatim}
 
 The results show that the Newey-West formula yields, on average, an estimated standard deviation that is closer to the ``true'' value than the standard OLS formula. The latter underestimate the standard deviation of \(b\).
@@ -1992,7 +1992,7 @@ The \texttt{glmnet} package (see \href{https://glmnet.stanford.edu/articles/glmn
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.004091039
+## [1] 0.003727602
 \end{verbatim}
 
 \begin{Shaded}
@@ -2014,24 +2014,24 @@ The \texttt{glmnet} package (see \href{https://glmnet.stanford.edu/articles/glmn
 \begin{verbatim}
 ## 18 x 1 sparse Matrix of class "dgCMatrix"
 ##                                s1
-## (Intercept)           6.583140504
-## delinq_2yrs           0.066258597
-## annual_inc            0.006054923
+## (Intercept)           6.627817184
+## delinq_2yrs           0.065166059
+## annual_inc            0.006603198
 ## annual_inc2           .          
-## log_annual_inc       -0.037951509
-## dti                   0.020652724
-## installment           8.518960621
-## verification_status  -0.002894435
-## funded_amnt          -7.560852965
-## funded_amnt2         -0.504192252
-## log_funded_amnt      -0.253756726
-## pub_rec               0.058043332
-## emp_length_10        -0.018946660
-## owner                -0.024841917
-## renter               -0.060398310
+## log_annual_inc       -0.038648540
+## dti                   0.019932058
+## installment           8.636645286
+## verification_status  -0.003667472
+## funded_amnt          -7.662840777
+## funded_amnt2         -0.517617243
+## log_funded_amnt      -0.256890033
+## pub_rec               0.057255481
+## emp_length_10        -0.018817829
+## owner                -0.024997467
+## renter               -0.059573041
 ## pub_rec_bankruptcies  .          
 ## revol_util            .          
-## revol_bal             0.003093752
+## revol_bal             0.003361683
 \end{verbatim}
 
 \begin{Shaded}
@@ -2042,11 +2042,11 @@ The \texttt{glmnet} package (see \href{https://glmnet.stanford.edu/articles/glmn
 
 \begin{verbatim}
 ##       lambda.min
-## 21529   3.807030
-## 21547   3.416528
-## 21579   4.026621
-## 21583   3.255096
-## 21608   3.340412
+## 21529   3.811212
+## 21547   3.415492
+## 21579   4.027977
+## 21583   3.256566
+## 21608   3.337846
 \end{verbatim}
 
 \hypertarget{Panel}{%
@@ -2698,7 +2698,7 @@ The following simulation illustrate this bias. The \(x\)-coordinates of the dots
 \includegraphics[width=0.95\linewidth]{AdvECTS_files/figure-latex/dynpanel1-1} \caption{illustration of the bias pertianing to the LSDV estimation approach in the presence of auto-correlation of the depend variable.}\label{fig:dynpanel1}
 \end{figure}
 
-In the previous example, the estimate of \(\rho\) (whose true value is 0.9) is 0.666.
+In the previous example, the estimate of \(\rho\) (whose true value is 0.9) is 0.626.
 
 To address this, one can resort to instrumental-variable regressions. \citet{Anderson_Hsiao_1982} have, in particular, proposed a first-differenced Two Stage Least Squares (2SLS) estimator. This estimation is based on the following transformation of the model:
 \begin{equation}
@@ -2722,7 +2722,7 @@ Using the previous (simulated) example, this approach consists in the following 
 \end{Highlighting}
 \end{Shaded}
 
-While the OLS estimate of \(\rho\) (whose true value is 0.9) was 0.666, we obtain here \texttt{rho\_TSLS} \(=\) 1.617.
+While the OLS estimate of \(\rho\) (whose true value is 0.9) was 0.626, we obtain here \texttt{rho\_TSLS} \(=\) 0.266.
 
 Let us come back to the general case (with covariates \(\mathbf{x}_{i,k}\)'s). For \(t=3\), \(y_{i,1}\) (and \(\mathbf{x}_{i,1}\)) is the only possible instrument. However, for \(t=4\), one could use \(y_{i,2}\) and \(y_{i,1}\) (as well as \(\mathbf{x}_{i,2}\) and \(\mathbf{x}_{i,1}\)). More generally, defining matrix \(Z_i\) as follows:
 \[
@@ -4205,31 +4205,29 @@ let us specify the Gaussian priors:
 \hypertarget{microeconometrics}{%
 \chapter{Microeconometrics}\label{microeconometrics}}
 
+In microeconometric models, the variables of interest often feature restricted distributions ---for instance with discontinuous support---, which necessitates specific models. Typical examples are discrete-choice models (binary, multinomial, ordered outcomes), sample selection models (censored or truncated outcomes), and count-data models (integer outcomes). This section describes the estimation and interpretation of these models. It also shows how the discrete-choice models can emerge from (structural) random-utility frameworks.
+
 \hypertarget{binary-choice-models}{%
 \section{Binary-choice models}\label{binary-choice-models}}
 
-In many instances, the variables to be explained (\(y_i\)s) have only two possible values (\(0\) and \(1\), say).
+In many instances, the variables to be explained (the \(y_i\)'s) have only two possible values (\(0\) and \(1\), say). That is, they are binary variables. The probability for them to be equal to either 0 or 1 may depend on independent variables, gathered in vectors \(\mathbf{x}_i\) (\(K \times 1\)).
 
-Assume we suspect some variable \(\mathbf{x}_i\) (\(K \times 1\)) to be able to account for the probability that \(y_i=1\).
-
-The model reads:
+The model then reads:
 \begin{equation}\label{eq:binaryBenroulli}
 y_i | \mathbf{X} \sim \mathcal{B}(g(\mathbf{x}_i;\boldsymbol\theta)),
 \end{equation}
 where \(g(\mathbf{x}_i;\boldsymbol\theta)\) is the parameter of the Bernoulli distribution. In other words, conditionally on \(\mathbf{X}\):
-\[
+\begin{equation}
 y_i = \left\{
 \begin{array}{cl}
 1 & \mbox{ with probability } g(\mathbf{x}_i;\boldsymbol\theta)\\
 0 & \mbox{ with probability } 1-g(\mathbf{x}_i;\boldsymbol\theta),
 \end{array}
-\right.
-\]
+\right.\label{eq:genericBinary}
+\end{equation}
 where \(\boldsymbol\theta\) is a vector of parameters to be estimated.
 
-The objective is to estimate the vector of population parameters \(\boldsymbol\theta\).
-
-Binary-choice models can be used to account for\ldots{}
+The spectrum of applications is wide. Binary-choice models can be used to account for:
 
 \begin{itemize}
 \tightlist
@@ -4246,22 +4244,21 @@ A possibility is to run a linear regression (a situation called \textbf{Linear P
 y_i = \boldsymbol\theta'\mathbf{x}_i + \varepsilon_i.
 \]
 
-Such a regression could be consistent with the \emph{conditional-mean-zero assumption} (Hypothesis \ref{hyp:exogeneity}) and with the \emph{assumption of non-correlated residuals} (Hypothesis \ref{hyp:noncorrelResid}), but more difficultly with the \textbf{homoskedasticity assumption} (Hypothesis \ref{hyp:homoskedasticity}). Moreover, the \(\varepsilon_i\)s cannot be Gaussian (because \(y_i \in \{0,1\}\)). Therefore, using a linear regression to study the relationship between \(\mathbf{x}_i\) and \(y_i\) can be consistent but it is inefficient.
+Such a regression could be consistent with the \emph{conditional-mean-zero assumption} (Hypothesis \ref{hyp:exogeneity}) and with the \emph{assumption of non-correlated residuals} (Hypothesis \ref{hyp:noncorrelResid}), but more difficultly with the \emph{homoskedasticity assumption} (Hypothesis \ref{hyp:homoskedasticity}). Moreover, the \(\varepsilon_i\)'s cannot be Gaussian (because \(y_i \in \{0,1\}\)). Hence, using a linear regression to study the relationship between \(\mathbf{x}_i\) and \(y_i\) can be consistent but it is inefficient.
+
+Figure \ref{fig:LPM} illustrates the fit resulting from an application of the LPM model to binary (dependent) variables.
 
 \begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{AdvECTS_files/figure-latex/LPM-1} 
-
-}
-
-\caption{Fitting a binary variable with a linear model (Linear Probability Model, LPM). The model is $\mathbb{P}(y_i=1|x_i)=\Phi(0.5+2x_i)$, where $\Phi$ is the c.d.f. of the normal distribution and where $x_i \sim \,i.i.d.\,\mathcal{N}(0,1)$.}\label{fig:LPM}
+\includegraphics[width=0.95\linewidth]{AdvECTS_files/figure-latex/LPM-1} \caption{Fitting a binary variable with a linear model (Linear Probability Model, LPM). The model is $\mathbb{P}(y_i=1|x_i)=\Phi(0.5+2x_i)$, where $\Phi$ is the c.d.f. of the normal distribution and where $x_i \sim \,i.i.d.\,\mathcal{N}(0,1)$.}\label{fig:LPM}
 \end{figure}
+
+Except for its last row (LPM case), Table \ref{tab:foo} provides examples of functions \(g\) valued in \([0,1]\), and that can therefore used in models of the type: \(\mathbb{P}(y_i=1|\mathbf{x}_i;\boldsymbol heta) = g(\boldsymbol\theta'\mathbf{x}_i)\) (see Eq. \eqref{eq:genericBinary}). The ``linear'' case is given for comparison, but note that it does not satisfy \(g(\boldsymbol\theta'\mathbf{x}_i) \in [0,1]\) for any value of \(\boldsymbol\theta'\mathbf{x}_i\).
 
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.0634}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.6972}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2394}}@{}}
-\caption{\label{tab:foo} This table provides examples of function \(g\), s.t. \(\mathbb{P}(y_i=1|\mathbf{x}_i;\boldsymbol heta) = g(\boldsymbol\theta'\mathbf{x}_i)\). The ``linear'' case is given for comparison, but note that it does not satisfy \(g(\boldsymbol\theta'\mathbf{x}_i)\) for any value of \(\boldsymbol\theta'\mathbf{x}_i\).}\tabularnewline
+\caption{\label{tab:foo} This table provides examples of function \(g\), s.t. \(\mathbb{P}(y_i=1|\mathbf{x}_i;\boldsymbol heta) = g(\boldsymbol\theta'\mathbf{x}_i)\). The ``linear'' case is given for comparison, but note that it does not satisfy \(g(\boldsymbol\theta'\mathbf{x}_i) \in [0,1]\) for any value of \(\boldsymbol\theta'\mathbf{x}_i\).}\tabularnewline
 \toprule()
 \begin{minipage}[b]{\linewidth}\raggedright
 Model
@@ -4289,46 +4286,33 @@ linear & \(x\) & 1 \\
 \bottomrule()
 \end{longtable}
 
-Two prominent models to tackle this situation. In both models, we have:
-\[
-\mathbb{P}(y_i=1|\mathbf{x}_i;\boldsymbol\theta)=g(\boldsymbol\theta'\mathbf{x}_i).
-\]
+Figure \ref{fig:ProbLogit} displays the functions \(g\) appearing in Table \ref{tab:foo}.
 
-In the \textbf{Probit model}, we have
+\begin{figure}
+\includegraphics[width=0.95\linewidth]{AdvECTS_files/figure-latex/ProbLogit-1} \caption{Probit, Logit, and Log-log functions.}\label{fig:ProbLogit}
+\end{figure}
+
+The \textbf{probit} and the \textbf{logit} models are popular binary-choice models. In the probit model, we have:
 \begin{equation}
 g(z) = \Phi(z),\label{eq:probit}
 \end{equation}
-where \(\Phi\) is the c.d.f. of the normal distribution.
-
-And for the \textbf{logit model}:
+where \(\Phi\) is the c.d.f. of the normal distribution. And for the logit model:
 \begin{equation}
 g(z) = \frac{1}{1+\exp(-z)}.\label{eq:logit}
 \end{equation}
 
-Figure \ref{fig:ProbLogit} displays the functions \(g\) appearing in Table \ref{tab:foo}.
+Figure \ref{fig:LPM2} shows the conditional probabilities associated with the (probit) model that had been used to generate the data of Figure \ref{fig:LPM}.
 
 \begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{AdvECTS_files/figure-latex/ProbLogit-1} 
-
-}
-
-\caption{Probit, Logit, and Log-log functions.}\label{fig:ProbLogit}
-\end{figure}
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{AdvECTS_files/figure-latex/LPM2-1} 
-
-}
-
-\caption{The model is $\mathbb{P}(y_i=1|x_i)=\Phi(0.5+2x_i)$, where $\Phi$ is the c.d.f. of the normal distribution and where $x_i \sim \,i.i.d.\,\mathcal{N}(0,1)$. Crosses give the model-implied probabilities of having $y_i=1$.}\label{fig:LPM2}
+\includegraphics[width=0.95\linewidth]{AdvECTS_files/figure-latex/LPM2-1} \caption{The model is $\mathbb{P}(y_i=1|x_i)=\Phi(0.5+2x_i)$, where $\Phi$ is the c.d.f. of the normal distribution and where $x_i \sim \,i.i.d.\,\mathcal{N}(0,1)$. Crosses give the model-implied probabilities of having $y_i=1$ (conditional on $x_i$).}\label{fig:LPM2}
 \end{figure}
 
 \hypertarget{latent}{%
 \subsection{Interpretation in terms of latent variable, and utility-based models}\label{latent}}
 
-The probit model has an interpretation in terms of \textbf{latent variables}. In this model, we indeed have:
+The probit model has an interpretation in terms of latent variables, which, in turn, is often exploited in structural models, called \textbf{Random Utility Models (RUM)}. In such structural models, it is assumed that the agents that have to take the decision (for agent \(i\): \(y_i=0\) or \(y_i=1\)) do so by selecting the outcome that provides them with the larger utility. Part of this utility is observed by the econometrician (it depends on the covariates \(\mathbf{x}_i\)) and part of it is latent.
+
+In the probit model, we have:
 \[
 \mathbb{P}(y_i=1|\mathbf{x}_i;\boldsymbol\theta) = \Phi(\boldsymbol\theta'\mathbf{x}_i) = \mathbb{P}(-\varepsilon_{i}<\boldsymbol\theta'\mathbf{x}_i),
 \]
@@ -4336,35 +4320,32 @@ where \(\varepsilon_{i} \sim \mathcal{N}(0,1)\). That is:
 \[
 \mathbb{P}(y_i=1|\mathbf{x}_i;\boldsymbol\theta) = \mathbb{P}(0< y_i^*),
 \]
-where \(y_i^* = \boldsymbol\theta'\mathbf{x}_i + \varepsilon_i\), with \(\varepsilon_{i} \sim \mathcal{N}(0,1)\). Variable \(y_i^*\) can be interpreted as a (latent) variable that determines \(y_i\) since \(y_i = \mathbb{I}_{\{y_i^*>0\}}\).
+where \(y_i^* = \boldsymbol\theta'\mathbf{x}_i + \varepsilon_i\), with \(\varepsilon_{i} \sim \mathcal{N}(0,1)\). Variable \(y_i^*\) can be interpreted as a (latent) variable that determines \(y_i\) (since \(y_i = \mathbb{I}_{\{y_i^*>0\}}\)).
+
+Figure \ref{fig:Latent} illustrates this situation.
 
 \begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{AdvECTS_files/figure-latex/Latent-1} 
-
-}
-
-\caption{Distribution of $y_i^*$ conditional on $\mathbf{x}_i$.}\label{fig:Latent}
+\includegraphics[width=0.95\linewidth]{AdvECTS_files/figure-latex/Latent-1} \caption{Distribution of $y_i^*$ conditional on $\mathbf{x}_i$.}\label{fig:Latent}
 \end{figure}
 
-\textbf{Random Utility Models (RUM)} are based on such a view of probit models. Assume that agent (\(i\)) chooses \(y_i=1\) if the utility associated with this choice (\(U_{i,1}\)) is higher than the one associated with \(y_i=0\) (\(U_{i,0}\)). Assume further that the utility of agent \(i\), if she chooses outcome \(j\) (\(\in \{0,1\}\)), is given by
+As mentioned above, assume that agent (\(i\)) chooses \(y_i=1\) if the utility associated with this choice (\(U_{i,1}\)) is higher than the one associated with \(y_i=0\) (\(U_{i,0}\)). Assume further that the utility of agent \(i\), if she chooses outcome \(j\) (\(\in \{0,1\}\)), is given by
 \[
 U_{i,j} = V_{i,j} + \varepsilon_{i,j},
 \]
-where \(V_{i,j}\) is the deterministic component of the utility associated with choice and \(\varepsilon_{i,j}\) is a random (agent-specific) component.
-
-Moreover, posit \(V_{i,j} = \boldsymbol\theta_j'\mathbf{x}_i\). We then have:
+where \(V_{i,j}\) is the deterministic component of the utility associated with choice and where \(\varepsilon_{i,j}\) is a random (agent-specific) component. Moreover, posit \(V_{i,j} = \boldsymbol\theta_j'\mathbf{x}_i\). We then have:
 \begin{eqnarray}
 \mathbb{P}(y_i = 1|\mathbf{x}_i;\boldsymbol\theta) &=& \mathbb{P}(\boldsymbol\theta_1'\mathbf{x}_i+\varepsilon_{i,1}>\boldsymbol\theta_0'\mathbf{x}_i+\varepsilon_{i,0}) \nonumber\\
 &=& F(\boldsymbol\theta_1'\mathbf{x}_i-\boldsymbol\theta_0'\mathbf{x}_i) = F([\boldsymbol\theta_1-\boldsymbol\theta_0]'\mathbf{x}_i),\label{eq:utility}
 \end{eqnarray}
 where \(F\) is the c.d.f. of \(\varepsilon_{i,0}-\varepsilon_{i,1}\).
 
-Note that only the difference \(\boldsymbol\theta_1-\boldsymbol\theta_0\) is identifiable (as opposed to \(\boldsymbol\theta_1\) AND \(\boldsymbol\theta_0\)). Indeed, replacing \(U\) with \(aU\) (\(a>0\)) gives the same model \(\Leftrightarrow\) scaling issue, solved by fixing the variance of \(\varepsilon_{i,0}-\varepsilon_{i,1}\).
+Note that only the difference \(\boldsymbol\theta_1-\boldsymbol\theta_0\) is identifiable (as opposed to \(\boldsymbol\theta_1\) AND \(\boldsymbol\theta_0\)). Indeed, replacing \(U\) with \(aU\) (\(a>0\)) gives the same model. This \emph{scaling} issue can be solved by fixing the variance of \(\varepsilon_{i,0}-\varepsilon_{i,1}\).
 
-Other types of structural models --based on the comparison of marginal costs and benefits-- give rise to the existence of latent variable and to probit models. An example is \citet{Nakosteen_Zimmer_1980}. The main ingredients of their approach are as follows:
+\begin{example}[Migration and income]
+\protect\hypertarget{exm:migration}{}\label{exm:migration}The RUM approach has been used by \citet{Nakosteen_Zimmer_1980} to study migration choices. Their model is based on the comparison of marginal costs and benefits associated with migration. The main ingredients of their approach are as follows:
 
 \begin{itemize}
+\tightlist
 \item
   Wage that can be earned at the present location: \(y_p^* = \boldsymbol\theta_p'\mathbf{x}_p + \varepsilon_p\).
 \item
@@ -4378,35 +4359,38 @@ In this context, agents decision to migrate if \(y_m^* > y_p^* + C^*\), i.e.~if
 y^* = y_m^* -  y_p^* - C^* =  \boldsymbol\theta'\mathbf{x} + \underbrace{\varepsilon}_{=\varepsilon_m - \varepsilon_c - \varepsilon_p}>0,
 \]
 where \(\mathbf{x}\) is the union of the \(\mathbf{x}_i\)s, for \(i \in \{p,m,c\}\).
+\end{example}
 
 \hypertarget{Avregressors}{%
 \subsection{Alternative-Varying Regressors}\label{Avregressors}}
 
-In some cases, the regressors may depend on the considered alternative (\(0\) or \(1\)). For instance:
+In some cases, regressors may depend on the considered alternative (\(0\) or \(1\)). For instance:
 
 \begin{itemize}
+\tightlist
 \item
-  When modeling the decision to participate in the labour force (or not), the wage depends on the alternative. It cannot be included among the regressors given it is not observed if the considered agent has decided not to work.
+  When modeling the decision to participate in the labour force (or not), the wage depends on the alternative. Typically, it is zero if the considered agent has decided not to work (and strictly positive otherwise).
 \item
-  In the context of the choice of transportation mode, the \emph{time cost} depends on the considered transportation mode.
+  In the context of the choice of transportation mode, ``time cost'' depends on the considered transportation mode.
 \end{itemize}
 
 In terms of utility, we then have:
 \[
 V_{i,j} = {\theta^{(u)}_{j}}'\mathbf{u}_{i,j} + {\theta^{(v)}_{j}}'\mathbf{v}_{i},
 \]
-where the \(\mathbf{u}_{i,j}\)s are regressors associated with agent \(i\), but taking different values for the different choices (\(j=0\) or \(j=1\)).
-
-In that case, Eq. \eqref{eq:utility} becomes:
+where the \(\mathbf{u}_{i,j}\)'s are regressors associated with agent \(i\), but taking different values for the different choices (\(j=0\) or \(j=1\)). In that case, Eq. \eqref{eq:utility} becomes:
 \begin{equation}
 \mathbb{P}(y_i = 1|\mathbf{x}_i;\boldsymbol\theta)  = F\left({\theta^{(u)}_{1}}'\mathbf{u}_{i,1}-{\theta^{(u)}_{0}}'\mathbf{u}_{i,0}+[\boldsymbol\theta_1^{(v)}-\boldsymbol\theta_0^{(v)}]'\mathbf{v}_i\right),\label{eq:utility2}
 \end{equation}
-and, if \(\theta^{(u)}_{1}=\theta^{(u)}_{0}=\theta^{(u)}\) --as is customary-- we get:
+and, if \(\theta^{(u)}_{1}=\theta^{(u)}_{0}=\theta^{(u)}\) ---as is customary--- we get:
 \begin{equation}
 \mathbb{P}(y_i = 1|\mathbf{x}_i;\boldsymbol\theta)  = F\left({\theta^{(u)}_{1}}'(\mathbf{u}_{i,1}-\mathbf{u}_{i,0})+[\boldsymbol\theta_1^{(v)}-\boldsymbol\theta_0^{(v)}]'\mathbf{v}_i\right).\label{eq:utility3}
 \end{equation}
 
-The fishing-mode dataset used in \citet{Cameron_Trivedi_2005} (Chapter 14 and 15) contains alternative-specific variables. Specifically, for each individual, the price and catch rate depend on the fishing model. In the table reported below, lines \texttt{price} and \texttt{catch} correspond to the prices and catch rates associated with the chosen alternative.
+\begin{example}[Fishing-mode dataset]
+\protect\hypertarget{exm:FishingTable}{}\label{exm:FishingTable}
+
+The fishing-mode dataset used in \citet{Cameron_Trivedi_2005} (Chapters 14 and 15) contains alternative-specific variables. Specifically, for each individual, the price and catch rate depend on the fishing model. In the table reported below, lines \texttt{price} and \texttt{catch} correspond to the prices and catch rates associated with the chosen alternative.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4433,12 +4417,14 @@ The fishing-mode dataset used in \citet{Cameron_Trivedi_2005} (Chapter 14 and 15
 ## ----------------------------------------------------------
 \end{verbatim}
 
+\end{example}
+
 \hypertarget{estimation}{%
 \subsection{Estimation}\label{estimation}}
 
 These models can be estimated by Maximum Likelihood approaches (see Section \ref{secMLE}).
 
-To simplify the exposition, we consider the \(\mathbf{x}_i\) to be deterministic. Also, we assume that the r.v. are independent across entities \(i\). How to write the likelihood here? It can be seen that:
+To simplify the exposition, we consider the \(\mathbf{x}_i\) vectors of covariates to be deterministic. Also, we assume that the r.v. are independent across entities \(i\). How to write the likelihood in that case? It can be seen that:
 \begin{eqnarray}
 f(y_i|\mathbf{x}_i;\boldsymbol\theta) &=& y_i g(\boldsymbol\theta'\mathbf{x}_i) + (1-y_i) (1-g(\boldsymbol\theta'\mathbf{x}_i)) \nonumber \\
 &=&  g(\boldsymbol\theta'\mathbf{x}_i)^{y_i}(1-g(\boldsymbol\theta'\mathbf{x}_i))^{1-y_i}.
@@ -4458,7 +4444,7 @@ that is:
 \sum_{i=1}^{n} y_i \mathbf{x}_i\frac{g'(\boldsymbol\theta'\mathbf{x}_i)}{g(\boldsymbol\theta'\mathbf{x}_i)} - (1-y_i) \mathbf{x}_i \frac{g'(\boldsymbol\theta'\mathbf{x}_i)}{1-g(\boldsymbol\theta'\mathbf{x}_i)} = \mathbf{0}.
 \]
 
-This is a nonlinear equation that generally has to be numerically solved. Under regularity conditions (Hypotheses \ref{hyp:MLEregularity}), we have (Prop. \ref{prp:MLEproperties}):
+This is a nonlinear (multivariate) equation that can be solved numerically. Under regularity conditions (Hypotheses \ref{hyp:MLEregularity}), we have (Prop. \ref{prp:MLEproperties}):
 \[
 \boldsymbol\theta_{MLE} \sim \mathcal{N}(\boldsymbol\theta_0,\mathbf{I}(\boldsymbol\theta_0)^{-1}),
 \]
@@ -4467,7 +4453,7 @@ where
 \mathbf{I}(\boldsymbol\theta_0) = - \mathbb{E}_0 \left( \frac{\partial^2 \log \mathcal{L}(\theta;\mathbf{y},\mathbf{X})}{\partial \boldsymbol\theta \partial \boldsymbol\theta'}\right) = n \mathcal{I}_Y(\boldsymbol\theta_0).
 \]
 
-For finite samples, we can e.g.~approximate \(\mathbf{I}(\boldsymbol\theta_0)^{-1}\) by (Eq. \eqref{eq:III1}):
+For finite samples, we can e.g.~approximate \(\mathbf{I}(\boldsymbol\theta_0)^{-1}\) by Eq. \eqref{eq:III1}:
 \[
 \mathbf{I}(\boldsymbol\theta_0)^{-1} \approx -\left(\frac{\partial^2 \log \mathcal{L}(\boldsymbol\theta_{MLE};\mathbf{y},\mathbf{X})}{\partial \boldsymbol\theta \partial \boldsymbol\theta'}\right)^{-1}.
 \]
@@ -4484,23 +4470,22 @@ In the Logit case (see Table \ref{tab:foo}), it can be shown that we have:
 \]
 where \(g'(x)=\dfrac{\exp(-x)}{(1 + \exp(-x))^2}\).
 
-Since \(g'(x)>0\), it can be checked that \(-\partial^2 \log \mathcal{L}(\boldsymbol\theta;\mathbf{y},\mathbf{X})/\partial \boldsymbol\theta \partial \boldsymbol\theta'\) is positive definite.
+Remark that, since \(g'(x)>0\), \(-\partial^2 \log \mathcal{L}(\boldsymbol\theta;\mathbf{y},\mathbf{X})/\partial \boldsymbol\theta \partial \boldsymbol\theta'\) is positive definite.
 
-\hypertarget{marginal-effectss}{%
-\subsection{Marginal effectss}\label{marginal-effectss}}
+\hypertarget{marginalFX}{%
+\subsection{Marginal effects}\label{marginalFX}}
 
 How to measure marginal effects, i.e.~the effect on the probability that \(y_i=1\) of a marginal increase of \(x_{i,k}\)? This object is given by:
 \[
 \frac{\partial \mathbb{P}(y_i=1|\mathbf{x_i};\boldsymbol\theta)}{\partial x_{i,k}} = \underbrace{g'(\boldsymbol\theta'\mathbf{x}_i)}_{>0}\theta_k,
 \]
-which is of the same sign as \(\theta_k\).
+which is of the same sign as \(\theta_k\) if function \(g\) is monotonously increasing.
 
-It can be estimated by \(g'(\boldsymbol\theta_{MLE}'\mathbf{x}_i)\theta_{MLE,k}\). It is important to see that the marginal effect depends on \(\mathbf{x}_i\): increases by 1 unit of \(x_{i,k}\) (entity \(i\)) and of \(x_{j,k}\) (entity \(j\)) do not necessarily have the same effects on \(\mathbb{P}(y_i=1|\mathbf{x_i};\boldsymbol\theta)\) and on \(\mathbb{P}(y_j=1|\mathbf{x_j};\boldsymbol\theta)\), respectively.
-
-To address this issue, one can compute some measures of ``average'' marginal effect. There are two main solutions. For each explanatory variable \(k\):
+This marginal effect can be estimated by \(g'(\boldsymbol\theta_{MLE}'\mathbf{x}_i)\theta_{MLE,k}\). It is important to see that the marginal effect depends on \(\mathbf{x}_i\): increases by 1 unit of \(x_{i,k}\) (entity \(i\)) and of \(x_{j,k}\) (entity \(j\)) do not necessarily have the same effects on \(\mathbb{P}(y_i=1|\mathbf{x_i};\boldsymbol\theta)\) and on \(\mathbb{P}(y_j=1|\mathbf{x_j};\boldsymbol\theta)\), respectively. To address this issue, one can compute some measures of ``average'' marginal effect. There are two main solutions. For each explanatory variable \(k\):
 
 \begin{enumerate}
 \def\labelenumi{\roman{enumi}.}
+\tightlist
 \item
   Denoting by \(\hat{\mathbf{x}}\) the sample average of the \(\mathbf{x}_i\)s, compute \(g'(\boldsymbol\theta_{MLE}'\hat{\mathbf{x}})\theta_{MLE,k}\).
 \item
@@ -4510,18 +4495,18 @@ To address this issue, one can compute some measures of ``average'' marginal eff
 \hypertarget{goodness-of-fit-1}{%
 \subsection{Goodness of fit}\label{goodness-of-fit-1}}
 
-There is no obvious version of ``\(R^2\)'' for binary-choice models. Existing measures are called \textbf{pseudo-\(R^2\)\} measures}.
+There is no obvious version of ``\(R^2\)'' for binary-choice models. Existing measures are called \textbf{pseudo-\(R^2\) measures}.
 
 Denoting by \(\log \mathcal{L}_0(\mathbf{y})\) the (maximum) log-likelihood that would be obtained for a model containing only a constant term (i.e.~with \(\mathbf{x}_i = 1\) for all \(i\)), the \textbf{McFadden's pseudo-\(R^2\)} is given by:
 \[
 R^2_{MF} = 1 - \frac{\log \mathcal{L}(\boldsymbol\theta;\mathbf{y})}{\log \mathcal{L}_0(\mathbf{y})}.
 \]
-Intuitively, \(R^2_{MF}=0\) if the explanatory variables do not allow to predict the decision (\(y\)).
+Intuitively, \(R^2_{MF}=0\) if the explanatory variables do not convey any information on the outcome \(y\). Indeed, in this case, the model is not better than the reference model, that simply captures the fraction of \(y_i\)'s that are equal to 1.
 
-\hypertarget{example-credit-data}{%
-\subsection{Example: Credit data}\label{example-credit-data}}
+\begin{example}[Credit and defaults (Lending-club dataset)]
+\protect\hypertarget{exm:creditProbit}{}\label{exm:creditProbit}This example makes use of the \texttt{credit} data of package \texttt{AEC}. The objective is to model the default probabilities of lenders.
 
-This example makes use of the \texttt{credit} data of package \texttt{AEC}. The objective is to model the default probabilities of lenders.
+Let us first represent the relationship between the fraction of households that have defaulted on their loan and their annual income:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4537,7 +4522,9 @@ This example makes use of the \texttt{credit} data of package \texttt{AEC}. The 
 
 \includegraphics{AdvECTS_files/figure-latex/Probitlending-1.pdf}
 
-We consider three specifications. The first one, with no explanatory variables, is trivial. It will just be used to compute the pseudo-\(R^2\).
+The previous figure suggests that the effect of annual income on the probability of default is non-monotonous. We will therefore include a quadratic term in one of our specification (namely \texttt{eq1} below).
+
+We consider three specifications. The first one (\texttt{eq0}), with no explanatory variables, is trivial. It will just be used to compute the pseudo-\(R^2\). In the second (\texttt{eq1}), we consider a few covariates (loan amount, the ratio between the amount and annual income, The number of more-than-30 days past-due incidences of delinquency in the borrower's credit file for the past 2 years, and a quadratic function of annual income). In the third model (\texttt{eq2}), we add a credit rating.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4546,30 +4533,7 @@ We consider three specifications. The first one, with no explanatory variables, 
            \AttributeTok{data=}\NormalTok{credit,}\AttributeTok{family=}\FunctionTok{binomial}\NormalTok{(}\AttributeTok{link=}\StringTok{"probit"}\NormalTok{))}
 \NormalTok{eq2 }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(Default }\SpecialCharTok{\textasciitilde{}}\NormalTok{ grade }\SpecialCharTok{+} \FunctionTok{log}\NormalTok{(loan\_amnt) }\SpecialCharTok{+}\NormalTok{ amt2income }\SpecialCharTok{+}\NormalTok{ delinq\_2yrs }\SpecialCharTok{+} \FunctionTok{log}\NormalTok{(annual\_inc)}\SpecialCharTok{+} \FunctionTok{I}\NormalTok{(}\FunctionTok{log}\NormalTok{(annual\_inc)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{),}
            \AttributeTok{data=}\NormalTok{credit,}\AttributeTok{family=}\FunctionTok{binomial}\NormalTok{(}\AttributeTok{link=}\StringTok{"probit"}\NormalTok{))}
-\NormalTok{logL0 }\OtherTok{\textless{}{-}} \FunctionTok{logLik}\NormalTok{(eq0)}
-\NormalTok{logL1 }\OtherTok{\textless{}{-}} \FunctionTok{logLik}\NormalTok{(eq1)}
-\NormalTok{logL2 }\OtherTok{\textless{}{-}} \FunctionTok{logLik}\NormalTok{(eq2)}
-\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ logL1}\SpecialCharTok{/}\NormalTok{logL0 }\CommentTok{\# pseudo R2}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 'log Lik.' 0.01173993 (df=6)
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ logL2}\SpecialCharTok{/}\NormalTok{logL0 }\CommentTok{\# pseudo R2}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 'log Lik.' 0.0558487 (df=12)
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{stargazer}\SpecialCharTok{::}\FunctionTok{stargazer}\NormalTok{(eq0,eq1,eq2,}\AttributeTok{type=}\StringTok{"text"}\NormalTok{)}
+\NormalTok{stargazer}\SpecialCharTok{::}\FunctionTok{stargazer}\NormalTok{(eq0,eq1,eq2,}\AttributeTok{type=}\StringTok{"text"}\NormalTok{,}\AttributeTok{no.space =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4583,40 +4547,28 @@ We consider three specifications. The first one, with no explanatory variables, 
 ## ----------------------------------------------------
 ## gradeB                                     0.400*** 
 ##                                            (0.055)  
-##                                                     
 ## gradeC                                     0.587*** 
 ##                                            (0.057)  
-##                                                     
 ## gradeD                                     0.820*** 
 ##                                            (0.061)  
-##                                                     
 ## gradeE                                     0.874*** 
 ##                                            (0.091)  
-##                                                     
 ## gradeF                                     1.230*** 
 ##                                            (0.147)  
-##                                                     
 ## gradeG                                     1.439*** 
 ##                                            (0.227)  
-##                                                     
 ## log(loan_amnt)                  -0.149**  -0.194*** 
 ##                                 (0.060)    (0.061)  
-##                                                     
 ## amt2income                      1.266***   1.222*** 
 ##                                 (0.383)    (0.393)  
-##                                                     
 ## delinq_2yrs                     0.096***    0.009   
 ##                                 (0.034)    (0.035)  
-##                                                     
 ## log(annual_inc)                 -1.444**    -0.874  
 ##                                 (0.569)    (0.586)  
-##                                                     
 ## I(log(annual_inc)2)             0.064**     0.038   
 ##                                 (0.025)    (0.026)  
-##                                                     
 ## Constant            -1.231***   7.937***    4.749   
 ##                      (0.017)    (3.060)    (3.154)  
-##                                                     
 ## ----------------------------------------------------
 ## Observations          9,156      9,156      9,156   
 ## Log Likelihood      -3,157.696 -3,120.625 -2,981.343
@@ -4625,7 +4577,22 @@ We consider three specifications. The first one, with no explanatory variables, 
 ## Note:                    *p<0.1; **p<0.05; ***p<0.01
 \end{verbatim}
 
-Let us now compute marginal effects.
+Let us compute the pseudo R2 for the last two models:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{logL0 }\OtherTok{\textless{}{-}} \FunctionTok{logLik}\NormalTok{(eq0);logL1 }\OtherTok{\textless{}{-}} \FunctionTok{logLik}\NormalTok{(eq1);logL2 }\OtherTok{\textless{}{-}} \FunctionTok{logLik}\NormalTok{(eq2)}
+\NormalTok{pseudoR2\_eq1 }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ logL1}\SpecialCharTok{/}\NormalTok{logL0 }\CommentTok{\# pseudo R2}
+\NormalTok{pseudoR2\_eq2 }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ logL2}\SpecialCharTok{/}\NormalTok{logL0 }\CommentTok{\# pseudo R2}
+\FunctionTok{c}\NormalTok{(pseudoR2\_eq1,pseudoR2\_eq2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.01173993 0.05584870
+\end{verbatim}
+
+Let us now compute the (average) marginal effects, using method ii of Section \ref{marginalFX}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4644,12 +4611,12 @@ Let us now compute marginal effects.
 ##          0.001574178         -0.154701321          0.006813694
 \end{verbatim}
 
-There is, however, an issue for the \texttt{annual\_inc} variable. Indeed, the previous computation does not realize that this variable appears twice among the explanatory variables. To address this, one can proceed as follows.
+There is an issue for the \texttt{annual\_inc} variable. Indeed, the previous computation does not realize that this variable appears twice among the explanatory variables (through \texttt{log(annual\_inc)} and \texttt{I(log(annual\_inc)\^{}2)}). To address this, one can proceed as follows: (1) we construct a new counterfactual dataset where annual incomes are increase by 1\%, (2) we use the model to compute model-implied probabilities of default on this new dataset and (3), we subtract the probabilities resulting from the original dataset from these counterfactual probabilities:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{new\_credit }\OtherTok{\textless{}{-}}\NormalTok{ credit}
-\NormalTok{new\_credit}\SpecialCharTok{$}\NormalTok{annual\_inc }\OtherTok{\textless{}{-}} \FloatTok{1.01} \SpecialCharTok{*}\NormalTok{ new\_credit}\SpecialCharTok{$}\NormalTok{annual\_inc }\CommentTok{\# increase of income by 1\%}
+\NormalTok{new\_credit}\SpecialCharTok{$}\NormalTok{annual\_inc }\OtherTok{\textless{}{-}} \FloatTok{1.01} \SpecialCharTok{*}\NormalTok{ new\_credit}\SpecialCharTok{$}\NormalTok{annual\_inc}
 \NormalTok{bas\_predict\_eq2  }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(eq2, }\AttributeTok{newdata =}\NormalTok{ credit, }\AttributeTok{type =} \StringTok{"response"}\NormalTok{)}
 \CommentTok{\# This is equivalent to pnorm(predict(eq2, newdata = credit))}
 \NormalTok{new\_predict\_eq2  }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(eq2, }\AttributeTok{newdata =}\NormalTok{ new\_credit, }\AttributeTok{type =} \StringTok{"response"}\NormalTok{)}
@@ -4661,7 +4628,7 @@ There is, however, an issue for the \texttt{annual\_inc} variable. Indeed, the p
 ## [1] -6.562126e-05
 \end{verbatim}
 
-This average effect is pretty low. To compare, let us compute the average effect associated with a unit increase in the number of delinquencies:
+The negative sign means that, on average across the entities considered in the analysis, a 1\% increase in annual income results in a decrease in the default probability. This average effect is however pretty low. To get an economic sense of the size of this effect, let us compute the average effect associated with a unit increase in the number of delinquencies:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4688,11 +4655,12 @@ We can employ a likelihood ratio test (see Def. \ref{def:LR}) to see if the two 
 \end{Shaded}
 
 The computation gives a p-value of 0.0436.
+\end{example}
 
-\hypertarget{replicating-table-14.2-of-cameron-and-trivedi-2005}{%
-\subsection{Replicating Table 14.2 of Cameron and Trivedi (2005)}\label{replicating-table-14.2-of-cameron-and-trivedi-2005}}
+\begin{example}[Replicating Table 14.2 of Cameron and Trivedi (2005)]
+\protect\hypertarget{exm:Fisch142}{}\label{exm:Fisch142}
 
-The following lines of codes replicate Table 14.2 of \citet{Cameron_Trivedi_2005}.
+The following lines of codes replicate Table 14.2 of \citet{Cameron_Trivedi_2005} (see Example \ref{exm:FishingTable}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4701,38 +4669,8 @@ The following lines of codes replicate Table 14.2 of \citet{Cameron_Trivedi_2005
 \NormalTok{data.reduced}\SpecialCharTok{$}\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{*}\NormalTok{(data.reduced}\SpecialCharTok{$}\NormalTok{mode}\SpecialCharTok{==}\StringTok{"charter"}\NormalTok{)}
 \CommentTok{\# check first line of Table 14.1:}
 \NormalTok{price.charter.y0 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(data.reduced}\SpecialCharTok{$}\NormalTok{pcharter[data.reduced}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{==}\DecValTok{0}\NormalTok{])}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Warning in mean.default(data.reduced$pcharter[data.reduced$y == 0]): argument is
-## not numeric or logical: returning NA
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{price.charter.y1 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(data.reduced}\SpecialCharTok{$}\NormalTok{pcharter[data.reduced}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{==}\DecValTok{1}\NormalTok{])}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Warning in mean.default(data.reduced$pcharter[data.reduced$y == 1]): argument is
-## not numeric or logical: returning NA
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{price.charter    }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(data.reduced}\SpecialCharTok{$}\NormalTok{pcharter)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Warning in mean.default(data.reduced$pcharter): argument is not numeric or
-## logical: returning NA
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \CommentTok{\# Run probit regression:}
 \NormalTok{reg.probit }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ lnrelp,}
                   \AttributeTok{data=}\NormalTok{data.reduced,}
@@ -4745,7 +4683,7 @@ The following lines of codes replicate Table 14.2 of \citet{Cameron_Trivedi_2005
 \NormalTok{reg.OLS }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ lnrelp,}
               \AttributeTok{data=}\NormalTok{data.reduced)}
 \CommentTok{\# Replicates Table 14.2 of Cameron and Trivedi:}
-\NormalTok{stargazer}\SpecialCharTok{::}\FunctionTok{stargazer}\NormalTok{(reg.logit, reg.probit, reg.OLS,}
+\NormalTok{stargazer}\SpecialCharTok{::}\FunctionTok{stargazer}\NormalTok{(reg.logit, reg.probit, reg.OLS,}\AttributeTok{no.space =} \ConstantTok{TRUE}\NormalTok{,}
                      \AttributeTok{type=}\StringTok{"text"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -4761,10 +4699,8 @@ The following lines of codes replicate Table 14.2 of \citet{Cameron_Trivedi_2005
 ## ----------------------------------------------------------------
 ## lnrelp              -1.823*** -1.056***        -0.243***        
 ##                      (0.145)   (0.075)          (0.010)         
-##                                                                 
 ## Constant            2.053***  1.194***          0.784***        
 ##                      (0.169)   (0.088)          (0.013)         
-##                                                                 
 ## ----------------------------------------------------------------
 ## Observations           630       630              630           
 ## R2                                               0.463          
@@ -4777,14 +4713,14 @@ The following lines of codes replicate Table 14.2 of \citet{Cameron_Trivedi_2005
 ## Note:                                *p<0.1; **p<0.05; ***p<0.01
 \end{verbatim}
 
-\hypertarget{predictions}{%
-\subsection{Predictions}\label{predictions}}
+\end{example}
 
-How to define predicted outcomes? As is the case for \(y_i\), predicted outcomes \(\hat{y}_i\) need to be valued in \(\{0,1\}\). A natural choice consists in considering that \(\hat{y}_i=1\) if \(\mathbb{P}(y_i=1|\mathbf{x}_i;\boldsymbol\theta) > 0.5\), i.e., in taking a cutoff of \(c=0.5\).However, we may have some models where all predicted probabilities are small, but some less than others. In this context, a model-implied probability of 10\% (say) could characterize a ``high-risk'' entity. However, using a cutoff of 50\% would not identify this level of riskiness.
+\hypertarget{predictions-and-roc-curves}{%
+\subsection{Predictions and ROC curves}\label{predictions-and-roc-curves}}
 
-The \textbf{receiver operating characteristics (ROC)} curve consitutes a more general approach. It works as follows:
+How to compute model-implied predicted outcomes? As is the case for \(y_i\), predicted outcomes \(\hat{y}_i\) need to be valued in \(\{0,1\}\). A natural choice consists in considering that \(\hat{y}_i=1\) if \(\mathbb{P}(y_i=1|\mathbf{x}_i;\boldsymbol\theta) > 0.5\), i.e., in taking a cutoff of \(c=0.5\). There exist, though, situations where doing so is not relevant. For instance, we may have some models where all predicted probabilities are small, but some less than others. In this context, a model-implied probability of 10\% (say) could characterize a ``high-risk'' entity. However, using a cutoff of 50\% would not identify this level of riskiness.
 
-For each potential cutoff \(c \in [0,1]\), compute (and plot):
+The \textbf{receiver operating characteristics (ROC)} curve consitutes a more general approach. The idea is to remain agnostic and to consider all possible values of the cutoff \(c\). It works as follows. For each potential cutoff \(c \in [0,1]\), compute (and plot):
 
 \begin{itemize}
 \tightlist
@@ -4794,9 +4730,14 @@ For each potential cutoff \(c \in [0,1]\), compute (and plot):
   The fraction of \(y = 0\) values incorrectly specified (\emph{False Positive Rate}).
 \end{itemize}
 
-Such a curve mechanically starts at (0,0) {[}situation when \(c=1\){]} and terminates at (1,1) {[}situation when \(c=0\){]}.
+Such a curve mechanically starts at (0,0) ---which corresponds to \(c=1\)--- and terminates at (1,1) --situation when \(c=0\).
 
 In the case of no predictive ability (worst situation), the ROC curve is a straight line between (0,0) and (1,1).
+
+\begin{example}[ROC with the fishing-mode dataset]
+\protect\hypertarget{exm:FishingROC}{}\label{exm:FishingROC}
+
+Figure \ref{fig:fishing3} shows the ROC curve associated with the probit model estimated in Example \ref{exm:Fisch142}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4811,7 +4752,9 @@ In the case of no predictive ability (worst situation), the ROC curve is a strai
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AdvECTS_files/figure-latex/fishing3-1.pdf}
+\begin{figure}
+\includegraphics[width=0.95\linewidth]{AdvECTS_files/figure-latex/fishing3-1} \caption{Application of the ROC methodology on the fishing-mode dataset.}\label{fig:fishing3}
+\end{figure}
 
 \begin{verbatim}
 ## 
@@ -4823,31 +4766,12 @@ In the case of no predictive ability (worst situation), the ROC curve is a strai
 ## 95% CI: 89.5%-93.87% (DeLong)
 \end{verbatim}
 
+\end{example}
+
 \hypertarget{multiple-choice-models}{%
 \section{Multiple Choice Models}\label{multiple-choice-models}}
 
-We will now consider cases where the number of possible outcomes (or alternatives) is larger than two. Let us denote by \(J\) this number. We have \(y_j \in \{1,\dots,J\}\). We also consider variables \(\mathbf{x}_i\) (\(K \times 1\)) that are suspected to account for the probabilities that \(y_i=j\), \(j \in \{1,\dots,J\}\).
-
-We will assume that the \(y_i\)s are assumed to be independently distributed, with:
-\begin{equation}
-y_i = \left\{
-\begin{array}{cl}
-1 & \mbox{ with probability } g_1(\mathbf{x}_i;\boldsymbol\theta)\\
-\vdots \\
-J & \mbox{ with probability } g_J(\mathbf{x}_i;\boldsymbol\theta),
-\end{array}
-\right.\label{eq:generalMultiNom}
-\end{equation}
-where \(\boldsymbol\theta\) is a vector of parameters to be estimated.
-
-Of course, for all entities (\(i\)), we must have:
-\[
-\sum_{j=1}^J g_j(\mathbf{x}_i;\boldsymbol\theta)=1.
-\]
-
-Our objective is to estimate the vector of population parameters \(\boldsymbol\theta\) given functional forms for the \(g_j\)s.
-
-Multiple-choice models can for instance be used to account for
+We will now consider cases where the number of possible outcomes (or alternatives) is larger than two. Let us denote by \(J\) this number. We have \(y_j \in \{1,\dots,J\}\). Here are examples of such dependent variables:
 
 \begin{itemize}
 \tightlist
@@ -4863,10 +4787,25 @@ Multiple-choice models can for instance be used to account for
 
 In a few cases, the values associated with the choices will themselves be meaningful, for example, number of accidents per day: \(y = 0, 1,2, \dots\) (count data). In most cases, the values are meaningless.
 
+We assume the existence of covariates, gathered in vector \(\mathbf{x}_i\) (\(K \times 1\)), that are suspected to influence for the probabilities of obtaining the different outcomes (\(y_i=j\), \(j \in \{1,\dots,J\}\)).
+
+In what follows, we will assume that the \(y_i\)'s are assumed to be independently distributed, with:
+\begin{equation}
+y_i = \left\{
+\begin{array}{cl}
+1 & \mbox{ with probability } g_1(\mathbf{x}_i;\boldsymbol\theta)\\
+\vdots \\
+J & \mbox{ with probability } g_J(\mathbf{x}_i;\boldsymbol\theta).
+\end{array}
+\right.\label{eq:generalMultiNom}
+\end{equation}
+
+(Of course, for all entities (\(i\)), we must have \(\sum_{j=1}^J g_j(\mathbf{x}_i;\boldsymbol\theta)=1\).) Our objective is to estimate the vector of population parameters \(\boldsymbol\theta\) given functional forms for the \(g_j\)'s.
+
 \hypertarget{ordered-case}{%
 \subsection{Ordered case}\label{ordered-case}}
 
-Sometimes, there exist a natural order for the different alternatives. This is typically the case where respondents have to choose a level of agreement to a statement in five points: (1) Strongly disagree; (2) Disagree; (3) Neither agree nor disagree; (4) Agree; (5) Strongly agree. Another standard case is that of ratings (from A to F, say).
+Sometimes, there exists a natural order for the different alternatives. This is typically the case where respondents have to choose a level of agreement to a statement in five points: (1) Strongly disagree; (2) Disagree; (3) Neither agree nor disagree; (4) Agree; (5) Strongly agree. Another standard case is that of ratings (from A to F, say).
 
 The ordered probit model consists in extending the binary case, considering the latent-variable view of the latter (see Section \ref{latent}). Formally, the model is as follows:
 \begin{equation}
@@ -4876,7 +4815,7 @@ where
 \[
 y_{i}^* = \boldsymbol\theta'\mathbf{x}_i + \varepsilon_i,
 \]
-with \(\varepsilon_i \sim \,i.i.d.\,\mathcal{N}(0,1)\). The \(\alpha_j\), \(j \in \{1,\dots,J-1\}\), are important (new) parameters that have to be estimated, on top of \(\boldsymbol\theta\). Naturally, we have \(\alpha_1<\alpha_2<\dots<\alpha_{J-1}\). Moreover \(\alpha_0\) is \(- \infty\) and \(\alpha_J\) is \(+ \infty\), so that Eq. \eqref{eq:Pordered} is valid for \(j \in \{1,\dots,J\}\).
+with \(\varepsilon_i \sim \,i.i.d.\,\mathcal{N}(0,1)\). The \(\alpha_j\)'s, \(j \in \{1,\dots,J-1\}\), are (new) parameters that have to be estimated, on top of \(\boldsymbol\theta\). Naturally, we have \(\alpha_1<\alpha_2<\dots<\alpha_{J-1}\). Moreover \(\alpha_0\) is \(- \infty\) and \(\alpha_J\) is \(+ \infty\), so that Eq. \eqref{eq:Pordered} is valid for any \(j \in \{1,\dots,J\}\) (including \(1\) and \(J\)).
 
 We have:
 \begin{eqnarray*}
@@ -4886,16 +4825,16 @@ g_j(\mathbf{x}_i;\boldsymbol\theta,\boldsymbol\alpha) = \mathbb{P}(y_i = j | \ma
 \end{eqnarray*}
 where \(F\) is the c.d.f. of \(\mathcal{N}(0,1)\).
 
-If one component of \(\mathbf{x}_i\) (\(\forall i\)) is 1 (intercept), then one of the \(\alpha_j\) (\(j\in\{1,\dots,J-1\}\)) is not identified. (One can then arbitrarily set \(\alpha_1=0\), which is done in the binary logit/probit cases.)
+If, for all \(i\), one of the components of \(\mathbf{x}_i\) is equal to 1 (which is what is done in linear regression to introduce an intercept in the specification), then one of the \(\alpha_j\) (\(j\in\{1,\dots,J-1\}\)) is not identified. One can then arbitrarily set \(\alpha_1=0\), which is what is done in the binary logit/probit cases.
 
 This model can be estimated by maximizing the likelihood function (see Section \ref{secMLE}). This function is given by:
 \begin{equation}
 \log \mathcal{L}(\boldsymbol\theta,\boldsymbol\alpha;\mathbf{y},\mathbf{X}) = \sum_{i=1}^n  \sum_{j=1}^J \mathbb{I}_{\{y_i=j\}} \log \left(g_j(\mathbf{x}_i;\boldsymbol\theta,\boldsymbol\alpha)\right). \label{eq:multipleLogLik}
 \end{equation}
 
-Let us stress that we have two types of parameters to estimate: those included in vector \(\boldsymbol\theta\), and the \(alpha_j\)'s, gathered in vector \(\boldsymbol\alpha\).
+Let us stress that we have two types of parameters to estimate: those included in vector \(\boldsymbol\theta\), and the \(\alpha_j\)'s, gathered in vector \(\boldsymbol\alpha\).
 
-Note that the estimated values of the \(\theta_j\)'s are slightly more complicated to interpret (at least in term of sign) than in the binary case. Indeed, we have:
+The estimated values of the \(\theta_j\)'s are slightly more complicated to interpret (at least in term of sign) than in the binary case. Indeed, we have:
 \[
 \mathbb{P}(y_i \le j | \mathbf{x}_i) = F(\alpha_{j} - \boldsymbol\theta'\mathbf{x}_i) \Rightarrow \frac{\partial \mathbb{P}(y_i \le j | \mathbf{x}_i)}{\mathbf{x}_i} =- \underbrace{F'(\alpha_{j} - \boldsymbol\theta'\mathbf{x}_i)}_{>0}\boldsymbol\theta.
 \]
@@ -4904,6 +4843,11 @@ Hence the sign of \(\theta_k\) indicates whether \(\mathbb{P}(y_i \le j | \mathb
 \frac{\partial \mathbb{P}(y_i = j | \mathbf{x}_i)}{\mathbf{x}_i} = \underbrace{\left(-F'(\alpha_{j} + \boldsymbol\theta'\mathbf{x}_i)+F'(\alpha_{j-1} + \boldsymbol\theta'\mathbf{x}_i)\right)}_{A}\boldsymbol\theta.
 \]
 Therefore the signs of the components of \(\boldsymbol\theta\) are not necessarily those of the marginal effects. (For the sign of \(A\) is a priori unknown.)
+
+\begin{example}[Predicting credit ratings (Lending-club dataset)]
+\protect\hypertarget{exm:orderedCredit}{}\label{exm:orderedCredit}
+
+Let us use credit dataset again (see Example \ref{exm:creditProbit}), and let use try and model the ratings attributed by the lending-club:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4959,6 +4903,8 @@ Therefore the signs of the components of \(\boldsymbol\theta\) are not necessari
 ## Note:               *p<0.1; **p<0.05; ***p<0.01
 \end{verbatim}
 
+Predicted ratings (and probabilties of being given a given rating) can be computed as follows:
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{pred.grade }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(model1,}\AttributeTok{newdata =}\NormalTok{ training) }\CommentTok{\# predicted grade (the most likely according to model)}
@@ -4966,69 +4912,66 @@ Therefore the signs of the components of \(\boldsymbol\theta\) are not necessari
 \end{Highlighting}
 \end{Shaded}
 
+\end{example}
+
 \hypertarget{MNL}{%
-\subsection{General multinomial model}\label{MNL}}
+\subsection{General multinomial logit model}\label{MNL}}
 
-Regressors may be \textbf{alternative-specific} or \textbf{alternative invariant} (see also Section \ref{Avregressors}).
+This section introduces the general multinomial logit model, which is the natural extebsion of the binary logit model. Its general formulation is as follows:
+\begin{equation}
+g_j(\mathbf{x}_i;\boldsymbol\theta) = \frac{\exp(\theta_j'\mathbf{x}_i)}{\sum_{k=1}^J \exp(\theta_k'\mathbf{x}_i)}.\label{eq:GeneralMNL}
+\end{equation}
+(natural extension of the , see Table \ref{tab:foo}.)
 
-Fishing data: prices and catch rates are alternative-specific, income is alternative-invariant.
+Note that, by construction, \(g_j(\mathbf{x}_i;\boldsymbol\theta) \in [0,1]\) and \(\sum_{j}g_j(\mathbf{x}_i;\boldsymbol\theta)=1\).
 
-Notations: as in Section \ref{Avregressors}, that is \ldots{}
+The components of \(\mathbf{x}_i\) (regressors, or covariates) may be \emph{alternative-specific} or \emph{alternative invariant} (see also Section \ref{Avregressors}). We may e.g.~organize \(\mathbf{x}_i\) as follows:
+\begin{equation}
+\mathbf{x}_i = [\mathbf{u}_{i,1}',\dots,\mathbf{u}_{i,J}',\mathbf{v}_{i}']',\label{eq:xorganiz}
+\end{equation}
+where the notations are as in Section \ref{Avregressors}, that is:
 
 \begin{itemize}
 \tightlist
 \item
-  \(\mathbf{u}_{i,j}\): vector of variables associated with agent \(i\) and alternative \(j\) (alternative-specific regressors).
+  \(\mathbf{u}_{i,j}\) (\(j \in \{1,/dots,J\}\)): vector of variables associated with agent \(i\) and alternative \(j\) (alternative-specific regressors). Examples: Travel time per type of transportation (transportation choice), wage per type of work, cost per type of car.
+\item
+  \(\mathbf{v}_{i}\): vector of variables associated with agent \(i\) but alternative-invariant. Examples: age or gender of agent \(i\),
 \end{itemize}
 
-Example: Travel time per type of transportation (transportation choice), wage per type of work, cost per type of car.
-* \(\mathbf{v}_{i}\): vector of variables associated with agent \(i\) but alternative-invariant.
-
-Example: age or gender of agent \(i\),
-
-We may e.g.~organize \(\mathbf{x}_i\) as follows:
-\begin{equation}
-\mathbf{x}_i = [\mathbf{u}_{i,1}',\dots,\mathbf{u}_{i,J}',\mathbf{v}_{i}']'.\label{eq:xorganiz}
-\end{equation}
-
-\textbf{General} Multinomial Logit
-
-The general formulation of a multinomial logit is as follows:
-\begin{equation}
-g_j(\mathbf{x}_i;\boldsymbol\theta) = \frac{\exp(\theta_j'\mathbf{x}_i)}{\sum_{k=1}^J \exp(\theta_k'\mathbf{x}_i)}.\label{eq:GeneralMNL}
-\end{equation}
-(natural extension of the binary logit model, see Table \ref{tab:foo}.)
-
-Note: By construction, \(g_j(\mathbf{x}_i;\boldsymbol\theta) \in [0,1]\) and \(\sum_{j}g_j(\mathbf{x}_i;\boldsymbol\theta)=1\).
-
-If \(\mathbf{x}_i\) organized as in Eq. (\eqref{eq:xorganiz}), then, with obvious notations, \(\theta_j\) is of the form:
+When \(\mathbf{x}_i\) is as in Eq. \eqref{eq:xorganiz}, with obvious notations, \(\theta_j\) is of the form:
 \begin{equation}
 \theta_j = [{\theta^{(u)}_{1,j}}',\dots,{\theta^{(u)}_{J,j}}',{\theta_j^{(v)}}']',\label{eq:thetaOrganiz}
 \end{equation}
-(and \(\boldsymbol\theta=[\theta_1',\dots,\theta_J']'\)).
+and \(\boldsymbol\theta=[\theta_1',\dots,\theta_J']'\).
 
-\textbf{Classical specifications}
+The literature has considered different specific cases of the general multinomial logit model:\footnote{The labelling ``CL'' and ``MNL'' ---used in the literature--- are relatively \emph{ad hoc} (see 15.4.1 in \citet{Cameron_Trivedi_2005}).}
 
-\textbf{Conditional logit (CL)} with alternative-varying regressors:
-\begin{equation}
-\theta_j = [\mathbf{0}',\dots,\mathbf{0}',\underbrace{\boldsymbol\beta'}_{\mbox{j$^{th}$ position}},\mathbf{0}',\dots]',\label{eq:thetaOrganizCL}
-\end{equation}
-i.e.~we have \(\boldsymbol\beta=\theta^{(u)}_{1,1}=\dots=\theta^{(u)}_{J,J}\) and \(\theta^{(u)}_{i,j}=0\) for \(i \ne j\).
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Conditional logit (CL)} with alternative-varying regressors:
+  \begin{equation}
+  \theta_j = [\mathbf{0}',\dots,\mathbf{0}',\underbrace{\boldsymbol\beta'}_{\mbox{j$^{th}$ position}},\mathbf{0}',\dots]',\label{eq:thetaOrganizCL}
+  \end{equation}
+  i.e.~we have \(\boldsymbol\beta=\theta^{(u)}_{1,1}=\dots=\theta^{(u)}_{J,J}\) and \(\theta^{(u)}_{i,j}=0\) for \(i \ne j\).
+\item
+  \textbf{Multinomial logit (MNL)} with alternative-invariant regressors:
+  \begin{equation}
+  \theta_j = \left[\mathbf{0}',\dots,\mathbf{0}',{\theta_j^{(v)}}'\right]',\label{eq:thetaOrganizML}
+  \end{equation}
+  (can embed intercepts.)
+\item
+  \textbf{Mixed logit:}
+  \begin{equation}
+  \theta_j = \left[\mathbf{0}',\dots,\mathbf{0}',\boldsymbol\beta',\mathbf{0}',\dots,\mathbf{0}',{\theta_j^{(v)}}'\right]'.\label{eq:thetaOrganizCL}
+  \end{equation}
+\end{itemize}
 
-\textbf{Multinomial logit (MNL)} with alternative-invariant regressors:
-\begin{equation}
-\theta_j = \left[\mathbf{0}',\dots,\mathbf{0}',{\theta_j^{(v)}}'\right]',\label{eq:thetaOrganizML}
-\end{equation}
-(can embed intercepts.)
+\begin{example}[CL and MNL with the fishing-mode dataset]
+\protect\hypertarget{exm:FishingGeneralLogit}{}\label{exm:FishingGeneralLogit}
 
-\textbf{Mixed logit:}
-\begin{equation}
-\theta_j = \left[\mathbf{0}',\dots,\mathbf{0}',\boldsymbol\beta',\mathbf{0}',\dots,\mathbf{0}',{\theta_j^{(v)}}'\right]'.\label{eq:thetaOrganizCL}
-\end{equation}
-
-Remark: The labelling ``CL'' and ``MNL'' --used in the literature-- are relatively \emph{ad hoc} (see 15.4.1 in \citet{Cameron_Trivedi_2005}).
-
-The following lines replicate Table 15.2 in \citet{Cameron_Trivedi_2005}.
+The following lines replicate Table 15.2 in \citet{Cameron_Trivedi_2005} (see also Examples \ref{exm:FishingTable} and \ref{exm:Fisch142}):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5081,9 +5024,11 @@ The following lines replicate Table 15.2 in \citet{Cameron_Trivedi_2005}.
 ## Note:                                                         *p<0.1; **p<0.05; ***p<0.01
 \end{verbatim}
 
+\end{example}
+
 \textbf{ML estimation}
 
-Consider the general model described in Eq. \eqref{eq:generalMultiNom}. It can be noted that:
+General multinomial logit models can be estimated by Maximum Likelihood techniques (see Section \ref{secMLE}). Consider the general model described in Eq. \eqref{eq:generalMultiNom}. It can be noted that:
 \[
 f(y_i|\mathbf{x}_i;\boldsymbol\theta) = \prod_{j=1}^J g_j(\mathbf{x}_i;\boldsymbol\theta)^{\mathbb{I}_{\{y_i=j\}}},
 \]
@@ -5095,37 +5040,31 @@ The log-likelihood function is therefore given by:
 \begin{equation}
 \log \mathcal{L}(\boldsymbol\theta;\mathbf{y},\mathbf{X}) = \sum_{i=1}^n  \sum_{j=1}^J \mathbb{I}_{\{y_i=j\}} \log \left(g_j(\mathbf{x}_i;\boldsymbol\theta)\right).\label{eq:multipleLogLik}
 \end{equation}
-Numerical methods have to be employed in order to find the maximum-likelihood estimate of \(\boldsymbol\theta\).
+Numerical methods have to be employed in order to find the maximum-likelihood estimate of \(\boldsymbol\theta\). (Standard packages contain fast algorithms.)
 
 \textbf{Marginal Effects}
 
-Let's use the notation \(p_{i,j} \equiv \mathbb{P}(y_i=j|\mathbf{x}_i;\boldsymbol\theta)\). According to the general logit formulation (Eq. \eqref{eq:GeneralMNL}), we have:
+Let us consider the computation of marginal effects in the general multinomial logit model (Eq. \eqref{eq:GeneralMNL}). Using the notation \(p_{i,j} \equiv \mathbb{P}(y_i=j|\mathbf{x}_i;\boldsymbol\theta)\), we have:
 \begin{eqnarray*}
 \frac{\partial p_{i,j}}{\partial x_{i,s}} &=& \frac{\theta_{j,s}\exp(\theta_j'\mathbf{x}_i)\sum_{k=1}^J \exp(\theta_k'\mathbf{x}_i)}{(\sum_{k=1}^J \exp(\theta_k'\mathbf{x}_i))^2} \\
 && - \frac{\exp(\theta_j'\mathbf{x}_i)\sum_{k=1}^J \theta_{k,s} \exp(\theta_k'\mathbf{x}_i)}{(\sum_{k=1}^J \exp(\theta_k'\mathbf{x}_i))^2}\\
 &=& \theta_{j,s} p_{i,j} - \sum_{k=1}^J \theta_{k,s} p_{i,j}p_{i,k}\\
 &=&  p_{i,j} \times \Big(\theta_{j,s} - \underbrace{\sum_{k=1}^J \theta_{k,s} p_{i,k}}_{=\overline{\boldsymbol{\theta}}^{(i)}_{s}}\Big),
 \end{eqnarray*}
-where \(\overline{\boldsymbol\theta}^{(i)}_{s}\) does not depend on \(j\).
-
-It then appears that the sign of the marginal effect is not necessarily that of \(\theta_{j,s}\).
+where \(\overline{\boldsymbol\theta}^{(i)}_{s}\) does not depend on \(j\). Note that the sign of the marginal effect is not necessarily that of \(\theta_{j,s}\).
 
 \textbf{Utility models}
 
-More general models can be defined. Notably by resorting to \textbf{Additive Random Utility Models, ARUM} (see Section \ref{latent}).
+The general multinomial logit model may arise as the natural specification arising in strucrural contexts where agents compare (random) utilities associated with \(J\) potential outcomes (see Section \ref{latent} for the binary situation).
 
-Let's drop the \(i\) subscript for simplicity. The utility derived form choosing \(j\) is given by \(U_j = V_j + \varepsilon_j\).
-
-We have (with obvious notations):
+Let's drop the \(i\) subscript for simplicity and assume that the utility derived form choosing \(j\) is given by \(U_j = V_j + \varepsilon_j\), where \(V_j\) is deterministic (may depend on observed covariates) and \(\varepsilon_j\) is stochastic. We have (with obvious notations):
 \begin{eqnarray*}
 \mathbb{P}(y=j) &=& \mathbb{P}(U_j>U_k,\,\forall k \ne j)\\
 \mathbb{P}(y=j) &=& \mathbb{P}(U_k-U_j<0,\,\forall k \ne j)\\
 \mathbb{P}(y=j) &=& \mathbb{P}(\underbrace{\varepsilon_k-\varepsilon_j}_{=:\tilde\varepsilon_{k,j}}<\underbrace{V_j - V_k}_{=:-\tilde{V}_{k,j}},\,\forall k \ne j).
 \end{eqnarray*}
 
-The last expression is an \((J-1)\)-variate integral. It has, in general, no analytical solution.
-
-\textbf{Utility Models and the Multinomial Logit}
+The last expression is an \((J-1)\)-variate integral. While it has, in general, no analytical solution, Prop. \ref{prp:Weibull} shows that it is the case when employing Gumbel distributions (see Def. \ref{def:Gumbel}).
 
 \begin{definition}[Gumbel distribution]
 \protect\hypertarget{def:Gumbel}{}\label{def:Gumbel}Gumbel distribution (\(\mathcal{W}\)), support: \(\mathbb{R}\) (see Theorem \ref{thm:Extreme}):
@@ -5134,15 +5073,10 @@ F(u) = \exp(-\exp(-u)), \qquad f(u)=\exp(-u-\exp(u)).
 \]
 \end{definition}
 
-If \(X\sim\mathcal{W}\), then \(\mathbb{E}(X)=0.577\) (Euler constant)\footnote{The Euler constant \(\gamma\) satisfies \(\gamma = \lim_{n\rightarrow \infty} \left(- \ln(n) + \sum_{k=1}^n \frac{1}{k}\right)\).} and \(\mathbb{V}ar(X)=\pi^2/6\).
+Remark: if \(X\sim\mathcal{W}\), then \(\mathbb{E}(X)=0.577\) (Euler constant)\footnote{The Euler constant \(\gamma\) satisfies \(\gamma = \lim_{n\rightarrow \infty} \left(- \ln(n) + \sum_{k=1}^n \frac{1}{k}\right)\).} and \(\mathbb{V}ar(X)=\pi^2/6\).
 
 \begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{AdvECTS_files/figure-latex/Gumbel-1} 
-
-}
-
-\caption{C.d.f. of the Gumbel distribution ($F(x)=\exp(-\exp(-x))$).}\label{fig:Gumbel}
+\includegraphics[width=0.95\linewidth]{AdvECTS_files/figure-latex/Gumbel-1} \caption{C.d.f. of the Gumbel distribution ($F(x)=\exp(-\exp(-x))$).}\label{fig:Gumbel}
 \end{figure}
 
 \begin{proposition}[Weibull]
@@ -5170,83 +5104,50 @@ where \(\lambda_j = \log\left(1 + \frac{\sum_{k \ne j} \exp(V_k)}{\exp(V_j)}\rig
 which leads to the result.
 \end{proof}
 
-\textbf{Remarks on identification}
+Some remarks on identification (see Def. \ref{def:identif}) are in order.
 
-We have:
-\begin{eqnarray*}
-\mathbb{P}(y=j) &=& \frac{\exp(V_j)}{\sum_{k=1}^J \exp(V_k)}\\
-&=& \frac{\exp(V^*_j)}{1 + \sum_{k=2}^J \exp(V^*_k)},
-\end{eqnarray*}
-where \(V^*_j = V_j - V_1\).
-
-We can always assume that \(V_{1}=0\).
-
-Case where \(V_{i,j} = \theta_j'\mathbf{x}_i = \boldsymbol\beta'\mathbf{u}_{i,j}+{\theta_j^{(v)}}'\mathbf{v}_i\) (see Eqs.,\eqref{eq:xOrganiz} and \eqref{eq:thetaOrganizCL}): we can assume that
-\[
-\begin{array}{clll}
-(A) & \mathbf{u}_{i,1}&=&0,\\
-(B) & \theta_1^{(v)} &=& 0.
-\end{array}
-\]
-If (A) does not hold, we can replace \(\mathbf{u}_{i,j}\) by \(\mathbf{u}_{i,j}-\mathbf{u}_{i,1}\).
-
-If \(J=2\) and \(j \in \{0,1\}\) (shift by one unit), we have \(\mathbb{P}(y=1|\mathbf{x})=\dfrac{\exp(\boldsymbol\theta'\mathbf{x})}{1+\exp(\boldsymbol\theta'\mathbf{x})}\), this is the logit model (Table \ref{tab:foo}).
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  We have:
+  \begin{eqnarray*}
+  \mathbb{P}(y=j) &=& \frac{\exp(V_j)}{\sum_{k=1}^J \exp(V_k)}= \frac{\exp(V^*_j)}{1 + \sum_{k=2}^J \exp(V^*_k)},
+  \end{eqnarray*}
+  where \(V^*_j = V_j - V_1\). We can therefore always assume that \(V_{1}=0\). In the case where \(V_{i,j} = \theta_j'\mathbf{x}_i = \boldsymbol\beta'\mathbf{u}_{i,j}+{\theta_j^{(v)}}'\mathbf{v}_i\) (see Eqs. \eqref{eq:xorganiz} and \eqref{eq:thetaOrganizCL}), we can for instance assume that:
+  \begin{eqnarray*}
+  &(A)& \mathbf{u}_{i,1}=0,\\
+  &(B)& \theta_1^{(v)} = 0.
+  \end{eqnarray*}
+  If (A) does not hold, we can replace \(\mathbf{u}_{i,j}\) with \(\mathbf{u}_{i,j}-\mathbf{u}_{i,1}\).
+\item
+  If \(J=2\) and \(j \in \{0,1\}\) (shift by one unit), we have \(\mathbb{P}(y=1|\mathbf{x})=\dfrac{\exp(\boldsymbol\theta'\mathbf{x})}{1+\exp(\boldsymbol\theta'\mathbf{x})}\), this is the logit model (Table \ref{tab:foo}).
+\end{enumerate}
 
 \textbf{Limitations of logit models}
 
-In a Logit model:
+In a Logit model, we have:
 \begin{equation}
 \mathbb{P}(y=j|y \in \{k,j\}) = \frac{\exp(\theta_j'\mathbf{x})}{\exp(\theta_j'\mathbf{x}) + \exp(\theta_k'\mathbf{x})}.\label{eq:condiProba}
 \end{equation}
-This conditional probability does not depend on other alternatives (i.e.~does not depend on \(\theta_m\), \(m \ne j,k\)). In particular, if \(\mathbf{x} = [\mathbf{u}_1',\dots,\mathbf{u}_J',\mathbf{v}']'\), then changes in \(\mathbf{u}_m\) (\(m \ne j,\,k\)) have no impact on the object shown in Eq. \eqref{eq:condiProba}.
+This conditional probability does not depend on other alternatives (i.e., it does not depend on \(\theta_m\), \(m \ne j,k\)). In particular, if \(\mathbf{x} = [\mathbf{u}_1',\dots,\mathbf{u}_J',\mathbf{v}']'\), then changes in \(\mathbf{u}_m\) (\(m \ne j,\,k\)) have no impact on the object shown in Eq. \eqref{eq:condiProba}.
 
-That is, a Multinomial Logit can be seen as a series of pairwise comparisons that are unaffected by the characteristics of alternatives. Such a model is said to satisfy the \textbf{independence from irrelevant alternatives (IIA)} property.
+That is, a Multinomial Logit can be seen as a series of pairwise comparisons that are unaffected by the characteristics of alternatives. Such a model is said to satisfy the \textbf{independence from irrelevant alternatives (IIA)} property. That is, in these models, for any individual, the ratio of probabilities of choosing two alternatives is independent of the availability or attributes of any other alternatives. While this may not sound alarming, there are situations where you would like it not to be the case, this is for instance the case when you want to extrapolate the results of your estimated model to a situation where there is a novel outcome that is highly susbstitutable to one of the previous ones. This can be illustrated with the famous ``red-blue bus'' example:
 
-IIA property: for any individual, the ratio of probabilities of choosing two alternatives is independent of the availability or attributes of any other alternatives.
-
-In such a mode, the choice of commuting by car or (red) bus is independent of whether commuting using a blue bus is an option.
-
-\textbf{Red-Blue Buses}
-
-Assume one has a logit modelling the ``car (\(y=1\)) vs red bus (\(y=2\))'' choice.
-
-If a blue bus (\(y=3\)) is exactly as a red bus, except for the color, then one would expect to have:
+\begin{example}[Red-blue bus and IIA]
+\protect\hypertarget{exm:redbluebus}{}\label{exm:redbluebus}Assume one has a logit model capturing the decision to travel using either a car (\(y=1\)) or a (red) bus (\(y=2\)). Assume you want to augment this model to allow for a third choice (\(y=3\)): travel with a blue bus. If a blue bus (\(y=3\)) is exactly as a red bus, except for the color, then one would expect to have:
 \[
 \mathbb{P}(y=3|y \in \{2,3\}) = 0.5,
 \]
 i.e.~\(\theta_2 = \theta_3\).
 
-Assume we had \(V_1=V_2\). We expect to have \(V_2=V_3\) (hence \(p_2=p_3\)). The model will then imply \(p_1=p_2=p_3=0.33\).
-
-It would seem more reasonable to have \(p_1 = p_2 + p_3 = 0.5\) and \(p_2=p_3=0.25\).
-
-\textbf{Sequential models}
-
-Naturally, other possible ad-hoc modelling strategy are possible, e.g.~sequential modelling:
-\begin{eqnarray*}
-\mathbb{P}(y=1|\mathbf{x}) &=& F(\theta_1'\mathbf{x}) \\
-\mathbb{P}(y=2|\mathbf{x}) &=& (1-F(\theta_1'\mathbf{x})) \times F(\theta_2'\mathbf{x}) \\
-\mathbb{P}(y=3|\mathbf{x}) &=& (1-F(\theta_1'\mathbf{x})) \times (1 - F(\theta_2'\mathbf{x})).
-\end{eqnarray*}
-
-Easily checked that \(\sum_j \mathbb{P}(y=j|\mathbf{x})=1\).
-Example: car purchase; 1st choice = brand, 2nd choice = color.
-
-Likelihood function:
-\begin{eqnarray*}
-\mathcal{L}(\theta_1,\theta_2;\mathbf{y},\mathbf{X}) &=& \prod_{j \in \{1,2,3\}} \left( \prod_{i\,s.t.\,y_i=j} \mathbb{P}(y_i=j|\mathbf{x}_i)\right).
-\end{eqnarray*}
-
-The maximization of the log-likelihood can be performed sequentially (w.r.t. to \(\theta_1\) first, and next w.r.t. \(\theta_2\)).
-
-Weaknesses: results may depend on the chosen sequence + no clear mapping with utility framework.
-
-Alternative: nested logit model (see below) where utilities of alternatives 2 and 3 are affected by correlated shocks.
+Assume we had \(V_1=V_2\). We expect to have \(V_2=V_3\) (hence \(p_2=p_3\)). A multinomial logit model would then imply \(p_1=p_2=p_3=0.33\). It would seem more reasonable to have \(p_1 = p_2 + p_3 = 0.5\) and \(p_2=p_3=0.25\).
+\end{example}
 
 \hypertarget{nested-logits}{%
 \subsection{Nested logits}\label{nested-logits}}
 
-Nested Logits are natural extensions of logit models when choices feature a nesting structure. The nested logit approach is based on the concept of sequential choices. That is, this approach is relevant when it makes sense to group some choices into the same \emph{nest}, also called \emph{limbs}. This framework is consistent with the idea according to which, for each agent, there exist unobserved nest-specific variables.
+Nested Logits are natural extensions of logit models when choices feature a nesting structure. This approach is relevant when it makes sense to group some choices into the same \emph{nest}, also called \emph{limbs}. Intuitively, this framework is consistent with the idea according to which, for each agent, there exist unobserved nest-specific variables.
 
 The setup is as follows: we consider \(J\) \emph{limbs}. For each limb \(j\), we have \(K_j\) \emph{branches}. Let us denotes by \(y_1\) the limb choice (i.e., \(y_1 \in \{1,\dots,J\}\)) and by \(y_2\) the branch choice (with \(y_2 \in \{1,\dots,K_j\}\)). The utility associated with the pair of choices \((j,k)\) is given by
 \[
@@ -5271,28 +5172,21 @@ One usually make the following two assumptions:
   The disturbances \(\boldsymbol\varepsilon\) follow the Generalized Extreme Value (GEV) distribution (see Def. \ref{def:GEVdistri}).
 \end{enumerate}
 
+The following figure displays simulations of pairs \((\varepsilon_1,\varepsilon_2)\) drawn from GEV distributions for different values of \(\rho\). The simulation approach is based on \href{http://www.caee.utexas.edu/prof/bhat/ABSTRACTS/Supp_material.pdf}{Bhat}. The code used to produce this chart is in Appendix \ref{App:GEV}.
+
+\begin{figure}
+\includegraphics[width=0.95\linewidth]{images/Figure_GEV} \caption{GEV simulations.}\label{fig:GEV}
+\end{figure}
+
 Under (i) and (ii), we have:
 \begin{eqnarray}
 \mathbb{P}[(y_1,y_2) = (j,k)|\mathbf{x}] &=& \underbrace{\frac{\exp(\mathbf{u}_j'\boldsymbol\alpha + \rho_j I_j)}{\sum_{m=1}^J \exp(\mathbf{u}_m'\boldsymbol\alpha + \rho_m I_m)}}_{= \mathbb{P}[y_1 = j|\mathbf{x}]} \times \nonumber\\
 && \underbrace{\frac{\exp(\mathbf{v}_{j,k}'\boldsymbol\beta_j/\rho_j)}{\sum_{l=1}^{K_j} \exp(\mathbf{v}_{j,l}'\boldsymbol\beta_j/\rho_j)}}_{= \mathbb{P}[y_2 = k|y_1=j,\mathbf{x}]}, \label{eq:Nested}
 \end{eqnarray}
-where \(I_j\)'s are \textbf{inclusive values} or \textbf{log sums}, given by:
+where \(I_j\)'s are called inclusive values (or log sums), given by:
 \[
 I_j = \log \left( \sum_{l=1}^{K_j} \exp(\mathbf{v}_{j,l}'\boldsymbol\beta_j/\rho_j)\right).
 \]
-
-\begin{definition}[Generalized Extreme Value (GEV) distribution]
-\protect\hypertarget{def:GEVdistri}{}\label{def:GEVdistri}The vector of disturbances \(\boldsymbol\varepsilon=[\varepsilon_{1,1},\dots,\varepsilon_{1,K_1},\dots,\varepsilon_{J,1},\dots,\varepsilon_{J,K_J}]'\) follows the Generalized Extreme Value (GEV) distribution if its c.d.f. is:
-\[
-F(\boldsymbol\varepsilon,\boldsymbol\rho) = \exp(-G(e^{-\varepsilon_{1,1}},\dots,e^{-\varepsilon_{J,K_J}};\boldsymbol\rho))
-\]
-with
-\begin{eqnarray*}
-G(\mathbf{Y};\boldsymbol\rho) &\equiv&  G(Y_{1,1},\dots,Y_{1,K_1},\dots,Y_{J,1},\dots,Y_{J,K_J};\boldsymbol\rho) \\
-&=& \sum_{j=1}^J\left(\sum_{k=1}^{K_j} Y_{jk}^{1/\rho_j}
-\right)^{\rho_j}
-\end{eqnarray*}
-\end{definition}
 
 Some remarks are in order:
 
@@ -5302,37 +5196,25 @@ Some remarks are in order:
 \item
   It can be shown that \(\rho_j = \sqrt{1 - \mathbb{C}or(\varepsilon_{j,k},\varepsilon_{j,l})}\), for \(k \ne l\).
 \item
-  \(\rho_j=1 \Rightarrow\), \(\varepsilon_{j,k}\) and \(\varepsilon_{j,l}\) are uncorrelated (\(\Rightarrow\) Multinomial logit).
+  \(\rho_j=1\) implies that \(\varepsilon_{j,k}\) and \(\varepsilon_{j,l}\) are uncorrelated (we are then back to the multinomial logit case).
 \item
   When \(J=1\):
   \[
   F([\varepsilon_1,\dots,\varepsilon_K]',\rho) = \exp\left(-\left(\sum_{k=1}^{K} \exp(-\varepsilon_k/\rho)\right)^{\rho}\right).
   \]
+\item
+  We have:
+  \begin{eqnarray*}
+  I_j = \mathbb{E}(\max_k(U_{j,k})) &=& \mathbb{E}(\max_k(V_{j,k} + \varepsilon_{j,k})),
+  \end{eqnarray*}
+  The inclusive values can therefore be seen as measures of the relative attractiveness of a nest.
 \end{enumerate}
-
-The following figure displays simulations of pairs \((\varepsilon_1,\varepsilon_2)\) drawn from GEV distributions for different values of \(\rho\). The simulation approach is based on \href{http://www.caee.utexas.edu/prof/bhat/ABSTRACTS/Supp_material.pdf}{Bhat}. The code used to produce this chart is in Appendix \ref{App:GEV}.
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{images/Figure_GEV} 
-
-}
-
-\caption{GEV simulations.}\label{fig:GEV}
-\end{figure}
-
-It can be shown that:
-\begin{eqnarray*}
-I_j = \mathbb{E}(\max_k(U_{j,k})) &=& \mathbb{E}(\max_k(V_{j,k} + \varepsilon_{j,k})),
-\end{eqnarray*}
-
-The inclusive values can be seen as measures of the relative attractiveness of a nest.
 
 This approach allows for some level of correlation across the \(\varepsilon_{j,k}\) (for a given \(j\)). This can be interpreted as the existence of an (unobserved) \emph{common error component} for the alternatives of a same nest. This component contributes to making the alternatives of a given nest more similar. In other words, this approach can accommodate a higher sensitivity (cross-elasticity) between the alternatives of a given nest.
 
 Note that if the common component is reduced to zero (i.e.~\(\rho_i=1\)), the model boils down to the multinomial logit model with no covariance of error terms among the alternatives.
 
-Contrary to the general multinmial model, nested logits can solve the Red-Blue problem described in Section \ref{MNL}. Assume you have estimated a model specifying \(U_{1} = V_{1} + \varepsilon_{1}\) (car choice) and \(U_{2} = V_{2} + \varepsilon_{2}\) (red bus choice). You can then assume that the blue-bus utility is of the form \(U_{3} = V_{2} + \varepsilon_{3}\) where \(\varepsilon_{3}\) is perfectly correlated to \(\varepsilon_{2}\). This is done by redefining the set of choices as follows:
+Contrary to the general multinmial model, nested logits can solve the Red-Blue problem described in Section \ref{MNL} (see Example \ref{exm:redbluebus}). Assume you have estimated a model specifying \(U_{1} = V_{1} + \varepsilon_{1}\) (car choice) and \(U_{2} = V_{2} + \varepsilon_{2}\) (red bus choice). You can then assume that the blue-bus utility is of the form \(U_{3} = V_{2} + \varepsilon_{3}\) where \(\varepsilon_{3}\) is perfectly correlated to \(\varepsilon_{2}\). This is done by redefining the set of choices as follows:
 \begin{eqnarray*}
 j=1 &\Leftrightarrow& (j'=1,k=1) \\
 j=2 &\Leftrightarrow& (j'=2,k=1) \\
@@ -5353,7 +5235,10 @@ By contrast:
 \end{eqnarray*}
 which depends on the expected utilities of all alternatives in nest \(j_A\) and \(j_B\). So the IIA does not hold.
 
-Travel model dataset used, e.g., by \citet{Hensher_Greene_2002} (see also \citet{Heiss_2002}).
+\begin{example}[Travel-mode dataset]
+\protect\hypertarget{exm:nestedTravel}{}\label{exm:nestedTravel}
+
+Let us illustrate nested logits on the travel-mode dataset used, e.g., by \citet{Hensher_Greene_2002} (see also \citet{Heiss_2002}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5426,22 +5311,19 @@ Travel model dataset used, e.g., by \citet{Hensher_Greene_2002} (see also \citet
 ## Note:              *p<0.1; **p<0.05; ***p<0.01
 \end{verbatim}
 
+\end{example}
+
 \hypertarget{tobit}{%
 \section{Tobit models}\label{tobit}}
 
-In some situatins, the dependent variable is incompletely observed, which may result in a non-representative sample. Typically, in some cases, observations of the dependent variable can have a lower and/or an upper limit, while the ``true'', underlying, dependent variable has not. In this case, OLS regression may lead to inconsistent parameter estimates.
+In some situations, the dependent variable is incompletely observed, which may result in a non-representative sample. Typically, in some cases, observations of the dependent variable can have a lower and/or an upper limit, while the ``true'', underlying, dependent variable has not. In this case, OLS regression may lead to inconsistent parameter estimates.
 
 Tobit models have been designed to address some of these situations. This approach has been named after James Tobin, who developed this model in the late 50s (see \citet{Tobin_1956}).
 
 Figure \ref{fig:tobit1} illustrates the situation. The dots (white and black) represent the ``true'' observations. Now, assume that only the black are observed. If ones uses these observations in an OLS regression to estimate the relatonship between \(x\) and \(y\), then one gets the red line. It is clear that the sensitivity of \(y\) to \(x\) is then underestimated. The blue line is the line one would obtain if white dots were also observed; the grey line represents the model used to genrate the data (\(y_i=x_i+\varepsilon_i\)).
 
 \begin{figure}
-
-{\centering \includegraphics{AdvECTS_files/figure-latex/tobit1-1} 
-
-}
-
-\caption{Bias in the case of sample selection. The grey line represents the population regression line. The model is $y_i = x_i + \varepsilon_i$, with $\varepsilon_{i,t} \sim \mathcal{N}(0,1)$. The red line is the OLS regression line based on black dots only.}\label{fig:tobit1}
+\includegraphics{AdvECTS_files/figure-latex/tobit1-1} \caption{Bias in the case of sample selection. The grey line represents the population regression line. The model is $y_i = x_i + \varepsilon_i$, with $\varepsilon_{i,t} \sim \mathcal{N}(0,1)$. The red line is the OLS regression line based on black dots only.}\label{fig:tobit1}
 \end{figure}
 
 Assume that the (partially) observed dependent variable follows:
@@ -5465,13 +5347,11 @@ y^* &if& y^*>L \\
 \end{array}
 \right.
 \end{eqnarray*}
-where ``\(-\)'\,' stands for missing observations.
+where ``\(-\)'' stands for missing observations.
 
 This formulation is easily extended to censoring from above (\(L \rightarrow U\)) or censoring from both below and above.
 
-The model parameters: \(\theta = [\boldsymbol\beta',\boldsymbol\gamma']'\).
-
-Let us write the conditional p.d.f. of the observed variable:
+The model parameters are gathered in vector \(\theta = [\boldsymbol\beta',\boldsymbol\gamma']'\). Let us write the conditional p.d.f. of the observed variable:
 \begin{eqnarray*}
 \mbox{Censored case:}&& f(y|\mathbf{x};\theta) = \left\{
 \begin{array}{ccc}
@@ -5494,7 +5374,7 @@ In the censored case, we have:
 && \left. \mathbb{I}_{\{y_i>0\}} \log \left[f_{\boldsymbol\gamma}^*(y_i -  \boldsymbol\beta'\mathbf{x}_i)\right]\right\}.
 \end{eqnarray*}
 
-The \textbf{Tobit, or censored/truncated normal regression model} correspinds to the case described above, but with Gaussian errors \(\varepsilon\). Specifically:
+The Tobit, or censored/truncated normal regression model, corresponds to the case described above, but with Gaussian errors \(\varepsilon\). Specifically:
 \[
 y^* = \boldsymbol\beta'\mathbf{x} + \varepsilon,
 \]
@@ -5521,32 +5401,21 @@ Without loss of generality, we can assume that \(L=0\). (One can shift observed 
   \]
 \end{itemize}
 
-Results usually heavily rely on distributional assumptions (more than in uncensored/untruncated case). The framework is easy to extend to an heteroskedastic case, for instance by setting \(\sigma_i^2=\exp(\alpha'\mathbf{x}_i)\).
+Results usually heavily rely on distributional assumptions (more than in uncensored/untruncated case). The framework is easy to extend to an heteroskedastic case, for instance by setting \(\sigma_i^2=\exp(\alpha'\mathbf{x}_i)\). Such a situation is illustrated by Figure \ref{fig:tobit2}.
 
 \begin{figure}
-
-{\centering \includegraphics{AdvECTS_files/figure-latex/tobit2-1} 
-
-}
-
-\caption{Censored dataset with heteroskedasticitiy. The model is $y_i = x_i + \varepsilon_i$, with $\varepsilon_{i,t} \sim \mathcal{N}(0,\sigma_i^2)$ where $\sigma_i = \exp(-1 + x_i)$.}\label{fig:tobit2}
+\includegraphics{AdvECTS_files/figure-latex/tobit2-1} \caption{Censored dataset with heteroskedasticitiy. The model is $y_i = x_i + \varepsilon_i$, with $\varepsilon_{i,t} \sim \mathcal{N}(0,\sigma_i^2)$ where $\sigma_i = \exp(-1 + x_i)$.}\label{fig:tobit2}
 \end{figure}
 
 Let us consider the conditional means of \(y\) in the general case, i.e., for any \(\varepsilon\) distribution. Assume \(\mathbf{x}\) is observed, such that expectations are conditional on \(\mathbf{x}\).
 
 \begin{itemize}
-\tightlist
 \item
   For data that are left-truncated at 0, we have:
-\end{itemize}
-
-\begin{eqnarray*}
-\mathbb{E}(y) &=& \mathbb{E}(y^*|y^*>0)\\
-&=&\underbrace{\boldsymbol\beta'\mathbf{x}}_{=\mathbb{E}(y^*)} + \underbrace{\mathbb{E}(\varepsilon|\varepsilon>-\boldsymbol\beta'\mathbf{x})}_{>0} > \mathbb{E}(y^*).
-\end{eqnarray*}
-
-\begin{itemize}
-\tightlist
+  \begin{eqnarray*}
+  \mathbb{E}(y) &=& \mathbb{E}(y^*|y^*>0)\\
+  &=&\underbrace{\boldsymbol\beta'\mathbf{x}}_{=\mathbb{E}(y^*)} + \underbrace{\mathbb{E}(\varepsilon|\varepsilon>-\boldsymbol\beta'\mathbf{x})}_{>0} > \mathbb{E}(y^*).
+  \end{eqnarray*}
 \item
   Consider data that are left-censored at 0. By Bayes, we have that
   \[
@@ -5567,65 +5436,51 @@ Let us consider the conditional means of \(y\) in the general case, i.e., for an
 Now, let us come back to the Tobit (i.e., Gaussian case) case.
 
 \begin{itemize}
-\tightlist
 \item
   For data that are left-truncated at 0:
-\end{itemize}
-
-\begin{eqnarray}
-\mathbb{E}(y) &=& \boldsymbol\beta'\mathbf{x} + \mathbb{E}(\varepsilon|\varepsilon>-\boldsymbol\beta'\mathbf{x}) \nonumber\\
-&=&  \boldsymbol\beta'\mathbf{x} + \sigma \underbrace{\frac{\phi(\boldsymbol\beta'\mathbf{x}/\sigma)}{\Phi(\boldsymbol\beta'\mathbf{x}/\sigma)}}_{=: \lambda(\boldsymbol\beta'\mathbf{x}/\sigma)} \nonumber\\
-&=& \sigma \left( \frac{\boldsymbol\beta'\mathbf{x}}{\sigma} + \lambda\left(\frac{\boldsymbol\beta'\mathbf{x}}{\sigma}\right)\right). \label{eq:Econdtruncated}
-\end{eqnarray}
-
-where the penultimate line is obtained by using Eq. \eqref{eq:Etrunc}.
-
-\begin{itemize}
-\tightlist
+  \begin{eqnarray}
+  \mathbb{E}(y) &=& \boldsymbol\beta'\mathbf{x} + \mathbb{E}(\varepsilon|\varepsilon>-\boldsymbol\beta'\mathbf{x}) \nonumber\\
+  &=&  \boldsymbol\beta'\mathbf{x} + \sigma \underbrace{\frac{\phi(\boldsymbol\beta'\mathbf{x}/\sigma)}{\Phi(\boldsymbol\beta'\mathbf{x}/\sigma)}}_{=: \lambda(\boldsymbol\beta'\mathbf{x}/\sigma)} = \sigma \left( \frac{\boldsymbol\beta'\mathbf{x}}{\sigma} + \lambda\left(\frac{\boldsymbol\beta'\mathbf{x}}{\sigma}\right)\right). \label{eq:Econdtruncated}
+  \end{eqnarray}
+  where the penultimate line is obtained by using Eq. \eqref{eq:Etrunc}.
 \item
   For data that are left-censored at 0:
+  \begin{eqnarray*}
+  \mathbb{E}(y) &=&  \mathbb{P}(y^*>0)\mathbb{E}(y^*|y^*>0)\\
+  &=&  \Phi\left( \frac{\boldsymbol\beta'\mathbf{x}}{\sigma}\right) \sigma \left(
+  \frac{\boldsymbol\beta'\mathbf{x}}{\sigma} +   \lambda\left(\frac{\boldsymbol\beta'\mathbf{x}}{\sigma}\right)
+  \right).
+  \end{eqnarray*}
 \end{itemize}
 
-\begin{eqnarray*}
-\mathbb{E}(y) &=&  \mathbb{P}(y^*>0)\mathbb{E}(y^*|y^*>0)\\
-&=&  \Phi\left( \frac{\boldsymbol\beta'\mathbf{x}}{\sigma}\right) \sigma \left(
-\frac{\boldsymbol\beta'\mathbf{x}}{\sigma} +   \lambda\left(\frac{\boldsymbol\beta'\mathbf{x}}{\sigma}\right)
-\right).
-\end{eqnarray*}
-
 \begin{figure}
-
-{\centering \includegraphics{AdvECTS_files/figure-latex/tobit3-1} 
-
-}
-
-\caption{Conditional means of $y$ in Tobit models. The model is $y_i = x_i + \varepsilon_i$, with $\varepsilon_i \sim \mathcal{N}(0,1)$.}\label{fig:tobit3}
+\includegraphics{AdvECTS_files/figure-latex/tobit3-1} \caption{Conditional means of $y$ in Tobit models. The model is $y_i = x_i + \varepsilon_i$, with $\varepsilon_i \sim \mathcal{N}(0,1)$.}\label{fig:tobit3}
 \end{figure}
 
 \textbf{Heckit regression}
 
-The previous formula can in particular be used in an alternative estimation approach, namely the Heckman two-step estimation. This approach is based on two steps:
+The previous formula (Eq. \eqref{eq:Econdtruncated}) can in particular be used in an alternative estimation approach, namely the Heckman two-step estimation. This approach is based on two steps:\footnote{See 16.10.2 of \citet{Cameron_Trivedi_2005} for the derivation of asymptotic standard errors of \(\boldsymbol\beta\).}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
   Using the complete sample, fit a Probit model of \(\mathbb{I}_{\{y_i>0\}}\) on \(\mathbf{x}\). This provides a consistent estimate of \(\frac{\boldsymbol\beta}{\sigma}\), and therefore of \(\lambda(\boldsymbol\beta'\mathbf{x}/\sigma)\). (Indeed, if \(z_i \equiv \mathbb{I}_{\{y_i>0\}}\), then \(\mathbb{P}(z_i=1|\mathbf{x}_i;\boldsymbol\beta/\sigma)=\Phi(\boldsymbol\beta'\mathbf{x}_i/\sigma)\).)
 \item
-  Using the truncated sample only: run an OLS regression of \(\mathbf{y}\) on \(\left\{\mathbf{x},\lambda(\boldsymbol\beta'\mathbf{x}/\sigma)\right\}\). THis provides a consistent estimate of \((\boldsymbol\beta,\sigma)\).
+  Using the truncated sample only: run an OLS regression of \(\mathbf{y}\) on \(\left\{\mathbf{x},\lambda(\boldsymbol\beta'\mathbf{x}/\sigma)\right\}\) (having Eq. \eqref{eq:Econdtruncated} in mind). This provides a consistent estimate of \((\boldsymbol\beta,\sigma)\).
 \end{enumerate}
 
 The underlying specification is of the form:
 \[
 \mbox{Conditional mean} + \mbox{disturbance}.
 \]
+where ``Conditional mean'' comes from Eq. \eqref{eq:Econdtruncated} and ``disturbance'' is an error with zero conditional mean.
 
-where ``Conditional mean'' comes from Eq. \eqref{eq:Econdtruncated} and ``disturbance'' is an error of zero conditional mean.
+This approach is also applied to the case of \textbf{sample selection models} (see Section \ref{section:SSM}).
 
-This approach is also applied to the case of \textbf{sample selection models} (see Section,@ref(section:SSM\}).
+\begin{example}[Wage prediction]
+\protect\hypertarget{exm:WageMroz1}{}\label{exm:WageMroz1}
 
-See 16.10.2 of \citet{Cameron_Trivedi_2005} for the derivation of asymptotic standard errors of \(\boldsymbol\beta\).
-
-The following example are based on the dataset used in \citet{Mroz_1987} (this dataset is part of the \texttt{sampleSelection} package).
+The present example is based on the dataset used in \citet{Mroz_1987} (whicht is part of the \texttt{sampleSelection} package).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5685,23 +5540,16 @@ The following example are based on the dataset used in \citet{Mroz_1987} (this d
 Figure \ref{fig:tobit5} shows that, low wages, the OLS model tends to over-predict wages. The slope between observed and Tobit-predicted wages is closer to one (the adjustment line is closer to the 45-degree line.)
 
 \begin{figure}
-
-{\centering \includegraphics{AdvECTS_files/figure-latex/tobit5-1} 
-
-}
-
-\caption{Predicted versus observed wages.}\label{fig:tobit5}
+\includegraphics{AdvECTS_files/figure-latex/tobit5-1} \caption{Predicted versus observed wages.}\label{fig:tobit5}
 \end{figure}
+
+\end{example}
 
 \textbf{Two-part model}
 
-In the standard Tobit framework, the model determining censored --or truncated-- data \textbf{censoring mechanism} is the same as the one determining non-censored --or observed-- data \textbf{outcome mechanism}.
+In the standard Tobit framework, the model determining censored ---or truncated--- data \emph{censoring mechanism} is the same as the one determining non-censored ---or observed--- data \emph{outcome mechanism}. A two-part model adds flexibility by permitting the zeros and non-zeros to be generated by different densities. The second model characterizes the outcome \emph{conditional on} the outcome being observed.
 
-A \textbf{two-part model} adds flexibility by permitting the zeros and non-zeros to be generated by different densities.
-
-Here, the second model characterizes the outcome \emph{conditional on} the outcome being observed.
-
-In a seminal paper, \citet{Duan_et_al_1983} eploy this methodology to account for individual annual hospital expenses. The two models are then as follows:
+In a seminal paper, \citet{Duan_et_al_1983} employ this methodology to account for individual annual hospital expenses. The two models are then as follows:
 
 \begin{itemize}
 \tightlist
@@ -5721,11 +5569,11 @@ In sample-selection models, studied in the next section, one specifies the joint
 \hypertarget{sample-selection-models}{%
 \section{Sample Selection Models}\label{sample-selection-models}}
 
-The situation tackled by sample-selection models is the following. The dependent variable of interest, denoted by \(y_2\), depends on observed variables \(\mathbf{x}_2\). The fact that \(y_2\) is observed depends on the value of a latent variable (\(y_1^*\)) that is correlated to observed variables \(\mathbf{x}_1\). The difference w.r.t. the two-part model skethed above is that, even conditionally on \((\mathbf{x}_1,\mathbf{x}_2)\), \(y_1^*\) and \(y_2\) may be correlated.
+The situation tackled by sample-selection models is the following. The dependent variable of interest, denoted by \(y_2\), depends on observed variables \(\mathbf{x}_2\). Observing \(y_2\), or not, depends on the value of a latent variable (\(y_1^*\)) that is correlated to observed variables \(\mathbf{x}_1\). The difference w.r.t. the two-part model skethed above is that, even conditionally on \((\mathbf{x}_1,\mathbf{x}_2)\), \(y_1^*\) and \(y_2\) may be correlated.
 
 As in the Tobit case, even in the simplest case of population conditional mean linear in regressors (i.e.~\(y_2 = \mathbf{x}_2'\boldsymbol\beta_2 + \varepsilon_2\)), OLS regression leads to inconsistent parameter estimates because the sample is not representative of the population.
 
-There are two latent variables: \(y_1^*\) and \(y_2^*\). We observe \(y_1\) and, if the considered entity ``participates'\,', \(y_2\). More specifically:
+There are two latent variables: \(y_1^*\) and \(y_2^*\). We observe \(y_1\) and, if the considered entity ``participates'', we also observe \(y_2\). More specifically:
 \begin{eqnarray*}
 y_1 &=& \left\{
 \begin{array}{ccc}
@@ -5744,7 +5592,7 @@ y_2^* &\mbox{if}& y_1 = 1 \\
 Moreover:
 \begin{eqnarray*}
 y_1^* &=& \mathbf{x}_1'\boldsymbol\beta_1 + \varepsilon_1 \\
-y_2^* &=& \mathbf{x}_2'\boldsymbol\beta_2 + \varepsilon_2,
+y_2^* &=& \mathbf{x}_2'\boldsymbol\beta_2 + \varepsilon_2.
 \end{eqnarray*}
 
 Note that the Tobit model (Section \ref{tobit}) is the special case where \(y_1^*=y_2^*\).
@@ -5773,19 +5621,14 @@ Let's compute \(\mathbb{P}(y_1^*>0|y_2,\mathbf{x};\theta)\). By Prop. \ref{prop:
 y_1^*|y_2 \sim \mathcal{N}\left(\mathbf{x}_1'\boldsymbol\beta_1 + \frac{\rho}{\sigma_2}(y_2-\mathbf{x}_2'\boldsymbol\beta_2),1-\rho^2\right).
 \]
 which leads to
-\begin{equation}\label{eq:probaPP3}
-\mathbb{P}(y_1^*>0|y_2,\mathbf{x};\theta) = \Phi\left( \frac{\mathbf{x}_1'\boldsymbol\beta_1 + \dfrac{\rho}{\sigma_2}(y_2-\mathbf{x}_2'\boldsymbol\beta_2)}{\sqrt{1-\rho^2}}\right).
+\begin{equation}
+\mathbb{P}(y_1^*>0|y_2,\mathbf{x};\theta) = \Phi\left( \frac{\mathbf{x}_1'\boldsymbol\beta_1 + \dfrac{\rho}{\sigma_2}(y_2-\mathbf{x}_2'\boldsymbol\beta_2)}{\sqrt{1-\rho^2}}\right).\label{eq:probaPP3}
 \end{equation}
 
 Figure \ref{fig:SampleSelec} shows \(\mathbb{P}(y_1^*>0|y_2,\mathbf{x};\theta)\) for different values of \(y_2\) and of \(\rho\), in the case where \(\boldsymbol\beta_1=\boldsymbol\beta_2=0\).
 
 \begin{figure}
-
-{\centering \includegraphics{AdvECTS_files/figure-latex/SampleSelec-1} 
-
-}
-
-\caption{Probability of observing $y_2$ depending on its value, for different values of conditional correlation between $y_2$ and $y_1^*$.}\label{fig:SampleSelec}
+\includegraphics{AdvECTS_files/figure-latex/SampleSelec-1} \caption{Probability of observing $y_2$ depending on its value, for different values of conditional correlation between $y_2$ and $y_1^*$.}\label{fig:SampleSelec}
 \end{figure}
 
 Using Eqs. \eqref{eq:probaPP1}, \eqref{eq:probaPP2} and \eqref{eq:probaPP3} gives the log-likelihood function:
@@ -5795,17 +5638,16 @@ Using Eqs. \eqref{eq:probaPP1}, \eqref{eq:probaPP2} and \eqref{eq:probaPP3} give
 &&  \sum_{i=1}^n y_{1,i} \log \left(\Phi\left( \frac{\mathbf{x}_{1,i}'\boldsymbol\beta_1 + \dfrac{\rho}{\sigma_2}(y_{2,i}-\mathbf{x}_2'\boldsymbol\beta_2)}{\sqrt{1-\rho^2}}\right)\right).
 \end{eqnarray*}
 
-Computation of conditional expectation:
+We can also compute conditional expectations:
 \begin{eqnarray}
 \mathbb{E}(y_2^*|y_1=1,\mathbf{x}) &=& \mathbb{E}(\mathbb{E}(y_2^*|y_1^*,\mathbf{x})|y_1=1,\mathbf{x})\nonumber\\
 &=& \mathbb{E}(\mathbf{x}_2'\boldsymbol\beta_2 + \rho\sigma_2(y_1^*-\mathbf{x}_1'\boldsymbol\beta_1)|y_1=1,\mathbf{x})\nonumber\\
 &=& \mathbf{x}_2'\boldsymbol\beta_2 + \rho\sigma_2\mathbb{E}( \underbrace{y_1^*-\mathbf{x}_1'\boldsymbol\beta_1}_{=\varepsilon_1 \sim\mathcal{N}(0,1)}|\varepsilon_1>-\mathbf{x}_1'\boldsymbol\beta_1,\mathbf{x})\nonumber\\
 &=& \mathbf{x}_2'\boldsymbol\beta_2 + \rho\sigma_2\frac{\phi(-\mathbf{x}_1'\boldsymbol\beta_1)}{1 - \Phi(-\mathbf{x}_1'\boldsymbol\beta_1)}\nonumber\\
 &=& \mathbf{x}_2'\boldsymbol\beta_2 + \rho\sigma_2\frac{\phi(\mathbf{x}_1'\boldsymbol\beta_1)}{\Phi(\mathbf{x}_1'\boldsymbol\beta_1)}\nonumber\\
-&=&\mathbf{x}_2'\boldsymbol\beta_2 + \rho\sigma_2\lambda(\mathbf{x}_1'\boldsymbol\beta_1).\label{eq:y2y11}
+&=&\mathbf{x}_2'\boldsymbol\beta_2 + \rho\sigma_2\lambda(\mathbf{x}_1'\boldsymbol\beta_1),\label{eq:y2y11}
 \end{eqnarray}
-
-Similarly:
+and:
 \begin{eqnarray*}
 \mathbb{E}(y_2^*|y_1=0,\mathbf{x}) &=&  \mathbf{x}_2'\boldsymbol\beta_2 + \rho\sigma_2\mathbb{E}(y_1^*-\mathbf{x}_1'\boldsymbol\beta_1|\varepsilon_1\le-\mathbf{x}_1'\boldsymbol\beta_1,\mathbf{x})\\
 &=& \mathbf{x}_2'\boldsymbol\beta_2 + \rho\sigma_2\frac{\phi(-\mathbf{x}_1'\boldsymbol\beta_1)}{1 - \Phi(-\mathbf{x}_1'\boldsymbol\beta_1)}\\
@@ -5814,12 +5656,13 @@ Similarly:
 
 \textbf{Heckman procedure}
 
-In particular, Eq. (\eqref{eq:y2y11} shows that \(\mathbb{E}(y_2^*|y_1=1,\mathbf{x}) \ne \mathbf{x}_2'\boldsymbol\beta_2\) when \(\rho \ne 0\) \(\Rightarrow\) biased OLS estimates based only on the sub-sample where \(y_1=1\).
+As for tobit models (Section \ref{tobit}), we can use the Heckman procedure to estimate this model. Eq. \eqref{eq:y2y11} shows that \(\mathbb{E}(y_2^*|y_1=1,\mathbf{x}) \ne \mathbf{x}_2'\boldsymbol\beta_2\) when \(\rho \ne 0\). Therefore, the OLS approach yields biased estimates based when it is employed only on the sub-sample where \(y_1=1\).
 
-\textbf{Heckman two-step procedure} (or ``Heckit'\,'): replace \(\lambda(\mathbf{x}_1'\boldsymbol\beta_1)\) appearing in Eq. \eqref{eq:y2y11} by an estimate. More precisely:
+The Heckman two-step procedure (or ``Heckit'') consists in replacing \(\lambda(\mathbf{x}_1'\boldsymbol\beta_1)\) appearing in Eq. \eqref{eq:y2y11} with a consistent estimate of it. More precisely:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
   Get an estimate \(\widehat{\boldsymbol\beta_1}\) of \(\boldsymbol\beta_1\) (probit regression of \(y_1\) on \(\mathbf{x}_1\)).
 \item
@@ -5840,24 +5683,25 @@ Using that \(\varepsilon_2\) can be decomposed as \(\rho\sigma_2\varepsilon_1 + 
 \]
 Using Eq. \eqref{eq:Vtrunc2}, we get:
 \[
-\mathbb{V}ar(\varepsilon_1|\varepsilon_1>-\mathbf{x}_1'\boldsymbol\beta_1,\mathbf{x}) = 1 - \mathbf{x}_1'\boldsymbol\beta_1 \lambda(\mathbf{x}_1'\boldsymbol\beta_1) - \lambda(\mathbf{x}_1'\boldsymbol\beta_1)^2.
+\mathbb{V}ar(\varepsilon_1|\varepsilon_1>-\mathbf{x}_1'\boldsymbol\beta_1,\mathbf{x}) = 1 - \mathbf{x}_1'\boldsymbol\beta_1 \lambda(\mathbf{x}_1'\boldsymbol\beta_1) - \lambda(\mathbf{x}_1'\boldsymbol\beta_1)^2,
 \]
+which gives
 \begin{eqnarray*}
 &&\mathbb{V}ar(y_2|y_1^*>0,\mathbf{x}) \\
 &=& \sigma_2^2(1-\rho^2) + \rho^2\sigma_2^2 (1 - \mathbf{x}_1'\boldsymbol\beta_1 \lambda(\mathbf{x}_1'\boldsymbol\beta_1) - \lambda(\mathbf{x}_1'\boldsymbol\beta_1)^2)\\
-&=& \sigma_2^2 - \rho^2\sigma_2^2 \left(\mathbf{x}_1'\boldsymbol\beta_1 \lambda(\mathbf{x}_1'\boldsymbol\beta_1) + \lambda(\mathbf{x}_1'\boldsymbol\beta_1)^2\right).
+&=& \sigma_2^2 - \rho^2\sigma_2^2 \left(\mathbf{x}_1'\boldsymbol\beta_1 \lambda(\mathbf{x}_1'\boldsymbol\beta_1) + \lambda(\mathbf{x}_1'\boldsymbol\beta_1)^2\right),
 \end{eqnarray*}
-
-Therefore:
+and, finally:
 \[
 \sigma_2^2 \approx \widehat{\mathbb{V}ar}(y_2|y_1^*>0,\mathbf{x}) + \widehat{\rho \sigma_2}^2 \left(\mathbf{x}_1'\widehat{\boldsymbol\beta_1} \lambda(\mathbf{x}_1'\widehat{\boldsymbol\beta_1}) + \lambda(\mathbf{x}_1'\widehat{\boldsymbol\beta_1})^2\right).
 \]
 
-Heckman procedure is computationally simple. Although computational costs are no longer an issue, the two-step solution allows certain generalisations more easily than ML, and is more robust in certain circumstances.
+The Heckman procedure is computationally simple. Although computational costs are no longer an issue, the two-step solution allows certain generalisations more easily than ML, and is more robust in certain circumstances. The computation of parameter standard errors is fairly complicated because of the two steps (see \citet{Cameron_Trivedi_2005}, Subsection 16.10.2). Bootstrap can be resorted to.
 
-The computation of parameter standard errors is complicated because of the two steps (see \citet{Cameron_Trivedi_2005}), Subsection 16.10.2). Bootstrap can be resorted to.
+\begin{example}[Wage prediction]
+\protect\hypertarget{exm:WageSample}{}\label{exm:WageSample}
 
-Let us use the \citet{Mroz_1987} dataset again,with the objective of explaining wage setting.
+As in Example \ref{exm:WageMroz1}, let us use the \citet{Mroz_1987} dataset again, with the objective of explaining wage setting.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5884,7 +5728,7 @@ Let us use the \citet{Mroz_1987} dataset again,with the objective of explaining 
 \NormalTok{ml }\OtherTok{\textless{}{-}} \FunctionTok{selection}\NormalTok{(lfp}\SpecialCharTok{\textasciitilde{}}\NormalTok{age}\SpecialCharTok{+}\FunctionTok{I}\NormalTok{(age}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{+}\NormalTok{kids5}\SpecialCharTok{+}\NormalTok{huswage}\SpecialCharTok{+}\NormalTok{educ, }
                 \FunctionTok{log}\NormalTok{(wage)}\SpecialCharTok{\textasciitilde{}}\NormalTok{educ}\SpecialCharTok{+}\NormalTok{exper}\SpecialCharTok{+}\FunctionTok{I}\NormalTok{(exper}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{+}\NormalTok{city, }\AttributeTok{data =}\NormalTok{ Mroz87)}
 \CommentTok{\# Print selection{-}equation estimates:}
-\FunctionTok{stargazer}\NormalTok{(logitW,probitW,heckvan,ml,}\AttributeTok{type =} \StringTok{"text"}\NormalTok{,}
+\FunctionTok{stargazer}\NormalTok{(logitW,probitW,heckvan,ml,}\AttributeTok{type =} \StringTok{"text"}\NormalTok{,}\AttributeTok{no.space =} \ConstantTok{TRUE}\NormalTok{,}
           \AttributeTok{selection.equation =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -5901,22 +5745,16 @@ Let us use the \citet{Mroz_1987} dataset again,with the objective of explaining 
 ## -------------------------------------------------------------------
 ## age                   0.012     0.010       0.010         0.010    
 ##                      (0.114)   (0.069)     (0.069)       (0.069)   
-##                                                                    
 ## I(age2)              -0.001    -0.0005     -0.0005       -0.0005   
 ##                      (0.001)   (0.001)     (0.001)       (0.001)   
-##                                                                    
 ## kids5               -1.409*** -0.855***   -0.855***     -0.854***  
 ##                      (0.198)   (0.116)     (0.115)       (0.116)   
-##                                                                    
 ## huswage             -0.069*** -0.042***   -0.042***     -0.042***  
 ##                      (0.020)   (0.012)     (0.012)       (0.013)   
-##                                                                    
 ## educ                0.244***  0.148***    0.148***      0.148***   
 ##                      (0.040)   (0.024)     (0.023)       (0.024)   
-##                                                                    
 ## Constant             -0.938    -0.620      -0.620        -0.615    
 ##                      (2.508)   (1.506)     (1.516)       (1.518)   
-##                                                                    
 ## -------------------------------------------------------------------
 ## Observations           753       753         753           753     
 ## R2                                          0.158                  
@@ -5932,7 +5770,7 @@ Let us use the \citet{Mroz_1987} dataset again,with the objective of explaining 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# Print outcome{-}equation estimates:}
-\FunctionTok{stargazer}\NormalTok{(ols1,heckvan,ml,}\AttributeTok{type =} \StringTok{"text"}\NormalTok{)}
+\FunctionTok{stargazer}\NormalTok{(ols1,heckvan,ml,}\AttributeTok{type =} \StringTok{"text"}\NormalTok{,}\AttributeTok{no.space =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5948,19 +5786,14 @@ Let us use the \citet{Mroz_1987} dataset again,with the objective of explaining 
 ## -----------------------------------------------------------------------
 ## educ                       0.106***           0.106***      0.106***   
 ##                             (0.014)            (0.017)       (0.017)   
-##                                                                        
 ## exper                      0.041***           0.041***      0.041***   
 ##                             (0.013)            (0.013)       (0.013)   
-##                                                                        
 ## I(exper2)                  -0.001**           -0.001**      -0.001**   
 ##                            (0.0004)           (0.0004)      (0.0004)   
-##                                                                        
 ## city                         0.054              0.053         0.053    
 ##                             (0.068)            (0.069)       (0.069)   
-##                                                                        
 ## Constant                   -0.531***           -0.547*      -0.544**   
 ##                             (0.199)            (0.289)       (0.272)   
-##                                                                        
 ## -----------------------------------------------------------------------
 ## Observations                  428                753           753     
 ## R2                           0.158              0.158                  
@@ -5973,6 +5806,8 @@ Let us use the \citet{Mroz_1987} dataset again,with the objective of explaining 
 ## =======================================================================
 ## Note:                                       *p<0.1; **p<0.05; ***p<0.01
 \end{verbatim}
+
+\end{example}
 
 \hypertarget{models-of-count-data}{%
 \section{Models of Count Data}\label{models-of-count-data}}
@@ -5988,15 +5823,14 @@ The most basic count-data model is the Poisson model. In this model, we have \(y
 \]
 implying \(\mathbb{E}(y) = \mathbb{V}ar(y) = \mu\).
 
-the Poisson parameter, \(\mu\), is then assumed to depend on some observed variables, gathered in vector \(\mathbf{x}_i\) for entity \(i\). To ensure that \(\mu_i \ge 0\), it is common to take \(\mu_i = \exp[\boldsymbol\beta'\mathbf{x}_i]\), which gives:
-A standard assumption:
+the Poisson parameter, \(\mu\), is then assumed to depend on some observed variables, gathered in vector \(\mathbf{x}_i\) for entity \(i\). To ensure that \(\mu_i \ge 0\), it is common to take \(\mu_i = \exp(\boldsymbol\beta'\mathbf{x}_i)\), which gives:
 \[
 y_i \sim \mathcal{P}(\exp[\boldsymbol\beta'\mathbf{x}_i]).
 \]
 
-The Poisson regression is intrinsically heteroskedastic (since \(\mathbb{V}ar(y_i) = \exp[\boldsymbol\beta'\mathbf{x}_i]\)).
+The Poisson regression is intrinsically heteroskedastic (since \(\mathbb{V}ar(y_i) = \mu_i = \exp(\boldsymbol\beta'\mathbf{x}_i)\)).
 
-Under the assumption of independence across entities, the log-likelihood is imple to derive:
+Under the assumption of independence across entities, the log-likelihood is given by:
 \[
 \log \mathcal{L}(\boldsymbol\beta;\mathbf{y},\mathbf{X}) = \sum_{i=1}^n (y_i \boldsymbol\beta'\mathbf{x}_i - \exp[\boldsymbol\beta'\mathbf{x}_i] - \ln[y_i!]).
 \]
@@ -6011,7 +5845,7 @@ y_i \sim i.i.d.\,\mathcal{N}(\exp[\boldsymbol\beta'\mathbf{x}_i],\sigma^2).
 \]
 That is, Eq. \eqref{eq:FOCPoisson} also characterizes the (true) ML estimator of \(\boldsymbol\beta\) in the previous model.
 
-Since \(\mathbb{E}(y_i|\mathbf{x}_i) = \exp(\boldsymbol\beta'\mathbf{x}_i)\), we have
+Since \(\mathbb{E}(y_i|\mathbf{x}_i) = \exp(\boldsymbol\beta'\mathbf{x}_i)\), we have:
 \[
 y_i = \exp(\boldsymbol\beta'\mathbf{x}_i) + \varepsilon_i,
 \]
@@ -6023,18 +5857,18 @@ How to interpret regression coefficients (the components of \(\boldsymbol\beta\)
 \]
 which depends on the considered individual.
 
-The average response is:
+The average estimated response is:
 \[
-\widehat{\beta}_j \frac{1}{n}\sum_{i=1}^n  \exp(\boldsymbol\beta'\mathbf{x}_i),
+\widehat{\beta}_j \frac{1}{n}\sum_{i=1}^n  \exp(\widehat{\boldsymbol\beta}'\mathbf{x}_i),
 \]
-which is equal to \(\widehat{\beta}_j \overline{y}\) if the model includes a constant (e.g.~if \(x_{1,i}=1\)).
+which is equal to \(\widehat{\beta}_j \overline{y}\) if the model includes a constant (e.g., if \(x_{1,i}=1\) for all entities \(i\)).
 
 The limitation of the standard Poisson model is that the distribution of \(y_i\) conditional on \(\mathbf{x}_i\) depends on a single parameter (\(\mu_i\)). Besides, there is often a tension between fitting the fraction of zeros, i.e.~\(\mathbb{P}(y_i=0|\mathbf{x}_i)=\exp[-\exp(\boldsymbol\beta'\mathbf{x}_i)]\), and the distribution of \(y_i|\mathbf{x}_i,y_i>0\). The following models (negative binomial, or NB model, the Hurdle model, and the Zero-Inflated model) have been designed to address these points.
 
 \hypertarget{negative-binomial-model}{%
 \subsection{Negative binomial model}\label{negative-binomial-model}}
 
-In the \textbf{negative binomial model}, we have:
+In the negative binomial model, we have:
 \[
 y_i|\lambda_i \sim \mathcal{P}(\lambda_i),
 \]
@@ -6053,7 +5887,7 @@ This notably implies that:
 \mathbb{E}(\nu_i) = 1 \quad \mbox{and} \quad \mathbb{V}ar(\nu) = \frac{1}{\delta}.
 \]
 
-Hence, the p.d.f. of \(y_i\) conditional on \(\exp(\boldsymbol\beta'\mathbf{x}_i)=\mu\) and \(\delta\) is obtained as a mixture of densities:
+Hence, the p.d.f. of \(y_i\) conditional on \(\mu\) and \(\delta\) (with \(\mu=\exp(\boldsymbol\beta'\mathbf{x}_i)\)) is obtained as a mixture of densities:
 \[
 \mathbb{P}(y_i=k|\exp(\boldsymbol\beta'\mathbf{x}_i)=\mu;\delta)=\int_0^\infty \frac{e^{-\mu \nu}(\mu \nu)^k}{k!} \frac{\nu^{\delta - 1}e^{-\nu\delta}\delta^\delta}{\Gamma(\delta)} d \nu.
 \]
@@ -6070,14 +5904,13 @@ Note that \(\mathbb{V}ar(y|\mathbf{x}) > \mathbb{E}(y|\mathbf{x})\) (which is of
 \[
 \mathbb{V}ar(y|\mathbf{x}) = \mu+\alpha \mu^2.
 \]
-the previous expression is the basis of the so-called \textbf{NB2} specification.
-
-If \(\delta\) is replaced by \(\mu/\gamma\), then we get the \textbf{NB1} model:
+The previous expression is the basis of the so-called \textbf{NB2} specification. If \(\delta\) is replaced by \(\mu/\gamma\), then we get the \textbf{NB1} model:
 \[
 \mathbb{V}ar(y|\mathbf{x}) = \mu(1+\gamma).
 \]
 
-The following example compares different specifications, namely a linear regression model, a Poisson model, and a NB model, to account for the number of doctor visits. The dataset (`\texttt{randdata}) is the one used in Chapter 20 of \citet{Cameron_Trivedi_2005} (available on \href{http://cameron.econ.ucdavis.edu/mmabook/mmadata.html}{that page}).
+\begin{example}[Number of doctor visits]
+\protect\hypertarget{exm:Doctorvisits}{}\label{exm:Doctorvisits}The following example compares different specifications, namely a linear regression model, a Poisson model, and a NB model, to account for the number of doctor visits. The dataset (`\texttt{randdata}) is the one used in Chapter 20 of \citet{Cameron_Trivedi_2005} (available on \href{http://cameron.econ.ucdavis.edu/mmabook/mmadata.html}{that page}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6090,7 +5923,9 @@ The following example compares different specifications, namely a linear regress
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{AdvECTS_files/figure-latex/countdata1-1.pdf}
+\begin{figure}
+\includegraphics[width=0.95\linewidth]{AdvECTS_files/figure-latex/countdata1-1} \caption{Distribution of the number of doctor visits.}\label{fig:countdata1}
+\end{figure}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6183,6 +6018,7 @@ Let us now compute the model-implied probabilities, and let's compare them with 
 \end{verbatim}
 
 It appears that the NB model is better at capturing the relatively large number of zeros than the Poisson model. This will also be the case for the Hurdle and Zero-Inflation models:
+\end{example}
 
 \hypertarget{hurdle-model}{%
 \subsection{Hurdle model}\label{hurdle-model}}
@@ -6216,6 +6052,11 @@ f_1(0) + (1-f_1(0))f_2(0) & \mbox{if $y=0$},\\
 \right.
 \]
 Typically, \(f_1\) corresponds to a logit model and \(f_2\) is Poisson or negative binomial density. This model is easily estimated by ML techniques.
+
+\begin{example}[Number of doctor visits]
+\protect\hypertarget{exm:Doctorvisits2}{}\label{exm:Doctorvisits2}
+
+Let us come back to the data used in Example \ref{exm:Doctorvisits}, and estimate Hurdle and a zero-inflation models:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6358,6 +6199,8 @@ Finally, we compare average model-implied probabilities with the frequencies obs
 ## [4,] 0.3124319 0.06056959 0.1083120 0.13262624 0.12553899 0.09847017
 ## [5,] 0.3124684 0.06053026 0.1082799 0.13262562 0.12556531 0.09850218
 \end{verbatim}
+
+\end{example}
 
 \hypertarget{TS}{%
 \chapter{Time Series}\label{TS}}
@@ -10555,6 +10398,19 @@ Because \(\Sigma\) is a symmetrical definite positive matrix, it admits the spec
 
 It remains to note that \(Y'Y=X'PD^{-1}P'X=X'\mathbb{V}ar(X)^{-1}X\) to conclude.
 \end{proof}
+
+\begin{definition}[Generalized Extreme Value (GEV) distribution]
+\protect\hypertarget{def:GEVdistri}{}\label{def:GEVdistri}The vector of disturbances \(\boldsymbol\varepsilon=[\varepsilon_{1,1},\dots,\varepsilon_{1,K_1},\dots,\varepsilon_{J,1},\dots,\varepsilon_{J,K_J}]'\) follows the Generalized Extreme Value (GEV) distribution if its c.d.f. is:
+\[
+F(\boldsymbol\varepsilon,\boldsymbol\rho) = \exp(-G(e^{-\varepsilon_{1,1}},\dots,e^{-\varepsilon_{J,K_J}};\boldsymbol\rho))
+\]
+with
+\begin{eqnarray*}
+G(\mathbf{Y};\boldsymbol\rho) &\equiv&  G(Y_{1,1},\dots,Y_{1,K_1},\dots,Y_{J,1},\dots,Y_{J,K_J};\boldsymbol\rho) \\
+&=& \sum_{j=1}^J\left(\sum_{k=1}^{K_j} Y_{jk}^{1/\rho_j}
+\right)^{\rho_j}
+\end{eqnarray*}
+\end{definition}
 
 \hypertarget{stochastic-convergences}{%
 \subsection{Stochastic convergences}\label{stochastic-convergences}}

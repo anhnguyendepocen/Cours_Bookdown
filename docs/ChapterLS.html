@@ -701,7 +701,7 @@ and that the <span class="math inline">\((\mathbf{x}_i,\varepsilon_i)\)</span>�
 <span class="math display" id="eq:sXX">\[\begin{equation}
 \widehat{\mathbb{V}ar}(\mathbf{b}) = s^2 (\mathbf{X}'\mathbf{X})^{-1}.\tag{2.18}
 \end{equation}\]</span></p>
-<p>Eqs. <a href="ChapterLS.html#eq:Qasympt">(2.16)</a> and <a href="ChapterLS.html#eq:convgceOLS">(2.17)</a> respectively correspond to convergences in probability and in distribution (see Definitions <a href="append.html#def:convergenceproba">7.14</a> and <a href="append.html#def:cvgceDistri">7.17</a>, respectively).</p>
+<p>Eqs. <a href="ChapterLS.html#eq:Qasympt">(2.16)</a> and <a href="ChapterLS.html#eq:convgceOLS">(2.17)</a> respectively correspond to convergences in probability and in distribution (see Definitions <a href="append.html#def:convergenceproba">7.15</a> and <a href="append.html#def:cvgceDistri">7.18</a>, respectively).</p>
 </div>
 </div>
 <div id="CommonPitfalls" class="section level2" number="2.3">
@@ -1221,7 +1221,7 @@ Figure 2.6: Situation of heteroskedasticity. The model is <span class="math inli
 <span>  <span class="va">all_V_White</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">all_V_White</span>,<span class="va">V_White</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">all_b</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">all_V_OLS</span><span class="op">)</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">all_V_White</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] 0.13413605 0.06452872 0.13275783</code></pre>
+<pre><code>## [1] 0.13121044 0.06272679 0.13133749</code></pre>
 <p>The results show that the White formula yields, on average, an estimated standard deviation that is much closer to the “true” value than the standard OLS formula. The latter underestimate the standard deviation of <span class="math inline">\(b\)</span>.</p>
 </div>
 <p>In the following example, we regress GDP growth rates from the <span class="citation">Jordà, Schularick, and Taylor (<a href="references.html#ref-JST_2017" role="doc-biblioref">2017</a>)</span> database on a systemic financial crisis dummy. We compute the HC0- and HC1-based standard deviations of the parameter estimate, and compare it to the one based on the standard OLS formula.</p>
@@ -1288,8 +1288,8 @@ where the <span class="math inline">\(u_i\)</span>’s and the <span class="math
 <span>  <span class="va">all.NW.stdv.b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">all.NW.stdv.b</span>,<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">NW.V</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">all.b</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">all.OLS.stdv.b</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">all.Whi.stdv.b</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">all.NW.stdv.b</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##           [,1]      [,2]      [,3]      [,4]
-## [1,] 0.2042835 0.1020689 0.0980526 0.1500161</code></pre>
+<pre><code>##           [,1]     [,2]       [,3]      [,4]
+## [1,] 0.2160487 0.102571 0.09796509 0.1514413</code></pre>
 <p>The results show that the Newey-West formula yields, on average, an estimated standard deviation that is closer to the “true” value than the standard OLS formula. The latter underestimate the standard deviation of <span class="math inline">\(b\)</span>.</p>
 </div>
 <p>What precedes suggest that, when the residuals feature autocorrelation, it is important to use appropriately adjusted covariance matrices to make statistical inference. How to detect autocorrelation in residuals? A popular test has been proposed by <span class="citation">Durbin and Watson (<a href="references.html#ref-Durbin_Watson_1950" role="doc-biblioref">1950</a>)</span> and <span class="citation">Durbin and Watson (<a href="references.html#ref-Durbin_Watson_1951" role="doc-biblioref">1951</a>)</span>. The Durbin-Watson test statistic is:
@@ -1547,40 +1547,40 @@ f(\boldsymbol\beta) &amp; = &amp; \sum_{j=2}^K |\beta_j| \quad \mbox{(lasso)}.
 <div class="inline-figure"><img src="AdvECTS_files/figure-html/lasso6-1.png" width="672"></div>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cvglmnet</span><span class="op">$</span><span class="va">lambda.min</span> <span class="co"># value of lambda.min, that is the value of lambda that gives minimum mean cross-validated error</span></span></code></pre></div>
-<pre><code>## [1] 0.004091039</code></pre>
+<pre><code>## [1] 0.003727602</code></pre>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cvglmnet</span><span class="op">$</span><span class="va">lambda.1se</span> <span class="co"># largest value of lambda that is such that the sample cost is within the +1/-1 standard-deviation band stemming from the cv procedure</span></span></code></pre></div>
-<pre><code>## [1] 0.004927671</code></pre>
+<pre><code>## [1] 0.00448991</code></pre>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">cvglmnet</span>, s <span class="op">=</span> <span class="st">"lambda.min"</span><span class="op">)</span> <span class="co"># associated parameters</span></span></code></pre></div>
 <pre><code>## 18 x 1 sparse Matrix of class "dgCMatrix"
 ##                                s1
-## (Intercept)           6.583140504
-## delinq_2yrs           0.066258597
-## annual_inc            0.006054923
+## (Intercept)           6.627817184
+## delinq_2yrs           0.065166059
+## annual_inc            0.006603198
 ## annual_inc2           .          
-## log_annual_inc       -0.037951509
-## dti                   0.020652724
-## installment           8.518960621
-## verification_status  -0.002894435
-## funded_amnt          -7.560852965
-## funded_amnt2         -0.504192252
-## log_funded_amnt      -0.253756726
-## pub_rec               0.058043332
-## emp_length_10        -0.018946660
-## owner                -0.024841917
-## renter               -0.060398310
+## log_annual_inc       -0.038648540
+## dti                   0.019932058
+## installment           8.636645286
+## verification_status  -0.003667472
+## funded_amnt          -7.662840777
+## funded_amnt2         -0.517617243
+## log_funded_amnt      -0.256890033
+## pub_rec               0.057255481
+## emp_length_10        -0.018817829
+## owner                -0.024997467
+## renter               -0.059573041
 ## pub_rec_bankruptcies  .          
 ## revol_util            .          
-## revol_bal             0.003093752</code></pre>
+## revol_bal             0.003361683</code></pre>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">cvglmnet</span>, newx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span>, s <span class="op">=</span> <span class="st">"lambda.min"</span><span class="op">)</span> <span class="co"># predicted values of y for specific values of x</span></span></code></pre></div>
 <pre><code>##       lambda.min
-## 21529   3.807030
-## 21547   3.416528
-## 21579   4.026621
-## 21583   3.255096
-## 21608   3.340412</code></pre>
+## 21529   3.811212
+## 21547   3.415492
+## 21579   4.027977
+## 21583   3.256566
+## 21608   3.337846</code></pre>
 
 </div>
 </div>

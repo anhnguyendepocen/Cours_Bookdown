@@ -118,7 +118,7 @@ Under regularity and identification conditions, this estimator is consistent, th
 <span class="math display" id="eq:consistGMM">\[\begin{equation}
 \hat{\boldsymbol\theta}_{n} \overset{p}{\rightarrow} \boldsymbol\theta_0,\tag{4.1}
 \end{equation}\]</span>
-i.e. <span class="math inline">\(\forall \varepsilon&gt;0\)</span>, <span class="math inline">\(\lim_{n \rightarrow \infty} \mathbb{P}(|\hat{\boldsymbol\theta}_{n} - \boldsymbol\theta_0|&gt;\varepsilon) = 0\)</span> (this is Definition <a href="append.html#def:convergenceproba">7.14</a>).</p>
+i.e. <span class="math inline">\(\forall \varepsilon&gt;0\)</span>, <span class="math inline">\(\lim_{n \rightarrow \infty} \mathbb{P}(|\hat{\boldsymbol\theta}_{n} - \boldsymbol\theta_0|&gt;\varepsilon) = 0\)</span> (this is Definition <a href="append.html#def:convergenceproba">7.15</a>).</p>
 <p>Definition <a href="estimation-methods.html#def:GMM">4.1</a> involves a positive definite matrix <span class="math inline">\(W_n\)</span>. While one can take any positive definite matrix to have consistency (Eq. <a href="estimation-methods.html#eq:consistGMM">(4.1)</a>), it can be shown that he GMM estimator achieves the minimum asymptotic variance when <span class="math inline">\(W_n\)</span> is the inverse of matrix <span class="math inline">\(S\)</span>, the latter being defined by:
 <span class="math display">\[
 S = Asy.\mathbb{V}ar\left(\sqrt{n}g(\underline{y_n};\hat{\boldsymbol\theta}_n)\right).
