@@ -1,12 +1,18 @@
 # Microeconometrics
 
-In microeconometric models, the variables of interest often feature restricted distributions ---for instance with discontinuous support---, which necessitates specific models. Typical examples are discrete-choice models (binary, multinomial, ordered outcomes), sample selection models (censored or truncated outcomes), and count-data models (integer outcomes). This section describes the estimation and interpretation of these models. It also shows how the discrete-choice models can emerge from (structural) random-utility frameworks.
+In microeconometric models, the variables of interest often feature restricted distributions ---for instance with discontinuous support---, which necessitates specific models. Typical examples are discrete-choice models (binary, multinomial, ordered outcomes), sample selection models (censored or truncated outcomes), and count-data models (integer outcomes). This chapter describes the estimation and interpretation of these models. It also shows how the discrete-choice models can emerge from (structural) random-utility frameworks.
 
 ## Binary-choice models
 
 In many instances, the variables to be explained (the $y_i$'s) have only two possible values ($0$ and $1$, say). That is, they are binary variables. The probability for them to be equal to either 0 or 1 may depend on independent variables, gathered in vectors $\bv{x}_i$ ($K \times 1$).
 
-The model then reads:
+The spectrum of applications is wide:
+
+* Binary decisions (e.g. in referendums, being owner or renter, living in the city or in the countryside, in/out of the labour force,...),
+* Contamination (disease or default),
+* Success/failure (exams).
+
+Without loss of generality, the model reads:
 \begin{equation}\label{eq:binaryBenroulli}
 y_i | \bv{X} \sim \mathcal{B}(g(\bv{x}_i;\boldsymbol\theta)),
 \end{equation}
@@ -21,18 +27,13 @@ y_i = \left\{
 \end{equation}
 where $\boldsymbol\theta$ is a vector of parameters to be estimated.
 
-The spectrum of applications is wide. Binary-choice models can be used to account for:
-
-* any binary decisions (e.g. in referendums, being owner or renter, living in the city or in the countryside, in/out of the labour force,...),
-* contamination (disease or default),
-* success/failure (exams).
-
-A possibility is to run a linear regression (a situation called **Linear Probability Model, LPM**):
+An estimation strategy is to assume that $g(\bv{x}_i;\boldsymbol\theta)$ can be proxied by $\tilde{\boldsymbol\theta}'\bv{x}_i$ and to run a linear regression to estimate $\tilde{\boldsymbol\theta}$ (a situation called **Linear Probability Model, LPM**):
 $$
-y_i = \boldsymbol\theta'\bv{x}_i + \varepsilon_i.
+y_i = \tilde{\boldsymbol\theta}'\bv{x}_i + \varepsilon_i.
 $$
+Notwithstanding the fact that this specification does not exclude negative probabilities or probabilities greater than one, it could be compatible with the *assumption of zero conditional mean* (Hypothesis \@ref(hyp:exogeneity)) and with the *assumption of non-correlated residuals* (Hypothesis \@ref(hyp:noncorrelResid)), but more difficultly with the *homoskedasticity assumption* (Hypothesis \@ref(hyp:homoskedasticity)). Moreover, the $\varepsilon_i$'s cannot be Gaussian (because $y_i \in \{0,1\}$). Hence, using a linear regression to study the relationship between $\bv{x}_i$ and $y_i$ can be consistent but it is inefficient.
 
-Such a regression could be consistent with the *conditional-mean-zero assumption* (Hypothesis \@ref(hyp:exogeneity)) and with the *assumption of non-correlated residuals* (Hypothesis \@ref(hyp:noncorrelResid)), but more difficultly with the *homoskedasticity assumption* (Hypothesis \@ref(hyp:homoskedasticity)). Moreover, the $\varepsilon_i$'s cannot be Gaussian (because $y_i \in \{0,1\}$). Hence, using a linear regression to study the relationship between $\bv{x}_i$ and $y_i$ can be consistent but it is inefficient.
+
 
 Figure \@ref(fig:LPM) illustrates the fit resulting from an application of the LPM model to binary (dependent) variables.
 
@@ -55,20 +56,20 @@ legend("topleft",
        pch=c(19,NaN),seg.len=2)
 ```
 
-Except for its last row (LPM case), Table \@ref(tab:foo) provides examples of functions $g$ valued in $[0,1]$, and that can therefore used in models of the type: $\mathbb{P}(y_i=1|\bv{x}_i;\boldsymbol	heta) = g(\boldsymbol\theta'\bv{x}_i)$ (see Eq. \@ref(eq:genericBinary)). The "linear" case is given for comparison, but note that it does not satisfy $g(\boldsymbol\theta'\bv{x}_i) \in [0,1]$ for any value of $\boldsymbol\theta'\bv{x}_i$.
+Except for its last row (LPM case), Table \@ref(tab:foo) provides examples of functions $g$ valued in $[0,1]$, and that can therefore used in models of the type: $\mathbb{P}(y_i=1|\bv{x}_i;\boldsymbol\theta) = g(\boldsymbol\theta'\bv{x}_i)$ (see Eq. \@ref(eq:genericBinary)). The "linear" case is given for comparison, but note that it does not satisfy $g(\boldsymbol\theta'\bv{x}_i) \in [0,1]$ for any value of $\boldsymbol\theta'\bv{x}_i$.
 
 
-Table: (\#tab:foo) This table provides examples of function $g$, s.t. $\mathbb{P}(y_i=1|\bv{x}_i;\boldsymbol	heta) = g(\boldsymbol\theta'\bv{x}_i)$. The "linear" case is given for comparison, but note that it does not satisfy $g(\boldsymbol\theta'\bv{x}_i) \in [0,1]$ for any value of $\boldsymbol\theta'\bv{x}_i$.
+Table: (\#tab:foo) This table provides examples of function $g$, s.t. $\mathbb{P}(y_i=1|\bv{x}_i;\boldsymbol	heta) = g(\boldsymbol\theta'\bv{x}_i)$. The LPM case (last row) is given for comparison but, again, it does not satisfy $g(\boldsymbol\theta'\bv{x}_i) \in [0,1]$ for any value of $\boldsymbol\theta'\bv{x}_i$.
 
-| Model   | Function $g$ | Derivative                       |
-|---------|---------------------------------------------------------------------------------------------------|----------------------------------|
-| Probit  | $\Phi$                                                                                            | $\phi$                           |
-| Logit   | $\dfrac{\exp(x)}{1+\exp(x)}$                                                                      | $\dfrac{\exp(x)}{(1+\exp(x))^2}$ |
-| log-log | $1 - \exp(-\exp(x))$                                                                              | $\exp(-\exp(x))\exp(x)$          |
-| linear  | $x$                                                                                               | 1                                |
+| Model   | Function $g$ | Derivative   |
+|---------|---------------|------------------|
+| Probit  | $\Phi$  | $\phi$      |
+| Logit   | $\dfrac{\exp(x)}{1+\exp(x)}$    | $\dfrac{\exp(x)}{(1+\exp(x))^2}$ |
+| log-log | $1 - \exp(-\exp(x))$ | $\exp(-\exp(x))\exp(x)$     |
+| linear (LPM)  | $x$  | 1  |
 
 
-Figure \@ref(fig:ProbLogit) displays the functions $g$ appearing in Table \@ref(tab:foo).
+Figure \@ref(fig:ProbLogit) displays the first three $g$ functions appearing in Table \@ref(tab:foo).
 
 ```{r ProbLogit, echo=FALSE, fig.cap="Probit, Logit, and Log-log functions.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
 x <- seq(-5,5,by=.01)
@@ -114,7 +115,7 @@ legend("topleft",
 
 ### Interpretation in terms of latent variable, and utility-based models {#latent}
 
-The probit model has an interpretation in terms of latent variables, which, in turn, is often exploited  in structural models, called **Random Utility Models (RUM)**. In such structural models, it is assumed that the agents that have to take the decision (for agent $i$: $y_i=0$ or $y_i=1$) do so by selecting the outcome that provides them with the larger utility. Part of this utility is observed by the econometrician (it depends on the covariates $\bv{x}_i$) and part of it is latent.
+The probit model has an interpretation in terms of latent variables, which, in turn, is often exploited  in structural models, called **Random Utility Models (RUM)**. In such structural models, it is assumed that the agents that have to take the decision do so by selecting the outcome that provides them with the larger utility (for agent $i$, two possible outcomes: $y_i=0$ or $y_i=1$). Part of this utility is observed by the econometrician ---it depends on the covariates $\bv{x}_i$--- and part of it is latent.
 
 In the probit model, we have:
 $$
@@ -151,7 +152,7 @@ text(2.5,.3,expression(paste(P,"(",y[i],"=1|",x[i],";",theta,")",sep="")),pos=4)
 ```
 
 
-As mentioned above, assume that agent ($i$) chooses $y_i=1$ if the utility associated with this choice ($U_{i,1}$) is higher than the one associated with $y_i=0$ ($U_{i,0}$). Assume further that the utility of agent $i$, if she chooses outcome $j$ ($\in \{0,1\}$), is given by
+Assume that agent ($i$) chooses $y_i=1$ if the utility associated with this choice ($U_{i,1}$) is higher than the one associated with $y_i=0$ (that is $U_{i,0}$). Assume further that the utility of agent $i$, if she chooses outcome $j$ ($\in \{0,1\}$), is given by
 $$
 U_{i,j} = V_{i,j} + \varepsilon_{i,j},
 $$
@@ -162,7 +163,7 @@ where $V_{i,j}$ is the deterministic component of the utility associated with ch
 \end{eqnarray}
 where $F$ is the c.d.f. of $\varepsilon_{i,0}-\varepsilon_{i,1}$.
 
-Note that only the difference $\boldsymbol\theta_1-\boldsymbol\theta_0$ is identifiable (as opposed to $\boldsymbol\theta_1$ AND $\boldsymbol\theta_0$). Indeed, replacing $U$ with $aU$ ($a>0$) gives the same model. This *scaling* issue can be solved by fixing the variance of $\varepsilon_{i,0}-\varepsilon_{i,1}$.
+Note that only the difference $\boldsymbol\theta_1-\boldsymbol\theta_0$ is identifiable (as opposed to $\boldsymbol\theta_1$ *and* $\boldsymbol\theta_0$). Indeed, replacing $U$ with $aU$ ($a>0$) gives the same model. This *scaling* issue can be solved by fixing the variance of $\varepsilon_{i,0}-\varepsilon_{i,1}$.
 
 :::{.example #migration name="Migration and income"}
 
@@ -214,13 +215,12 @@ stargazer::stargazer(Fishing,type="text")
 
 These models can be estimated by Maximum Likelihood approaches (see Section \@ref(secMLE)).
 
-To simplify the exposition, we consider the $\bv{x}_i$ vectors of covariates to be deterministic. Also, we assume that the r.v. are independent across entities $i$. How to write the likelihood in that case? It can be seen that:
-\begin{eqnarray}
-f(y_i|\bv{x}_i;\boldsymbol\theta) &=& y_i g(\boldsymbol\theta'\bv{x}_i) + (1-y_i) (1-g(\boldsymbol\theta'\bv{x}_i)) \nonumber \\
-&=&  g(\boldsymbol\theta'\bv{x}_i)^{y_i}(1-g(\boldsymbol\theta'\bv{x}_i))^{1-y_i}.
-\end{eqnarray}
+To simplify the exposition, we consider the $\bv{x}_i$ vectors of covariates to be deterministic. Moreover, we assume that the r.v. are independent across entities $i$. How to write the likelihood in that case? It is easily checked that:
+$$
+f(y_i|\bv{x}_i;\boldsymbol\theta) =   g(\boldsymbol\theta'\bv{x}_i)^{y_i}(1-g(\boldsymbol\theta'\bv{x}_i))^{1-y_i}.
+$$
 
-Therefore, if the observations $(\bv{x}_i,y_i)$ are independent across entities $i$, then:
+Therefore, if the observations $(\bv{x}_i,y_i)$ are independent across entities $i$, we obtain:
 $$
 \log \mathcal{L}(\boldsymbol\theta;\bv{y},\bv{X}) = \sum_{i=1}^{n}y_i \log[g(\boldsymbol\theta'\bv{x}_i)] + (1-y_i)\log[1-g(\boldsymbol\theta'\bv{x}_i)].
 $$
@@ -234,7 +234,7 @@ $$
 \sum_{i=1}^{n} y_i \bv{x}_i\frac{g'(\boldsymbol\theta'\bv{x}_i)}{g(\boldsymbol\theta'\bv{x}_i)} - (1-y_i) \bv{x}_i \frac{g'(\boldsymbol\theta'\bv{x}_i)}{1-g(\boldsymbol\theta'\bv{x}_i)} = \bv{0}.
 $$
 
-This is a nonlinear (multivariate) equation that can be solved numerically. Under regularity conditions (Hypotheses \@ref(hyp:MLEregularity)), we have (Prop. \@ref(prp:MLEproperties)):
+This is a nonlinear (multivariate) equation that can be solved numerically. Under regularity conditions (Hypotheses \@ref(hyp:MLEregularity)), we approximately have (Prop. \@ref(prp:MLEproperties)):
 $$
 \boldsymbol\theta_{MLE} \sim \mathcal{N}(\boldsymbol\theta_0,\bv{I}(\boldsymbol\theta_0)^{-1}),
 $$
@@ -267,11 +267,11 @@ Remark that, since $g'(x)>0$, $-\partial^2 \log \mathcal{L}(\boldsymbol\theta;\b
 
 How to measure marginal effects, i.e. the effect on the probability that $y_i=1$ of a marginal increase of $x_{i,k}$? This  object is given by:
 $$
-\frac{\partial \mathbb{P}(y_i=1|\bv{x_i};\boldsymbol\theta)}{\partial x_{i,k}} = \underbrace{g'(\boldsymbol\theta'\bv{x}_i)}_{>0}\theta_k,
+\frac{\partial \mathbb{P}(y_i=1|\bv{x}_i;\boldsymbol\theta)}{\partial x_{i,k}} = \underbrace{g'(\boldsymbol\theta'\bv{x}_i)}_{>0}\theta_k,
 $$
 which is of the same sign as $\theta_k$ if function $g$ is monotonously increasing.
 
-This marginal effect can be estimated by $g'(\boldsymbol\theta_{MLE}'\bv{x}_i)\theta_{MLE,k}$. It is important to see that the marginal effect depends on $\bv{x}_i$: increases by 1 unit of $x_{i,k}$ (entity $i$) and of $x_{j,k}$ (entity $j$) do not necessarily have the same effects on $\mathbb{P}(y_i=1|\bv{x_i};\boldsymbol\theta)$ and on $\mathbb{P}(y_j=1|\bv{x_j};\boldsymbol\theta)$, respectively. To address this issue, one can compute some measures of "average" marginal effect. There are two main solutions. For each explanatory variable $k$:
+For agent $i$, this marginal effect is consistently estimated by $g'(\boldsymbol\theta_{MLE}'\bv{x}_i)\theta_{MLE,k}$. It is important to see that the marginal effect depends on $\bv{x}_i$: respective increases by 1 unit of $x_{i,k}$ (entity $i$) and of $x_{j,k}$ (entity $j$) do not necessarily have the same effect on $\mathbb{P}(y_i=1|\bv{x}_i;\boldsymbol\theta)$ as on $\mathbb{P}(y_j=1|\bv{x}_j;\boldsymbol\theta)$. To address this issue, one can compute some measures of "average" marginal effect. There are two main solutions. For each explanatory variable $k$:
 
 i. Denoting by $\hat{\bv{x}}$ the sample average of the $\bv{x}_i$s, compute $g'(\boldsymbol\theta_{MLE}'\hat{\bv{x}})\theta_{MLE,k}$.
 ii. Compute the average (across $i$) of $g'(\boldsymbol\theta_{MLE}'\bv{x}_i)\theta_{MLE,k}$.
@@ -281,7 +281,7 @@ ii. Compute the average (across $i$) of $g'(\boldsymbol\theta_{MLE}'\bv{x}_i)\th
 
 There is no obvious version of "$R^2$" for binary-choice models. Existing measures are called **pseudo-$R^2$ measures**.
 
-Denoting by $\log \mathcal{L}_0(\bv{y})$ the (maximum) log-likelihood that would be obtained for a model containing only a constant term (i.e. with $\bv{x}_i = 1$ for all $i$), the **McFadden's pseudo-$R^2$** is given by:
+Denoting by $\log \mathcal{L}_0(\bv{y})$ the (maximum) log-likelihood that would be obtained for a model containing only a constant term (i.e. with $\bv{x}_i = 1$ for all $i$), the McFadden's pseudo-$R^2$ is given by:
 $$
 R^2_{MF} = 1 - \frac{\log \mathcal{L}(\boldsymbol\theta;\bv{y})}{\log \mathcal{L}_0(\bv{y})}.
 $$
@@ -297,7 +297,8 @@ Let us first represent the relationship between the fraction of households that 
 library(AEC)
 credit$Default <- 0
 credit$Default[credit$loan_status == "Charged Off"] <- 1
-credit$Default[credit$loan_status == "Does not meet the credit policy. Status:Charged Off"] <- 1
+credit$Default[credit$loan_status ==
+                 "Does not meet the credit policy. Status:Charged Off"] <- 1
 credit$amt2income <- credit$loan_amnt/credit$annual_inc
 plot(as.factor(credit$Default)~log(credit$annual_inc),
      ylevels=2:1,ylab="Default status",xlab="log(annual income)")
@@ -410,7 +411,7 @@ In the case of no predictive ability (worst situation), the ROC curve is a strai
 :::{.example #FishingROC name="ROC with the fishing-mode dataset"}
 Figure \@ref(fig:fishing3) shows the ROC curve associated with the probit model estimated in Example \@ref(exm:Fisch142).
 
-```{r fishing3, message=FALSE, warning=FALSE, fig.cap="Application of the ROC methodology on the fishing-mode dataset.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
+```{r fishing3, message=FALSE, warning=FALSE,results='hide',fig.keep='all', fig.cap="Application of the ROC methodology on the fishing-mode dataset.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
 library(pROC)
 predict_model <- predict.glm(reg.probit,type = "response")
 roc(data.reduced$y, predict_model, percent=T,
@@ -424,7 +425,7 @@ roc(data.reduced$y, predict_model, percent=T,
 
 ## Multiple Choice Models
 
-We will now consider cases where the number of possible outcomes (or alternatives) is larger than two. Let us denote by $J$ this number. We have $y_j \in \{1,\dots,J\}$. Here are examples of such dependent variables:
+We will now consider cases where the number of possible outcomes (or alternatives) is larger than two. Let us denote by $J$ this number. We have $y_j \in \{1,\dots,J\}$. This situation arise for instance when the outcome variable reflects:
 
 * Opinions: strongly opposed / opposed / neutral / support (ranked choices),
 * Occupational field: lawyer / farmer / engineer / doctor / ...,
@@ -451,7 +452,7 @@ J & \mbox{ with probability } g_J(\bv{x}_i;\boldsymbol\theta).
 
 ### Ordered case
 
-Sometimes, there exists a natural order for the different alternatives. This is typically the case where respondents have to choose a level of agreement to a statement in five points: (1) Strongly disagree; (2) Disagree; (3) Neither agree nor disagree; (4) Agree; (5) Strongly agree. Another standard case is that of ratings (from A to F, say).
+Sometimes, there exists a natural order for the different alternatives. This is typically the case where respondents have to choose a level of agreement to a statement, e.g.: (1) Strongly disagree; (2) Disagree; (3) Neither agree nor disagree; (4) Agree; (5) Strongly agree. Another standard case is that of ratings (from A to F, say).
 
 The ordered probit model consists in extending the binary case, considering the latent-variable view of the latter (see Section \@ref(latent)). Formally, the model is as follows:
 \begin{equation}
@@ -472,7 +473,7 @@ g_j(\bv{x}_i;\boldsymbol\theta,\boldsymbol\alpha) = \mathbb{P}(y_i = j | \bv{x}_
 where $F$ is the c.d.f. of $\mathcal{N}(0,1)$.
 
 
-If, for all $i$, one of the components of $\bv{x}_i$ is equal to 1 (which is what is done in linear regression to introduce an intercept in the specification), then one of the $\alpha_j$ ($j\in\{1,\dots,J-1\}$) is not identified. One can then arbitrarily set $\alpha_1=0$, which is what is done in the binary logit/probit cases.
+If, for all $i$, one of the components of $\bv{x}_i$ is equal to 1 (which is what is done in linear regression to introduce an intercept in the specification), then one of the $\alpha_j$ ($j\in\{1,\dots,J-1\}$) is not identified. One can then arbitrarily set $\alpha_1=0$. This is what is done in the binary logit/probit cases.
 
 This model can be estimated by maximizing the likelihood function (see Section \@ref(secMLE)). This function is given by:
 \begin{equation}
@@ -499,12 +500,13 @@ Let us use credit dataset again (see Example \@ref(exm:creditProbit)), and let u
 ```{r ordered1, warning=FALSE, message=FALSE}
 library(AEC)
 library(MASS)
-credit$emp_length_low5y   <- credit$emp_length %in% c("< 1 year","1 year","2 years","3 years","4 years")
+credit$emp_length_low5y   <- credit$emp_length %in%
+  c("< 1 year","1 year","2 years","3 years","4 years")
 credit$emp_length_high10y <- credit$emp_length=="10+ years"
 credit$annual_inc <- credit$annual_inc/1000
 credit$loan_amnt  <- credit$loan_amnt/1000
 credit$income2loan <- credit$annual_inc/credit$loan_amnt
-training <- credit[1:20000,]
+training <- credit[1:20000,] # sample is reduced
 training <- subset(training,grade!=c("E","F","G"))
 training <- droplevels(training)
 training$grade.ordered <- factor(training$grade,ordered=TRUE,
@@ -521,7 +523,8 @@ stargazer::stargazer(model1,model2,ord.intercepts = TRUE,type="text",
 Predicted ratings (and probabilties of being given a given rating) can be computed as follows:
 
 ```{r ordered1bis, warning=FALSE, message=FALSE}
-pred.grade <- predict(model1,newdata = training) # predicted grade (the most likely according to model)
+pred.grade <- predict(model1,newdata = training)
+# pred.grade = predicted grade, defined as the most likely according model
 pred.proba <- predict(model1,newdata = training, type="probs")
 ```
 :::
@@ -539,21 +542,20 @@ pred.proba <- predict(model1,newdata = training, type="probs")
 
 ### General multinomial logit model {#MNL}
 
-This section introduces the general multinomial logit model, which is the natural extebsion of the binary logit model. Its general formulation is as follows:
+This section introduces the general multinomial logit model, which is the natural extension of the binary logit model (see Table \@ref(tab:foo)). Its general formulation is as follows:
 \begin{equation}
 g_j(\bv{x}_i;\boldsymbol\theta) = \frac{\exp(\theta_j'\bv{x}_i)}{\sum_{k=1}^J \exp(\theta_k'\bv{x}_i)}.(\#eq:GeneralMNL)
 \end{equation}
-(natural extension of the , see Table \@ref(tab:foo).)
 
 Note that, by construction, $g_j(\bv{x}_i;\boldsymbol\theta) \in [0,1]$ and $\sum_{j}g_j(\bv{x}_i;\boldsymbol\theta)=1$.
 
-The components of $\bv{x}_i$ (regressors, or covariates) may be *alternative-specific* or *alternative invariant* (see also Section  \@ref(Avregressors)). We may e.g. organize $\bv{x}_i$ as follows:
+The components of $\bv{x}_i$ (regressors, or covariates) may be *alternative-specific* or *alternative invariant* (see also Section  \@ref(Avregressors)). We may, e.g., organize $\bv{x}_i$ as follows:
 \begin{equation}
 \bv{x}_i = [\bv{u}_{i,1}',\dots,\bv{u}_{i,J}',\bv{v}_{i}']',(\#eq:xorganiz)
 \end{equation}
 where the notations are as in Section \@ref(Avregressors), that is:
 
-* $\bv{u}_{i,j}$ ($j \in \{1,/dots,J\}$): vector of variables associated with agent $i$ and alternative $j$ (alternative-specific regressors). Examples: Travel time per type of transportation (transportation choice), wage per type of work, cost per type of car.
+* $\bv{u}_{i,j}$ ($j \in \{1,\dots,J\}$): vector of variables associated with agent $i$ and alternative $j$ (alternative-specific regressors). Examples: Travel time per type of transportation (transportation choice), wage per type of work, cost per type of car.
 * $\bv{v}_{i}$: vector of variables associated with agent $i$ but alternative-invariant. Examples: age or gender of agent $i$,
 
 When $\bv{x}_i$ is as in Eq. \@ref(eq:xorganiz), with obvious notations, $\theta_j$ is of the form:
@@ -570,12 +572,11 @@ The literature has considered different specific cases of the general multinomia
 \begin{equation}
 \theta_j = [\bv{0}',\dots,\bv{0}',\underbrace{\boldsymbol\beta'}_{\mbox{j$^{th}$ position}},\bv{0}',\dots]',(\#eq:thetaOrganizCL)
 \end{equation}
-i.e. we have $\boldsymbol\beta=\theta^{(u)}_{1,1}=\dots=\theta^{(u)}_{J,J}$ and $\theta^{(u)}_{i,j}=0$ for $i \ne j$.
+i.e., we have $\boldsymbol\beta=\theta^{(u)}_{1,1}=\dots=\theta^{(u)}_{J,J}$ and $\theta^{(u)}_{i,j}=\bv{0}$ for $i \ne j$.
 * **Multinomial logit (MNL)** with alternative-invariant regressors:
 \begin{equation}
-\theta_j = \left[\bv{0}',\dots,\bv{0}',{\theta_j^{(v)}}'\right]',(\#eq:thetaOrganizML)
+\theta_j = \left[\bv{0}',\dots,\bv{0}',{\theta_j^{(v)}}'\right]'.(\#eq:thetaOrganizML)
 \end{equation}
-(can embed intercepts.)
 * **Mixed logit:**
 \begin{equation}
 \theta_j = \left[\bv{0}',\dots,\bv{0}',\boldsymbol\beta',\bv{0}',\dots,\bv{0}',{\theta_j^{(v)}}'\right]'.(\#eq:thetaOrganizCL)
@@ -598,7 +599,8 @@ MNL1 <- mlogit(mode ~ price + catch, data = Fish)
 MNL2 <- mlogit(mode ~ price + catch - 1, data = Fish)
 MNL3 <- mlogit(mode ~ 0 | income, data = Fish)
 MNL4 <- mlogit(mode ~ price + catch | income, data = Fish)
-stargazer(MNL1,MNL2,MNL3,MNL4,type="text",no.space = TRUE)
+stargazer(MNL1,MNL2,MNL3,MNL4,type="text",no.space = TRUE,
+          omit.stat = c("lr"))
 ```
 :::
 
@@ -632,7 +634,7 @@ Let us consider the computation of marginal effects in the general multinomial l
 where $\overline{\boldsymbol\theta}^{(i)}_{s}$ does not depend on $j$. Note that the sign of the marginal effect is not necessarily that of $\theta_{j,s}$.
 
 
-**Utility models**
+**Random Utility models**
 
 The general multinomial logit model may arise as the natural specification arising in strucrural contexts where agents compare (random) utilities associated with $J$ potential outcomes (see Section \@ref(latent) for the binary situation).
 
@@ -646,7 +648,7 @@ Let's drop the $i$ subscript for simplicity and assume that the utility derived 
 The last expression is an $(J-1)$-variate integral. While it has, in general, no analytical solution, Prop. \@ref(prp:Weibull) shows that it is the case when employing Gumbel distributions (see Def. \@ref(def:Gumbel)).
 
 :::{.definition #Gumbel name="Gumbel distribution"}
-Gumbel distribution ($\mathcal{W}$), support: $\mathbb{R}$ (see Theorem \@ref(thm:Extreme)):
+The c.d.f. of the Gumbel distribution  ($\mathcal{W}$) is:
 $$
 F(u) = \exp(-\exp(-u)), \qquad f(u)=\exp(-u-\exp(u)).
 $$
@@ -722,7 +724,7 @@ $$
 $$
 i.e. $\theta_2 = \theta_3$.
 
-Assume we had $V_1=V_2$. We expect to have $V_2=V_3$ (hence $p_2=p_3$). A multinomial logit model would then imply $p_1=p_2=p_3=0.33$. It would seem more reasonable to have $p_1 = p_2 + p_3 = 0.5$ and $p_2=p_3=0.25$.
+Assume we had $V_1=V_2$. We expect to have $V_2=V_3$ (hence $p_2=p_3$). A multinomial logit model would then imply $p_1=p_2=p_3=0.33$. It would however seem more reasonable to have $p_1 = p_2 + p_3 = 0.5$ and $p_2=p_3=0.25$.
 :::
 
 
@@ -771,15 +773,11 @@ $$
 
 One usually make the following two assumptions:
 
-i. The deterministic part of the utility is given by:
-$$
-V_{j,k} = \bv{u}_j'\boldsymbol\alpha + \bv{v}_{j,k}'\boldsymbol\beta_j,
-$$
-where $\boldsymbol\alpha$ is common to all nests and the $\boldsymbol\beta_j$'s are nest-specific.
+i. The deterministic part of the utility is given by $V_{j,k} = \bv{u}_j'\boldsymbol\alpha + \bv{v}_{j,k}'\boldsymbol\beta_j$, where $\boldsymbol\alpha$ is common to all nests and the $\boldsymbol\beta_j$'s are nest-specific.
 
 ii. The disturbances $\boldsymbol\varepsilon$ follow the Generalized Extreme Value (GEV) distribution (see Def. \@ref(def:GEVdistri)).
 
-The following figure displays simulations of pairs $(\varepsilon_1,\varepsilon_2)$ drawn from GEV distributions for different values of $\rho$. The simulation approach is based on [Bhat](http://www.caee.utexas.edu/prof/bhat/ABSTRACTS/Supp_material.pdf). The code used to produce this chart is in Appendix \@ref(App:GEV).
+The following figure displays simulations of pairs $(\varepsilon_1,\varepsilon_2)$ drawn from GEV distributions for different values of $\rho$. The simulation approach is based on [Bhat](http://www.caee.utexas.edu/prof/bhat/ABSTRACTS/Supp_material.pdf). The code used to produce this chart is provided in Appendix \@ref(App:GEV).
 
 ```{r GEV, fig.align = 'left-aligned', out.width = "95%", fig.cap = "GEV simulations.", echo=FALSE}
 knitr::include_graphics("images/Figure_GEV.png")
@@ -824,7 +822,7 @@ j=3 &\Leftrightarrow& (j'=2,k=2),
 \end{eqnarray*}
 and by setting $\rho_2 \rightarrow 0$.
 
-IIA holds within a nest, but not when considering alternatives in different nests. Indeed, using Eq.\@ref(eq:Nested):
+IIA holds within a nest, but not when considering alternatives in different nests. Indeed, using Eq. \@ref(eq:Nested):
 $$
 \frac{\mathbb{P}[y_1=j,y_2=k_A|\bv{x}] }{\mathbb{P}[y_1=j,y_2=k_B|\bv{x}]} = \frac{\exp(\bv{v}_{j,k_A}'\boldsymbol\beta_j/\rho_j)}{\exp(\bv{v}_{j,k_B}'\boldsymbol\beta_j/\rho_j)},
 $$
@@ -857,26 +855,22 @@ TravelMode$time <- with(TravelMode, travel + wait)/60
 TravelMode$timeair <- with(TravelMode, time * I(mode == "air"))
 TravelMode$income <- with(TravelMode, income / 10)
 # Hensher and Greene (2002), table 1 p.8-9 model 5
-TravelMode$incomeother <- with(TravelMode, ifelse(mode %in% c('air', 'car'), income, 0))
+TravelMode$incomeother <- with(TravelMode,
+                               ifelse(mode %in% c('air', 'car'), income, 0))
 nl1 <- mlogit(choice ~ gcost + wait + incomeother, TravelMode,
-              shape='long', # Inidcates how the dataset is organized
-              alt.var='mode', # This is the variable that defines the alternative choices.
+              shape='long', # Indicates how the dataset is organized
+              alt.var='mode', # variable that defines the alternative choices.
               nests=list(public=c('train', 'bus'),
-                         car='car',
-                         air='air'), # The different components of the list define the "limbs".
-              un.nest.el = TRUE
-)
+                         car='car',air='air'), # defines the "limbs".
+              un.nest.el = TRUE)
 nl2 <- mlogit(choice ~ gcost + wait + time, TravelMode,
               shape='long', # Inidcates how the dataset is organized
-              alt.var='mode', # This is the variable that defines the alternative choices.
+              alt.var='mode', # variable that defines the alternative choices.
               nests=list(public=c('train', 'bus'),
-                         car='car',
-                         air='air'), # The different components of the list define the "limbs".
-              un.nest.el = TRUE
-)
+                         car='car',air='air'), # defines the "limbs".
+              un.nest.el = TRUE)
 stargazer(nl1,nl2,type="text",no.space = TRUE)
 ```
-
 :::
 
 
@@ -948,7 +942,7 @@ y^* &if& y^*>L \\
 \end{eqnarray*}
 where "$-$" stands for missing observations.
 
-This formulation is easily extended to censoring from above ($L \rightarrow U$) or censoring from both below and above.
+This formulation is easily extended to censoring from above ($L \rightarrow U$), or censoring from both below and above.
 
 The model parameters are gathered in vector $\theta = [\boldsymbol\beta',\boldsymbol\gamma']'$. Let us write the conditional p.d.f. of the observed variable:
 \begin{eqnarray*}
@@ -1043,11 +1037,10 @@ Let us consider the conditional means of $y$ in the general case, i.e., for any 
 
 * For data that are left-truncated at 0, we have:
 \begin{eqnarray*}
-\mathbb{E}(y) &=& \mathbb{E}(y^*|y^*>0)\\
-&=&\underbrace{\boldsymbol\beta'\bv{x}}_{=\mathbb{E}(y^*)} + \underbrace{\mathbb{E}(\varepsilon|\varepsilon>-\boldsymbol\beta'\bv{x})}_{>0} > \mathbb{E}(y^*).
+\mathbb{E}(y) &=& \mathbb{E}(y^*|y^*>0) = \underbrace{\boldsymbol\beta'\bv{x}}_{=\mathbb{E}(y^*)} + \underbrace{\mathbb{E}(\varepsilon|\varepsilon>-\boldsymbol\beta'\bv{x})}_{>0} > \mathbb{E}(y^*).
 \end{eqnarray*}
 
-* Consider data that are left-censored at 0. By Bayes, we have that
+* Consider data that are left-censored at 0. By Bayes, we have:
 $$
 f_{y^*|y^*>0}(u) = \frac{f_{y^*}(u)}{\mathbb{P}(y^*>0)}\mathbb{I}_{\{u>0\}}.
 $$
@@ -1081,11 +1074,11 @@ where the penultimate line is obtained by using Eq. \@ref(eq:Etrunc).
 
 ```{r tobit3, echo=FALSE, fig.cap="Conditional means of $y$ in Tobit models. The model is $y_i = x_i + \\varepsilon_i$, with $\\varepsilon_i \\sim \\mathcal{N}(0,1)$.", fig.align = 'left-aligned'}
 x <- seq(-4,4,by=.01)
+par(plt=c(.15,.95,.15,.95))
 plot(x,x + dnorm(x)/pnorm(x),las=1,type="l",lwd=2,ylab="E(y|x)",ylim=c(0,4))
 lines(x,pnorm(x)*(x + dnorm(x)/pnorm(x)),lwd=2,lty=3)
 grid()
 lines(c(-10,10),c(-10,10),col="grey")
-
 legend("topleft", # places a legend at the appropriate place 
        c("Truncated","Censored"),
        lty=c(1,3), # gives the legend appropriate symbols (lines)       
@@ -1139,9 +1132,7 @@ $$
 $$
 where "Conditional mean" comes from Eq. \@ref(eq:Econdtruncated) and "disturbance" is an error with zero conditional mean.
 
-
-
-This approach is also applied to the case of **sample selection models** (see Section \@ref(section:SSM)).
+This approach is also applied to the case of **sample selection models** (Section \@ref(SSM)).
 
 
 :::{.example #WageMroz1 name="Wage prediction"}
@@ -1156,7 +1147,7 @@ Mroz87$lfp.yesno <- NaN
 Mroz87$lfp.yesno[Mroz87$lfp==1] <- "yes"
 Mroz87$lfp.yesno[Mroz87$lfp==0] <- "no"
 Mroz87$lfp.yesno <- as.factor(Mroz87$lfp.yesno)
-ols <- lm(wage ~ educ + exper + I( exper^2 ) + city, data=subset(Mroz87, lfp==1))
+ols <- lm(wage ~ educ + exper + I( exper^2 ) + city,data=subset(Mroz87,lfp==1))
 tobit <- tobit(wage ~ educ + exper + I( exper^2 ) + city,
                left = 0, right = Inf,
                data=Mroz87)
@@ -1164,7 +1155,7 @@ Heckit <- heckit(lfp ~ educ + exper + I( exper^2 ) + city, # selection equation
                  wage ~ educ + exper + I( exper^2 ) + city, # outcome equation
                  data=Mroz87 )
 
-stargazer(ols,Heckit,tobit,no.space = TRUE,type="text")
+stargazer(ols,Heckit,tobit,no.space = TRUE,type="text",omit.stat = "f")
 ```
 
 Figure \@ref(fig:tobit5) shows that, low wages, the OLS model tends to over-predict wages. The slope between observed and Tobit-predicted wages is closer to one (the adjustment line is closer to the 45-degree line.)
@@ -1229,7 +1220,7 @@ In a seminal paper, @Duan_et_al_1983 employ this methodology to account for indi
 * $1^{st}$ model: $\mathbb{P}(hosp=1|\bv{x}) =  \Phi(\bv{x}_1'\boldsymbol\beta_1)$,
 * $2^{nd}$ model: $Expense = \exp(\bv{x}_2'\boldsymbol\beta_2 + \eta)$, with $\eta \sim\,i.i.d.\, \mathcal{N}(0,\sigma_2^2)$.
 
-We have:
+Specifically:
 $$
 \mathbb{E}(Expense|\bv{x}_1,\bv{x}_2) = \Phi(\bv{x}_1'\boldsymbol\beta_1)\exp\left(\bv{x}_2'\boldsymbol\beta_2+ \frac{\sigma_2^2}{2}\right).
 $$
@@ -1239,7 +1230,7 @@ In sample-selection models, studied in the next section, one specifies the joint
 
 
 
-## Sample Selection Models
+## Sample Selection Models {#SSM}
 
 
 The situation tackled by sample-selection models is the following. The dependent variable of interest, denoted by $y_2$, depends on observed variables $\bv{x}_2$. Observing $y_2$, or not, depends on the value of a latent variable ($y_1^*$) that is correlated to observed variables $\bv{x}_1$. The difference w.r.t. the two-part model skethed above is that, even conditionally on $(\bv{x}_1,\bv{x}_2)$, $y_1^*$ and $y_2$ may be correlated.
@@ -1285,11 +1276,10 @@ Let us derive the likelihood associated with this model. We have:
 \begin{eqnarray}
 f(\underbrace{0}_{=y_1},\underbrace{-}_{=y_2}|\bv{x};\theta) &=& \mathbb{P}(y_1^*\le 0) = \Phi(-\bv{x}_1'\boldsymbol\beta_1) (\#eq:probaPP1)\\
 f(1,y_2|\bv{x};\theta) &=& f(y_2^*|\bv{x};\theta) \mathbb{P}(y_1^*>0|y_2^*,\bv{x};\theta) \nonumber \\
-&=& \frac{1}{\sigma}\phi\left(\frac{y_2 - \bv{x}_2'\boldsymbol\beta_2}{\sigma}\right) \times \nonumber\\
-&& \mathbb{P}(y_1^*>0|y_2,\bv{x};\theta).(\#eq:probaPP2)
+&=& \frac{1}{\sigma}\phi\left(\frac{y_2 - \bv{x}_2'\boldsymbol\beta_2}{\sigma}\right)  \mathbb{P}(y_1^*>0|y_2,\bv{x};\theta).(\#eq:probaPP2)
 \end{eqnarray}
 
-Let's compute $\mathbb{P}(y_1^*>0|y_2,\bv{x};\theta)$. By Prop. \@ref(prop:update) (in Appendix \@ref(GaussianVar)), applied to ($\varepsilon_1,\varepsilon_2$), we have:
+Let us compute $\mathbb{P}(y_1^*>0|y_2,\bv{x};\theta)$. By Prop. \@ref(prp:update) (in Appendix \@ref(GaussianVar)), applied to ($\varepsilon_1,\varepsilon_2$), we have:
 $$
 y_1^*|y_2 \sim \mathcal{N}\left(\bv{x}_1'\boldsymbol\beta_1 + \frac{\rho}{\sigma_2}(y_2-\bv{x}_2'\boldsymbol\beta_2),1-\rho^2\right).
 $$
@@ -1298,7 +1288,7 @@ which leads to
 \mathbb{P}(y_1^*>0|y_2,\bv{x};\theta) = \Phi\left( \frac{\bv{x}_1'\boldsymbol\beta_1 + \dfrac{\rho}{\sigma_2}(y_2-\bv{x}_2'\boldsymbol\beta_2)}{\sqrt{1-\rho^2}}\right).(\#eq:probaPP3)
 \end{equation}
 
-Figure \@ref(fig:SampleSelec) shows $\mathbb{P}(y_1^*>0|y_2,\bv{x};\theta)$ for different values of $y_2$ and of $\rho$, in the case where $\boldsymbol\beta_1=\boldsymbol\beta_2=0$.
+Figure \@ref(fig:SampleSelec) displays $\mathbb{P}(y_1^*>0|y_2,\bv{x};\theta)$ for different values of $y_2$ and of $\rho$, in the case where $\boldsymbol\beta_1=\boldsymbol\beta_2=0$.
 
 ```{r SampleSelec, echo=FALSE, fig.cap="Probability of observing $y_2$ depending on its value, for different values of conditional correlation between $y_2$ and $y_1^*$.", fig.align = 'left-aligned'}
 
@@ -1342,7 +1332,7 @@ for(rho in all.rhos){
 ```
 
 
-Using Eqs. \@ref(eq:probaPP1), \@ref(eq:probaPP2) and \@ref(eq:probaPP3) gives the log-likelihood function:
+Using Eqs. \@ref(eq:probaPP1), \@ref(eq:probaPP2) and \@ref(eq:probaPP3), one gets the log-likelihood function:
 \begin{eqnarray*}
 \log \mathcal{L}(\theta;\bv{y},\bv{X}) &=& \sum_{i=1}^n  (1 - y_{1,i})\log \Phi(-\bv{x}_{1,i}'\boldsymbol\beta_1) + \\
 &&  \sum_{i=1}^n y_{1,i} \log \left(  \frac{1}{\sigma}\phi\left(\frac{y_{2,i} - \bv{x}_{2,i}'\boldsymbol\beta_2}{\sigma}\right)\right) + \\
@@ -1356,8 +1346,7 @@ We can also compute conditional expectations:
 &=& \mathbb{E}(\bv{x}_2'\boldsymbol\beta_2 + \rho\sigma_2(y_1^*-\bv{x}_1'\boldsymbol\beta_1)|y_1=1,\bv{x})\nonumber\\
 &=& \bv{x}_2'\boldsymbol\beta_2 + \rho\sigma_2\mathbb{E}( \underbrace{y_1^*-\bv{x}_1'\boldsymbol\beta_1}_{=\varepsilon_1 \sim\mathcal{N}(0,1)}|\varepsilon_1>-\bv{x}_1'\boldsymbol\beta_1,\bv{x})\nonumber\\
 &=& \bv{x}_2'\boldsymbol\beta_2 + \rho\sigma_2\frac{\phi(-\bv{x}_1'\boldsymbol\beta_1)}{1 - \Phi(-\bv{x}_1'\boldsymbol\beta_1)}\nonumber\\
-&=& \bv{x}_2'\boldsymbol\beta_2 + \rho\sigma_2\frac{\phi(\bv{x}_1'\boldsymbol\beta_1)}{\Phi(\bv{x}_1'\boldsymbol\beta_1)}\nonumber\\
-&=&\bv{x}_2'\boldsymbol\beta_2 + \rho\sigma_2\lambda(\bv{x}_1'\boldsymbol\beta_1),(\#eq:y2y11)
+&=& \bv{x}_2'\boldsymbol\beta_2 + \rho\sigma_2\frac{\phi(\bv{x}_1'\boldsymbol\beta_1)}{\Phi(\bv{x}_1'\boldsymbol\beta_1)}=\bv{x}_2'\boldsymbol\beta_2 + \rho\sigma_2\lambda(\bv{x}_1'\boldsymbol\beta_1),(\#eq:y2y11)
 \end{eqnarray}
 and:
 \begin{eqnarray*}
@@ -1393,8 +1382,7 @@ $$
 $$
 which gives
 \begin{eqnarray*}
-&&\mathbb{V}ar(y_2|y_1^*>0,\bv{x}) \\
-&=& \sigma_2^2(1-\rho^2) + \rho^2\sigma_2^2 (1 - \bv{x}_1'\boldsymbol\beta_1 \lambda(\bv{x}_1'\boldsymbol\beta_1) - \lambda(\bv{x}_1'\boldsymbol\beta_1)^2)\\
+\mathbb{V}ar(y_2|y_1^*>0,\bv{x}) &=& \sigma_2^2(1-\rho^2) + \rho^2\sigma_2^2 (1 - \bv{x}_1'\boldsymbol\beta_1 \lambda(\bv{x}_1'\boldsymbol\beta_1) - \lambda(\bv{x}_1'\boldsymbol\beta_1)^2)\\
 &=& \sigma_2^2 - \rho^2\sigma_2^2 \left(\bv{x}_1'\boldsymbol\beta_1 \lambda(\bv{x}_1'\boldsymbol\beta_1) + \lambda(\bv{x}_1'\boldsymbol\beta_1)^2\right),
 \end{eqnarray*}
 and, finally:
@@ -1409,7 +1397,6 @@ The Heckman procedure is computationally simple. Although computational costs ar
 As in Example \@ref(exm:WageMroz1), let us use the @Mroz_1987 dataset again, with the objective of explaining wage setting.
 
 ```{r #SampleSelec, warning=FALSE, message=FALSE}
-
 library(sampleSelection)
 library(AER)
 data("Mroz87")
@@ -1417,18 +1404,18 @@ Mroz87$lfp.yesno <- NaN
 Mroz87$lfp.yesno[Mroz87$lfp==1] <- "yes"
 Mroz87$lfp.yesno[Mroz87$lfp==0] <- "no"
 Mroz87$lfp.yesno <- as.factor(Mroz87$lfp.yesno)
-
 #Logit & Probit (selection equation)
 logitW <- glm(lfp ~ age + I( age^2 ) + kids5 + huswage + educ,
               family = binomial(link = "logit"), data = Mroz87) 
 probitW <- glm(lfp ~ age + I( age^2 ) + kids5 + huswage + educ,
                family = binomial(link = "probit"), data = Mroz87) 
 # OLS for outcome:
-ols1 <- lm(log(wage) ~ educ + exper + I( exper^2 ) + city, data=subset(Mroz87, lfp==1))
+ols1 <- lm(log(wage) ~ educ+exper+I( exper^2 )+city,data=subset(Mroz87,lfp==1))
 # Two-step Heckman estimation
-heckvan <- heckit( lfp ~ age + I( age^2 ) + kids5 + huswage + educ, # selection equation
-                   log(wage) ~ educ + exper + I( exper^2 ) + city, # outcome equation
-                   data=Mroz87 )
+heckvan <- 
+  heckit( lfp ~ age + I( age^2 ) + kids5 + huswage + educ, # selection equation
+          log(wage) ~ educ + exper + I( exper^2 ) + city, # outcome equation
+          data=Mroz87 )
 # Maximun likelihood estimation of selection model:
 ml <- selection(lfp~age+I(age^2)+kids5+huswage+educ, 
                 log(wage)~educ+exper+I(exper^2)+city, data = Mroz87)
@@ -1436,9 +1423,8 @@ ml <- selection(lfp~age+I(age^2)+kids5+huswage+educ,
 stargazer(logitW,probitW,heckvan,ml,type = "text",no.space = TRUE,
           selection.equation = TRUE)
 # Print outcome-equation estimates:
-stargazer(ols1,heckvan,ml,type = "text",no.space = TRUE)
+stargazer(ols1,heckvan,ml,type = "text",no.space = TRUE,omit.stat = "f")
 ```
-
 :::
 
 ## Models of Count Data
@@ -1536,7 +1522,7 @@ Note that $\mathbb{V}ar(y|\bv{x}) > \mathbb{E}(y|\bv{x})$ (which is often called
 $$
 \mathbb{V}ar(y|\bv{x}) = \mu+\alpha \mu^2.
 $$
-The previous expression is the basis of the so-called **NB2** specification. If $\delta$ is replaced by $\mu/\gamma$, then we get the **NB1** model:
+The previous expression is the basis of the so-called **NB2** specification. If $\delta$ is replaced with $\mu/\gamma$, then we get the **NB1** model:
 $$
 \mathbb{V}ar(y|\bv{x}) = \mu(1+\gamma).
 $$
@@ -1547,45 +1533,47 @@ The following example compares different specifications, namely a linear regress
 
 ```{r countdata1, warning=FALSE, message=FALSE, fig.cap="Distribution of the number of doctor visits.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
 library(AEC)
-#library(foreign)
 library(COUNT)
 library(pscl) # for predprob function and hurdle model
-#randdata <- subset(randdata,year==1) # randdata included in AEC 
+par(plt=c(.15,.95,.1,.95))
 plot(table(randdata$mdvis))
 ```
 
 ```{r countdata2, warning=FALSE, message=FALSE}
 randdata$LC <- log(1 + randdata$coins)
-model.OLS <- lm(mdvis ~ LC + idp + lpi + fmde + physlm + disea + hlthg + hlthf + hlthp - 1,
-                data=randdata)
-model.poisson <- glm(mdvis ~ LC + idp + lpi + fmde + physlm + disea + hlthg + hlthf + hlthp - 1,
-                     data=randdata,family = poisson)
-model.neg.bin <- glm.nb(mdvis ~ LC + idp + lpi + fmde + physlm + disea + hlthg + hlthf + hlthp - 1,
-                        data=randdata)
-model.neg.bin.with.intercept <- glm.nb(mdvis ~ LC + idp + lpi + fmde + physlm + disea + hlthg + hlthf + hlthp,
-                                       data=randdata)
-stargazer::stargazer(model.OLS,model.poisson,model.neg.bin, model.neg.bin.with.intercept,type="text",no.space = TRUE)
+model.OLS <- lm(mdvis ~ LC + idp + lpi + fmde + physlm + disea + hlthg + 
+                  hlthf + hlthp - 1,data=randdata)
+model.poisson <- glm(mdvis ~ LC + idp + lpi + fmde + physlm + disea + 
+                       hlthg + hlthf + hlthp - 1,data=randdata,family = poisson)
+model.neg.bin <- glm.nb(mdvis ~ LC + idp + lpi + fmde + physlm + disea +
+                          hlthg + hlthf + hlthp - 1,data=randdata)
+model.neg.bin.with.intercept <- 
+  glm.nb(mdvis ~ LC + idp + lpi + fmde + physlm + disea + hlthg + 
+           hlthf + hlthp,data=randdata)
+stargazer::stargazer(model.OLS,model.poisson,model.neg.bin,
+                     model.neg.bin.with.intercept,type="text",
+                     no.space = TRUE,omit.stat = c("f","ser"))
 ```
 
 Models' predictions can be obtained as follows:
 
 ```{r countdata3, warning=FALSE, message=FALSE}
-predict_poisson.beta.x <- predict(model.poisson) # prediction of beta'x, equivalent to "model.poisson$fitted.values"
-predict_poisson <- predict(model.poisson,type="response") # prediction of the number of events (exp(beta'x))
+# prediction of beta'x, equivalent to "model.poisson$fitted.values":
+predict_poisson.beta.x <- predict(model.poisson)
+# prediction of the number of events (exp(beta'x)):
+predict_poisson <- predict(model.poisson,type="response")
 predict_NB <- model.neg.bin$fitted.values
 ```
 
 Let us now compute the model-implied probabilities, and let's compare them with the frequencies observed in the data.
 
 ```{r countdata4, warning=FALSE, message=FALSE}
-prop.table.data <- prop.table(table(randdata$mdvis))
+prop.table.data  <- prop.table(table(randdata$mdvis))
 predprob.poisson <- predprob(model.poisson) # part of pscl package
 predprob.nb      <- predprob(model.neg.bin)
-print(rbind(
-  prop.table.data[1:6],
-  apply(predprob.poisson[,1:6],2,mean),
-  apply(predprob.nb[,1:6],2,mean)
-))
+print(rbind(prop.table.data[1:6],
+            apply(predprob.poisson[,1:6],2,mean),
+            apply(predprob.nb[,1:6],2,mean)))
 ```
 
 It appears that the NB model is better at capturing the relatively large number of zeros than the Poisson model. This will also be the case for the Hurdle and Zero-Inflation models:
@@ -1627,17 +1615,20 @@ Typically, $f_1$ corresponds to a logit model and $f_2$ is Poisson or negative b
 
 Let us come back to the data used in Example \@ref(exm:Doctorvisits), and estimate Hurdle and a zero-inflation models:
 
+<!-- # See Subsection 2.2 of https://cran.r-project.org/web/packages/pscl/vignettes/countreg.pdf -->
+
 ```{r countdata6}
-# Hurdle models
-# See Subsection 2.2 of https://cran.r-project.org/web/packages/pscl/vignettes/countreg.pdf
-model.hurdle <- hurdle(mdvis ~ LC + idp + lpi + fmde + physlm +
-                         disea + hlthg + hlthf + hlthp, data=randdata,
-                       dist = "poisson", zero.dist = "binomial", link = "logit")
+model.hurdle <- 
+  hurdle(mdvis ~ LC + idp + lpi + fmde + physlm + disea + hlthg + hlthf + 
+           hlthp, data=randdata,
+         dist = "poisson", zero.dist = "binomial", link = "logit")
 model.zeroinfl <- zeroinfl(mdvis ~ LC + idp + lpi + fmde + physlm +
                              disea + hlthg + hlthf + hlthp, data=randdata,
                            dist = "poisson", link = "logit")
-stargazer(model.hurdle,model.zeroinfl,zero.component=FALSE,no.space=TRUE,type="text")
-stargazer(model.hurdle,model.zeroinfl,zero.component=TRUE,no.space=TRUE,type="text")
+stargazer(model.hurdle,model.zeroinfl,zero.component=FALSE,
+          no.space=TRUE,type="text")
+stargazer(model.hurdle,model.zeroinfl,zero.component=TRUE,
+          no.space=TRUE,type="text")
 ```
 
 Let us test the importance of `LC` in the model using a Wald test:
@@ -1652,14 +1643,11 @@ Finally, we compare average model-implied probabilities with the frequencies obs
 ```{r countdata8}
 predprob.hurdle   <- predprob(model.hurdle)
 predprob.zeroinfl <- predprob(model.zeroinfl)
-print(rbind(
-  prop.table.data[1:6],
+print(rbind(prop.table.data[1:6],
   apply(predprob.poisson[,1:6],2,mean),
   apply(predprob.nb[,1:6],2,mean),
   apply(predprob.hurdle[,1:6],2,mean),
-  apply(predprob.zeroinfl[,1:6],2,mean)
-))
+  apply(predprob.zeroinfl[,1:6],2,mean)))
 ```
-
 :::
 

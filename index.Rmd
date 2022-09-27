@@ -1,15 +1,16 @@
 --- 
-title: "Advanced Econometrics"
+title: "Applied Econometrics"
 author: "Jean-Paul Renne"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
+fontsize: 12pt
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 github-repo: rstudio/bookdown-demo
-description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
+description: "This course covers various topics in econometrics. Simulations and real-data-based examples are provided."
 css: "my-style.css"
 ---
 
@@ -62,7 +63,7 @@ library(AEC)
 <!-- ``` -->
 <!-- XXXX HC0, HC1... Davidson MacKinnon 2004 Section 5.5 XXXX -->
 
-
+**p.d.f. version**: [here](https://www.dropbox.com/s/td4bqpbzfuvwsev/ApplEcts.pdf?dl=0).
 
 
 

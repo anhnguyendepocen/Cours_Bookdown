@@ -7,7 +7,7 @@ A time series is an infinite sequence of random variables indexed by time: $\{y_
 Standard time series models are built using **shocks** that we will often denote by $\varepsilon_t$. Typically, $\mathbb{E}(\varepsilon_t)=0$. In many models, the shocks are supposed to be i.i.d., but there exist other (less restrictive) notions of shocks. In particular, the definition of many processes is based on whote noises:
 
 :::{.definition #whitenoise name="White noise"}
-The process $\{\varepsilon_t\}_{t \in] -\infty,+\infty[}$ is a white noise if, for all $t$
+The process $\{\varepsilon_t\}_{t \in] -\infty,+\infty[}$ is a white noise if, for all $t$:
 
 a. $\mathbb{E}(\varepsilon_t)=0$,
 b. $\mathbb{E}(\varepsilon_t^2)=\sigma^2<\infty$ and
@@ -80,7 +80,7 @@ where $f_{Y_t,Y_{t-1},\dots,Y_{t-j}}(y_t,y_{t-1},\dots,y_{t-j})$ is the joint di
 In particular, $\gamma_{0,t} = \mathbb{V}ar(y_t)$.
 
 :::{.definition #covstat name="Covariance stationarity"}
-The process $y_t$ is covariance stationary --or weakly stationary-- if, for all $t$ and $j$,
+The process $y_t$ is covariance stationary ---or weakly stationary--- if, for all $t$ and $j$,
 $$
 \mathbb{E}(y_t) = \mu \quad \mbox{and} \quad \mathbb{E}\{(y_t - \mu)(y_{t-j} - \mu)\} = \gamma_j.
 $$
@@ -88,9 +88,10 @@ $$
 
 Figure \@ref(fig:nonstat1) displays the simulation of a process that is not covariance stationary. This process follows $y_t = 0.1t + \varepsilon_t$, where $\varepsilon_t \sim\,i.i.d.\,\mathcal{N}(0,1)$. Indeed, for such a process, we have: $\mathbb{E}(y_t)=0.1t$, which depends on $t$.
 
-```{r nonstat1, echo=FALSE, fig.cap="Example of a process that is not covariance stationary ($y_t = 0.1t + \\varepsilon_t$, where $\\varepsilon_t \\sim \\mathcal{N}(0,1)$).", fig.asp = .6, out.width = "90%", fig.align = 'left-aligned'}
+```{r nonstat1, echo=FALSE, fig.cap="Example of a process that is not covariance stationary ($y_t = 0.1t + \\varepsilon_t$, where $\\varepsilon_t \\sim \\mathcal{N}(0,1)$).", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
 T <- 200
 y <- 0.1*(1:T) + rnorm(T)
+par(plt=c(.1,.95,.1,.95))
 plot(y,xlab="",ylab="",type="l")
 ```
 
@@ -105,7 +106,7 @@ y_t = \mathbb{I}_{\{t<1000\}}\varepsilon_{1,t}+\mathbb{I}_{\{t\ge1000\}}\varepsi
 $$
 where $\varepsilon_{1,t} \sim \mathcal{N}(0,1)$ and $\varepsilon_{2,t} \sim \sqrt{\frac{\nu - 2}{\nu}} t(\nu)$ and $\nu = 4$.
 
-```{r nonstat2, echo=FALSE, fig.cap="Example of a process that is covariance stationary but not strictly stationary. The red lines delineate the 99\\% confidence interval of the standard normal distribution ($\\pm 2.58$).", fig.asp = .6, out.width = "90%", fig.align = 'left-aligned'}
+```{r nonstat2, echo=FALSE, fig.cap="Example of a process that is covariance stationary but not strictly stationary. The red lines delineate the 99\\% confidence interval of the standard normal distribution ($\\pm 2.58$).", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
 T <- 2000
 y <- rnorm(T)
 y[(T/2):T] <- rt(n = T/2 + 1,df=4)
@@ -137,8 +138,9 @@ Consider a long historical time series of the Swiss GDP growth, taken from the @
 
 [^FootnoteJST]: Version 6 of the dataset, available on [this website](https://www.macrohistory.net).
 
-```{r autocov, echo=FALSE, fig.cap="Annual growth rate of Swiss GDP, based on the Jord\\`a-Schularick-Taylor Macrohistory Database.", fig.asp = .6, out.width = "90%", fig.align = 'left-aligned'}
+```{r autocov, echo=FALSE, fig.cap="Annual growth rate of Swiss GDP, based on the Jorda-Schularick-Taylor Macrohistory Database.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
 library(AEC)
+data(JST)
 data <- subset(JST,iso=="CHE")
 par(plt=c(.1,.95,.1,.95))
 T <- dim(data)[1]
@@ -150,15 +152,19 @@ abline(h=mean(data$growth,na.rm = TRUE),col="blue",lty=2,xlab="",ylab="")
 
 
 
-```{r autocov2, echo=FALSE, fig.cap="For order $j$, the slope of the blue line is, approximately, $\\hat{\\gamma}_j/\\widehat{\\mathbb{V}ar}(y_t)$, where hats indicate sample moments.", fig.asp = .6, out.width = "90%", fig.align = 'left-aligned'}
+```{r autocov2, echo=FALSE, fig.cap="For order $j$, the slope of the blue line is, approximately, $\\hat{\\gamma}_j/\\widehat{\\mathbb{V}ar}(y_t)$, where hats indicate sample moments.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
 y <- data$growth
 j <- 1;y_1 <- c(rep(NaN,j),y[1:(T-j)])
 j <- 2;y_2 <- c(rep(NaN,j),y[1:(T-j)])
 j <- 3;y_3 <- c(rep(NaN,j),y[1:(T-j)])
 par(mfrow=c(1,2))
-plot(y_1,y,xlim=c(-.3,.3),ylim=c(-.3,.3),main="(a) order: one");grid()
+plot(y_1,y,xlim=c(-.3,.3),ylim=c(-.3,.3),main="(a) order: one",
+     xlab=expression(y[t-1]),ylab=expression(y[t]))
+grid()
 abline(lm(y~y_1),col="blue")
-plot(y_3,y,xlim=c(-.3,.3),ylim=c(-.3,.3),main="(b) order: three");grid()
+plot(y_3,y,xlim=c(-.3,.3),ylim=c(-.3,.3),main="(b) order: three",
+     xlab=expression(y[t-3]),ylab=expression(y[t]))
+grid()
 abline(lm(y~y_3),col="blue")
 ```
 
@@ -215,11 +221,11 @@ S^{NW}=\hat\gamma_0 + 2 \sum_{\nu=1}^{q}\left(1-\frac{\nu}{q+1}\right) \hat\gamm
 
 Loosely speaking, Theorem \@ref(thm:CLTcovstat) says that, for a given sample size, the higher the "persistency" of a proicess, the lower the accuracy of the sample mean as an estimate of the population mean. To illustrate, consider three processes that feature the same marginal variance (equal to one, say), but different autocorrelations: 0\%, 70\%, and 99.9\%. Figure \@ref(fig:TVTCL) displays simulated paths of such three processes. It indeed appears that, the larger the autocorrelation of the process, the further the sample mean (dashed red line) from the population mean (red solid line).
 
-Identical simulations can be performed using [this ShinyApp](https://jrenne.shinyapps.io/MacroEc/) (use panel "AR(1)").
+The same type of simulations can be performed using [this ShinyApp](https://jrenne.shinyapps.io/MacroEc/) (use panel "AR(1)").
 
-```{r TVTCL, echo=FALSE, fig.cap="The three samples have been simulated using the following data generating process: $x_t = \\mu + \\rho (x_{t-1}-\\mu) + \\sqrt{1-\\rho^2}\\varepsilon_t$, where $\\varepsilon_t \\sim \\mathcal{N}(0,1)$. Case A: $\\rho = 0$;  Case B: $\\rho = 0.7$;  Case C: $\\rho = 0.999$. In the three cases, $\\mathbb{E}(x_t)=\\mu=2$ and $\\mathbb{V}ar(x_t)=1$.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
+```{r TVTCL, echo=FALSE, fig.cap="The three samples have been simulated using the following data generating process: $x_t = \\mu + \\rho (x_{t-1}-\\mu) + \\sqrt{1-\\rho^2}\\varepsilon_t$, where $\\varepsilon_t \\sim \\mathcal{N}(0,1)$. Case A: $\\rho = 0$;  Case B: $\\rho = 0.7$;  Case C: $\\rho = 0.999$. In the three cases, $\\mathbb{E}(x_t)=\\mu=2$ and $\\mathbb{V}ar(x_t)=1$.", fig.asp = .6, out.width = "100%", fig.align = 'left-aligned'}
 all.rho <- c(0,.7,.999)
-par(plt=c(0.15,0.95,0.2,0.75))
+par(plt=c(0.1,0.95,0.2,0.75))
 par(mfrow=c(3,1))
 count <- 0
 for(rho in all.rho){
@@ -285,7 +291,7 @@ where $\mathbb{V}ar(\varepsilon_t)=\sigma^2$, has the same mean and autocovarian
 $$
 y_t = \mu + \varepsilon^*_t +\frac{1}{\theta}\varepsilon^*_{t-1},
 $$
-where $\mathbb{V}ar(\varepsilon^*_t)=\theta^2\sigma^2$.
+where $\mathbb{V}ar(\varepsilon^*_t)=\theta^2\sigma^2$. That is, even if we perfectly know the mean and auto-covariances of this process, it is not possible to identify which specification is the one that has been used to generate the data. Only one of these two specifications is said to be *fundamental*, that is the one that satisfies $|\theta_1|<1$ (see Eq. \@ref(eq:invertible)).
 
 :::{.definition #MAq name="MA(q) process"}
 A $q^{th}$ order Moving Average process is defined through:
@@ -317,7 +323,7 @@ Then use the fact that $\mathbb{E}(\varepsilon_t\varepsilon_s)=0$ if $t \ne s$ (
 Figure \@ref(fig:simMA) displays simulated paths of two MA processes (an MA(1) and an MA(4)). Such simulations can be produced by using panel "ARMA(p,q)" of [this web interface](https://jrenne.shinyapps.io/MacroEc/).
 
 
-```{r simMA, echo=TRUE, fig.cap="Simulation of MA processes.", fig.asp = .6, out.width = "90%", fig.align = 'left-aligned'}
+```{r simMA, echo=TRUE, fig.cap="Simulation of MA processes.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
 library(AEC)
 T <- 100;nb.sim <- 1
 y.0 <- c(0)
@@ -343,7 +349,7 @@ What if the order $q$ of an MA(q) process gets infinite? The notion of **infinit
 The sequence $\{\theta_{i}\}_{i\in\mathbb{N}}$ is absolutely summable if $\sum_{i=0}^{\infty}|\theta_i| < + \infty$, and it is square summable if $\sum_{i=0}^{\infty} \theta_i^2 < + \infty$.
 :::
 
-According to Theorem \@ref(thm:absMs), absolute summability implies square summability.
+According to Prop. \@ref(prp:absMs), absolute summability implies square summability.
 
 :::{.theorem #infMA name="Existence condition for an infinite MA process"}
 If $\{\theta_{i}\}_{i\in\mathbb{N}}$ is square summable (see Def. \@ref(def:summability)) and if $\{\varepsilon_t\}_{t = -\infty}^{+\infty}$ is a white noise process (see Def. \@ref(def:whitenoise)), then
@@ -352,9 +358,8 @@ $$
 $$
 defines a well-behaved [covariance-stationary] process, called infinite-order MA process (MA($\infty$)).
 :::
-
 :::{.proof}
-See Appendix 3.A in Hamilton."Well behaved" means that $\Sigma_{i=0}^{T} \theta_{t-i} \varepsilon_{t-i}$ converges in mean square (Def. \@ref(def:convergenceLr)) to some random variable $Z_t$. The proof makes use of the fact that:
+See Appendix 3.A in Hamilton. "Well behaved" means that $\Sigma_{i=0}^{T} \theta_{t-i} \varepsilon_{t-i}$ converges in mean square (Def. \@ref(def:convergenceLr)) to some random variable $Z_t$. The proof makes use of the fact that:
 $$
 \mathbb{E}\left[\left(\sum_{i=N}^{M}\theta_{i} \varepsilon_{t-i}\right)^2\right] = \sum_{i=N}^{M}|\theta_{i}|^2 \sigma^2,
 $$
@@ -365,7 +370,7 @@ and that, when $\{\theta_{i}\}$ is square summable, $\forall \eta>0$, $\exists N
 
 If $\{\theta_{i}\}_{i\in\mathbb{N}}$ is absolutely summable, i.e. if $\sum_{i=0}^{\infty}|\theta_i| < + \infty$, then
 
-i. $y_t = \mu + \sum_{i=0}^{+\infty} \theta_{i} \varepsilon_{t-i}$ exists (Theorem \@ref(them:infMA)) and is such that:
+i. $y_t = \mu + \sum_{i=0}^{+\infty} \theta_{i} \varepsilon_{t-i}$ exists (Theorem \@ref(thm:infMA)) and is such that:
 \begin{eqnarray*}
 \mathbb{E}(y_t) &=& \mu\\
 \gamma_0 = \mathbb{E}([y_t-\mu]^2) &=& \sigma^2(\theta_0^2 +\theta_1^2 + \dots)\\
@@ -375,7 +380,7 @@ ii. Process $y_t$ has absolutely summable auto-covariances, which implies that t
 :::
 
 :::{.proof}
-The absolute summability of $\{\theta_{t}\}$ and the fact that $\mathbb{E}(\varepsilon^2)<\infty$ imply that the order of integration and summation is interchangeable (see Hamilton, 1994, Footnote p. 52), which proves (i). For (ii), see end of Appendix 3.A in Hamilton (1994).
+The absolute summability of $\{\theta_{i}\}$ and the fact that $\mathbb{E}(\varepsilon^2)<\infty$ imply that the order of integration and summation is interchangeable (see Hamilton, 1994, Footnote p. 52), which proves (i). For (ii), see end of Appendix 3.A in Hamilton (1994).
 :::
 
 
@@ -531,7 +536,7 @@ The eigenvalues of $F$ (defined by Eq. \@ref(eq:F)) are the solutions of:
 These four statements are equivalent:
 
 i. Process $\{y_t\}$, defined in Def. \@ref(def:ARp), is covariance-stationary.
-ii. The eigenvalues of $F$ (as defined Eq. \@ref(eq:F)) lie within the unit circle.
+ii. The eigenvalues of $F$ (as defined Eq. \@ref(eq:F)) lie strictly within the unit circle.
 iii. The roots of Eq. \@ref(eq:outside) (below) lie strictly outside the unit circle.
 \begin{equation}
 1 - \phi_1 z - \dots - \phi_{p-1}z^{p-1} - \phi_p z^p = 0.(\#eq:outside)
@@ -572,7 +577,11 @@ y_t = \mu + \psi(L)\varepsilon_t,
 $$
 where
 \begin{equation}
-\psi(L) = (1 - \phi_1 L - \dots - \phi_p L^p)^{-1} \quad and \quad \mu = \mathbb{E}(y_t) = \dfrac{c}{1-\phi_1 -\dots - \phi_p}.(\#eq:EAR)
+\psi(L) = (1 - \phi_1 L - \dots - \phi_p L^p)^{-1},
+\end{equation}
+and
+\begin{equation}
+\mu = \mathbb{E}(y_t) = \dfrac{c}{1-\phi_1 -\dots - \phi_p}.(\#eq:EAR)
 \end{equation}
 
 
@@ -595,7 +604,7 @@ F[1,] <- c(.9,.2)
 lambda_z <- eigen(F)$values
 rbind(lambda_x,lambda_y,lambda_w,lambda_z)
 ```
-The absolute values of the eigenvalues associated with process $w_t$ are equal to `r round(abs(lambda_w),3)[1]`. Therefore, according to Proposition \@ref(prp:stability), processes $x_t$, $y_t$, and $w_t$ are covariance-stationary, but not $z_t$ (because the absolute value of one of the eigenvalues of the $F$ matrix associated with this process is larger than 1).
+The absolute values of the eigenvalues associated with process $w_t$ are both equal to `r round(abs(lambda_w),3)[1]`. Therefore, according to Proposition \@ref(prp:stability), processes $x_t$, $y_t$, and $w_t$ are covariance-stationary, but not $z_t$ (because the absolute value of one of the eigenvalues of the $F$ matrix associated with this process is larger than 1).
 
 The computation of the autocovariances of $y_t$ is based on the so-called **Yule-Walker equations** (Eq. \@ref(eq:gammas)). Let's rewrite Eq. \@ref(eq:AR):
 $$
@@ -740,16 +749,13 @@ $$
 \end{array}
 \right.
 $$
-We denote by $\{\tilde{y}_t^{(s)}\}$ the process following Eq. \@ref(eq:ARMApq) where $\{\varepsilon_t\}$ is replaced by $\{\tilde\varepsilon_t^{(s)}\}$. The time series $\{\tilde{y}_t^{(s)}\}$ is the (counterfactual) series $\{y_t\}$ that would have prevailed if $\varepsilon_t$ had been shifted by $\delta$ on date $s$ (only change).
+We denote by $\{\tilde{y}_t^{(s)}\}$ the process following Eq. \@ref(eq:ARMApq) where $\{\varepsilon_t\}$ is replaced with $\{\tilde\varepsilon_t^{(s)}\}$. The time series $\{\tilde{y}_t^{(s)}\}$ is the counterfactual series $\{y_t\}$ that would have prevailed if $\varepsilon_t$ had been shifted by $\delta$ on date $s$ (and that would be the only change).
 
-What is the relationship between $\{y_t\}$ and $\{\tilde{y}_t^{(s)}\}$? By definition, we have:
+The relationship between $\{y_t\}$ and $\{\tilde{y}_t^{(s)}\}$ defines the **dynamics multiplier**. The ltter is denoted by $\frac{\partial y_t}{\partial \varepsilon_{s}}$ and is such that:
 $$
-\boxed{\tilde{y}_t^{(s)} = y_t + \frac{\partial y_t}{\partial \varepsilon_{s}}\delta.}
+\tilde{y}_t^{(s)} = y_t + \frac{\partial y_t}{\partial \varepsilon_{s}}\delta.
 $$
-
-The object $\frac{\partial y_t}{\partial \varepsilon_{s}}$ is called the **dynamic multiplier** of $y_t$ w.r.t. $\varepsilon_{t}$ (of order $t-s$).
-
-Let us consider the **Wold decomposition** of $\{y_t\}$ (see Theorem \@ref(thm:Wold) and Eq. \@ref(eq:ARMAwold) for the application of this theorem to ARMA processes):
+We will see that the dynamic multipliers are closely related to the infinite MA representation (or **Wold decomposition**, Theorem \@ref(thm:Wold)) of $y_t$:
 $$
 y_t = \mu + \sum_{i=0}^{+\infty} \psi_i \varepsilon_{t-i}.
 $$
@@ -767,19 +773,19 @@ That is, $\{y_t\}$'s dynamic multiplier of order $k$ is the same object as the $
 
 For ARMA processes, the computation of the IRFs is easy:
 
-
 :::{.proposition #computPsi name="IRF of an ARMA(p,q) process"}
-The coefficients $\psi_h$, that define the IRF of process $y_t$ to $\varepsilon_t$ can be computed recursively as follows:
+The coefficients $\psi_h$, that define the IRF of process $y_t$ to $\varepsilon_t$, can be computed recursively as follows:
 
 1. Set $\psi_{-1}=\dots=\psi_{-p}=0$.
-2. For $h \ge 0$, (recursively) apply Eq. \@ref(eq:ARMApq):
+2. For $h \ge 0$, (recursively) apply:
 $$
 \psi_h = \phi_1 \psi_{h-1} + \dots + \phi_p \psi_{h-p} + \theta_h,
 $$
 where $\theta_h = 0$ for $h>q$.
 :::
+
 :::{.proof}
-This is obtained by apllying the operator $\frac{\partial}{\partial \varepsilon_{t}}$ on both sides of Eq. \@ref(eq:ARMApq):
+This is obtained by applying the operator $\frac{\partial}{\partial \varepsilon_{t}}$ on both sides of Eq. \@ref(eq:ARMApq):
 $$
 y_{t+h} = c + \phi_1 y_{t+h-1} + \dots + \phi_p y_{t+h-p} + \varepsilon_{t+h} + \theta_1 \varepsilon_{t+h-1} + \dots + \theta_q \varepsilon_{t+h-q}.
 $$
@@ -787,25 +793,30 @@ $$
 
 Note that Proposition \@ref(prp:computPsi) constitutes a simple way to compute the MA($\infty$) representation (or Wold representation) of an ARMA process.
 
-One can use function `sim.arma`, with the argument `make.IRF = 1` to compute ARMA's IRFs:
+One can use function `sim.arma` of package `AEC` to compute ARMA's IRFs (with the argument `make.IRF = 1`):
 
-```{r IRFarma, echo=TRUE, fig.cap="IRFs of three processes. Process 1 (MA(2)): $y_t = \\varepsilon_t + \\varepsilon_{t-1} + \\varepsilon_{t-2}$. Process 2 (ARMA(1,2)): $y_{t}=0.6y_{t-1} + \\varepsilon_t + 0.5\\varepsilon_{t-1}$. Process 3 (ARMA(4,2)): $y_{t}=0.5y_{t-3} + 0.4y_{t-4} + \\varepsilon_t + \\varepsilon_{t-1} + \\varepsilon_{t-2}$.", fig.asp = .6, out.width = "100%", fig.align = 'left-aligned'}
+```{r IRFarma, echo=TRUE, fig.cap="IRFs associated with the three processes. Process 1 (MA(2)): $y_t = \\varepsilon_t + \\varepsilon_{t-1} + \\varepsilon_{t-2}$. Process 2 (ARMA(1,1)): $y_{t}=0.6y_{t-1} + \\varepsilon_t + 0.5\\varepsilon_{t-1}$. Process 3 (ARMA(4,2)): $y_{t}=0.5y_{t-3} + 0.4y_{t-4} + \\varepsilon_t + \\varepsilon_{t-1} + \\varepsilon_{t-2}$.", fig.asp = .6, out.width = "100%", fig.align = 'left-aligned'}
 T <- 21 # number of periods for IRF
 theta <- c(1,1,1);phi <- c(0);c <- 0
-y.sim <- sim.arma(c,phi,theta,sigma=1,T,y.0=rep(0,length(phi)),nb.sim=1,make.IRF = 1)
+y.sim <- sim.arma(c,phi,theta,sigma=1,T,y.0=rep(0,length(phi)),
+                  nb.sim=1,make.IRF = 1)
 par(mfrow=c(1,3));par(plt=c(.25,.95,.2,.85))
 plot(0:(T-1),y.sim[,1],type="l",lwd=2,
      main="(a) Process 1",xlab="Time after shock on epsilon",
      ylab="Dynamic multiplier (shock on epsilon at t=0)",col="red")
 abline(h=0)
 theta <- c(1,.5);phi <- c(0.6)
-y.sim <- sim.arma(c,phi,theta,sigma=1,T,y.0=rep(0,length(phi)),nb.sim=1,make.IRF = 1)
+y.sim <- sim.arma(c,phi,theta,sigma=1,T,y.0=rep(0,length(phi)),
+                  nb.sim=1,make.IRF = 1)
 plot(0:(T-1),y.sim[,1],type="l",lwd=2,
-     main="(b) Process 2",xlab="Time after shock on epsilon",ylab="",col="red")
+     main="(b) Process 2",xlab="Time after shock on epsilon",
+     ylab="",col="red")
 theta <- c(1,1,1);phi <- c(0,0,.5,.4)
-y.sim <- sim.arma(c,phi,theta,sigma=1,T,y.0=rep(0,length(phi)),nb.sim=1,make.IRF = 1)
+y.sim <- sim.arma(c,phi,theta,sigma=1,T,y.0=rep(0,length(phi)),
+                  nb.sim=1,make.IRF = 1)
 plot(0:(T-1),y.sim[,1],type="l",lwd=2,
-     main="(c) Process 3",xlab="Time after shock on epsilon",ylab="",col="red")
+     main="(c) Process 3",xlab="Time after shock on epsilon",
+     ylab="",col="red")
 ```
 
 
@@ -813,6 +824,7 @@ Consider the annual Swiss GDP growth from the JST macro-history database. Let us
 
 ```{r IRFgdp1, echo=TRUE, fig.cap="(P)ACF analysis of Swiss GDP growth.", fig.asp = .6, out.width = "100%", fig.align = 'left-aligned'}
 library(AEC)
+data(JST)
 data <- subset(JST,iso=="CHE")
 par(plt=c(.1,.95,.1,.95))
 T <- dim(data)[1]
@@ -832,15 +844,17 @@ The two bottom plots of Figure \@ref(fig:IRFgdp1) suggest that either an MA(2) o
 res <- arima(growth,order=c(1,0,0))
 phi <- res$coef[1]
 T <- 11
-y.sim <- sim.arma(c=0,phi,theta=1,sigma=1,T,y.0=rep(0,length(phi)),nb.sim=1,make.IRF = 1)
+y.sim <- sim.arma(c=0,phi,theta=1,sigma=1,T,y.0=rep(0,length(phi)),
+                  nb.sim=1,make.IRF = 1)
+par(plt=c(.15,.95,.25,.95))
 plot(0:(T-1),y.sim[,1],type="l",lwd=3,
      xlab="Time after shock on epsilon",
      ylab="Dynamic multiplier (shock on epsilon at t=0)",col="red")
 # Fit a MA process:
 res <- arima(growth,order=c(0,0,2))
-phi <- 0
-theta <- c(1,res$coef[1:2])
-y.sim <- sim.arma(c=0,phi,theta,sigma=1,T,y.0=rep(0,length(phi)),nb.sim=1,make.IRF = 1)
+phi <- 0;theta <- c(1,res$coef[1:2])
+y.sim <- sim.arma(c=0,phi,theta,sigma=1,T,y.0=rep(0,length(phi)),
+                  nb.sim=1,make.IRF = 1)
 lines(0:(T-1),y.sim[,1],lwd=3,col="red",lty=2)
 abline(h=0)
 ```
@@ -888,7 +902,7 @@ $$
 
 <!-- Past values of the exogenous variable do not allow to predict present and future values of $\varepsilon_t$ (Eq. \@ref(eq:expepsx)). -->
 
-For strictly exogenous proceses $\{x_t\}$, past, present and future values of the exogenous variable do not allow to predict any of the $\varepsilon_t$'s.
+Hence, if $\{x_t\}$ is strictly exogenous to  $\varepsilon_t$, then past, present and future values of $x_t$ do not allow to predict the $\varepsilon_t$'s.
 
 In the following, we assume that $\{x_t\}$ is a covariance stationary process.
 
@@ -903,11 +917,11 @@ where $\{\varepsilon_t\}$ is an i.i.d. white noise sequence and $\{x_t\}$ is exo
 
 <!-- The Autoregressive Distributed Lag (ADL) Model ADL(p,r) is an ARMAX(p,0,r) model (see @Stock_Watson_2003, Chapter 16). -->
 
-What is the effect of a one-unit increase in $x_t$ on $y_t$? To address this question, this notion of "effect" has to be formalized Let us introduce two related sequences of values for $\{x\}$. Denote the first by $\{a\}^t$ and the second by $\{\tilde{a}\}^t$. Further, we posit $a_s = \tilde{a}_s$ for all $'s \ne t$, and $\tilde{a}_t = a_t+1$.
+What is the effect of a one-unit increase in $x_t$ on $y_t$? To address this question, this notion of "effect" has to be formalized. Let us introduce two related sequences of values for $\{x\}$. Denote the first by $\{a\}$ and the second by $\{\tilde{a}^t\}$. Further, we posit $a_s = \tilde{a}_s^t$ for all $s \ne t$, and $\tilde{a}_t^t = a_t+1$.
 
 With these notations, we define $\frac{\partial y_{t+h}}{\partial x_t}$ as follows:
 \begin{equation}
-\frac{\partial y_{t+h}}{\partial x_t} := \mathbb{E}(y_{t+h}|\{x\} = \{\tilde{a}^t\}) - \mathbb{E}(y_{t+h}|\{x\} = \{a\}^t).(\#eq:dynmultX)
+\frac{\partial y_{t+h}}{\partial x_t} := \mathbb{E}(y_{t+h}|\{x\} = \{\tilde{a}^t\}) - \mathbb{E}(y_{t+h}|\{x\} = \{a\}).(\#eq:dynmultX)
 \end{equation}
 Under the exogeneity assumption, it is easily seen that
 <!-- \begin{eqnarray*} -->
@@ -945,9 +959,11 @@ where we use the notation $\beta_h=0$ if $h>r$.
 
 Remark that the resulting dynamic multipliers are the same as those obtained for an ARMA(p,r) model where the $\theta_i$'s are replaced with $\beta_i$'s (see Proposition \@ref(prp:computPsi) in Section \@ref(ARMAIRF)).
 
-It has to be stressed that the definition of the dynamic multipliers (Eq. \@ref(eq:dynmultX)) does not reflect a potential persistency of the shock occuring on date $t$  in process $\{x\}$ itself. Going in this direction would necessitate to model the dynamics of $x_t$ (and, therefore, to go in the VAR direction , see Section \@ref(VAR)).
+It has to be stressed that the definition of the dynamic multipliers (Eq. \@ref(eq:dynmultX)) does not reflect a potential persistency of the shock occuring on date $t$  in process $\{x\}$ itself. Going in this direction would necessitate to model the joint dynamics of $x_t$ (for instance using a VAR model , see Section \@ref(VAR)).
 
-The next example is based on data used in @Stock_Watson_2003 (Chapter 16). The objective is to study the influence of the number of freezing days on the price of orange juice.
+:::{.example #OrangeJuice name="Influence of the number of freezing days on the price of orange juice"}
+
+This example is based on data used in @Stock_Watson_2003 (Chapter 16). The objective is to study the influence of the number of freezing days on the price of orange juice. Let us first estimate a ARMAX(0,0,12) model:
 
 ```{r freez, warning=FALSE, message=FALSE}
 library(AEC)
@@ -962,9 +978,12 @@ dprice <- 100*log(price[(k+1):T]/price[1:(T-k)])
 fdd <- FJ$fdd[(k+1):T]
 par(mfrow=c(3,1))
 par(plt=c(.1,.95,.15,.75))
-plot(date,price,type="l",xlab="",ylab="",main="(a) Price of orange Juice")
-plot(date,c(NaN,dprice),type="l",xlab="",ylab="",main="(b) Monthly pct Change (y)")
-plot(date,FJ$fdd,type="l",xlab="",ylab="",main="(c) Number of freezing days (x)")
+plot(date,price,type="l",xlab="",ylab="",
+     main="(a) Price of orange Juice")
+plot(date,c(NaN,dprice),type="l",xlab="",ylab="",
+     main="(b) Monthly pct Change (y)")
+plot(date,FJ$fdd,type="l",xlab="",ylab="",
+     main="(c) Number of freezing days (x)")
 ```
 ```{r freez2, warning=FALSE, message=FALSE}
 nb.lags <- 12
@@ -972,8 +991,7 @@ FDD <- FJ$fdd[(nb.lags+1):T]
 names.FDD <- NULL
 for(i in 1:nb.lags){
   FDD <- cbind(FDD,FJ$fdd[(nb.lags+1-i):(T-i)])
-  names.FDD <- c(names.FDD,paste(" Lag ",toString(i),sep=""))
-}
+  names.FDD <- c(names.FDD,paste(" Lag ",toString(i),sep=""))}
 colnames(FDD) <- c(" Lag 0",names.FDD)
 dprice <- dprice[(length(dprice)-dim(FDD)[1]+1):length(dprice)]
 eq <- lm(dprice~FDD)
@@ -982,7 +1000,7 @@ var.cov.mat <- NeweyWest(eq,lag = 7, prewhite = FALSE)
 robust_se <- sqrt(diag(var.cov.mat))
 # Stargazer output (with and without Robust SE)
 stargazer::stargazer(eq, eq, type = "text",
-                     column.labels = c("(no HAC)", "(HAC)"),keep.stat = "n",
+                     column.labels=c("(no HAC)","(HAC)"),keep.stat="n",
                      se = list(NULL,robust_se),no.space = TRUE)
 ```
 
@@ -994,8 +1012,7 @@ FDD <- FJ$fdd[(nb.lags+1):T]
 names.FDD <- NULL
 for(i in 1:nb.lags){
   FDD <- cbind(FDD,FJ$fdd[(nb.lags+1-i):(T-i)])
-  names.FDD <- c(names.FDD,paste(" Lag ",toString(i),sep=""))
-}
+  names.FDD <- c(names.FDD,paste(" Lag ",toString(i),sep=""))}
 colnames(FDD) <- c(" Lag 0",names.FDD)
 dprice <- 100*log(price[(k+1):T]/price[1:(T-k)])
 dprice <- dprice[(length(dprice)-dim(FDD)[1]+1):length(dprice)]
@@ -1004,17 +1021,20 @@ res.armax <- estim.armax(Y = dprice,p=3,q=0,X=FDD)
 
 Figure \@ref(fig:freez4) shows the IRF associated with each of the two models.
 
-```{r freez4, echo=TRUE, fig.cap="Response of changes in orange juice price (in percent) to the number of freezing days. The solid (respectively dashed) line corresponds to the ARMAX(0,0,12) (resp. ARMAX(3,0,1)) model. The first model is estimated by OLS, the second by MLE.", fig.asp = .6, out.width = "90%", fig.align = 'left-aligned'}
+```{r freez4, echo=TRUE, fig.cap="Response of changes in orange juice price (in percent) to the number of freezing days. The solid (respectively dashed) line corresponds to the ARMAX(0,0,12) (resp. ARMAX(3,0,1)) model. The first model is estimated by OLS (see above), the second by MLE.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
 nb.periods <- 20
 IRF1 <- sim.arma(c=0,phi=c(0),theta=eq$coefficients[2:13],sigma=1,
                  T=nb.periods,y.0=c(0),nb.sim=1,make.IRF=1)
 IRF2 <- sim.arma(c=0,phi=res.armax$phi,theta=res.armax$beta,sigma=1,
-                 T=nb.periods,y.0=rep(0,length(res.armax$phi)),nb.sim=1,make.IRF=1)
-plot(IRF1,type="l",lwd=2,col="red",xlab="months after shock",ylab="Chge in price (percent)")
+                 T=nb.periods,y.0=rep(0,length(res.armax$phi)),
+                 nb.sim=1,make.IRF=1)
+par(plt=c(.15,.95,.2,.95))
+plot(IRF1,type="l",lwd=2,col="red",xlab="months after shock",
+     ylab="Chge in price (percent)")
 lines(IRF2,lwd=2,col="red",lty=2)
 abline(h=0,col="grey")
 ```
-
+:::
 
 <!-- \begin{frame} -->
 <!-- \begin{scriptsize} -->
@@ -1055,7 +1075,10 @@ abline(h=0,col="grey")
 <!-- \end{frame} -->
 
 
-In the following example, we make use of monetary shocks identified through high-frequency data (see @Gertler_Karadi_2015). This dataset comes from [Valerie Ramey's website](https://econweb.ucsd.edu/~vramey/research.html) (see @Ramey_2016_NBER).
+
+:::{.example #Ramey1 name="Real effect of a monetary policy shock"}
+
+In this example, we make use of monetary shocks identified through high-frequency data (see @Gertler_Karadi_2015). This dataset comes from [Valerie Ramey's website](https://econweb.ucsd.edu/~vramey/research.html) (see @Ramey_2016_NBER).
 
 
 ```{r Ramey1}
@@ -1067,15 +1090,13 @@ Ramey$growth <- Ramey$LIP - c(rep(NaN,12),Ramey$LIP[1:(length(Ramey$LIP)-12)])
 vec.lags <- c(9,12,18)
 Matrix.of.Exog <- NULL
 shocks <- Ramey$ED2_TC
-for(i in 1:length(vec.lags)){
-  Matrix.of.Exog <- cbind(Matrix.of.Exog,
-                          c(rep(NaN,vec.lags[i]),shocks[1:(T-vec.lags[i])]))
-}
+for(i in 1:length(vec.lags)){Matrix.of.Exog <-
+  cbind(Matrix.of.Exog,c(rep(NaN,vec.lags[i]),shocks[1:(T-vec.lags[i])]))}
 # Look for dates where data are available:
 indic.good.dates <- complete.cases(Matrix.of.Exog)
 ```
 
-```{r Ramey1fig, echo=FALSE, fig.cap="The blue line corresponds to monetary-policy shocks identified by means of the Gertler and Karadi (2015)'s approach (high-frequency change in Euro-dollar futures). The black slid line is the year-on-year growth rate of industrial production.", fig.asp = .6, out.width = "90%", fig.align = 'left-aligned'}
+```{r Ramey1fig, echo=FALSE, fig.cap="The blue line corresponds to monetary-policy shocks identified by means of the Gertler and Karadi (2015)'s approach (high-frequency change in Euro-dollar futures). The black slid line is the year-on-year growth rate of industrial production.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
 par(mfrow=c(1,1),plt=c(.15,.95,.15,.95))
 plot(Ramey$DATES[indic.good.dates],100*Ramey$growth[indic.good.dates],type="l",
      ylim=c(-15,10),xlab="",ylab="in percent",lwd=2)
@@ -1101,30 +1122,28 @@ p <- 1; q <- 0
 x <- estim.armax(Ramey$growth[indic.good.dates],p,q,
                  X=Matrix.of.Exog[indic.good.dates,])
 # Compute IRF:
-irf <- sim.arma(0,x$phi,x$beta,x$sigma,T=60,y.0=rep(0,length(x$phi)),nb.sim=1,make.IRF=1,
-                X=NaN,beta=NaN)
+irf <- sim.arma(0,x$phi,x$beta,x$sigma,T=60,y.0=rep(0,length(x$phi)),
+                nb.sim=1,make.IRF=1,X=NaN,beta=NaN)
 ```
 
 Figure \@ref(fig:Ramey3) displays the resulting IRF, with a 95\% confidence band. The code used to produce the confidence bands (i.e., to compute the standard deviation of the dynamic multipliers for the different horizons) is based on the Delta method (see Eq. \@ref(eq:DeltaMethod)). The codes are available in Appendix \@ref(IRFDELTA).
 
 
-```{r Ramey3, echo=FALSE, fig.cap="Response of industrial-production growth to monetary-policy shocks. Dashed lines correpsond to the $\\pm$  2-standard-deviation bands.", fig.asp = .6, out.width = "90%", fig.align = 'left-aligned'}
+```{r Ramey3, echo=FALSE, fig.cap="Response of industrial-production growth to monetary-policy shocks. Dashed lines correpsond to the $\\pm$  2-standard-deviation bands.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
 irf.function <- function(THETA){
   c <- THETA[1]
   phi <- THETA[2:(p+1)]
   if(q>0){
     theta <- c(1,THETA[(1+p+1):(1+p+q)])
-  }else{
-    theta <- 1
-  }
+  }else{theta <- 1}
   sigma <- THETA[1+p+q+1]
   r <- dim(Matrix.of.Exog)[2] - 1
   beta <- THETA[(1+p+q+1+1):(1+p+q+1+(r+1))]
   
-  irf <- sim.arma(0,phi,beta,sigma=sd(Ramey$ED3_TC,na.rm=TRUE),T=60,y.0=rep(0,length(x$phi)),nb.sim=1,make.IRF=1,
+  irf <- sim.arma(0,phi,beta,sigma=sd(Ramey$ED3_TC,na.rm=TRUE),
+                  T=60,y.0=rep(0,length(x$phi)),nb.sim=1,make.IRF=1,
                   X=NaN,beta=NaN)
-  return(irf)
-}
+  return(irf)}
 
 IRF.0 <- 100*irf.function(x$THETA)
 eps <- .00000001
@@ -1134,9 +1153,7 @@ for(i in 1:length(x$THETA)){
   THETA.i[i] <- THETA.i[i] + eps
   IRF.i <- 100*irf.function(THETA.i)
   d.IRF <- cbind(d.IRF,
-                 (IRF.i - IRF.0)/eps
-  )
-}
+                 (IRF.i - IRF.0)/eps)}
 mat.var.cov.IRF <- d.IRF %*% x$I %*% t(d.IRF)
 
 par(mfrow=c(1,1),plt=c(.15,.95,.2,.95))
@@ -1147,7 +1164,7 @@ abline(h=0,col="black",lty=3,lwd=2)
 lines(IRF.0+2*sqrt(diag(mat.var.cov.IRF)),col="blue",lty=2,lwd=2)
 lines(IRF.0-2*sqrt(diag(mat.var.cov.IRF)),col="blue",lty=2,lwd=2)
 ```
-
+:::
 
 ### Maximum Likelihood Estimation of ARMA processes {#estimARMA}
 
@@ -1237,7 +1254,7 @@ which is maximised for:
 &=& \frac{1}{T-1} Y'(I - X(X'X)^{-1}X')Y. (\#eq:AROLSsigma)
 \end{eqnarray}
 
-Let us turn to the case of an AR(p) process. We use:
+Let us turn to the case of an AR(p) process. We have:
 \begin{eqnarray*}
 \log \mathcal{L}(\boldsymbol\theta;\bv{y}) &=& \log f_{Y_p,\dots,Y_1}(y_p,\dots,y_1;\boldsymbol\theta) +\\
 && \underbrace{\sum_{t=p+1}^{T} \log f_{Y_t|Y_{t-1},\dots,Y_{t-p}}(y_t,\dots,y_{t-p};\boldsymbol\theta)}_{\log \mathcal{L}^*(\boldsymbol\theta;\bv{y})}.
@@ -1266,20 +1283,17 @@ X = \left[\begin{array}{cccc}
 \end{array}\right].
 $$
 
-Again, for stationary processes, conditional and exact MLE have the same asymptotic  (large-sample) distribution.
-
-
-Consider the regression (where $y_t$ follows an AR(p) process):
+Again, for stationary processes, conditional and exact MLE have the same asymptotic  (large-sample) distribution. In small samples, the OLS formula is however biased. Indeed, consider the regression (where $y_t$ follows an AR(p) process):
 \begin{equation}
 y_t = \boldsymbol\beta'\bv{x}_t + \varepsilon_t,(\#eq:OLSregARp)
 \end{equation}
 with $\bv{x}_t = [1,y_{t-1},\dots,y_{t-p}]'$ and $\boldsymbol\beta = [c,\phi_1,\dots,\phi_p]'$. 
 
-The fact that $\bv{x}_t$ correlates to the $\varepsilon_s$'s for $s<t$ implies that the OLS estimator $\bv{b}$ of $\boldsymbol\beta$ is biased in small sample. Indeed, we have:
+The bias results from the fact that $\bv{x}_t$ correlates to the $\varepsilon_s$'s for $s<t$. To be sure:
 \begin{equation}
 \bv{b} = \boldsymbol{\beta} + (X'X)^{-1}X'\boldsymbol\varepsilon,(\#eq:olsar1)
 \end{equation}
-and because of the specific form of $X$, we have non-zero correlation between $\bv{x}_t$ and $\varepsilon_s$ for $s<t$, therefore $\mathbb{E}[(X'X)^{-1}X'\boldsymbol\varepsilon] \ne 0$. However, asymptotically, the previous expectation goes to zero, and we have:
+and because of the specific form of $X$, we have non-zero correlation between $\bv{x}_t$ and $\varepsilon_s$ for $s<t$, therefore $\mathbb{E}[(X'X)^{-1}X'\boldsymbol\varepsilon] \ne 0$. Again, asymptotically, the previous expectation goes to zero, and we have:
 
 
 :::{.proposition #cgceOLSARp name="Large-sample porperties of the OLS estimator of AR(p) models"}
@@ -1321,7 +1335,7 @@ $$
 The convergence in distribution of $\sqrt{T}(X'\boldsymbol\varepsilon/T)=\sqrt{T}\frac{1}{T}\sum_{t=1}^Tv_t$ results from Theorem \@ref(thm:CLTcovstat) (applied on $\bv{v}_t=\bv{x}_t\varepsilon_t$), using the $\gamma_j^v$ computed above.
 :::
 
-These two cases (exact or conditional log-likelihoods) can be implemented when asking R to fit an AR process by means of function `arima`. Let us for instance use the output gap of the `US3var` dataset (US quarterly data, from 1959:2 to 2015:1, used in @Gourieroux_Monfort_Renne_2017).
+These two cases (exact or conditional log-likelihoods) can be implemented when asking R to fit an AR process by means of function `arima`. Let us for instance use the output gap of the `US3var` dataset (US quarterly data, covering the period 1959:2 to 2015:1, used in @Gourieroux_Monfort_Renne_2017).
 
 ```{r UseArima}
 library(AEC)
@@ -1384,7 +1398,7 @@ with
 
 In this context, a consistent estimate of the conditional log-likelihood is still given by Eq. \@ref(eq:MALstar).
 
-Note that we could determine the exact likelihood of an MA process. Indeed, vector $Y = [y_1,\dots,y_T]'$ is a Gaussian-distributed vector of mean $\boldsymbol\mu = [\mu,\dots,\mu]'$ and of variance:
+Note that we could determine the exact likelihood of an MA process. Indeed, vector $\bv{y} = [y_1,\dots,y_T]'$ is a Gaussian-distributed vector of mean $\boldsymbol\mu = [\mu,\dots,\mu]'$ and of variance:
 $$
 \boldsymbol\Omega = \left[\begin{array}{ccccccc}
 \gamma_0 & \gamma_1&\dots&\gamma_q&{\color{red}0}&{\color{red}\dots}&{\color{red}0}\\
@@ -1396,10 +1410,11 @@ $$
 {\color{red}0}&{\color{red}\dots}&{\color{red}0}&\gamma_q&\dots&\gamma_1&\gamma_0
 \end{array}\right],
 $$
-where the $\gamma_j$'s are given by Eq. \@ref(eq:autocovMA). However, for large samples, the computation of the likelihood can be numerically demanding. Hence, the p.d.f. of $Y$ is given by (see Prop. \@ref(prp:pdfMultivarGaussian)):
+where the $\gamma_j$'s are given by Eq. \@ref(eq:autocovMA). The p.d.f. of $Y$ is then given by (see Prop. \@ref(prp:pdfMultivarGaussian)):
 $$
-(2\pi)^{-T/2}|\boldsymbol\Omega|^{-1/2}\exp\left( -\frac{1}{2} (Y-\boldsymbol\mu)' \boldsymbol\Omega^{-1} (Y-\boldsymbol\mu)\right).
+(2\pi)^{-T/2}|\boldsymbol\Omega|^{-1/2}\exp\left( -\frac{1}{2} (\bv{y}-\boldsymbol\mu)' \boldsymbol\Omega^{-1} (\bv{y}-\boldsymbol\mu)\right).
 $$
+However, for large samples, the computation of this likelihood becomes numerically demanding. 
 
 Finally, let us consider the MLE of an ARMA($p$,$q$) processes:
 $$
@@ -1893,7 +1908,7 @@ where the component of $\Sigma_{22}$ corresponding to the covariance between $\h
 See @Hamilton_1994, Appendix of Chapter 11.
 :::
 
-Naturally, in practice, $\Omega$ is replaced by $\hat{\Omega}$, $Q$ is replaced with $\hat{\bv{Q}} = \frac{1}{T}\sum_{t=p}^T x_t x_t'$ and $\Sigma$ with the matrix whose components are of the form $\hat\sigma_{i,l}\hat\sigma_{j,m}+\hat\sigma_{i,m}\hat\sigma_{j,l}$, where the $\hat\sigma_{i,l}$'s are the components of $\hat\Omega$.
+Naturally, in practice, $\Omega$ is replaced with $\hat{\Omega}$, $Q$ is replaced with $\hat{\bv{Q}} = \frac{1}{T}\sum_{t=p}^T x_t x_t'$ and $\Sigma$ with the matrix whose components are of the form $\hat\sigma_{i,l}\hat\sigma_{j,m}+\hat\sigma_{i,m}\hat\sigma_{j,l}$, where the $\hat\sigma_{i,l}$'s are the components of $\hat\Omega$.
 
 The simplicity of the VAR framework and the tractability of its MLE open the way to convenient econometric testing. Let's illustrate this with the likelihood ratio test. The maximum value achieved by the MLE is
 $$
@@ -2268,7 +2283,7 @@ y_{t} &=& c+\Phi y_{t-1}+\varepsilon_{t}\\
 & = & \mu +B\eta_{t}+\Phi B\eta_{t-1}+\ldots+\Phi^{k}B\eta_{t-k}+\ldots,
 \end{eqnarray}
 
-The sequence of shocks $\{\eta_t\}$ determines the sequence $\{y_t\}$. What if $\{\eta_t\}$ is replaced by $\{\tilde{\eta}_t\}$, where $\tilde{\eta}_t=\eta_t$ if $t \ne s$ and $\tilde{\eta}_s=\eta_s + \gamma$?
+The sequence of shocks $\{\eta_t\}$ determines the sequence $\{y_t\}$. What if $\{\eta_t\}$ is replaced with $\{\tilde{\eta}_t\}$, where $\tilde{\eta}_t=\eta_t$ if $t \ne s$ and $\tilde{\eta}_s=\eta_s + \gamma$?
 
 Assume $\{\tilde{y}_t\}$ is the associated "perturbated" sequence. We have $\tilde{y}_t = y_t$ if $t<s$. For $t \ge s$, the Wold decomposition of $\{\tilde{y}_t\}$ implies:
 $$
@@ -4252,8 +4267,8 @@ Bootstrapping consists in:
 * re-sampling $N$ times, i.e., constructing $N$ samples of $T$ observations, using the estimated
 VAR coefficients and
 
-    a. a sample of residuals from the distribution $N(0,BB')$ (**parametric approach**), or
-    b. a sample of residuals drawn randomly from the set of the actual estimated residuals $\{\hat\varepsilon_t\}_{t=1,..,T}$. (**non-parametric approach**).
+a. a sample of residuals from the distribution $N(0,BB')$ (**parametric approach**), or
+b. a sample of residuals drawn randomly from the set of the actual estimated residuals $\{\hat\varepsilon_t\}_{t=1,..,T}$. (**non-parametric approach**).
 
 * re-estimating the SVAR $N$ times.
 
@@ -4276,23 +4291,23 @@ More formally, the algorithm is as follows:
 
 1. Estimate the SVAR coefficients $\{\widehat{\Phi}_j\}_{j=1,..,p}$ and $\widehat{\Omega}$
 2. **First bootstrap.** For each iteration $k$:
-    a. Construct a sample
+a. Construct a sample
 $$
 y_t^{(k)}=\widehat{\Phi}_1 y_{t-1}^{(k)} + \dots + \widehat{\Phi}_p y_{t-p}^{(k)} + \hat\varepsilon_t^{(k)},
 $$
 with $\hat\varepsilon_{t}^{(k)}=\hat\varepsilon_{s_t^{(k)}}$, where $\{s_1^{(k)},..,s_T^{(k)}\}$ is a random set from $\{1,..,T\}^T$.
-    b. Re-estimate the VAR and compute the coefficients $\{\widehat{\Phi}_j\}_{j=1,..,p}^{(k)}$.
+b. Re-estimate the VAR and compute the coefficients $\{\widehat{\Phi}_j\}_{j=1,..,p}^{(k)}$.
 
 3. Perform $N$ replications and compute the median coefficients $\{\widehat{\Phi}_j\}_{j=1,..,p}^*$. 
 4. Approximate the bias terms by $\widehat{\Theta}_j=\widehat{\Phi}_j^*-\widehat{\Phi}_j$.
 5. Construct the bias-corrected terms $\widetilde{\Phi}_j=\widehat{\Phi}_j-\widehat{\Theta}_j$.
 6. **Second bootstrap.** For each iteration $k$:
-    a. Construct a sample now from 
-    $$y_t^{(k)}=\widetilde{\Phi}_1 y_{t-1}^{(k)} + \dots + \widetilde{\Phi}_p y_{t-p}^{(k)} + \hat\varepsilon_t^{(k)}.
-    $$
-    b. Re-estimate the VAR and compute the coefficients $\{\widehat{\Phi}^*_j\}_{j=1,..,p}^{(k)}$.
-    c. Construct the bias-corrected estimates $\widetilde{\Phi}_j^{*(k)}=\widehat{\Phi}_j^{*(k)}-\widehat{\Theta}_j$.
-    d. Compute the associated IRFs $\{\widetilde{\Psi}_j^{*(k)}\}_{j\ge 1}$.
+a. Construct a sample now from 
+$$y_t^{(k)}=\widetilde{\Phi}_1 y_{t-1}^{(k)} + \dots + \widetilde{\Phi}_p y_{t-p}^{(k)} + \hat\varepsilon_t^{(k)}.
+$$
+b. Re-estimate the VAR and compute the coefficients $\{\widehat{\Phi}^*_j\}_{j=1,..,p}^{(k)}$.
+c. Construct the bias-corrected estimates $\widetilde{\Phi}_j^{*(k)}=\widehat{\Phi}_j^{*(k)}-\widehat{\Theta}_j$.
+d. Compute the associated IRFs $\{\widetilde{\Psi}_j^{*(k)}\}_{j\ge 1}$.
 
 7. Perform $N$ replications and compute the median and the confidence interval of the set of IRFs.
 
@@ -4331,7 +4346,6 @@ Forecasts produced by professional forecasters are available on these web pages:
 * [OECD Global Economic Outlook](http://www.oecd.org/eco/economicoutlook.htm).
 * [European Commission Economic Forecasts](http://ec.europa.eu/economy_finance/eu/forecasts/index_en.htm).
 
-
 How to formalize the forecasting problem? Assume the current date is $t$. We want to forecast the value that variable $y_t$ will take on date $t+1$ (i.e., $y_{t+1}$) based on the observation of a set of variables gathered in vector $x_t$ ($x_t$ may contain lagged values of $y_t$).
 
 The forecaster aims at minimizing (a function of) the forecast error. It is usal to consider the following (quadratic) loss function:
@@ -4343,7 +4357,6 @@ where $y^*_{t+1}$ is the forecast of $y_{t+1}$ (function of $x_t$).
 :::{.proposition #smallestMSE name="Smallest MSE"}
 The smallest MSE is obtained with  MSEthe expectation of $y_{t+1}$ conditional on $x_t$.
 :::
-
 :::{.proof}
 See Appendix \@ref(AppendixProof).
 :::
@@ -4615,7 +4628,7 @@ We use a long historical time series of the Swiss GDP growth taken from the @JST
 
 We want to forecast this GDP growth. We envision two specifications : an AR(1) specification (the one advocated by the AIC criteria, see Example \@ref(exm:SwissGrowthAIC)), and an ARMA(2,2) specification. We are interested in 2-year-ahead forecasts (i.e., $h=2$ since the data are yearly).
 
-```{r fcstARMA, warning=FALSE, fig.cap="XXX.", fig.asp = .6, out.width = "90%", fig.align = 'left-aligned'}
+```{r fcstARMA, warning=FALSE, fig.cap="XXX.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
 library(AEC)
 library(forecast)
 data <- subset(JST,iso=="CHE")
@@ -4636,7 +4649,7 @@ With `alternative = "greater"` The alternative hypothesis is that method 2 is mo
 
 Assume now that we want to compare the AR(1) process to a VAR model (see Def. \@ref(def:SVAR)). We consider a bivariate VAR, where GDP growth is complemented with CPI-based inflation rate.
 
-```{r fcstVAR, warning=FALSE,message=FALSE,fig.cap="XXX.", fig.asp = .6, out.width = "90%", fig.align = 'left-aligned'}
+```{r fcstVAR, warning=FALSE,message=FALSE,fig.cap="XXX.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
 library(vars)
 infl <- c(NaN,log(data$cpi[2:T]/data$cpi[1:(T-1)]))
 y_var <- cbind(y,infl)

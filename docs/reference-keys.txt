@@ -30,6 +30,7 @@ prp:indeps2b
 eq:resultstudentt
 eq:resultstudentt2
 fig:chartStudent
+exm:SHP0001
 eq:H0Ftest
 eq:W1
 prp:Ftest1
@@ -74,6 +75,7 @@ exm:HCheterAC
 eq:NW
 eq:simul11
 eq:simul22
+exm:DurbinWats
 eq:BBB
 eq:cluster1
 eq:definiS
@@ -99,6 +101,8 @@ fig:airbnb3
 eq:paneldyn
 fig:dynpanel1
 eq:paneldynFisrtDiff
+eq:EY1a
+eq:EY0a
 eq:DiD
 fig:figAbadie
 fig:figMeyer
@@ -119,7 +123,7 @@ def:score
 prp:score
 def:Fisher
 prp:Fisher
-exm:unlabeled-div-18
+exm:unlabeled-div-16
 prp:additiv
 thm:FDCR
 def:identif
@@ -224,7 +228,7 @@ def:LRV
 eq:covSmplMean
 eq:NWest
 fig:TVTCL
-def:unlabeled-div-28
+def:unlabeled-div-26
 def:MAq
 prp:covMAq
 eq:autocovMA
@@ -261,7 +265,9 @@ def:ARMAX
 eq:DLM
 eq:dynmultX
 prp:computPsiARMAX
+exm:OrangeJuice
 fig:freez4
+exm:Ramey1
 fig:Ramey1fig
 fig:Ramey3
 def:Markov
@@ -447,7 +453,7 @@ overidentif
 example-estimation-of-the-stochastic-discount-factor-s.d.f.
 secMLE
 intuition
-notations
+definition-and-properties
 to-sum-up-mle-in-practice
 example-mle-estimation-of-a-mixture-of-gaussian-distribution
 TestMLE
@@ -468,7 +474,7 @@ ordered-case
 MNL
 nested-logits
 tobit
-sample-selection-models
+SSM
 models-of-count-data
 poisson-model
 negative-binomial-model

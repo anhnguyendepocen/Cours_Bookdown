@@ -161,7 +161,6 @@ The result follows from Prop. \@ref(prp:rootsidempotent), combined with the fact
 :::
 
 
-
 :::{.proposition #constrainedLS name="Constrained least squares"}
 The solution of the following optimisation problem:
 \begin{eqnarray*}

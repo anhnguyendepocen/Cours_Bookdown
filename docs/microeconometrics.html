@@ -4,15 +4,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 5 Microeconometrics | Advanced Econometrics</title>
+<title>Chapter 5 Microeconometrics | Applied Econometrics</title>
 <meta name="author" content="Jean-Paul Renne">
 <meta name="description" content="In microeconometric models, the variables of interest often feature restricted distributions —for instance with discontinuous support—, which necessitates specific models. Typical examples are...">
 <meta name="generator" content="bookdown 0.27 with bs4_book()">
-<meta property="og:title" content="Chapter 5 Microeconometrics | Advanced Econometrics">
+<meta property="og:title" content="Chapter 5 Microeconometrics | Applied Econometrics">
 <meta property="og:type" content="book">
 <meta property="og:description" content="In microeconometric models, the variables of interest often feature restricted distributions —for instance with discontinuous support—, which necessitates specific models. Typical examples are...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 5 Microeconometrics | Advanced Econometrics">
+<meta name="twitter:title" content="Chapter 5 Microeconometrics | Applied Econometrics">
 <meta name="twitter:description" content="In microeconometric models, the variables of interest often feature restricted distributions —for instance with discontinuous support—, which necessitates specific models. Typical examples are...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -53,7 +53,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="">Advanced Econometrics</a>
+        <a href="index.html" title="">Applied Econometrics</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -84,13 +84,19 @@
 <h1>
 <span class="header-section-number">5</span> Microeconometrics<a class="anchor" aria-label="anchor" href="#microeconometrics"><i class="fas fa-link"></i></a>
 </h1>
-<p>In microeconometric models, the variables of interest often feature restricted distributions —for instance with discontinuous support—, which necessitates specific models. Typical examples are discrete-choice models (binary, multinomial, ordered outcomes), sample selection models (censored or truncated outcomes), and count-data models (integer outcomes). This section describes the estimation and interpretation of these models. It also shows how the discrete-choice models can emerge from (structural) random-utility frameworks.</p>
+<p>In microeconometric models, the variables of interest often feature restricted distributions —for instance with discontinuous support—, which necessitates specific models. Typical examples are discrete-choice models (binary, multinomial, ordered outcomes), sample selection models (censored or truncated outcomes), and count-data models (integer outcomes). This chapter describes the estimation and interpretation of these models. It also shows how the discrete-choice models can emerge from (structural) random-utility frameworks.</p>
 <div id="binary-choice-models" class="section level2" number="5.1">
 <h2>
 <span class="header-section-number">5.1</span> Binary-choice models<a class="anchor" aria-label="anchor" href="#binary-choice-models"><i class="fas fa-link"></i></a>
 </h2>
 <p>In many instances, the variables to be explained (the <span class="math inline">\(y_i\)</span>’s) have only two possible values (<span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>, say). That is, they are binary variables. The probability for them to be equal to either 0 or 1 may depend on independent variables, gathered in vectors <span class="math inline">\(\mathbf{x}_i\)</span> (<span class="math inline">\(K \times 1\)</span>).</p>
-<p>The model then reads:
+<p>The spectrum of applications is wide:</p>
+<ul>
+<li>Binary decisions (e.g. in referendums, being owner or renter, living in the city or in the countryside, in/out of the labour force,…),</li>
+<li>Contamination (disease or default),</li>
+<li>Success/failure (exams).</li>
+</ul>
+<p>Without loss of generality, the model reads:
 <span class="math display">\[\begin{equation}\label{eq:binaryBenroulli}
 y_i | \mathbf{X} \sim \mathcal{B}(g(\mathbf{x}_i;\boldsymbol\theta)),
 \end{equation}\]</span>
@@ -104,32 +110,26 @@ y_i = \left\{
 \right.\tag{5.1}
 \end{equation}\]</span>
 where <span class="math inline">\(\boldsymbol\theta\)</span> is a vector of parameters to be estimated.</p>
-<p>The spectrum of applications is wide. Binary-choice models can be used to account for:</p>
-<ul>
-<li>any binary decisions (e.g. in referendums, being owner or renter, living in the city or in the countryside, in/out of the labour force,…),</li>
-<li>contamination (disease or default),</li>
-<li>success/failure (exams).</li>
-</ul>
-<p>A possibility is to run a linear regression (a situation called <strong>Linear Probability Model, LPM</strong>):
+<p>An estimation strategy is to assume that <span class="math inline">\(g(\mathbf{x}_i;\boldsymbol\theta)\)</span> can be proxied by <span class="math inline">\(\tilde{\boldsymbol\theta}'\mathbf{x}_i\)</span> and to run a linear regression to estimate <span class="math inline">\(\tilde{\boldsymbol\theta}\)</span> (a situation called <strong>Linear Probability Model, LPM</strong>):
 <span class="math display">\[
-y_i = \boldsymbol\theta'\mathbf{x}_i + \varepsilon_i.
-\]</span></p>
-<p>Such a regression could be consistent with the <em>conditional-mean-zero assumption</em> (Hypothesis <a href="ChapterLS.html#hyp:exogeneity">2.2</a>) and with the <em>assumption of non-correlated residuals</em> (Hypothesis <a href="ChapterLS.html#hyp:noncorrelResid">2.4</a>), but more difficultly with the <em>homoskedasticity assumption</em> (Hypothesis <a href="ChapterLS.html#hyp:homoskedasticity">2.3</a>). Moreover, the <span class="math inline">\(\varepsilon_i\)</span>’s cannot be Gaussian (because <span class="math inline">\(y_i \in \{0,1\}\)</span>). Hence, using a linear regression to study the relationship between <span class="math inline">\(\mathbf{x}_i\)</span> and <span class="math inline">\(y_i\)</span> can be consistent but it is inefficient.</p>
+y_i = \tilde{\boldsymbol\theta}'\mathbf{x}_i + \varepsilon_i.
+\]</span>
+Notwithstanding the fact that this specification does not exclude negative probabilities or probabilities greater than one, it could be compatible with the <em>assumption of zero conditional mean</em> (Hypothesis <a href="ChapterLS.html#hyp:exogeneity">2.2</a>) and with the <em>assumption of non-correlated residuals</em> (Hypothesis <a href="ChapterLS.html#hyp:noncorrelResid">2.4</a>), but more difficultly with the <em>homoskedasticity assumption</em> (Hypothesis <a href="ChapterLS.html#hyp:homoskedasticity">2.3</a>). Moreover, the <span class="math inline">\(\varepsilon_i\)</span>’s cannot be Gaussian (because <span class="math inline">\(y_i \in \{0,1\}\)</span>). Hence, using a linear regression to study the relationship between <span class="math inline">\(\mathbf{x}_i\)</span> and <span class="math inline">\(y_i\)</span> can be consistent but it is inefficient.</p>
 <p>Figure <a href="microeconometrics.html#fig:LPM">5.1</a> illustrates the fit resulting from an application of the LPM model to binary (dependent) variables.</p>
 <div class="figure" style="text-align: left-aligned">
 <span style="display:block;" id="fig:LPM"></span>
-<img src="AdvECTS_files/figure-html/LPM-1.png" alt="Fitting a binary variable with a linear model (Linear Probability Model, LPM). The model is $\mathbb{P}(y_i=1|x_i)=\Phi(0.5+2x_i)$, where $\Phi$ is the c.d.f. of the normal distribution and where $x_i \sim \,i.i.d.\,\mathcal{N}(0,1)$." width="95%"><p class="caption">
+<img src="ApplEcts_files/figure-html/LPM-1.png" alt="Fitting a binary variable with a linear model (Linear Probability Model, LPM). The model is $\mathbb{P}(y_i=1|x_i)=\Phi(0.5+2x_i)$, where $\Phi$ is the c.d.f. of the normal distribution and where $x_i \sim \,i.i.d.\,\mathcal{N}(0,1)$." width="95%"><p class="caption">
 Figure 5.1: Fitting a binary variable with a linear model (Linear Probability Model, LPM). The model is <span class="math inline">\(\mathbb{P}(y_i=1|x_i)=\Phi(0.5+2x_i)\)</span>, where <span class="math inline">\(\Phi\)</span> is the c.d.f. of the normal distribution and where <span class="math inline">\(x_i \sim \,i.i.d.\,\mathcal{N}(0,1)\)</span>.
 </p>
 </div>
-<p>Except for its last row (LPM case), Table <a href="microeconometrics.html#tab:foo">5.1</a> provides examples of functions <span class="math inline">\(g\)</span> valued in <span class="math inline">\([0,1]\)</span>, and that can therefore used in models of the type: <span class="math inline">\(\mathbb{P}(y_i=1|\mathbf{x}_i;\boldsymbol heta) = g(\boldsymbol\theta'\mathbf{x}_i)\)</span> (see Eq. <a href="microeconometrics.html#eq:genericBinary">(5.1)</a>). The “linear” case is given for comparison, but note that it does not satisfy <span class="math inline">\(g(\boldsymbol\theta'\mathbf{x}_i) \in [0,1]\)</span> for any value of <span class="math inline">\(\boldsymbol\theta'\mathbf{x}_i\)</span>.</p>
+<p>Except for its last row (LPM case), Table <a href="microeconometrics.html#tab:foo">5.1</a> provides examples of functions <span class="math inline">\(g\)</span> valued in <span class="math inline">\([0,1]\)</span>, and that can therefore used in models of the type: <span class="math inline">\(\mathbb{P}(y_i=1|\mathbf{x}_i;\boldsymbol\theta) = g(\boldsymbol\theta'\mathbf{x}_i)\)</span> (see Eq. <a href="microeconometrics.html#eq:genericBinary">(5.1)</a>). The “linear” case is given for comparison, but note that it does not satisfy <span class="math inline">\(g(\boldsymbol\theta'\mathbf{x}_i) \in [0,1]\)</span> for any value of <span class="math inline">\(\boldsymbol\theta'\mathbf{x}_i\)</span>.</p>
 <div class="inline-table"><table class="table table-sm">
 <caption>
-<span id="tab:foo">Table 5.1: </span> This table provides examples of function <span class="math inline">\(g\)</span>, s.t. <span class="math inline">\(\mathbb{P}(y_i=1|\mathbf{x}_i;\boldsymbol heta) = g(\boldsymbol\theta'\mathbf{x}_i)\)</span>. The “linear” case is given for comparison, but note that it does not satisfy <span class="math inline">\(g(\boldsymbol\theta'\mathbf{x}_i) \in [0,1]\)</span> for any value of <span class="math inline">\(\boldsymbol\theta'\mathbf{x}_i\)</span>.</caption>
+<span id="tab:foo">Table 5.1: </span> This table provides examples of function <span class="math inline">\(g\)</span>, s.t. <span class="math inline">\(\mathbb{P}(y_i=1|\mathbf{x}_i;\boldsymbol heta) = g(\boldsymbol\theta'\mathbf{x}_i)\)</span>. The LPM case (last row) is given for comparison but, again, it does not satisfy <span class="math inline">\(g(\boldsymbol\theta'\mathbf{x}_i) \in [0,1]\)</span> for any value of <span class="math inline">\(\boldsymbol\theta'\mathbf{x}_i\)</span>.</caption>
 <colgroup>
-<col width="6%">
-<col width="69%">
-<col width="23%">
+<col width="21%">
+<col width="35%">
+<col width="42%">
 </colgroup>
 <thead><tr class="header">
 <th>Model</th>
@@ -154,16 +154,16 @@ Figure 5.1: Fitting a binary variable with a linear model (Linear Probability Mo
 <td><span class="math inline">\(\exp(-\exp(x))\exp(x)\)</span></td>
 </tr>
 <tr class="even">
-<td>linear</td>
+<td>linear (LPM)</td>
 <td><span class="math inline">\(x\)</span></td>
 <td>1</td>
 </tr>
 </tbody>
 </table></div>
-<p>Figure <a href="microeconometrics.html#fig:ProbLogit">5.2</a> displays the functions <span class="math inline">\(g\)</span> appearing in Table <a href="microeconometrics.html#tab:foo">5.1</a>.</p>
+<p>Figure <a href="microeconometrics.html#fig:ProbLogit">5.2</a> displays the first three <span class="math inline">\(g\)</span> functions appearing in Table <a href="microeconometrics.html#tab:foo">5.1</a>.</p>
 <div class="figure" style="text-align: left-aligned">
 <span style="display:block;" id="fig:ProbLogit"></span>
-<img src="AdvECTS_files/figure-html/ProbLogit-1.png" alt="Probit, Logit, and Log-log functions." width="95%"><p class="caption">
+<img src="ApplEcts_files/figure-html/ProbLogit-1.png" alt="Probit, Logit, and Log-log functions." width="95%"><p class="caption">
 Figure 5.2: Probit, Logit, and Log-log functions.
 </p>
 </div>
@@ -178,7 +178,7 @@ g(z) = \frac{1}{1+\exp(-z)}.\tag{5.3}
 <p>Figure <a href="microeconometrics.html#fig:LPM2">5.3</a> shows the conditional probabilities associated with the (probit) model that had been used to generate the data of Figure <a href="microeconometrics.html#fig:LPM">5.1</a>.</p>
 <div class="figure" style="text-align: left-aligned">
 <span style="display:block;" id="fig:LPM2"></span>
-<img src="AdvECTS_files/figure-html/LPM2-1.png" alt="The model is $\mathbb{P}(y_i=1|x_i)=\Phi(0.5+2x_i)$, where $\Phi$ is the c.d.f. of the normal distribution and where $x_i \sim \,i.i.d.\,\mathcal{N}(0,1)$. Crosses give the model-implied probabilities of having $y_i=1$ (conditional on $x_i$)." width="95%"><p class="caption">
+<img src="ApplEcts_files/figure-html/LPM2-1.png" alt="The model is $\mathbb{P}(y_i=1|x_i)=\Phi(0.5+2x_i)$, where $\Phi$ is the c.d.f. of the normal distribution and where $x_i \sim \,i.i.d.\,\mathcal{N}(0,1)$. Crosses give the model-implied probabilities of having $y_i=1$ (conditional on $x_i$)." width="95%"><p class="caption">
 Figure 5.3: The model is <span class="math inline">\(\mathbb{P}(y_i=1|x_i)=\Phi(0.5+2x_i)\)</span>, where <span class="math inline">\(\Phi\)</span> is the c.d.f. of the normal distribution and where <span class="math inline">\(x_i \sim \,i.i.d.\,\mathcal{N}(0,1)\)</span>. Crosses give the model-implied probabilities of having <span class="math inline">\(y_i=1\)</span> (conditional on <span class="math inline">\(x_i\)</span>).
 </p>
 </div>
@@ -186,7 +186,7 @@ Figure 5.3: The model is <span class="math inline">\(\mathbb{P}(y_i=1|x_i)=\Phi(
 <h3>
 <span class="header-section-number">5.1.1</span> Interpretation in terms of latent variable, and utility-based models<a class="anchor" aria-label="anchor" href="#latent"><i class="fas fa-link"></i></a>
 </h3>
-<p>The probit model has an interpretation in terms of latent variables, which, in turn, is often exploited in structural models, called <strong>Random Utility Models (RUM)</strong>. In such structural models, it is assumed that the agents that have to take the decision (for agent <span class="math inline">\(i\)</span>: <span class="math inline">\(y_i=0\)</span> or <span class="math inline">\(y_i=1\)</span>) do so by selecting the outcome that provides them with the larger utility. Part of this utility is observed by the econometrician (it depends on the covariates <span class="math inline">\(\mathbf{x}_i\)</span>) and part of it is latent.</p>
+<p>The probit model has an interpretation in terms of latent variables, which, in turn, is often exploited in structural models, called <strong>Random Utility Models (RUM)</strong>. In such structural models, it is assumed that the agents that have to take the decision do so by selecting the outcome that provides them with the larger utility (for agent <span class="math inline">\(i\)</span>, two possible outcomes: <span class="math inline">\(y_i=0\)</span> or <span class="math inline">\(y_i=1\)</span>). Part of this utility is observed by the econometrician —it depends on the covariates <span class="math inline">\(\mathbf{x}_i\)</span>— and part of it is latent.</p>
 <p>In the probit model, we have:
 <span class="math display">\[
 \mathbb{P}(y_i=1|\mathbf{x}_i;\boldsymbol\theta) = \Phi(\boldsymbol\theta'\mathbf{x}_i) = \mathbb{P}(-\varepsilon_{i}&lt;\boldsymbol\theta'\mathbf{x}_i),
@@ -199,11 +199,11 @@ where <span class="math inline">\(y_i^* = \boldsymbol\theta'\mathbf{x}_i + \vare
 <p>Figure <a href="microeconometrics.html#fig:Latent">5.4</a> illustrates this situation.</p>
 <div class="figure" style="text-align: left-aligned">
 <span style="display:block;" id="fig:Latent"></span>
-<img src="AdvECTS_files/figure-html/Latent-1.png" alt="Distribution of $y_i^*$ conditional on $\bv{x}_i$." width="95%"><p class="caption">
+<img src="ApplEcts_files/figure-html/Latent-1.png" alt="Distribution of $y_i^*$ conditional on $\bv{x}_i$." width="95%"><p class="caption">
 Figure 5.4: Distribution of <span class="math inline">\(y_i^*\)</span> conditional on <span class="math inline">\(\mathbf{x}_i\)</span>.
 </p>
 </div>
-<p>As mentioned above, assume that agent (<span class="math inline">\(i\)</span>) chooses <span class="math inline">\(y_i=1\)</span> if the utility associated with this choice (<span class="math inline">\(U_{i,1}\)</span>) is higher than the one associated with <span class="math inline">\(y_i=0\)</span> (<span class="math inline">\(U_{i,0}\)</span>). Assume further that the utility of agent <span class="math inline">\(i\)</span>, if she chooses outcome <span class="math inline">\(j\)</span> (<span class="math inline">\(\in \{0,1\}\)</span>), is given by
+<p>Assume that agent (<span class="math inline">\(i\)</span>) chooses <span class="math inline">\(y_i=1\)</span> if the utility associated with this choice (<span class="math inline">\(U_{i,1}\)</span>) is higher than the one associated with <span class="math inline">\(y_i=0\)</span> (that is <span class="math inline">\(U_{i,0}\)</span>). Assume further that the utility of agent <span class="math inline">\(i\)</span>, if she chooses outcome <span class="math inline">\(j\)</span> (<span class="math inline">\(\in \{0,1\}\)</span>), is given by
 <span class="math display">\[
 U_{i,j} = V_{i,j} + \varepsilon_{i,j},
 \]</span>
@@ -213,7 +213,7 @@ where <span class="math inline">\(V_{i,j}\)</span> is the deterministic componen
 &amp;=&amp; F(\boldsymbol\theta_1'\mathbf{x}_i-\boldsymbol\theta_0'\mathbf{x}_i) = F([\boldsymbol\theta_1-\boldsymbol\theta_0]'\mathbf{x}_i),\tag{5.4}
 \end{eqnarray}\]</span>
 where <span class="math inline">\(F\)</span> is the c.d.f. of <span class="math inline">\(\varepsilon_{i,0}-\varepsilon_{i,1}\)</span>.</p>
-<p>Note that only the difference <span class="math inline">\(\boldsymbol\theta_1-\boldsymbol\theta_0\)</span> is identifiable (as opposed to <span class="math inline">\(\boldsymbol\theta_1\)</span> AND <span class="math inline">\(\boldsymbol\theta_0\)</span>). Indeed, replacing <span class="math inline">\(U\)</span> with <span class="math inline">\(aU\)</span> (<span class="math inline">\(a&gt;0\)</span>) gives the same model. This <em>scaling</em> issue can be solved by fixing the variance of <span class="math inline">\(\varepsilon_{i,0}-\varepsilon_{i,1}\)</span>.</p>
+<p>Note that only the difference <span class="math inline">\(\boldsymbol\theta_1-\boldsymbol\theta_0\)</span> is identifiable (as opposed to <span class="math inline">\(\boldsymbol\theta_1\)</span> <em>and</em> <span class="math inline">\(\boldsymbol\theta_0\)</span>). Indeed, replacing <span class="math inline">\(U\)</span> with <span class="math inline">\(aU\)</span> (<span class="math inline">\(a&gt;0\)</span>) gives the same model. This <em>scaling</em> issue can be solved by fixing the variance of <span class="math inline">\(\varepsilon_{i,0}-\varepsilon_{i,1}\)</span>.</p>
 <div class="example">
 <p><span id="exm:migration" class="example"><strong>Example 5.1  (Migration and income) </strong></span>The RUM approach has been used by <span class="citation">Nakosteen and Zimmer (<a href="references.html#ref-Nakosteen_Zimmer_1980" role="doc-biblioref">1980</a>)</span> to study migration choices. Their model is based on the comparison of marginal costs and benefits associated with migration. The main ingredients of their approach are as follows:</p>
 <ul>
@@ -251,7 +251,7 @@ and, if <span class="math inline">\(\theta^{(u)}_{1}=\theta^{(u)}_{0}=\theta^{(u
 \end{equation}\]</span></p>
 <div class="example">
 <p><span id="exm:FishingTable" class="example"><strong>Example 5.2  (Fishing-mode dataset) </strong></span>The fishing-mode dataset used in <span class="citation">Cameron and Trivedi (<a href="references.html#ref-Cameron_Trivedi_2005" role="doc-biblioref">2005</a>)</span> (Chapters 14 and 15) contains alternative-specific variables. Specifically, for each individual, the price and catch rate depend on the fishing model. In the table reported below, lines <code>price</code> and <code>catch</code> correspond to the prices and catch rates associated with the chosen alternative.</p>
-<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://cran.r-project.org/package=mlogit">mlogit</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"Fishing"</span>,package<span class="op">=</span><span class="st">"mlogit"</span><span class="op">)</span></span>
 <span><span class="fu">stargazer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">Fishing</span>,type<span class="op">=</span><span class="st">"text"</span><span class="op">)</span></span></code></pre></div>
@@ -276,12 +276,11 @@ and, if <span class="math inline">\(\theta^{(u)}_{1}=\theta^{(u)}_{0}=\theta^{(u
 <span class="header-section-number">5.1.3</span> Estimation<a class="anchor" aria-label="anchor" href="#estimation"><i class="fas fa-link"></i></a>
 </h3>
 <p>These models can be estimated by Maximum Likelihood approaches (see Section <a href="estimation-methods.html#secMLE">4.2</a>).</p>
-<p>To simplify the exposition, we consider the <span class="math inline">\(\mathbf{x}_i\)</span> vectors of covariates to be deterministic. Also, we assume that the r.v. are independent across entities <span class="math inline">\(i\)</span>. How to write the likelihood in that case? It can be seen that:
-<span class="math display">\[\begin{eqnarray}
-f(y_i|\mathbf{x}_i;\boldsymbol\theta) &amp;=&amp; y_i g(\boldsymbol\theta'\mathbf{x}_i) + (1-y_i) (1-g(\boldsymbol\theta'\mathbf{x}_i)) \nonumber \\
-&amp;=&amp;  g(\boldsymbol\theta'\mathbf{x}_i)^{y_i}(1-g(\boldsymbol\theta'\mathbf{x}_i))^{1-y_i}.
-\end{eqnarray}\]</span></p>
-<p>Therefore, if the observations <span class="math inline">\((\mathbf{x}_i,y_i)\)</span> are independent across entities <span class="math inline">\(i\)</span>, then:
+<p>To simplify the exposition, we consider the <span class="math inline">\(\mathbf{x}_i\)</span> vectors of covariates to be deterministic. Moreover, we assume that the r.v. are independent across entities <span class="math inline">\(i\)</span>. How to write the likelihood in that case? It is easily checked that:
+<span class="math display">\[
+f(y_i|\mathbf{x}_i;\boldsymbol\theta) =   g(\boldsymbol\theta'\mathbf{x}_i)^{y_i}(1-g(\boldsymbol\theta'\mathbf{x}_i))^{1-y_i}.
+\]</span></p>
+<p>Therefore, if the observations <span class="math inline">\((\mathbf{x}_i,y_i)\)</span> are independent across entities <span class="math inline">\(i\)</span>, we obtain:
 <span class="math display">\[
 \log \mathcal{L}(\boldsymbol\theta;\mathbf{y},\mathbf{X}) = \sum_{i=1}^{n}y_i \log[g(\boldsymbol\theta'\mathbf{x}_i)] + (1-y_i)\log[1-g(\boldsymbol\theta'\mathbf{x}_i)].
 \]</span></p>
@@ -293,7 +292,7 @@ that is:
 <span class="math display">\[
 \sum_{i=1}^{n} y_i \mathbf{x}_i\frac{g'(\boldsymbol\theta'\mathbf{x}_i)}{g(\boldsymbol\theta'\mathbf{x}_i)} - (1-y_i) \mathbf{x}_i \frac{g'(\boldsymbol\theta'\mathbf{x}_i)}{1-g(\boldsymbol\theta'\mathbf{x}_i)} = \mathbf{0}.
 \]</span></p>
-<p>This is a nonlinear (multivariate) equation that can be solved numerically. Under regularity conditions (Hypotheses <a href="estimation-methods.html#hyp:MLEregularity">4.1</a>), we have (Prop. <a href="estimation-methods.html#prp:MLEproperties">4.4</a>):
+<p>This is a nonlinear (multivariate) equation that can be solved numerically. Under regularity conditions (Hypotheses <a href="estimation-methods.html#hyp:MLEregularity">4.1</a>), we approximately have (Prop. <a href="estimation-methods.html#prp:MLEproperties">4.4</a>):
 <span class="math display">\[
 \boldsymbol\theta_{MLE} \sim \mathcal{N}(\boldsymbol\theta_0,\mathbf{I}(\boldsymbol\theta_0)^{-1}),
 \]</span>
@@ -323,10 +322,10 @@ where <span class="math inline">\(g'(x)=\dfrac{\exp(-x)}{(1 + \exp(-x))^2}\)</sp
 </h3>
 <p>How to measure marginal effects, i.e. the effect on the probability that <span class="math inline">\(y_i=1\)</span> of a marginal increase of <span class="math inline">\(x_{i,k}\)</span>? This object is given by:
 <span class="math display">\[
-\frac{\partial \mathbb{P}(y_i=1|\mathbf{x_i};\boldsymbol\theta)}{\partial x_{i,k}} = \underbrace{g'(\boldsymbol\theta'\mathbf{x}_i)}_{&gt;0}\theta_k,
+\frac{\partial \mathbb{P}(y_i=1|\mathbf{x}_i;\boldsymbol\theta)}{\partial x_{i,k}} = \underbrace{g'(\boldsymbol\theta'\mathbf{x}_i)}_{&gt;0}\theta_k,
 \]</span>
 which is of the same sign as <span class="math inline">\(\theta_k\)</span> if function <span class="math inline">\(g\)</span> is monotonously increasing.</p>
-<p>This marginal effect can be estimated by <span class="math inline">\(g'(\boldsymbol\theta_{MLE}'\mathbf{x}_i)\theta_{MLE,k}\)</span>. It is important to see that the marginal effect depends on <span class="math inline">\(\mathbf{x}_i\)</span>: increases by 1 unit of <span class="math inline">\(x_{i,k}\)</span> (entity <span class="math inline">\(i\)</span>) and of <span class="math inline">\(x_{j,k}\)</span> (entity <span class="math inline">\(j\)</span>) do not necessarily have the same effects on <span class="math inline">\(\mathbb{P}(y_i=1|\mathbf{x_i};\boldsymbol\theta)\)</span> and on <span class="math inline">\(\mathbb{P}(y_j=1|\mathbf{x_j};\boldsymbol\theta)\)</span>, respectively. To address this issue, one can compute some measures of “average” marginal effect. There are two main solutions. For each explanatory variable <span class="math inline">\(k\)</span>:</p>
+<p>For agent <span class="math inline">\(i\)</span>, this marginal effect is consistently estimated by <span class="math inline">\(g'(\boldsymbol\theta_{MLE}'\mathbf{x}_i)\theta_{MLE,k}\)</span>. It is important to see that the marginal effect depends on <span class="math inline">\(\mathbf{x}_i\)</span>: respective increases by 1 unit of <span class="math inline">\(x_{i,k}\)</span> (entity <span class="math inline">\(i\)</span>) and of <span class="math inline">\(x_{j,k}\)</span> (entity <span class="math inline">\(j\)</span>) do not necessarily have the same effect on <span class="math inline">\(\mathbb{P}(y_i=1|\mathbf{x}_i;\boldsymbol\theta)\)</span> as on <span class="math inline">\(\mathbb{P}(y_j=1|\mathbf{x}_j;\boldsymbol\theta)\)</span>. To address this issue, one can compute some measures of “average” marginal effect. There are two main solutions. For each explanatory variable <span class="math inline">\(k\)</span>:</p>
 <ol style="list-style-type: lower-roman">
 <li>Denoting by <span class="math inline">\(\hat{\mathbf{x}}\)</span> the sample average of the <span class="math inline">\(\mathbf{x}_i\)</span>s, compute <span class="math inline">\(g'(\boldsymbol\theta_{MLE}'\hat{\mathbf{x}})\theta_{MLE,k}\)</span>.</li>
 <li>Compute the average (across <span class="math inline">\(i\)</span>) of <span class="math inline">\(g'(\boldsymbol\theta_{MLE}'\mathbf{x}_i)\theta_{MLE,k}\)</span>.</li>
@@ -337,7 +336,7 @@ which is of the same sign as <span class="math inline">\(\theta_k\)</span> if fu
 <span class="header-section-number">5.1.5</span> Goodness of fit<a class="anchor" aria-label="anchor" href="#goodness-of-fit-1"><i class="fas fa-link"></i></a>
 </h3>
 <p>There is no obvious version of “<span class="math inline">\(R^2\)</span>” for binary-choice models. Existing measures are called <strong>pseudo-<span class="math inline">\(R^2\)</span> measures</strong>.</p>
-<p>Denoting by <span class="math inline">\(\log \mathcal{L}_0(\mathbf{y})\)</span> the (maximum) log-likelihood that would be obtained for a model containing only a constant term (i.e. with <span class="math inline">\(\mathbf{x}_i = 1\)</span> for all <span class="math inline">\(i\)</span>), the <strong>McFadden’s pseudo-<span class="math inline">\(R^2\)</span></strong> is given by:
+<p>Denoting by <span class="math inline">\(\log \mathcal{L}_0(\mathbf{y})\)</span> the (maximum) log-likelihood that would be obtained for a model containing only a constant term (i.e. with <span class="math inline">\(\mathbf{x}_i = 1\)</span> for all <span class="math inline">\(i\)</span>), the McFadden’s pseudo-<span class="math inline">\(R^2\)</span> is given by:
 <span class="math display">\[
 R^2_{MF} = 1 - \frac{\log \mathcal{L}(\boldsymbol\theta;\mathbf{y})}{\log \mathcal{L}_0(\mathbf{y})}.
 \]</span>
@@ -345,18 +344,19 @@ Intuitively, <span class="math inline">\(R^2_{MF}=0\)</span> if the explanatory 
 <div class="example">
 <p><span id="exm:creditProbit" class="example"><strong>Example 5.3  (Credit and defaults (Lending-club dataset)) </strong></span>This example makes use of the <code>credit</code> data of package <code>AEC</code>. The objective is to model the default probabilities of lenders.</p>
 <p>Let us first represent the relationship between the fraction of households that have defaulted on their loan and their annual income:</p>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
 <span><span class="va">credit</span><span class="op">$</span><span class="va">Default</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
 <span><span class="va">credit</span><span class="op">$</span><span class="va">Default</span><span class="op">[</span><span class="va">credit</span><span class="op">$</span><span class="va">loan_status</span> <span class="op">==</span> <span class="st">"Charged Off"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
-<span><span class="va">credit</span><span class="op">$</span><span class="va">Default</span><span class="op">[</span><span class="va">credit</span><span class="op">$</span><span class="va">loan_status</span> <span class="op">==</span> <span class="st">"Does not meet the credit policy. Status:Charged Off"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span><span class="va">credit</span><span class="op">$</span><span class="va">Default</span><span class="op">[</span><span class="va">credit</span><span class="op">$</span><span class="va">loan_status</span> <span class="op">==</span></span>
+<span>                 <span class="st">"Does not meet the credit policy. Status:Charged Off"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span><span class="va">credit</span><span class="op">$</span><span class="va">amt2income</span> <span class="op">&lt;-</span> <span class="va">credit</span><span class="op">$</span><span class="va">loan_amnt</span><span class="op">/</span><span class="va">credit</span><span class="op">$</span><span class="va">annual_inc</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">credit</span><span class="op">$</span><span class="va">Default</span><span class="op">)</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">credit</span><span class="op">$</span><span class="va">annual_inc</span><span class="op">)</span>,</span>
 <span>     ylevels<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">1</span>,ylab<span class="op">=</span><span class="st">"Default status"</span>,xlab<span class="op">=</span><span class="st">"log(annual income)"</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="AdvECTS_files/figure-html/Probitlending-1.png" width="672"></div>
+<div class="inline-figure"><img src="ApplEcts_files/figure-html/Probitlending-1.png" width="672"></div>
 <p>The previous figure suggests that the effect of annual income on the probability of default is non-monotonous. We will therefore include a quadratic term in one of our specification (namely <code>eq1</code> below).</p>
 <p>We consider three specifications. The first one (<code>eq0</code>), with no explanatory variables, is trivial. It will just be used to compute the pseudo-<span class="math inline">\(R^2\)</span>. In the second (<code>eq1</code>), we consider a few covariates (loan amount, the ratio between the amount and annual income, The number of more-than-30 days past-due incidences of delinquency in the borrower’s credit file for the past 2 years, and a quadratic function of annual income). In the third model (<code>eq2</code>), we add a credit rating.</p>
-<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eq0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Default</span> <span class="op">~</span> <span class="fl">1</span>,data<span class="op">=</span><span class="va">credit</span>,family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span><span class="op">(</span>link<span class="op">=</span><span class="st">"probit"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">eq1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Default</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">loan_amnt</span><span class="op">)</span> <span class="op">+</span> <span class="va">amt2income</span> <span class="op">+</span> <span class="va">delinq_2yrs</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">annual_inc</span><span class="op">)</span><span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">annual_inc</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>,</span>
 <span>           data<span class="op">=</span><span class="va">credit</span>,family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span><span class="op">(</span>link<span class="op">=</span><span class="st">"probit"</span><span class="op">)</span><span class="op">)</span></span>
@@ -401,14 +401,14 @@ Intuitively, <span class="math inline">\(R^2_{MF}=0\)</span> if the explanatory 
 ## ====================================================
 ## Note:                    *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
 <p>Let us compute the pseudo R2 for the last two models:</p>
-<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">logL0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/logLik.html">logLik</a></span><span class="op">(</span><span class="va">eq0</span><span class="op">)</span>;<span class="va">logL1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/logLik.html">logLik</a></span><span class="op">(</span><span class="va">eq1</span><span class="op">)</span>;<span class="va">logL2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/logLik.html">logLik</a></span><span class="op">(</span><span class="va">eq2</span><span class="op">)</span></span>
 <span><span class="va">pseudoR2_eq1</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="va">logL1</span><span class="op">/</span><span class="va">logL0</span> <span class="co"># pseudo R2</span></span>
 <span><span class="va">pseudoR2_eq2</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="va">logL2</span><span class="op">/</span><span class="va">logL0</span> <span class="co"># pseudo R2</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">pseudoR2_eq1</span>,<span class="va">pseudoR2_eq2</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.01173993 0.05584870</code></pre>
 <p>Let us now compute the (average) marginal effects, using method ii of Section <a href="microeconometrics.html#marginalFX">5.1.4</a>:</p>
-<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">eq2</span><span class="op">)</span><span class="op">)</span>,na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">*</span><span class="va">eq2</span><span class="op">$</span><span class="va">coefficients</span></span></code></pre></div>
 <pre><code>##          (Intercept)               gradeB               gradeC 
 ##          0.840731198          0.070747353          0.103944305 
@@ -419,7 +419,7 @@ Intuitively, <span class="math inline">\(R^2_{MF}=0\)</span> if the explanatory 
 ##          delinq_2yrs      log(annual_inc) I(log(annual_inc)^2) 
 ##          0.001574178         -0.154701321          0.006813694</code></pre>
 <p>There is an issue for the <code>annual_inc</code> variable. Indeed, the previous computation does not realize that this variable appears twice among the explanatory variables (through <code>log(annual_inc)</code> and <code>I(log(annual_inc)^2)</code>). To address this, one can proceed as follows: (1) we construct a new counterfactual dataset where annual incomes are increase by 1%, (2) we use the model to compute model-implied probabilities of default on this new dataset and (3), we subtract the probabilities resulting from the original dataset from these counterfactual probabilities:</p>
-<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">new_credit</span> <span class="op">&lt;-</span> <span class="va">credit</span></span>
 <span><span class="va">new_credit</span><span class="op">$</span><span class="va">annual_inc</span> <span class="op">&lt;-</span> <span class="fl">1.01</span> <span class="op">*</span> <span class="va">new_credit</span><span class="op">$</span><span class="va">annual_inc</span></span>
 <span><span class="va">bas_predict_eq2</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">eq2</span>, newdata <span class="op">=</span> <span class="va">credit</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
@@ -428,14 +428,14 @@ Intuitively, <span class="math inline">\(R^2_{MF}=0\)</span> if the explanatory 
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">new_predict_eq2</span> <span class="op">-</span> <span class="va">bas_predict_eq2</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] -6.562126e-05</code></pre>
 <p>The negative sign means that, on average across the entities considered in the analysis, a 1% increase in annual income results in a decrease in the default probability. This average effect is however pretty low. To get an economic sense of the size of this effect, let us compute the average effect associated with a unit increase in the number of delinquencies:</p>
-<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">new_credit</span> <span class="op">&lt;-</span> <span class="va">credit</span></span>
 <span><span class="va">new_credit</span><span class="op">$</span><span class="va">delinq_2yrs</span> <span class="op">&lt;-</span> <span class="va">credit</span><span class="op">$</span><span class="va">delinq_2yrs</span> <span class="op">+</span> <span class="fl">1</span></span>
 <span><span class="va">new_predict_eq2</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">eq2</span>, newdata <span class="op">=</span> <span class="va">new_credit</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">new_predict_eq2</span> <span class="op">-</span> <span class="va">bas_predict_eq2</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.001582332</code></pre>
 <p>We can employ a likelihood ratio test (see Def. <a href="estimation-methods.html#def:LR">4.8</a>) to see if the two variables associated with annual income are jointly statistically significant (in the context of <code>eq1</code>):</p>
-<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eq1restr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Default</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">loan_amnt</span><span class="op">)</span> <span class="op">+</span> <span class="va">amt2income</span> <span class="op">+</span> <span class="va">delinq_2yrs</span>,</span>
 <span>                data<span class="op">=</span><span class="va">credit</span>,family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span><span class="op">(</span>link<span class="op">=</span><span class="st">"probit"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">LRstat</span> <span class="op">&lt;-</span> <span class="fl">2</span><span class="op">*</span><span class="op">(</span><span class="va">logL1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/logLik.html">logLik</a></span><span class="op">(</span><span class="va">eq1restr</span><span class="op">)</span><span class="op">)</span></span>
@@ -444,7 +444,7 @@ Intuitively, <span class="math inline">\(R^2_{MF}=0\)</span> if the explanatory 
 </div>
 <div class="example">
 <p><span id="exm:Fisch142" class="example"><strong>Example 5.4  (Replicating Table 14.2 of Cameron and Trivedi (2005)) </strong></span>The following lines of codes replicate Table 14.2 of <span class="citation">Cameron and Trivedi (<a href="references.html#ref-Cameron_Trivedi_2005" role="doc-biblioref">2005</a>)</span> (see Example <a href="microeconometrics.html#exm:FishingTable">5.2</a>).</p>
-<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data.reduced</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">Fishing</span>,<span class="va">mode</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"charter"</span>,<span class="st">"pier"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">data.reduced</span><span class="op">$</span><span class="va">lnrelp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data.reduced</span><span class="op">$</span><span class="va">price.charter</span><span class="op">/</span><span class="va">data.reduced</span><span class="op">$</span><span class="va">price.pier</span><span class="op">)</span></span>
 <span><span class="va">data.reduced</span><span class="op">$</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">*</span><span class="op">(</span><span class="va">data.reduced</span><span class="op">$</span><span class="va">mode</span><span class="op">==</span><span class="st">"charter"</span><span class="op">)</span></span>
@@ -504,7 +504,7 @@ Intuitively, <span class="math inline">\(R^2_{MF}=0\)</span> if the explanatory 
 <p>In the case of no predictive ability (worst situation), the ROC curve is a straight line between (0,0) and (1,1).</p>
 <div class="example">
 <p><span id="exm:FishingROC" class="example"><strong>Example 5.5  (ROC with the fishing-mode dataset) </strong></span>Figure <a href="microeconometrics.html#fig:fishing3">5.5</a> shows the ROC curve associated with the probit model estimated in Example <a href="microeconometrics.html#exm:Fisch142">5.4</a>.</p>
-<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://expasy.org/tools/pROC/">pROC</a></span><span class="op">)</span></span>
 <span><span class="va">predict_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.glm.html">predict.glm</a></span><span class="op">(</span><span class="va">reg.probit</span>,type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/pROC/man/roc.html">roc</a></span><span class="op">(</span><span class="va">data.reduced</span><span class="op">$</span><span class="va">y</span>, <span class="va">predict_model</span>, percent<span class="op">=</span><span class="cn">T</span>,</span>
@@ -515,17 +515,10 @@ Intuitively, <span class="math inline">\(R^2_{MF}=0\)</span> if the explanatory 
 <span>    main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"ROC curve using"</span>,<span class="st">"(N = "</span>,<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data.reduced</span><span class="op">)</span>,<span class="st">")"</span><span class="op">)</span> <span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: left-aligned">
 <span style="display:block;" id="fig:fishing3"></span>
-<img src="AdvECTS_files/figure-html/fishing3-1.png" alt="Application of the ROC methodology on the fishing-mode dataset." width="95%"><p class="caption">
+<img src="ApplEcts_files/figure-html/fishing3-1.png" alt="Application of the ROC methodology on the fishing-mode dataset." width="95%"><p class="caption">
 Figure 5.5: Application of the ROC methodology on the fishing-mode dataset.
 </p>
 </div>
-<pre><code>## 
-## Call:
-## roc.default(response = data.reduced$y, predictor = predict_model,     percent = T, ci = TRUE, plot = TRUE, boot.n = 1000, ci.alpha = 0.9,     stratified = T, grid = TRUE, show.thres = TRUE, legacy.axes = TRUE,     reuse.auc = TRUE, print.auc = TRUE, print.thres.col = "blue",     ci.type = "bars", print.thres.cex = 0.7, col = "red", main = paste("ROC curve using",         "(N = ", nrow(data.reduced), ")"))
-## 
-## Data: predict_model in 178 controls (data.reduced$y 0) &lt; 452 cases (data.reduced$y 1).
-## Area under the curve: 91.69%
-## 95% CI: 89.5%-93.87% (DeLong)</code></pre>
 </div>
 </div>
 </div>
@@ -533,7 +526,7 @@ Figure 5.5: Application of the ROC methodology on the fishing-mode dataset.
 <h2>
 <span class="header-section-number">5.2</span> Multiple Choice Models<a class="anchor" aria-label="anchor" href="#multiple-choice-models"><i class="fas fa-link"></i></a>
 </h2>
-<p>We will now consider cases where the number of possible outcomes (or alternatives) is larger than two. Let us denote by <span class="math inline">\(J\)</span> this number. We have <span class="math inline">\(y_j \in \{1,\dots,J\}\)</span>. Here are examples of such dependent variables:</p>
+<p>We will now consider cases where the number of possible outcomes (or alternatives) is larger than two. Let us denote by <span class="math inline">\(J\)</span> this number. We have <span class="math inline">\(y_j \in \{1,\dots,J\}\)</span>. This situation arise for instance when the outcome variable reflects:</p>
 <ul>
 <li>Opinions: strongly opposed / opposed / neutral / support (ranked choices),</li>
 <li>Occupational field: lawyer / farmer / engineer / doctor / …,</li>
@@ -557,7 +550,7 @@ J &amp; \mbox{ with probability } g_J(\mathbf{x}_i;\boldsymbol\theta).
 <h3>
 <span class="header-section-number">5.2.1</span> Ordered case<a class="anchor" aria-label="anchor" href="#ordered-case"><i class="fas fa-link"></i></a>
 </h3>
-<p>Sometimes, there exists a natural order for the different alternatives. This is typically the case where respondents have to choose a level of agreement to a statement in five points: (1) Strongly disagree; (2) Disagree; (3) Neither agree nor disagree; (4) Agree; (5) Strongly agree. Another standard case is that of ratings (from A to F, say).</p>
+<p>Sometimes, there exists a natural order for the different alternatives. This is typically the case where respondents have to choose a level of agreement to a statement, e.g.: (1) Strongly disagree; (2) Disagree; (3) Neither agree nor disagree; (4) Agree; (5) Strongly agree. Another standard case is that of ratings (from A to F, say).</p>
 <p>The ordered probit model consists in extending the binary case, considering the latent-variable view of the latter (see Section <a href="microeconometrics.html#latent">5.1.1</a>). Formally, the model is as follows:
 <span class="math display" id="eq:Pordered">\[\begin{equation}
 \mathbb{P}(y_i = j | \mathbf{x}_i) = \mathbb{P}(\alpha_{j-1} &lt;y^*_i &lt; \alpha_{j} |\mathbf{x}_i), \tag{5.8}
@@ -574,7 +567,7 @@ g_j(\mathbf{x}_i;\boldsymbol\theta,\boldsymbol\alpha) = \mathbb{P}(y_i = j | \ma
 &amp;=&amp; F(\alpha_{j} - \boldsymbol\theta'\mathbf{x}_i) - F(\alpha_{j-1} - \boldsymbol\theta'\mathbf{x}_i),
 \end{eqnarray*}\]</span>
 where <span class="math inline">\(F\)</span> is the c.d.f. of <span class="math inline">\(\mathcal{N}(0,1)\)</span>.</p>
-<p>If, for all <span class="math inline">\(i\)</span>, one of the components of <span class="math inline">\(\mathbf{x}_i\)</span> is equal to 1 (which is what is done in linear regression to introduce an intercept in the specification), then one of the <span class="math inline">\(\alpha_j\)</span> (<span class="math inline">\(j\in\{1,\dots,J-1\}\)</span>) is not identified. One can then arbitrarily set <span class="math inline">\(\alpha_1=0\)</span>, which is what is done in the binary logit/probit cases.</p>
+<p>If, for all <span class="math inline">\(i\)</span>, one of the components of <span class="math inline">\(\mathbf{x}_i\)</span> is equal to 1 (which is what is done in linear regression to introduce an intercept in the specification), then one of the <span class="math inline">\(\alpha_j\)</span> (<span class="math inline">\(j\in\{1,\dots,J-1\}\)</span>) is not identified. One can then arbitrarily set <span class="math inline">\(\alpha_1=0\)</span>. This is what is done in the binary logit/probit cases.</p>
 <p>This model can be estimated by maximizing the likelihood function (see Section <a href="estimation-methods.html#secMLE">4.2</a>). This function is given by:
 <span class="math display" id="eq:multipleLogLik">\[\begin{equation}
 \log \mathcal{L}(\boldsymbol\theta,\boldsymbol\alpha;\mathbf{y},\mathbf{X}) = \sum_{i=1}^n  \sum_{j=1}^J \mathbb{I}_{\{y_i=j\}} \log \left(g_j(\mathbf{x}_i;\boldsymbol\theta,\boldsymbol\alpha)\right). \tag{5.9}
@@ -591,15 +584,16 @@ Hence the sign of <span class="math inline">\(\theta_k\)</span> indicates whethe
 Therefore the signs of the components of <span class="math inline">\(\boldsymbol\theta\)</span> are not necessarily those of the marginal effects. (For the sign of <span class="math inline">\(A\)</span> is a priori unknown.)</p>
 <div class="example">
 <p><span id="exm:orderedCredit" class="example"><strong>Example 5.6  (Predicting credit ratings (Lending-club dataset)) </strong></span>Let us use credit dataset again (see Example <a href="microeconometrics.html#exm:creditProbit">5.3</a>), and let use try and model the ratings attributed by the lending-club:</p>
-<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/">MASS</a></span><span class="op">)</span></span>
-<span><span class="va">credit</span><span class="op">$</span><span class="va">emp_length_low5y</span>   <span class="op">&lt;-</span> <span class="va">credit</span><span class="op">$</span><span class="va">emp_length</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"&lt; 1 year"</span>,<span class="st">"1 year"</span>,<span class="st">"2 years"</span>,<span class="st">"3 years"</span>,<span class="st">"4 years"</span><span class="op">)</span></span>
+<span><span class="va">credit</span><span class="op">$</span><span class="va">emp_length_low5y</span>   <span class="op">&lt;-</span> <span class="va">credit</span><span class="op">$</span><span class="va">emp_length</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"&lt; 1 year"</span>,<span class="st">"1 year"</span>,<span class="st">"2 years"</span>,<span class="st">"3 years"</span>,<span class="st">"4 years"</span><span class="op">)</span></span>
 <span><span class="va">credit</span><span class="op">$</span><span class="va">emp_length_high10y</span> <span class="op">&lt;-</span> <span class="va">credit</span><span class="op">$</span><span class="va">emp_length</span><span class="op">==</span><span class="st">"10+ years"</span></span>
 <span><span class="va">credit</span><span class="op">$</span><span class="va">annual_inc</span> <span class="op">&lt;-</span> <span class="va">credit</span><span class="op">$</span><span class="va">annual_inc</span><span class="op">/</span><span class="fl">1000</span></span>
 <span><span class="va">credit</span><span class="op">$</span><span class="va">loan_amnt</span>  <span class="op">&lt;-</span> <span class="va">credit</span><span class="op">$</span><span class="va">loan_amnt</span><span class="op">/</span><span class="fl">1000</span></span>
 <span><span class="va">credit</span><span class="op">$</span><span class="va">income2loan</span> <span class="op">&lt;-</span> <span class="va">credit</span><span class="op">$</span><span class="va">annual_inc</span><span class="op">/</span><span class="va">credit</span><span class="op">$</span><span class="va">loan_amnt</span></span>
-<span><span class="va">training</span> <span class="op">&lt;-</span> <span class="va">credit</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">20000</span>,<span class="op">]</span></span>
+<span><span class="va">training</span> <span class="op">&lt;-</span> <span class="va">credit</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">20000</span>,<span class="op">]</span> <span class="co"># sample is reduced</span></span>
 <span><span class="va">training</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">training</span>,<span class="va">grade</span><span class="op">!=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"E"</span>,<span class="st">"F"</span>,<span class="st">"G"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">training</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/droplevels.html">droplevels</a></span><span class="op">(</span><span class="va">training</span><span class="op">)</span></span>
 <span><span class="va">training</span><span class="op">$</span><span class="va">grade.ordered</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">training</span><span class="op">$</span><span class="va">grade</span>,ordered<span class="op">=</span><span class="cn">TRUE</span>,</span>
@@ -639,8 +633,9 @@ Therefore the signs of the components of <span class="math inline">\(\boldsymbol
 ## ===============================================
 ## Note:               *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
 <p>Predicted ratings (and probabilties of being given a given rating) can be computed as follows:</p>
-<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">pred.grade</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">model1</span>,newdata <span class="op">=</span> <span class="va">training</span><span class="op">)</span> <span class="co"># predicted grade (the most likely according to model)</span></span>
+<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pred.grade</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">model1</span>,newdata <span class="op">=</span> <span class="va">training</span><span class="op">)</span></span>
+<span><span class="co"># pred.grade = predicted grade, defined as the most likely according model</span></span>
 <span><span class="va">pred.proba</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">model1</span>,newdata <span class="op">=</span> <span class="va">training</span>, type<span class="op">=</span><span class="st">"probs"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <!-- \begin{exerc}[Political information] -->
@@ -655,20 +650,19 @@ Therefore the signs of the components of <span class="math inline">\(\boldsymbol
 <h3>
 <span class="header-section-number">5.2.2</span> General multinomial logit model<a class="anchor" aria-label="anchor" href="#MNL"><i class="fas fa-link"></i></a>
 </h3>
-<p>This section introduces the general multinomial logit model, which is the natural extebsion of the binary logit model. Its general formulation is as follows:
+<p>This section introduces the general multinomial logit model, which is the natural extension of the binary logit model (see Table <a href="microeconometrics.html#tab:foo">5.1</a>). Its general formulation is as follows:
 <span class="math display" id="eq:GeneralMNL">\[\begin{equation}
 g_j(\mathbf{x}_i;\boldsymbol\theta) = \frac{\exp(\theta_j'\mathbf{x}_i)}{\sum_{k=1}^J \exp(\theta_k'\mathbf{x}_i)}.\tag{5.10}
-\end{equation}\]</span>
-(natural extension of the , see Table <a href="microeconometrics.html#tab:foo">5.1</a>.)</p>
+\end{equation}\]</span></p>
 <p>Note that, by construction, <span class="math inline">\(g_j(\mathbf{x}_i;\boldsymbol\theta) \in [0,1]\)</span> and <span class="math inline">\(\sum_{j}g_j(\mathbf{x}_i;\boldsymbol\theta)=1\)</span>.</p>
-<p>The components of <span class="math inline">\(\mathbf{x}_i\)</span> (regressors, or covariates) may be <em>alternative-specific</em> or <em>alternative invariant</em> (see also Section <a href="microeconometrics.html#Avregressors">5.1.2</a>). We may e.g. organize <span class="math inline">\(\mathbf{x}_i\)</span> as follows:
+<p>The components of <span class="math inline">\(\mathbf{x}_i\)</span> (regressors, or covariates) may be <em>alternative-specific</em> or <em>alternative invariant</em> (see also Section <a href="microeconometrics.html#Avregressors">5.1.2</a>). We may, e.g., organize <span class="math inline">\(\mathbf{x}_i\)</span> as follows:
 <span class="math display" id="eq:xorganiz">\[\begin{equation}
 \mathbf{x}_i = [\mathbf{u}_{i,1}',\dots,\mathbf{u}_{i,J}',\mathbf{v}_{i}']',\tag{5.11}
 \end{equation}\]</span>
 where the notations are as in Section <a href="microeconometrics.html#Avregressors">5.1.2</a>, that is:</p>
 <ul>
 <li>
-<span class="math inline">\(\mathbf{u}_{i,j}\)</span> (<span class="math inline">\(j \in \{1,/dots,J\}\)</span>): vector of variables associated with agent <span class="math inline">\(i\)</span> and alternative <span class="math inline">\(j\)</span> (alternative-specific regressors). Examples: Travel time per type of transportation (transportation choice), wage per type of work, cost per type of car.</li>
+<span class="math inline">\(\mathbf{u}_{i,j}\)</span> (<span class="math inline">\(j \in \{1,\dots,J\}\)</span>): vector of variables associated with agent <span class="math inline">\(i\)</span> and alternative <span class="math inline">\(j\)</span> (alternative-specific regressors). Examples: Travel time per type of transportation (transportation choice), wage per type of work, cost per type of car.</li>
 <li>
 <span class="math inline">\(\mathbf{v}_{i}\)</span>: vector of variables associated with agent <span class="math inline">\(i\)</span> but alternative-invariant. Examples: age or gender of agent <span class="math inline">\(i\)</span>,</li>
 </ul>
@@ -684,13 +678,13 @@ and <span class="math inline">\(\boldsymbol\theta=[\theta_1',\dots,\theta_J']'\)
 <span class="math display" id="eq:thetaOrganizCL">\[\begin{equation}
 \theta_j = [\mathbf{0}',\dots,\mathbf{0}',\underbrace{\boldsymbol\beta'}_{\mbox{j$^{th}$ position}},\mathbf{0}',\dots]',\tag{5.13}
 \end{equation}\]</span>
-i.e. we have <span class="math inline">\(\boldsymbol\beta=\theta^{(u)}_{1,1}=\dots=\theta^{(u)}_{J,J}\)</span> and <span class="math inline">\(\theta^{(u)}_{i,j}=0\)</span> for <span class="math inline">\(i \ne j\)</span>.</li>
+i.e., we have <span class="math inline">\(\boldsymbol\beta=\theta^{(u)}_{1,1}=\dots=\theta^{(u)}_{J,J}\)</span> and <span class="math inline">\(\theta^{(u)}_{i,j}=\mathbf{0}\)</span> for <span class="math inline">\(i \ne j\)</span>.</li>
 <li>
 <strong>Multinomial logit (MNL)</strong> with alternative-invariant regressors:
 <span class="math display" id="eq:thetaOrganizML">\[\begin{equation}
-\theta_j = \left[\mathbf{0}',\dots,\mathbf{0}',{\theta_j^{(v)}}'\right]',\tag{5.14}
+\theta_j = \left[\mathbf{0}',\dots,\mathbf{0}',{\theta_j^{(v)}}'\right]'.\tag{5.14}
 \end{equation}\]</span>
-(can embed intercepts.)</li>
+</li>
 <li>
 <strong>Mixed logit:</strong>
 <span class="math display" id="eq:thetaOrganizCL">\[\begin{equation}
@@ -700,7 +694,7 @@ i.e. we have <span class="math inline">\(\boldsymbol\beta=\theta^{(u)}_{1,1}=\d
 </ul>
 <div class="example">
 <p><span id="exm:FishingGeneralLogit" class="example"><strong>Example 5.7  (CL and MNL with the fishing-mode dataset) </strong></span>The following lines replicate Table 15.2 in <span class="citation">Cameron and Trivedi (<a href="references.html#ref-Cameron_Trivedi_2005" role="doc-biblioref">2005</a>)</span> (see also Examples <a href="microeconometrics.html#exm:FishingTable">5.2</a> and <a href="microeconometrics.html#exm:Fisch142">5.4</a>):</p>
-<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Specify data organization:</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://cran.r-project.org/package=mlogit">mlogit</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">stargazer</span><span class="op">)</span></span>
@@ -713,37 +707,37 @@ i.e. we have <span class="math inline">\(\boldsymbol\beta=\theta^{(u)}_{1,1}=\d
 <span><span class="va">MNL2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mlogit/man/mlogit.html">mlogit</a></span><span class="op">(</span><span class="va">mode</span> <span class="op">~</span> <span class="va">price</span> <span class="op">+</span> <span class="va">catch</span> <span class="op">-</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="va">Fish</span><span class="op">)</span></span>
 <span><span class="va">MNL3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mlogit/man/mlogit.html">mlogit</a></span><span class="op">(</span><span class="va">mode</span> <span class="op">~</span> <span class="fl">0</span> <span class="op">|</span> <span class="va">income</span>, data <span class="op">=</span> <span class="va">Fish</span><span class="op">)</span></span>
 <span><span class="va">MNL4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mlogit/man/mlogit.html">mlogit</a></span><span class="op">(</span><span class="va">mode</span> <span class="op">~</span> <span class="va">price</span> <span class="op">+</span> <span class="va">catch</span> <span class="op">|</span> <span class="va">income</span>, data <span class="op">=</span> <span class="va">Fish</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">MNL1</span>,<span class="va">MNL2</span>,<span class="va">MNL3</span>,<span class="va">MNL4</span>,type<span class="op">=</span><span class="st">"text"</span>,no.space <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">MNL1</span>,<span class="va">MNL2</span>,<span class="va">MNL3</span>,<span class="va">MNL4</span>,type<span class="op">=</span><span class="st">"text"</span>,no.space <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>          omit.stat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lr"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
-## =========================================================================================
-##                                              Dependent variable:                         
-##                     ---------------------------------------------------------------------
-##                                                     mode                                 
-##                             (1)            (2)            (3)                 (4)        
-## -----------------------------------------------------------------------------------------
-## (Intercept):boat         0.871***                       0.739***            0.527**      
-##                           (0.114)                       (0.197)             (0.223)      
-## (Intercept):charter      1.499***                       1.341***           1.694***      
-##                           (0.133)                       (0.195)             (0.224)      
-## (Intercept):pier         0.307***                       0.814***           0.778***      
-##                           (0.115)                       (0.229)             (0.220)      
-## price                    -0.025***      -0.020***                          -0.025***     
-##                           (0.002)        (0.001)                            (0.002)      
-## catch                    0.377***        0.953***                          0.358***      
-##                           (0.110)        (0.089)                            (0.110)      
-## income:boat                                             0.0001**            0.0001*      
-##                                                        (0.00004)           (0.0001)      
-## income:charter                                          -0.00003           -0.00003      
-##                                                        (0.00004)           (0.0001)      
-## income:pier                                            -0.0001***          -0.0001**     
-##                                                         (0.0001)           (0.0001)      
-## -----------------------------------------------------------------------------------------
-## Observations               1,182          1,182          1,182               1,182       
-## R2                         0.178          0.014          0.189                           
-## Log Likelihood          -1,230.784      -1,311.980     -1,477.151         -1,215.138     
-## LR Test             533.878*** (df = 5)            41.145*** (df = 6) 565.171*** (df = 8)
-## =========================================================================================
-## Note:                                                         *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+## ===============================================================
+##                                 Dependent variable:            
+##                     -------------------------------------------
+##                                        mode                    
+##                        (1)        (2)        (3)        (4)    
+## ---------------------------------------------------------------
+## (Intercept):boat     0.871***              0.739***   0.527**  
+##                      (0.114)               (0.197)    (0.223)  
+## (Intercept):charter  1.499***              1.341***   1.694*** 
+##                      (0.133)               (0.195)    (0.224)  
+## (Intercept):pier     0.307***              0.814***   0.778*** 
+##                      (0.115)               (0.229)    (0.220)  
+## price               -0.025***  -0.020***             -0.025*** 
+##                      (0.002)    (0.001)               (0.002)  
+## catch                0.377***   0.953***              0.358*** 
+##                      (0.110)    (0.089)               (0.110)  
+## income:boat                                0.0001**   0.0001*  
+##                                           (0.00004)   (0.0001) 
+## income:charter                             -0.00003   -0.00003 
+##                                           (0.00004)   (0.0001) 
+## income:pier                               -0.0001*** -0.0001** 
+##                                            (0.0001)   (0.0001) 
+## ---------------------------------------------------------------
+## Observations          1,182      1,182      1,182      1,182   
+## R2                    0.178      0.014      0.189              
+## Log Likelihood      -1,230.784 -1,311.980 -1,477.151 -1,215.138
+## ===============================================================
+## Note:                               *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
 </div>
 <p><strong>ML estimation</strong></p>
 <p>General multinomial logit models can be estimated by Maximum Likelihood techniques (see Section <a href="estimation-methods.html#secMLE">4.2</a>). Consider the general model described in Eq. <a href="microeconometrics.html#eq:generalMultiNom">(5.7)</a>. It can be noted that:
@@ -768,7 +762,7 @@ Numerical methods have to be employed in order to find the maximum-likelihood es
 &amp;=&amp;  p_{i,j} \times \Big(\theta_{j,s} - \underbrace{\sum_{k=1}^J \theta_{k,s} p_{i,k}}_{=\overline{\boldsymbol{\theta}}^{(i)}_{s}}\Big),
 \end{eqnarray*}\]</span>
 where <span class="math inline">\(\overline{\boldsymbol\theta}^{(i)}_{s}\)</span> does not depend on <span class="math inline">\(j\)</span>. Note that the sign of the marginal effect is not necessarily that of <span class="math inline">\(\theta_{j,s}\)</span>.</p>
-<p><strong>Utility models</strong></p>
+<p><strong>Random Utility models</strong></p>
 <p>The general multinomial logit model may arise as the natural specification arising in strucrural contexts where agents compare (random) utilities associated with <span class="math inline">\(J\)</span> potential outcomes (see Section <a href="microeconometrics.html#latent">5.1.1</a> for the binary situation).</p>
 <p>Let’s drop the <span class="math inline">\(i\)</span> subscript for simplicity and assume that the utility derived form choosing <span class="math inline">\(j\)</span> is given by <span class="math inline">\(U_j = V_j + \varepsilon_j\)</span>, where <span class="math inline">\(V_j\)</span> is deterministic (may depend on observed covariates) and <span class="math inline">\(\varepsilon_j\)</span> is stochastic. We have (with obvious notations):
 <span class="math display">\[\begin{eqnarray*}
@@ -778,7 +772,7 @@ where <span class="math inline">\(\overline{\boldsymbol\theta}^{(i)}_{s}\)</span
 \end{eqnarray*}\]</span></p>
 <p>The last expression is an <span class="math inline">\((J-1)\)</span>-variate integral. While it has, in general, no analytical solution, Prop. <a href="microeconometrics.html#prp:Weibull">5.1</a> shows that it is the case when employing Gumbel distributions (see Def. <a href="microeconometrics.html#def:Gumbel">5.1</a>).</p>
 <div class="definition">
-<p><span id="def:Gumbel" class="definition"><strong>Definition 5.1  (Gumbel distribution) </strong></span>Gumbel distribution (<span class="math inline">\(\mathcal{W}\)</span>), support: <span class="math inline">\(\mathbb{R}\)</span> (see Theorem <a href="#thm:Extreme"><strong>??</strong></a>):
+<p><span id="def:Gumbel" class="definition"><strong>Definition 5.1  (Gumbel distribution) </strong></span>The c.d.f. of the Gumbel distribution (<span class="math inline">\(\mathcal{W}\)</span>) is:
 <span class="math display">\[
 F(u) = \exp(-\exp(-u)), \qquad f(u)=\exp(-u-\exp(u)).
 \]</span></p>
@@ -786,7 +780,7 @@ F(u) = \exp(-\exp(-u)), \qquad f(u)=\exp(-u-\exp(u)).
 <p>Remark: if <span class="math inline">\(X\sim\mathcal{W}\)</span>, then <span class="math inline">\(\mathbb{E}(X)=0.577\)</span> (Euler constant)<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;The Euler constant &lt;span class="math inline"&gt;\(\gamma\)&lt;/span&gt; satisfies &lt;span class="math inline"&gt;\(\gamma = \lim_{n\rightarrow \infty} \left(- \ln(n) + \sum_{k=1}^n \frac{1}{k}\right)\)&lt;/span&gt;.&lt;/p&gt;'><sup>14</sup></a> and <span class="math inline">\(\mathbb{V}ar(X)=\pi^2/6\)</span>.</p>
 <div class="figure" style="text-align: left-aligned">
 <span style="display:block;" id="fig:Gumbel"></span>
-<img src="AdvECTS_files/figure-html/Gumbel-1.png" alt="C.d.f. of the Gumbel distribution ($F(x)=\exp(-\exp(-x))$)." width="95%"><p class="caption">
+<img src="ApplEcts_files/figure-html/Gumbel-1.png" alt="C.d.f. of the Gumbel distribution ($F(x)=\exp(-\exp(-x))$)." width="95%"><p class="caption">
 Figure 5.6: C.d.f. of the Gumbel distribution (<span class="math inline">\(F(x)=\exp(-\exp(-x))\)</span>).
 </p>
 </div>
@@ -797,7 +791,7 @@ Figure 5.6: C.d.f. of the Gumbel distribution (<span class="math inline">\(F(x)=
 \]</span></p>
 </div>
 <div class="proof">
-<p><span id="unlabeled-div-25" class="proof"><em>Proof</em>. </span>We have:
+<p><span id="unlabeled-div-23" class="proof"><em>Proof</em>. </span>We have:
 <span class="math display">\[\begin{eqnarray*}
 \mathbb{P}(y=j) &amp;=&amp; \mathbb{P}(\forall\,k \ne j,\,U_k &lt; U_j) =  \mathbb{P}(\forall\,k \ne j,\,\varepsilon_k &lt; V_j - V_k + \varepsilon_j) \\
 &amp;=&amp; \int \prod_{k \ne j} F(V_j - V_k + \varepsilon) f(\varepsilon)d\varepsilon.
@@ -840,7 +834,7 @@ This conditional probability does not depend on other alternatives (i.e., it doe
 \mathbb{P}(y=3|y \in \{2,3\}) = 0.5,
 \]</span>
 i.e. <span class="math inline">\(\theta_2 = \theta_3\)</span>.</p>
-<p>Assume we had <span class="math inline">\(V_1=V_2\)</span>. We expect to have <span class="math inline">\(V_2=V_3\)</span> (hence <span class="math inline">\(p_2=p_3\)</span>). A multinomial logit model would then imply <span class="math inline">\(p_1=p_2=p_3=0.33\)</span>. It would seem more reasonable to have <span class="math inline">\(p_1 = p_2 + p_3 = 0.5\)</span> and <span class="math inline">\(p_2=p_3=0.25\)</span>.</p>
+<p>Assume we had <span class="math inline">\(V_1=V_2\)</span>. We expect to have <span class="math inline">\(V_2=V_3\)</span> (hence <span class="math inline">\(p_2=p_3\)</span>). A multinomial logit model would then imply <span class="math inline">\(p_1=p_2=p_3=0.33\)</span>. It would however seem more reasonable to have <span class="math inline">\(p_1 = p_2 + p_3 = 0.5\)</span> and <span class="math inline">\(p_2=p_3=0.25\)</span>.</p>
 </div>
 <!-- **Sequential models** -->
 <!-- Naturally, other possible ad-hoc modelling strategy are possible, e.g. sequential modelling: -->
@@ -878,14 +872,10 @@ We have:
 \]</span></p>
 <p>One usually make the following two assumptions:</p>
 <ol style="list-style-type: lower-roman">
-<li><p>The deterministic part of the utility is given by:
-<span class="math display">\[
-V_{j,k} = \mathbf{u}_j'\boldsymbol\alpha + \mathbf{v}_{j,k}'\boldsymbol\beta_j,
-\]</span>
-where <span class="math inline">\(\boldsymbol\alpha\)</span> is common to all nests and the <span class="math inline">\(\boldsymbol\beta_j\)</span>’s are nest-specific.</p></li>
+<li><p>The deterministic part of the utility is given by <span class="math inline">\(V_{j,k} = \mathbf{u}_j'\boldsymbol\alpha + \mathbf{v}_{j,k}'\boldsymbol\beta_j\)</span>, where <span class="math inline">\(\boldsymbol\alpha\)</span> is common to all nests and the <span class="math inline">\(\boldsymbol\beta_j\)</span>’s are nest-specific.</p></li>
 <li><p>The disturbances <span class="math inline">\(\boldsymbol\varepsilon\)</span> follow the Generalized Extreme Value (GEV) distribution (see Def. <a href="append.html#def:GEVdistri">7.14</a>).</p></li>
 </ol>
-<p>The following figure displays simulations of pairs <span class="math inline">\((\varepsilon_1,\varepsilon_2)\)</span> drawn from GEV distributions for different values of <span class="math inline">\(\rho\)</span>. The simulation approach is based on <a href="http://www.caee.utexas.edu/prof/bhat/ABSTRACTS/Supp_material.pdf">Bhat</a>. The code used to produce this chart is in Appendix <a href="append.html#App:GEV">7.6.1</a>.</p>
+<p>The following figure displays simulations of pairs <span class="math inline">\((\varepsilon_1,\varepsilon_2)\)</span> drawn from GEV distributions for different values of <span class="math inline">\(\rho\)</span>. The simulation approach is based on <a href="http://www.caee.utexas.edu/prof/bhat/ABSTRACTS/Supp_material.pdf">Bhat</a>. The code used to produce this chart is provided in Appendix <a href="append.html#App:GEV">7.6.1</a>.</p>
 <div class="figure" style="text-align: left-aligned">
 <span style="display:block;" id="fig:GEV"></span>
 <img src="images/Figure_GEV.png" alt="GEV simulations." width="95%"><p class="caption">
@@ -926,7 +916,7 @@ j=2 &amp;\Leftrightarrow&amp; (j'=2,k=1) \\
 j=3 &amp;\Leftrightarrow&amp; (j'=2,k=2),
 \end{eqnarray*}\]</span>
 and by setting <span class="math inline">\(\rho_2 \rightarrow 0\)</span>.</p>
-<p>IIA holds within a nest, but not when considering alternatives in different nests. Indeed, using Eq.<a href="microeconometrics.html#eq:Nested">(5.16)</a>:
+<p>IIA holds within a nest, but not when considering alternatives in different nests. Indeed, using Eq. <a href="microeconometrics.html#eq:Nested">(5.16)</a>:
 <span class="math display">\[
 \frac{\mathbb{P}[y_1=j,y_2=k_A|\mathbf{x}] }{\mathbb{P}[y_1=j,y_2=k_B|\mathbf{x}]} = \frac{\exp(\mathbf{v}_{j,k_A}'\boldsymbol\beta_j/\rho_j)}{\exp(\mathbf{v}_{j,k_B}'\boldsymbol\beta_j/\rho_j)},
 \]</span>
@@ -939,7 +929,7 @@ i.e. we have IIA in nest <span class="math inline">\(j\)</span>.</p>
 which depends on the expected utilities of all alternatives in nest <span class="math inline">\(j_A\)</span> and <span class="math inline">\(j_B\)</span>. So the IIA does not hold.</p>
 <div class="example">
 <p><span id="exm:nestedTravel" class="example"><strong>Example 5.9  (Travel-mode dataset) </strong></span>Let us illustrate nested logits on the travel-mode dataset used, e.g., by <span class="citation">Hensher and Greene (<a href="references.html#ref-Hensher_Greene_2002" role="doc-biblioref">2002</a>)</span> (see also <span class="citation">Heiss (<a href="references.html#ref-Heiss_2002" role="doc-biblioref">2002</a>)</span>).</p>
-<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://cran.r-project.org/package=mlogit">mlogit</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">stargazer</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"TravelMode"</span>, package <span class="op">=</span> <span class="st">"AER"</span><span class="op">)</span></span>
@@ -955,23 +945,20 @@ which depends on the expected utilities of all alternatives in nest <span class=
 <span><span class="va">TravelMode</span><span class="op">$</span><span class="va">timeair</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">TravelMode</span>, <span class="va">time</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">mode</span> <span class="op">==</span> <span class="st">"air"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">TravelMode</span><span class="op">$</span><span class="va">income</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">TravelMode</span>, <span class="va">income</span> <span class="op">/</span> <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co"># Hensher and Greene (2002), table 1 p.8-9 model 5</span></span>
-<span><span class="va">TravelMode</span><span class="op">$</span><span class="va">incomeother</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">TravelMode</span>, <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">mode</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'air'</span>, <span class="st">'car'</span><span class="op">)</span>, <span class="va">income</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">TravelMode</span><span class="op">$</span><span class="va">incomeother</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">TravelMode</span>,</span>
+<span>                               <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">mode</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'air'</span>, <span class="st">'car'</span><span class="op">)</span>, <span class="va">income</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">nl1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mlogit/man/mlogit.html">mlogit</a></span><span class="op">(</span><span class="va">choice</span> <span class="op">~</span> <span class="va">gcost</span> <span class="op">+</span> <span class="va">wait</span> <span class="op">+</span> <span class="va">incomeother</span>, <span class="va">TravelMode</span>,</span>
-<span>              shape<span class="op">=</span><span class="st">'long'</span>, <span class="co"># Inidcates how the dataset is organized</span></span>
-<span>              alt.var<span class="op">=</span><span class="st">'mode'</span>, <span class="co"># This is the variable that defines the alternative choices.</span></span>
+<span>              shape<span class="op">=</span><span class="st">'long'</span>, <span class="co"># Indicates how the dataset is organized</span></span>
+<span>              alt.var<span class="op">=</span><span class="st">'mode'</span>, <span class="co"># variable that defines the alternative choices.</span></span>
 <span>              nests<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>public<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'train'</span>, <span class="st">'bus'</span><span class="op">)</span>,</span>
-<span>                         car<span class="op">=</span><span class="st">'car'</span>,</span>
-<span>                         air<span class="op">=</span><span class="st">'air'</span><span class="op">)</span>, <span class="co"># The different components of the list define the "limbs".</span></span>
-<span>              un.nest.el <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span>
+<span>                         car<span class="op">=</span><span class="st">'car'</span>,air<span class="op">=</span><span class="st">'air'</span><span class="op">)</span>, <span class="co"># defines the "limbs".</span></span>
+<span>              un.nest.el <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">nl2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mlogit/man/mlogit.html">mlogit</a></span><span class="op">(</span><span class="va">choice</span> <span class="op">~</span> <span class="va">gcost</span> <span class="op">+</span> <span class="va">wait</span> <span class="op">+</span> <span class="va">time</span>, <span class="va">TravelMode</span>,</span>
 <span>              shape<span class="op">=</span><span class="st">'long'</span>, <span class="co"># Inidcates how the dataset is organized</span></span>
-<span>              alt.var<span class="op">=</span><span class="st">'mode'</span>, <span class="co"># This is the variable that defines the alternative choices.</span></span>
+<span>              alt.var<span class="op">=</span><span class="st">'mode'</span>, <span class="co"># variable that defines the alternative choices.</span></span>
 <span>              nests<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>public<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'train'</span>, <span class="st">'bus'</span><span class="op">)</span>,</span>
-<span>                         car<span class="op">=</span><span class="st">'car'</span>,</span>
-<span>                         air<span class="op">=</span><span class="st">'air'</span><span class="op">)</span>, <span class="co"># The different components of the list define the "limbs".</span></span>
-<span>              un.nest.el <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span>
+<span>                         car<span class="op">=</span><span class="st">'car'</span>,air<span class="op">=</span><span class="st">'air'</span><span class="op">)</span>, <span class="co"># defines the "limbs".</span></span>
+<span>              un.nest.el <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">nl1</span>,<span class="va">nl2</span>,type<span class="op">=</span><span class="st">"text"</span>,no.space <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## ==============================================
@@ -1015,7 +1002,7 @@ which depends on the expected utilities of all alternatives in nest <span class=
 <p>Figure <a href="microeconometrics.html#fig:tobit1">5.8</a> illustrates the situation. The dots (white and black) represent the “true” observations. Now, assume that only the black are observed. If ones uses these observations in an OLS regression to estimate the relatonship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, then one gets the red line. It is clear that the sensitivity of <span class="math inline">\(y\)</span> to <span class="math inline">\(x\)</span> is then underestimated. The blue line is the line one would obtain if white dots were also observed; the grey line represents the model used to genrate the data (<span class="math inline">\(y_i=x_i+\varepsilon_i\)</span>).</p>
 <div class="figure" style="text-align: left-aligned">
 <span style="display:block;" id="fig:tobit1"></span>
-<img src="AdvECTS_files/figure-html/tobit1-1.png" alt="Bias in the case of sample selection. The grey line represents the population regression line. The model is $y_i = x_i + \varepsilon_i$, with $\varepsilon_{i,t} \sim \mathcal{N}(0,1)$. The red line is the OLS regression line based on black dots only." width="672"><p class="caption">
+<img src="ApplEcts_files/figure-html/tobit1-1.png" alt="Bias in the case of sample selection. The grey line represents the population regression line. The model is $y_i = x_i + \varepsilon_i$, with $\varepsilon_{i,t} \sim \mathcal{N}(0,1)$. The red line is the OLS regression line based on black dots only." width="672"><p class="caption">
 Figure 5.8: Bias in the case of sample selection. The grey line represents the population regression line. The model is <span class="math inline">\(y_i = x_i + \varepsilon_i\)</span>, with <span class="math inline">\(\varepsilon_{i,t} \sim \mathcal{N}(0,1)\)</span>. The red line is the OLS regression line based on black dots only.
 </p>
 </div>
@@ -1040,7 +1027,7 @@ y^* &amp;if&amp; y^*&gt;L \\
 \right.
 \end{eqnarray*}\]</span>
 where “<span class="math inline">\(-\)</span>” stands for missing observations.</p>
-<p>This formulation is easily extended to censoring from above (<span class="math inline">\(L \rightarrow U\)</span>) or censoring from both below and above.</p>
+<p>This formulation is easily extended to censoring from above (<span class="math inline">\(L \rightarrow U\)</span>), or censoring from both below and above.</p>
 <p>The model parameters are gathered in vector <span class="math inline">\(\theta = [\boldsymbol\beta',\boldsymbol\gamma']'\)</span>. Let us write the conditional p.d.f. of the observed variable:
 <span class="math display">\[\begin{eqnarray*}
 \mbox{Censored case:}&amp;&amp; f(y|\mathbf{x};\theta) = \left\{
@@ -1087,7 +1074,7 @@ f(y) = \frac{1}{\Phi(\boldsymbol\beta'\mathbf{x})}
 <p>Results usually heavily rely on distributional assumptions (more than in uncensored/untruncated case). The framework is easy to extend to an heteroskedastic case, for instance by setting <span class="math inline">\(\sigma_i^2=\exp(\alpha'\mathbf{x}_i)\)</span>. Such a situation is illustrated by Figure <a href="microeconometrics.html#fig:tobit2">5.9</a>.</p>
 <div class="figure" style="text-align: left-aligned">
 <span style="display:block;" id="fig:tobit2"></span>
-<img src="AdvECTS_files/figure-html/tobit2-1.png" alt="Censored dataset with heteroskedasticitiy. The model is $y_i = x_i + \varepsilon_i$, with $\varepsilon_{i,t} \sim \mathcal{N}(0,\sigma_i^2)$ where $\sigma_i = \exp(-1 + x_i)$." width="672"><p class="caption">
+<img src="ApplEcts_files/figure-html/tobit2-1.png" alt="Censored dataset with heteroskedasticitiy. The model is $y_i = x_i + \varepsilon_i$, with $\varepsilon_{i,t} \sim \mathcal{N}(0,\sigma_i^2)$ where $\sigma_i = \exp(-1 + x_i)$." width="672"><p class="caption">
 Figure 5.9: Censored dataset with heteroskedasticitiy. The model is <span class="math inline">\(y_i = x_i + \varepsilon_i\)</span>, with <span class="math inline">\(\varepsilon_{i,t} \sim \mathcal{N}(0,\sigma_i^2)\)</span> where <span class="math inline">\(\sigma_i = \exp(-1 + x_i)\)</span>.
 </p>
 </div>
@@ -1095,10 +1082,9 @@ Figure 5.9: Censored dataset with heteroskedasticitiy. The model is <span class=
 <ul>
 <li><p>For data that are left-truncated at 0, we have:
 <span class="math display">\[\begin{eqnarray*}
-\mathbb{E}(y) &amp;=&amp; \mathbb{E}(y^*|y^*&gt;0)\\
-&amp;=&amp;\underbrace{\boldsymbol\beta'\mathbf{x}}_{=\mathbb{E}(y^*)} + \underbrace{\mathbb{E}(\varepsilon|\varepsilon&gt;-\boldsymbol\beta'\mathbf{x})}_{&gt;0} &gt; \mathbb{E}(y^*).
+\mathbb{E}(y) &amp;=&amp; \mathbb{E}(y^*|y^*&gt;0) = \underbrace{\boldsymbol\beta'\mathbf{x}}_{=\mathbb{E}(y^*)} + \underbrace{\mathbb{E}(\varepsilon|\varepsilon&gt;-\boldsymbol\beta'\mathbf{x})}_{&gt;0} &gt; \mathbb{E}(y^*).
 \end{eqnarray*}\]</span></p></li>
-<li><p>Consider data that are left-censored at 0. By Bayes, we have that
+<li><p>Consider data that are left-censored at 0. By Bayes, we have:
 <span class="math display">\[
 f_{y^*|y^*&gt;0}(u) = \frac{f_{y^*}(u)}{\mathbb{P}(y^*&gt;0)}\mathbb{I}_{\{u&gt;0\}}.
 \]</span>
@@ -1131,7 +1117,7 @@ where the penultimate line is obtained by using Eq. <a href="append.html#eq:Etru
 </ul>
 <div class="figure" style="text-align: left-aligned">
 <span style="display:block;" id="fig:tobit3"></span>
-<img src="AdvECTS_files/figure-html/tobit3-1.png" alt="Conditional means of $y$ in Tobit models. The model is $y_i = x_i + \varepsilon_i$, with $\varepsilon_i \sim \mathcal{N}(0,1)$." width="672"><p class="caption">
+<img src="ApplEcts_files/figure-html/tobit3-1.png" alt="Conditional means of $y$ in Tobit models. The model is $y_i = x_i + \varepsilon_i$, with $\varepsilon_i \sim \mathcal{N}(0,1)$." width="672"><p class="caption">
 Figure 5.10: Conditional means of <span class="math inline">\(y\)</span> in Tobit models. The model is <span class="math inline">\(y_i = x_i + \varepsilon_i\)</span>, with <span class="math inline">\(\varepsilon_i \sim \mathcal{N}(0,1)\)</span>.
 </p>
 </div>
@@ -1167,10 +1153,10 @@ Figure 5.10: Conditional means of <span class="math inline">\(y\)</span> in Tobi
 \mbox{Conditional mean} + \mbox{disturbance}.
 \]</span>
 where “Conditional mean” comes from Eq. <a href="microeconometrics.html#eq:Econdtruncated">(5.17)</a> and “disturbance” is an error with zero conditional mean.</p>
-<p>This approach is also applied to the case of <strong>sample selection models</strong> (see Section <a href="#section:SSM"><strong>??</strong></a>).</p>
+<p>This approach is also applied to the case of <strong>sample selection models</strong> (Section <a href="microeconometrics.html#SSM">5.4</a>).</p>
 <div class="example">
 <p><span id="exm:WageMroz1" class="example"><strong>Example 5.10  (Wage prediction) </strong></span>The present example is based on the dataset used in <span class="citation">Mroz (<a href="references.html#ref-Mroz_1987" role="doc-biblioref">1987</a>)</span> (whicht is part of the <code>sampleSelection</code> package).</p>
-<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.sampleSelection.org">sampleSelection</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AER</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"Mroz87"</span><span class="op">)</span></span>
@@ -1178,7 +1164,7 @@ where “Conditional mean” comes from Eq. <a href="microeconometrics.html#eq:E
 <span><span class="va">Mroz87</span><span class="op">$</span><span class="va">lfp.yesno</span><span class="op">[</span><span class="va">Mroz87</span><span class="op">$</span><span class="va">lfp</span><span class="op">==</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"yes"</span></span>
 <span><span class="va">Mroz87</span><span class="op">$</span><span class="va">lfp.yesno</span><span class="op">[</span><span class="va">Mroz87</span><span class="op">$</span><span class="va">lfp</span><span class="op">==</span><span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"no"</span></span>
 <span><span class="va">Mroz87</span><span class="op">$</span><span class="va">lfp.yesno</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">Mroz87</span><span class="op">$</span><span class="va">lfp.yesno</span><span class="op">)</span></span>
-<span><span class="va">ols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">wage</span> <span class="op">~</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">exper</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span> <span class="va">exper</span><span class="op">^</span><span class="fl">2</span> <span class="op">)</span> <span class="op">+</span> <span class="va">city</span>, data<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">Mroz87</span>, <span class="va">lfp</span><span class="op">==</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">ols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">wage</span> <span class="op">~</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">exper</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span> <span class="va">exper</span><span class="op">^</span><span class="fl">2</span> <span class="op">)</span> <span class="op">+</span> <span class="va">city</span>,data<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">Mroz87</span>,<span class="va">lfp</span><span class="op">==</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">tobit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/AER/man/tobit.html">tobit</a></span><span class="op">(</span><span class="va">wage</span> <span class="op">~</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">exper</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span> <span class="va">exper</span><span class="op">^</span><span class="fl">2</span> <span class="op">)</span> <span class="op">+</span> <span class="va">city</span>,</span>
 <span>               left <span class="op">=</span> <span class="fl">0</span>, right <span class="op">=</span> <span class="cn">Inf</span>,</span>
 <span>               data<span class="op">=</span><span class="va">Mroz87</span><span class="op">)</span></span>
@@ -1186,42 +1172,41 @@ where “Conditional mean” comes from Eq. <a href="microeconometrics.html#eq:E
 <span>                 <span class="va">wage</span> <span class="op">~</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">exper</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span> <span class="va">exper</span><span class="op">^</span><span class="fl">2</span> <span class="op">)</span> <span class="op">+</span> <span class="va">city</span>, <span class="co"># outcome equation</span></span>
 <span>                 data<span class="op">=</span><span class="va">Mroz87</span> <span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">ols</span>,<span class="va">Heckit</span>,<span class="va">tobit</span>,no.space <span class="op">=</span> <span class="cn">TRUE</span>,type<span class="op">=</span><span class="st">"text"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">ols</span>,<span class="va">Heckit</span>,<span class="va">tobit</span>,no.space <span class="op">=</span> <span class="cn">TRUE</span>,type<span class="op">=</span><span class="st">"text"</span>,omit.stat <span class="op">=</span> <span class="st">"f"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
-## =============================================================================
-##                                        Dependent variable:                   
-##                     ---------------------------------------------------------
-##                                               wage                           
-##                               OLS              Heckman           Tobit       
-##                                               selection                      
-##                               (1)                (2)              (3)        
-## -----------------------------------------------------------------------------
-## educ                       0.481***           0.759***         0.642***      
-##                             (0.067)            (0.270)          (0.081)      
-## exper                        0.032              0.430          0.461***      
-##                             (0.062)            (0.369)          (0.068)      
-## I(exper2)                   -0.0003            -0.008          -0.009***     
-##                             (0.002)            (0.008)          (0.002)      
-## city                         0.449              0.113           -0.087       
-##                             (0.318)            (0.522)          (0.378)      
-## Constant                   -2.561***           -12.251        -10.395***     
-##                             (0.929)            (8.853)          (1.095)      
-## -----------------------------------------------------------------------------
-## Observations                  428                753              753        
-## R2                           0.125              0.128                        
-## Adjusted R2                  0.117              0.117                        
-## Log Likelihood                                                -1,462.700     
-## rho                                             1.063                        
-## Inverse Mills Ratio                         5.165 (4.594)                    
-## Residual Std. Error    3.111 (df = 423)                                      
-## F Statistic         15.077*** (df = 4; 423)                                  
-## Wald Test                                                 153.892*** (df = 4)
-## =============================================================================
-## Note:                                             *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+## ======================================================================
+##                                    Dependent variable:                
+##                     --------------------------------------------------
+##                                            wage                       
+##                           OLS           Heckman           Tobit       
+##                                        selection                      
+##                           (1)             (2)              (3)        
+## ----------------------------------------------------------------------
+## educ                    0.481***       0.759***         0.642***      
+##                         (0.067)         (0.270)          (0.081)      
+## exper                    0.032           0.430          0.461***      
+##                         (0.062)         (0.369)          (0.068)      
+## I(exper2)               -0.0003         -0.008          -0.009***     
+##                         (0.002)         (0.008)          (0.002)      
+## city                     0.449           0.113           -0.087       
+##                         (0.318)         (0.522)          (0.378)      
+## Constant               -2.561***        -12.251        -10.395***     
+##                         (0.929)         (8.853)          (1.095)      
+## ----------------------------------------------------------------------
+## Observations              428             753              753        
+## R2                       0.125           0.128                        
+## Adjusted R2              0.117           0.117                        
+## Log Likelihood                                         -1,462.700     
+## rho                                      1.063                        
+## Inverse Mills Ratio                  5.165 (4.594)                    
+## Residual Std. Error 3.111 (df = 423)                                  
+## Wald Test                                          153.892*** (df = 4)
+## ======================================================================
+## Note:                                      *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
 <p>Figure <a href="microeconometrics.html#fig:tobit5">5.11</a> shows that, low wages, the OLS model tends to over-predict wages. The slope between observed and Tobit-predicted wages is closer to one (the adjustment line is closer to the 45-degree line.)</p>
 <div class="figure" style="text-align: left-aligned">
 <span style="display:block;" id="fig:tobit5"></span>
-<img src="AdvECTS_files/figure-html/tobit5-1.png" alt="Predicted versus observed wages." width="672"><p class="caption">
+<img src="ApplEcts_files/figure-html/tobit5-1.png" alt="Predicted versus observed wages." width="672"><p class="caption">
 Figure 5.11: Predicted versus observed wages.
 </p>
 </div>
@@ -1252,15 +1237,15 @@ Figure 5.11: Predicted versus observed wages.
 <li>
 <span class="math inline">\(2^{nd}\)</span> model: <span class="math inline">\(Expense = \exp(\mathbf{x}_2'\boldsymbol\beta_2 + \eta)\)</span>, with <span class="math inline">\(\eta \sim\,i.i.d.\, \mathcal{N}(0,\sigma_2^2)\)</span>.</li>
 </ul>
-<p>We have:
+<p>Specifically:
 <span class="math display">\[
 \mathbb{E}(Expense|\mathbf{x}_1,\mathbf{x}_2) = \Phi(\mathbf{x}_1'\boldsymbol\beta_1)\exp\left(\mathbf{x}_2'\boldsymbol\beta_2+ \frac{\sigma_2^2}{2}\right).
 \]</span></p>
 <p>In sample-selection models, studied in the next section, one specifies the joint distribution for the censoring and outcome mechanisms (while the two parts are independent here).</p>
 </div>
-<div id="sample-selection-models" class="section level2" number="5.4">
+<div id="SSM" class="section level2" number="5.4">
 <h2>
-<span class="header-section-number">5.4</span> Sample Selection Models<a class="anchor" aria-label="anchor" href="#sample-selection-models"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.4</span> Sample Selection Models<a class="anchor" aria-label="anchor" href="#SSM"><i class="fas fa-link"></i></a>
 </h2>
 <p>The situation tackled by sample-selection models is the following. The dependent variable of interest, denoted by <span class="math inline">\(y_2\)</span>, depends on observed variables <span class="math inline">\(\mathbf{x}_2\)</span>. Observing <span class="math inline">\(y_2\)</span>, or not, depends on the value of a latent variable (<span class="math inline">\(y_1^*\)</span>) that is correlated to observed variables <span class="math inline">\(\mathbf{x}_1\)</span>. The difference w.r.t. the two-part model skethed above is that, even conditionally on <span class="math inline">\((\mathbf{x}_1,\mathbf{x}_2)\)</span>, <span class="math inline">\(y_1^*\)</span> and <span class="math inline">\(y_2\)</span> may be correlated.</p>
 <p>As in the Tobit case, even in the simplest case of population conditional mean linear in regressors (i.e. <span class="math inline">\(y_2 = \mathbf{x}_2'\boldsymbol\beta_2 + \varepsilon_2\)</span>), OLS regression leads to inconsistent parameter estimates because the sample is not representative of the population.</p>
@@ -1300,10 +1285,9 @@ Let us derive the likelihood associated with this model. We have:
 <span class="math display" id="eq:probaPP2">\[\begin{eqnarray}
 f(\underbrace{0}_{=y_1},\underbrace{-}_{=y_2}|\mathbf{x};\theta) &amp;=&amp; \mathbb{P}(y_1^*\le 0) = \Phi(-\mathbf{x}_1'\boldsymbol\beta_1) \tag{5.18}\\
 f(1,y_2|\mathbf{x};\theta) &amp;=&amp; f(y_2^*|\mathbf{x};\theta) \mathbb{P}(y_1^*&gt;0|y_2^*,\mathbf{x};\theta) \nonumber \\
-&amp;=&amp; \frac{1}{\sigma}\phi\left(\frac{y_2 - \mathbf{x}_2'\boldsymbol\beta_2}{\sigma}\right) \times \nonumber\\
-&amp;&amp; \mathbb{P}(y_1^*&gt;0|y_2,\mathbf{x};\theta).\tag{5.19}
+&amp;=&amp; \frac{1}{\sigma}\phi\left(\frac{y_2 - \mathbf{x}_2'\boldsymbol\beta_2}{\sigma}\right)  \mathbb{P}(y_1^*&gt;0|y_2,\mathbf{x};\theta).\tag{5.19}
 \end{eqnarray}\]</span></p>
-<p>Let’s compute <span class="math inline">\(\mathbb{P}(y_1^*&gt;0|y_2,\mathbf{x};\theta)\)</span>. By Prop. <a href="#prop:update"><strong>??</strong></a> (in Appendix <a href="append.html#GaussianVar">7.4</a>), applied to (<span class="math inline">\(\varepsilon_1,\varepsilon_2\)</span>), we have:
+<p>Let us compute <span class="math inline">\(\mathbb{P}(y_1^*&gt;0|y_2,\mathbf{x};\theta)\)</span>. By Prop. <a href="append.html#prp:update">7.16</a> (in Appendix <a href="append.html#GaussianVar">7.4</a>), applied to (<span class="math inline">\(\varepsilon_1,\varepsilon_2\)</span>), we have:
 <span class="math display">\[
 y_1^*|y_2 \sim \mathcal{N}\left(\mathbf{x}_1'\boldsymbol\beta_1 + \frac{\rho}{\sigma_2}(y_2-\mathbf{x}_2'\boldsymbol\beta_2),1-\rho^2\right).
 \]</span>
@@ -1311,14 +1295,14 @@ which leads to
 <span class="math display" id="eq:probaPP3">\[\begin{equation}
 \mathbb{P}(y_1^*&gt;0|y_2,\mathbf{x};\theta) = \Phi\left( \frac{\mathbf{x}_1'\boldsymbol\beta_1 + \dfrac{\rho}{\sigma_2}(y_2-\mathbf{x}_2'\boldsymbol\beta_2)}{\sqrt{1-\rho^2}}\right).\tag{5.20}
 \end{equation}\]</span></p>
-<p>Figure <a href="microeconometrics.html#fig:SampleSelec">5.12</a> shows <span class="math inline">\(\mathbb{P}(y_1^*&gt;0|y_2,\mathbf{x};\theta)\)</span> for different values of <span class="math inline">\(y_2\)</span> and of <span class="math inline">\(\rho\)</span>, in the case where <span class="math inline">\(\boldsymbol\beta_1=\boldsymbol\beta_2=0\)</span>.</p>
+<p>Figure <a href="microeconometrics.html#fig:SampleSelec">5.12</a> displays <span class="math inline">\(\mathbb{P}(y_1^*&gt;0|y_2,\mathbf{x};\theta)\)</span> for different values of <span class="math inline">\(y_2\)</span> and of <span class="math inline">\(\rho\)</span>, in the case where <span class="math inline">\(\boldsymbol\beta_1=\boldsymbol\beta_2=0\)</span>.</p>
 <div class="figure" style="text-align: left-aligned">
 <span style="display:block;" id="fig:SampleSelec"></span>
-<img src="AdvECTS_files/figure-html/SampleSelec-1.png" alt="Probability of observing $y_2$ depending on its value, for different values of conditional correlation between $y_2$ and $y_1^*$." width="672"><p class="caption">
+<img src="ApplEcts_files/figure-html/SampleSelec-1.png" alt="Probability of observing $y_2$ depending on its value, for different values of conditional correlation between $y_2$ and $y_1^*$." width="672"><p class="caption">
 Figure 5.12: Probability of observing <span class="math inline">\(y_2\)</span> depending on its value, for different values of conditional correlation between <span class="math inline">\(y_2\)</span> and <span class="math inline">\(y_1^*\)</span>.
 </p>
 </div>
-<p>Using Eqs. <a href="microeconometrics.html#eq:probaPP1">(5.18)</a>, <a href="microeconometrics.html#eq:probaPP2">(5.19)</a> and <a href="microeconometrics.html#eq:probaPP3">(5.20)</a> gives the log-likelihood function:
+<p>Using Eqs. <a href="microeconometrics.html#eq:probaPP1">(5.18)</a>, <a href="microeconometrics.html#eq:probaPP2">(5.19)</a> and <a href="microeconometrics.html#eq:probaPP3">(5.20)</a>, one gets the log-likelihood function:
 <span class="math display">\[\begin{eqnarray*}
 \log \mathcal{L}(\theta;\mathbf{y},\mathbf{X}) &amp;=&amp; \sum_{i=1}^n  (1 - y_{1,i})\log \Phi(-\mathbf{x}_{1,i}'\boldsymbol\beta_1) + \\
 &amp;&amp;  \sum_{i=1}^n y_{1,i} \log \left(  \frac{1}{\sigma}\phi\left(\frac{y_{2,i} - \mathbf{x}_{2,i}'\boldsymbol\beta_2}{\sigma}\right)\right) + \\
@@ -1330,8 +1314,7 @@ Figure 5.12: Probability of observing <span class="math inline">\(y_2\)</span> d
 &amp;=&amp; \mathbb{E}(\mathbf{x}_2'\boldsymbol\beta_2 + \rho\sigma_2(y_1^*-\mathbf{x}_1'\boldsymbol\beta_1)|y_1=1,\mathbf{x})\nonumber\\
 &amp;=&amp; \mathbf{x}_2'\boldsymbol\beta_2 + \rho\sigma_2\mathbb{E}( \underbrace{y_1^*-\mathbf{x}_1'\boldsymbol\beta_1}_{=\varepsilon_1 \sim\mathcal{N}(0,1)}|\varepsilon_1&gt;-\mathbf{x}_1'\boldsymbol\beta_1,\mathbf{x})\nonumber\\
 &amp;=&amp; \mathbf{x}_2'\boldsymbol\beta_2 + \rho\sigma_2\frac{\phi(-\mathbf{x}_1'\boldsymbol\beta_1)}{1 - \Phi(-\mathbf{x}_1'\boldsymbol\beta_1)}\nonumber\\
-&amp;=&amp; \mathbf{x}_2'\boldsymbol\beta_2 + \rho\sigma_2\frac{\phi(\mathbf{x}_1'\boldsymbol\beta_1)}{\Phi(\mathbf{x}_1'\boldsymbol\beta_1)}\nonumber\\
-&amp;=&amp;\mathbf{x}_2'\boldsymbol\beta_2 + \rho\sigma_2\lambda(\mathbf{x}_1'\boldsymbol\beta_1),\tag{5.21}
+&amp;=&amp; \mathbf{x}_2'\boldsymbol\beta_2 + \rho\sigma_2\frac{\phi(\mathbf{x}_1'\boldsymbol\beta_1)}{\Phi(\mathbf{x}_1'\boldsymbol\beta_1)}=\mathbf{x}_2'\boldsymbol\beta_2 + \rho\sigma_2\lambda(\mathbf{x}_1'\boldsymbol\beta_1),\tag{5.21}
 \end{eqnarray}\]</span>
 and:
 <span class="math display">\[\begin{eqnarray*}
@@ -1364,8 +1347,7 @@ Using Eq. <a href="append.html#eq:Vtrunc2">(7.7)</a>, we get:
 \]</span>
 which gives
 <span class="math display">\[\begin{eqnarray*}
-&amp;&amp;\mathbb{V}ar(y_2|y_1^*&gt;0,\mathbf{x}) \\
-&amp;=&amp; \sigma_2^2(1-\rho^2) + \rho^2\sigma_2^2 (1 - \mathbf{x}_1'\boldsymbol\beta_1 \lambda(\mathbf{x}_1'\boldsymbol\beta_1) - \lambda(\mathbf{x}_1'\boldsymbol\beta_1)^2)\\
+\mathbb{V}ar(y_2|y_1^*&gt;0,\mathbf{x}) &amp;=&amp; \sigma_2^2(1-\rho^2) + \rho^2\sigma_2^2 (1 - \mathbf{x}_1'\boldsymbol\beta_1 \lambda(\mathbf{x}_1'\boldsymbol\beta_1) - \lambda(\mathbf{x}_1'\boldsymbol\beta_1)^2)\\
 &amp;=&amp; \sigma_2^2 - \rho^2\sigma_2^2 \left(\mathbf{x}_1'\boldsymbol\beta_1 \lambda(\mathbf{x}_1'\boldsymbol\beta_1) + \lambda(\mathbf{x}_1'\boldsymbol\beta_1)^2\right),
 \end{eqnarray*}\]</span>
 and, finally:
@@ -1375,7 +1357,7 @@ and, finally:
 <p>The Heckman procedure is computationally simple. Although computational costs are no longer an issue, the two-step solution allows certain generalisations more easily than ML, and is more robust in certain circumstances. The computation of parameter standard errors is fairly complicated because of the two steps (see <span class="citation">Cameron and Trivedi (<a href="references.html#ref-Cameron_Trivedi_2005" role="doc-biblioref">2005</a>)</span>, Subsection 16.10.2). Bootstrap can be resorted to.</p>
 <div class="example">
 <p><span id="exm:WageSample" class="example"><strong>Example 5.11  (Wage prediction) </strong></span>As in Example <a href="microeconometrics.html#exm:WageMroz1">5.10</a>, let us use the <span class="citation">Mroz (<a href="references.html#ref-Mroz_1987" role="doc-biblioref">1987</a>)</span> dataset again, with the objective of explaining wage setting.</p>
-<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.sampleSelection.org">sampleSelection</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AER</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"Mroz87"</span><span class="op">)</span></span>
@@ -1383,18 +1365,18 @@ and, finally:
 <span><span class="va">Mroz87</span><span class="op">$</span><span class="va">lfp.yesno</span><span class="op">[</span><span class="va">Mroz87</span><span class="op">$</span><span class="va">lfp</span><span class="op">==</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"yes"</span></span>
 <span><span class="va">Mroz87</span><span class="op">$</span><span class="va">lfp.yesno</span><span class="op">[</span><span class="va">Mroz87</span><span class="op">$</span><span class="va">lfp</span><span class="op">==</span><span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"no"</span></span>
 <span><span class="va">Mroz87</span><span class="op">$</span><span class="va">lfp.yesno</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">Mroz87</span><span class="op">$</span><span class="va">lfp.yesno</span><span class="op">)</span></span>
-<span></span>
 <span><span class="co">#Logit &amp; Probit (selection equation)</span></span>
 <span><span class="va">logitW</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">lfp</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span> <span class="va">age</span><span class="op">^</span><span class="fl">2</span> <span class="op">)</span> <span class="op">+</span> <span class="va">kids5</span> <span class="op">+</span> <span class="va">huswage</span> <span class="op">+</span> <span class="va">educ</span>,</span>
 <span>              family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"logit"</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">Mroz87</span><span class="op">)</span> </span>
 <span><span class="va">probitW</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">lfp</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span> <span class="va">age</span><span class="op">^</span><span class="fl">2</span> <span class="op">)</span> <span class="op">+</span> <span class="va">kids5</span> <span class="op">+</span> <span class="va">huswage</span> <span class="op">+</span> <span class="va">educ</span>,</span>
 <span>               family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"probit"</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">Mroz87</span><span class="op">)</span> </span>
 <span><span class="co"># OLS for outcome:</span></span>
-<span><span class="va">ols1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">wage</span><span class="op">)</span> <span class="op">~</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">exper</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span> <span class="va">exper</span><span class="op">^</span><span class="fl">2</span> <span class="op">)</span> <span class="op">+</span> <span class="va">city</span>, data<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">Mroz87</span>, <span class="va">lfp</span><span class="op">==</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">ols1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">wage</span><span class="op">)</span> <span class="op">~</span> <span class="va">educ</span><span class="op">+</span><span class="va">exper</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span> <span class="va">exper</span><span class="op">^</span><span class="fl">2</span> <span class="op">)</span><span class="op">+</span><span class="va">city</span>,data<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">Mroz87</span>,<span class="va">lfp</span><span class="op">==</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co"># Two-step Heckman estimation</span></span>
-<span><span class="va">heckvan</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sampleSelection/man/selection.html">heckit</a></span><span class="op">(</span> <span class="va">lfp</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span> <span class="va">age</span><span class="op">^</span><span class="fl">2</span> <span class="op">)</span> <span class="op">+</span> <span class="va">kids5</span> <span class="op">+</span> <span class="va">huswage</span> <span class="op">+</span> <span class="va">educ</span>, <span class="co"># selection equation</span></span>
-<span>                   <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">wage</span><span class="op">)</span> <span class="op">~</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">exper</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span> <span class="va">exper</span><span class="op">^</span><span class="fl">2</span> <span class="op">)</span> <span class="op">+</span> <span class="va">city</span>, <span class="co"># outcome equation</span></span>
-<span>                   data<span class="op">=</span><span class="va">Mroz87</span> <span class="op">)</span></span>
+<span><span class="va">heckvan</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/sampleSelection/man/selection.html">heckit</a></span><span class="op">(</span> <span class="va">lfp</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span> <span class="va">age</span><span class="op">^</span><span class="fl">2</span> <span class="op">)</span> <span class="op">+</span> <span class="va">kids5</span> <span class="op">+</span> <span class="va">huswage</span> <span class="op">+</span> <span class="va">educ</span>, <span class="co"># selection equation</span></span>
+<span>          <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">wage</span><span class="op">)</span> <span class="op">~</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">exper</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span> <span class="va">exper</span><span class="op">^</span><span class="fl">2</span> <span class="op">)</span> <span class="op">+</span> <span class="va">city</span>, <span class="co"># outcome equation</span></span>
+<span>          data<span class="op">=</span><span class="va">Mroz87</span> <span class="op">)</span></span>
 <span><span class="co"># Maximun likelihood estimation of selection model:</span></span>
 <span><span class="va">ml</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/sampleSelection/man/selection.html">selection</a></span><span class="op">(</span><span class="va">lfp</span><span class="op">~</span><span class="va">age</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">age</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">+</span><span class="va">kids5</span><span class="op">+</span><span class="va">huswage</span><span class="op">+</span><span class="va">educ</span>, </span>
 <span>                <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">wage</span><span class="op">)</span><span class="op">~</span><span class="va">educ</span><span class="op">+</span><span class="va">exper</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">exper</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">+</span><span class="va">city</span>, data <span class="op">=</span> <span class="va">Mroz87</span><span class="op">)</span></span>
@@ -1432,39 +1414,38 @@ and, finally:
 ## Inverse Mills Ratio                     0.012 (0.152)              
 ## ===================================================================
 ## Note:                                   *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
-<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Print outcome-equation estimates:</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">ols1</span>,<span class="va">heckvan</span>,<span class="va">ml</span>,type <span class="op">=</span> <span class="st">"text"</span>,no.space <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">ols1</span>,<span class="va">heckvan</span>,<span class="va">ml</span>,type <span class="op">=</span> <span class="st">"text"</span>,no.space <span class="op">=</span> <span class="cn">TRUE</span>,omit.stat <span class="op">=</span> <span class="st">"f"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
-## =======================================================================
-##                                     Dependent variable:                
-##                     ---------------------------------------------------
-##                                          log(wage)                     
-##                               OLS              Heckman      selection  
-##                                               selection                
-##                               (1)                (2)           (3)     
-## -----------------------------------------------------------------------
-## educ                       0.106***           0.106***      0.106***   
-##                             (0.014)            (0.017)       (0.017)   
-## exper                      0.041***           0.041***      0.041***   
-##                             (0.013)            (0.013)       (0.013)   
-## I(exper2)                  -0.001**           -0.001**      -0.001**   
-##                            (0.0004)           (0.0004)      (0.0004)   
-## city                         0.054              0.053         0.053    
-##                             (0.068)            (0.069)       (0.069)   
-## Constant                   -0.531***           -0.547*      -0.544**   
-##                             (0.199)            (0.289)       (0.272)   
-## -----------------------------------------------------------------------
-## Observations                  428                753           753     
-## R2                           0.158              0.158                  
-## Adjusted R2                  0.150              0.148                  
-## Log Likelihood                                              -891.177   
-## rho                                             0.018     0.014 (0.203)
-## Inverse Mills Ratio                         0.012 (0.152)              
-## Residual Std. Error    0.667 (df = 423)                                
-## F Statistic         19.856*** (df = 4; 423)                            
-## =======================================================================
-## Note:                                       *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+## ================================================================
+##                                 Dependent variable:             
+##                     --------------------------------------------
+##                                      log(wage)                  
+##                           OLS           Heckman      selection  
+##                                        selection                
+##                           (1)             (2)           (3)     
+## ----------------------------------------------------------------
+## educ                    0.106***       0.106***      0.106***   
+##                         (0.014)         (0.017)       (0.017)   
+## exper                   0.041***       0.041***      0.041***   
+##                         (0.013)         (0.013)       (0.013)   
+## I(exper2)               -0.001**       -0.001**      -0.001**   
+##                         (0.0004)       (0.0004)      (0.0004)   
+## city                     0.054           0.053         0.053    
+##                         (0.068)         (0.069)       (0.069)   
+## Constant               -0.531***        -0.547*      -0.544**   
+##                         (0.199)         (0.289)       (0.272)   
+## ----------------------------------------------------------------
+## Observations              428             753           753     
+## R2                       0.158           0.158                  
+## Adjusted R2              0.150           0.148                  
+## Log Likelihood                                       -891.177   
+## rho                                      0.018     0.014 (0.203)
+## Inverse Mills Ratio                  0.012 (0.152)              
+## Residual Std. Error 0.667 (df = 423)                            
+## ================================================================
+## Note:                                *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
 </div>
 </div>
 <div id="models-of-count-data" class="section level2" number="5.5">
@@ -1551,91 +1532,91 @@ where <span class="math inline">\(\exp(\boldsymbol\beta'\mathbf{x}_i)=\mu\)</spa
 <span class="math display">\[
 \mathbb{V}ar(y|\mathbf{x}) = \mu+\alpha \mu^2.
 \]</span>
-The previous expression is the basis of the so-called <strong>NB2</strong> specification. If <span class="math inline">\(\delta\)</span> is replaced by <span class="math inline">\(\mu/\gamma\)</span>, then we get the <strong>NB1</strong> model:
+The previous expression is the basis of the so-called <strong>NB2</strong> specification. If <span class="math inline">\(\delta\)</span> is replaced with <span class="math inline">\(\mu/\gamma\)</span>, then we get the <strong>NB1</strong> model:
 <span class="math display">\[
 \mathbb{V}ar(y|\mathbf{x}) = \mu(1+\gamma).
 \]</span></p>
 <div class="example">
 <p><span id="exm:Doctorvisits" class="example"><strong>Example 5.12  (Number of doctor visits) </strong></span>The following example compares different specifications, namely a linear regression model, a Poisson model, and a NB model, to account for the number of doctor visits. The dataset (`<code>randdata</code>) is the one used in Chapter 20 of <span class="citation">Cameron and Trivedi (<a href="references.html#ref-Cameron_Trivedi_2005" role="doc-biblioref">2005</a>)</span> (available on <a href="http://cameron.econ.ucdavis.edu/mmabook/mmadata.html">that page</a>).</p>
-<div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
-<span><span class="co">#library(foreign)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">COUNT</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://github.com/atahk/pscl">pscl</a></span><span class="op">)</span> <span class="co"># for predprob function and hurdle model</span></span>
-<span><span class="co">#randdata &lt;- subset(randdata,year==1) # randdata included in AEC </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>plt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.15</span>,<span class="fl">.95</span>,<span class="fl">.1</span>,<span class="fl">.95</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">randdata</span><span class="op">$</span><span class="va">mdvis</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: left-aligned">
 <span style="display:block;" id="fig:countdata1"></span>
-<img src="AdvECTS_files/figure-html/countdata1-1.png" alt="Distribution of the number of doctor visits." width="95%"><p class="caption">
+<img src="ApplEcts_files/figure-html/countdata1-1.png" alt="Distribution of the number of doctor visits." width="95%"><p class="caption">
 Figure 5.13: Distribution of the number of doctor visits.
 </p>
 </div>
-<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">randdata</span><span class="op">$</span><span class="va">LC</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">randdata</span><span class="op">$</span><span class="va">coins</span><span class="op">)</span></span>
-<span><span class="va">model.OLS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mdvis</span> <span class="op">~</span> <span class="va">LC</span> <span class="op">+</span> <span class="va">idp</span> <span class="op">+</span> <span class="va">lpi</span> <span class="op">+</span> <span class="va">fmde</span> <span class="op">+</span> <span class="va">physlm</span> <span class="op">+</span> <span class="va">disea</span> <span class="op">+</span> <span class="va">hlthg</span> <span class="op">+</span> <span class="va">hlthf</span> <span class="op">+</span> <span class="va">hlthp</span> <span class="op">-</span> <span class="fl">1</span>,</span>
-<span>                data<span class="op">=</span><span class="va">randdata</span><span class="op">)</span></span>
-<span><span class="va">model.poisson</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">mdvis</span> <span class="op">~</span> <span class="va">LC</span> <span class="op">+</span> <span class="va">idp</span> <span class="op">+</span> <span class="va">lpi</span> <span class="op">+</span> <span class="va">fmde</span> <span class="op">+</span> <span class="va">physlm</span> <span class="op">+</span> <span class="va">disea</span> <span class="op">+</span> <span class="va">hlthg</span> <span class="op">+</span> <span class="va">hlthf</span> <span class="op">+</span> <span class="va">hlthp</span> <span class="op">-</span> <span class="fl">1</span>,</span>
-<span>                     data<span class="op">=</span><span class="va">randdata</span>,family <span class="op">=</span> <span class="va">poisson</span><span class="op">)</span></span>
-<span><span class="va">model.neg.bin</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/glm.nb.html">glm.nb</a></span><span class="op">(</span><span class="va">mdvis</span> <span class="op">~</span> <span class="va">LC</span> <span class="op">+</span> <span class="va">idp</span> <span class="op">+</span> <span class="va">lpi</span> <span class="op">+</span> <span class="va">fmde</span> <span class="op">+</span> <span class="va">physlm</span> <span class="op">+</span> <span class="va">disea</span> <span class="op">+</span> <span class="va">hlthg</span> <span class="op">+</span> <span class="va">hlthf</span> <span class="op">+</span> <span class="va">hlthp</span> <span class="op">-</span> <span class="fl">1</span>,</span>
-<span>                        data<span class="op">=</span><span class="va">randdata</span><span class="op">)</span></span>
-<span><span class="va">model.neg.bin.with.intercept</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/glm.nb.html">glm.nb</a></span><span class="op">(</span><span class="va">mdvis</span> <span class="op">~</span> <span class="va">LC</span> <span class="op">+</span> <span class="va">idp</span> <span class="op">+</span> <span class="va">lpi</span> <span class="op">+</span> <span class="va">fmde</span> <span class="op">+</span> <span class="va">physlm</span> <span class="op">+</span> <span class="va">disea</span> <span class="op">+</span> <span class="va">hlthg</span> <span class="op">+</span> <span class="va">hlthf</span> <span class="op">+</span> <span class="va">hlthp</span>,</span>
-<span>                                       data<span class="op">=</span><span class="va">randdata</span><span class="op">)</span></span>
-<span><span class="fu">stargazer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">model.OLS</span>,<span class="va">model.poisson</span>,<span class="va">model.neg.bin</span>, <span class="va">model.neg.bin.with.intercept</span>,type<span class="op">=</span><span class="st">"text"</span>,no.space <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## 
-## ==============================================================================================
-##                                                Dependent variable:                            
-##                     --------------------------------------------------------------------------
-##                                                       mdvis                                   
-##                                 OLS                Poisson               negative             
-##                                                                          binomial             
-##                                 (1)                  (2)           (3)              (4)       
-## ----------------------------------------------------------------------------------------------
-## LC                           -0.155***            -0.051***     -0.057***        -0.058***    
-##                               (0.020)              (0.003)       (0.006)          (0.006)     
-## idp                          -0.546***            -0.183***     -0.212***        -0.268***    
-##                               (0.075)              (0.011)       (0.023)          (0.023)     
-## lpi                           0.230***            0.095***       0.088***         0.041***    
-##                               (0.012)              (0.002)       (0.004)          (0.004)     
-## fmde                         -0.073***            -0.029***     -0.030***        -0.038***    
-##                               (0.012)              (0.002)       (0.004)          (0.003)     
-## physlm                        0.945***            0.217***       0.229***         0.269***    
-##                               (0.104)              (0.013)       (0.031)          (0.030)     
-## disea                         0.177***            0.050***       0.062***         0.038***    
-##                               (0.004)             (0.0005)       (0.001)          (0.001)     
-## hlthg                         0.270***            0.126***       0.068***         -0.044**    
-##                               (0.066)              (0.009)       (0.020)          (0.020)     
-## hlthf                         0.455***            0.149***       0.084**           0.017      
-##                               (0.123)              (0.016)       (0.037)          (0.036)     
-## hlthp                         1.537***            0.197***       0.185**          0.178**     
-##                               (0.263)              (0.027)       (0.076)          (0.074)     
-## Constant                                                                          0.664***    
-##                                                                                   (0.025)     
-## ----------------------------------------------------------------------------------------------
-## Observations                   20,190              20,190         20,190           20,190     
-## R2                             0.322                                                          
-## Adjusted R2                    0.322                                                          
-## Log Likelihood                                   -64,221.340   -43,745.860      -43,384.660   
-## theta                                                        0.732*** (0.010) 0.773*** (0.011)
-## Akaike Inf. Crit.                                128,460.700    87,509.710       86,789.320   
-## Residual Std. Error      4.393 (df = 20181)                                                   
-## F Statistic         1,066.623*** (df = 9; 20181)                                              
-## ==============================================================================================
-## Note:                                                              *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
-<p>Models’ predictions can be obtained as follows:</p>
 <div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">predict_poisson.beta.x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">model.poisson</span><span class="op">)</span> <span class="co"># prediction of beta'x, equivalent to "model.poisson$fitted.values"</span></span>
-<span><span class="va">predict_poisson</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">model.poisson</span>,type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span> <span class="co"># prediction of the number of events (exp(beta'x))</span></span>
+<code class="sourceCode R"><span><span class="va">randdata</span><span class="op">$</span><span class="va">LC</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">randdata</span><span class="op">$</span><span class="va">coins</span><span class="op">)</span></span>
+<span><span class="va">model.OLS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mdvis</span> <span class="op">~</span> <span class="va">LC</span> <span class="op">+</span> <span class="va">idp</span> <span class="op">+</span> <span class="va">lpi</span> <span class="op">+</span> <span class="va">fmde</span> <span class="op">+</span> <span class="va">physlm</span> <span class="op">+</span> <span class="va">disea</span> <span class="op">+</span> <span class="va">hlthg</span> <span class="op">+</span> </span>
+<span>                  <span class="va">hlthf</span> <span class="op">+</span> <span class="va">hlthp</span> <span class="op">-</span> <span class="fl">1</span>,data<span class="op">=</span><span class="va">randdata</span><span class="op">)</span></span>
+<span><span class="va">model.poisson</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">mdvis</span> <span class="op">~</span> <span class="va">LC</span> <span class="op">+</span> <span class="va">idp</span> <span class="op">+</span> <span class="va">lpi</span> <span class="op">+</span> <span class="va">fmde</span> <span class="op">+</span> <span class="va">physlm</span> <span class="op">+</span> <span class="va">disea</span> <span class="op">+</span> </span>
+<span>                       <span class="va">hlthg</span> <span class="op">+</span> <span class="va">hlthf</span> <span class="op">+</span> <span class="va">hlthp</span> <span class="op">-</span> <span class="fl">1</span>,data<span class="op">=</span><span class="va">randdata</span>,family <span class="op">=</span> <span class="va">poisson</span><span class="op">)</span></span>
+<span><span class="va">model.neg.bin</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/glm.nb.html">glm.nb</a></span><span class="op">(</span><span class="va">mdvis</span> <span class="op">~</span> <span class="va">LC</span> <span class="op">+</span> <span class="va">idp</span> <span class="op">+</span> <span class="va">lpi</span> <span class="op">+</span> <span class="va">fmde</span> <span class="op">+</span> <span class="va">physlm</span> <span class="op">+</span> <span class="va">disea</span> <span class="op">+</span></span>
+<span>                          <span class="va">hlthg</span> <span class="op">+</span> <span class="va">hlthf</span> <span class="op">+</span> <span class="va">hlthp</span> <span class="op">-</span> <span class="fl">1</span>,data<span class="op">=</span><span class="va">randdata</span><span class="op">)</span></span>
+<span><span class="va">model.neg.bin.with.intercept</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/glm.nb.html">glm.nb</a></span><span class="op">(</span><span class="va">mdvis</span> <span class="op">~</span> <span class="va">LC</span> <span class="op">+</span> <span class="va">idp</span> <span class="op">+</span> <span class="va">lpi</span> <span class="op">+</span> <span class="va">fmde</span> <span class="op">+</span> <span class="va">physlm</span> <span class="op">+</span> <span class="va">disea</span> <span class="op">+</span> <span class="va">hlthg</span> <span class="op">+</span> </span>
+<span>           <span class="va">hlthf</span> <span class="op">+</span> <span class="va">hlthp</span>,data<span class="op">=</span><span class="va">randdata</span><span class="op">)</span></span>
+<span><span class="fu">stargazer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">model.OLS</span>,<span class="va">model.poisson</span>,<span class="va">model.neg.bin</span>,</span>
+<span>                     <span class="va">model.neg.bin.with.intercept</span>,type<span class="op">=</span><span class="st">"text"</span>,</span>
+<span>                     no.space <span class="op">=</span> <span class="cn">TRUE</span>,omit.stat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"f"</span>,<span class="st">"ser"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## =========================================================================
+##                                     Dependent variable:                  
+##                   -------------------------------------------------------
+##                                            mdvis                         
+##                      OLS      Poisson               negative             
+##                                                     binomial             
+##                      (1)        (2)           (3)              (4)       
+## -------------------------------------------------------------------------
+## LC                -0.155***  -0.051***     -0.057***        -0.058***    
+##                    (0.020)    (0.003)       (0.006)          (0.006)     
+## idp               -0.546***  -0.183***     -0.212***        -0.268***    
+##                    (0.075)    (0.011)       (0.023)          (0.023)     
+## lpi               0.230***   0.095***       0.088***         0.041***    
+##                    (0.012)    (0.002)       (0.004)          (0.004)     
+## fmde              -0.073***  -0.029***     -0.030***        -0.038***    
+##                    (0.012)    (0.002)       (0.004)          (0.003)     
+## physlm            0.945***   0.217***       0.229***         0.269***    
+##                    (0.104)    (0.013)       (0.031)          (0.030)     
+## disea             0.177***   0.050***       0.062***         0.038***    
+##                    (0.004)   (0.0005)       (0.001)          (0.001)     
+## hlthg             0.270***   0.126***       0.068***         -0.044**    
+##                    (0.066)    (0.009)       (0.020)          (0.020)     
+## hlthf             0.455***   0.149***       0.084**           0.017      
+##                    (0.123)    (0.016)       (0.037)          (0.036)     
+## hlthp             1.537***   0.197***       0.185**          0.178**     
+##                    (0.263)    (0.027)       (0.076)          (0.074)     
+## Constant                                                     0.664***    
+##                                                              (0.025)     
+## -------------------------------------------------------------------------
+## Observations       20,190     20,190         20,190           20,190     
+## R2                  0.322                                                
+## Adjusted R2         0.322                                                
+## Log Likelihood              -64,221.340   -43,745.860      -43,384.660   
+## theta                                   0.732*** (0.010) 0.773*** (0.011)
+## Akaike Inf. Crit.           128,460.700    87,509.710       86,789.320   
+## =========================================================================
+## Note:                                         *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<p>Models’ predictions can be obtained as follows:</p>
+<div class="sourceCode" id="cb134"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># prediction of beta'x, equivalent to "model.poisson$fitted.values":</span></span>
+<span><span class="va">predict_poisson.beta.x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">model.poisson</span><span class="op">)</span></span>
+<span><span class="co"># prediction of the number of events (exp(beta'x)):</span></span>
+<span><span class="va">predict_poisson</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">model.poisson</span>,type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></span>
 <span><span class="va">predict_NB</span> <span class="op">&lt;-</span> <span class="va">model.neg.bin</span><span class="op">$</span><span class="va">fitted.values</span></span></code></pre></div>
 <p>Let us now compute the model-implied probabilities, and let’s compare them with the frequencies observed in the data.</p>
-<div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">prop.table.data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">randdata</span><span class="op">$</span><span class="va">mdvis</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">prop.table.data</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">randdata</span><span class="op">$</span><span class="va">mdvis</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">predprob.poisson</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pscl/man/predprob.html">predprob</a></span><span class="op">(</span><span class="va">model.poisson</span><span class="op">)</span> <span class="co"># part of pscl package</span></span>
 <span><span class="va">predprob.nb</span>      <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pscl/man/predprob.html">predprob</a></span><span class="op">(</span><span class="va">model.neg.bin</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span></span>
-<span>  <span class="va">prop.table.data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">predprob.poisson</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,<span class="fl">2</span>,<span class="va">mean</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">predprob.nb</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,<span class="fl">2</span>,<span class="va">mean</span><span class="op">)</span></span>
-<span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">prop.table.data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,</span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">predprob.poisson</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,<span class="fl">2</span>,<span class="va">mean</span><span class="op">)</span>,</span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">predprob.nb</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,<span class="fl">2</span>,<span class="va">mean</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##              0         1         2          3          4          5
 ## [1,] 0.3124319 0.1890540 0.1385339 0.09331352 0.06661714 0.04794453
 ## [2,] 0.1220592 0.2230328 0.2271621 0.17173478 0.10888940 0.06244353
@@ -1678,16 +1659,17 @@ f_1(0) + (1-f_1(0))f_2(0) &amp; \mbox{if $y=0$},\\
 Typically, <span class="math inline">\(f_1\)</span> corresponds to a logit model and <span class="math inline">\(f_2\)</span> is Poisson or negative binomial density. This model is easily estimated by ML techniques.</p>
 <div class="example">
 <p><span id="exm:Doctorvisits2" class="example"><strong>Example 5.13  (Number of doctor visits) </strong></span>Let us come back to the data used in Example <a href="microeconometrics.html#exm:Doctorvisits">5.12</a>, and estimate Hurdle and a zero-inflation models:</p>
-<div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Hurdle models</span></span>
-<span><span class="co"># See Subsection 2.2 of https://cran.r-project.org/web/packages/pscl/vignettes/countreg.pdf</span></span>
-<span><span class="va">model.hurdle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pscl/man/hurdle.html">hurdle</a></span><span class="op">(</span><span class="va">mdvis</span> <span class="op">~</span> <span class="va">LC</span> <span class="op">+</span> <span class="va">idp</span> <span class="op">+</span> <span class="va">lpi</span> <span class="op">+</span> <span class="va">fmde</span> <span class="op">+</span> <span class="va">physlm</span> <span class="op">+</span></span>
-<span>                         <span class="va">disea</span> <span class="op">+</span> <span class="va">hlthg</span> <span class="op">+</span> <span class="va">hlthf</span> <span class="op">+</span> <span class="va">hlthp</span>, data<span class="op">=</span><span class="va">randdata</span>,</span>
-<span>                       dist <span class="op">=</span> <span class="st">"poisson"</span>, zero.dist <span class="op">=</span> <span class="st">"binomial"</span>, link <span class="op">=</span> <span class="st">"logit"</span><span class="op">)</span></span>
+<!-- # See Subsection 2.2 of https://cran.r-project.org/web/packages/pscl/vignettes/countreg.pdf -->
+<div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model.hurdle</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/pscl/man/hurdle.html">hurdle</a></span><span class="op">(</span><span class="va">mdvis</span> <span class="op">~</span> <span class="va">LC</span> <span class="op">+</span> <span class="va">idp</span> <span class="op">+</span> <span class="va">lpi</span> <span class="op">+</span> <span class="va">fmde</span> <span class="op">+</span> <span class="va">physlm</span> <span class="op">+</span> <span class="va">disea</span> <span class="op">+</span> <span class="va">hlthg</span> <span class="op">+</span> <span class="va">hlthf</span> <span class="op">+</span> </span>
+<span>           <span class="va">hlthp</span>, data<span class="op">=</span><span class="va">randdata</span>,</span>
+<span>         dist <span class="op">=</span> <span class="st">"poisson"</span>, zero.dist <span class="op">=</span> <span class="st">"binomial"</span>, link <span class="op">=</span> <span class="st">"logit"</span><span class="op">)</span></span>
 <span><span class="va">model.zeroinfl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pscl/man/zeroinfl.html">zeroinfl</a></span><span class="op">(</span><span class="va">mdvis</span> <span class="op">~</span> <span class="va">LC</span> <span class="op">+</span> <span class="va">idp</span> <span class="op">+</span> <span class="va">lpi</span> <span class="op">+</span> <span class="va">fmde</span> <span class="op">+</span> <span class="va">physlm</span> <span class="op">+</span></span>
 <span>                             <span class="va">disea</span> <span class="op">+</span> <span class="va">hlthg</span> <span class="op">+</span> <span class="va">hlthf</span> <span class="op">+</span> <span class="va">hlthp</span>, data<span class="op">=</span><span class="va">randdata</span>,</span>
 <span>                           dist <span class="op">=</span> <span class="st">"poisson"</span>, link <span class="op">=</span> <span class="st">"logit"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">model.hurdle</span>,<span class="va">model.zeroinfl</span>,zero.component<span class="op">=</span><span class="cn">FALSE</span>,no.space<span class="op">=</span><span class="cn">TRUE</span>,type<span class="op">=</span><span class="st">"text"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">model.hurdle</span>,<span class="va">model.zeroinfl</span>,zero.component<span class="op">=</span><span class="cn">FALSE</span>,</span>
+<span>          no.space<span class="op">=</span><span class="cn">TRUE</span>,type<span class="op">=</span><span class="st">"text"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## ===========================================
 ##                    Dependent variable:     
@@ -1722,8 +1704,9 @@ Typically, <span class="math inline">\(f_1\)</span> corresponds to a logit model
 ## Log Likelihood  -54,772.100    -54,772.550 
 ## ===========================================
 ## Note:           *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
-<div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">model.hurdle</span>,<span class="va">model.zeroinfl</span>,zero.component<span class="op">=</span><span class="cn">TRUE</span>,no.space<span class="op">=</span><span class="cn">TRUE</span>,type<span class="op">=</span><span class="st">"text"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">model.hurdle</span>,<span class="va">model.zeroinfl</span>,zero.component<span class="op">=</span><span class="cn">TRUE</span>,</span>
+<span>          no.space<span class="op">=</span><span class="cn">TRUE</span>,type<span class="op">=</span><span class="st">"text"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## ===========================================
 ##                    Dependent variable:     
@@ -1759,7 +1742,7 @@ Typically, <span class="math inline">\(f_1\)</span> corresponds to a logit model
 ## ===========================================
 ## Note:           *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
 <p>Let us test the importance of <code>LC</code> in the model using a Wald test:</p>
-<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Test whether LC is important in the model:</span></span>
 <span><span class="va">model.hurdle.reduced</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">model.hurdle</span>,<span class="va">.</span><span class="op">~</span><span class="va">.</span><span class="op">-</span><span class="va">LC</span><span class="op">)</span></span>
 <span><span class="fu">lmtest</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/waldtest.html">waldtest</a></span><span class="op">(</span><span class="va">model.hurdle</span>, <span class="va">model.hurdle.reduced</span><span class="op">)</span></span></code></pre></div>
@@ -1774,16 +1757,14 @@ Typically, <span class="math inline">\(f_1\)</span> corresponds to a logit model
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>Finally, we compare average model-implied probabilities with the frequencies observed in the data:</p>
-<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">predprob.hurdle</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pscl/man/predprob.html">predprob</a></span><span class="op">(</span><span class="va">model.hurdle</span><span class="op">)</span></span>
 <span><span class="va">predprob.zeroinfl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pscl/man/predprob.html">predprob</a></span><span class="op">(</span><span class="va">model.zeroinfl</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span></span>
-<span>  <span class="va">prop.table.data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">prop.table.data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,</span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">predprob.poisson</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,<span class="fl">2</span>,<span class="va">mean</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">predprob.nb</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,<span class="fl">2</span>,<span class="va">mean</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">predprob.hurdle</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,<span class="fl">2</span>,<span class="va">mean</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">predprob.zeroinfl</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,<span class="fl">2</span>,<span class="va">mean</span><span class="op">)</span></span>
-<span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">predprob.zeroinfl</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,<span class="fl">2</span>,<span class="va">mean</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##              0          1         2          3          4          5
 ## [1,] 0.3124319 0.18905399 0.1385339 0.09331352 0.06661714 0.04794453
 ## [2,] 0.1220592 0.22303277 0.2271621 0.17173478 0.10888940 0.06244353
@@ -1821,7 +1802,7 @@ Typically, <span class="math inline">\(f_1\)</span> corresponds to a logit model
 </ul>
 </li>
 <li><a class="nav-link" href="#tobit"><span class="header-section-number">5.3</span> Tobit models</a></li>
-<li><a class="nav-link" href="#sample-selection-models"><span class="header-section-number">5.4</span> Sample Selection Models</a></li>
+<li><a class="nav-link" href="#SSM"><span class="header-section-number">5.4</span> Sample Selection Models</a></li>
 <li>
 <a class="nav-link" href="#models-of-count-data"><span class="header-section-number">5.5</span> Models of Count Data</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#poisson-model"><span class="header-section-number">5.5.1</span> Poisson model</a></li>
@@ -1846,7 +1827,7 @@ Typically, <span class="math inline">\(f_1\)</span> corresponds to a logit model
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Advanced Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-09-19.</p>
+    <p>"<strong>Applied Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-09-27.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

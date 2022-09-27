@@ -637,6 +637,31 @@
             "type": "report"
         },
         {
+            "DOI": "https://doi.org/10.1016/j.jpubeco.2003.11.002",
+            "ISSN": "0047-2727",
+            "URL": "https://www.sciencedirect.com/science/article/pii/S0047272703002068",
+            "author": [
+                {
+                    "family": "Dee",
+                    "given": "Thomas S."
+                }
+            ],
+            "container-title": "Journal of Public Economics",
+            "id": "DEE20041697",
+            "issue": "9",
+            "issued": {
+                "date-parts": [
+                    [
+                        2004
+                    ]
+                ]
+            },
+            "page": "1697-1720",
+            "title": "Are there civic returns to education?",
+            "type": "article-journal",
+            "volume": "88"
+        },
+        {
             "DOI": "https://doi.org/10.3982/ECTA14468",
             "URL": "https://onlinelibrary.wiley.com/doi/abs/10.3982/ECTA14468",
             "author": [
