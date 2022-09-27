@@ -92,7 +92,8 @@ Figure \@ref(fig:exmpSalarayPhDSHP) shows a real-data situation of heteroskedast
 library(AEC)
 table(shp$edyear19)
 shp_higherEd <- subset(shp,(edyear19>18)&age19<35)
-plot(i19wyg/1000~age19,data=shp_higherEd,pch=19,las=1,xlab="Age",ylab="Yearly work income")
+plot(i19wyg/1000~age19,data=shp_higherEd,pch=19,las=1,
+     xlab="Age",ylab="Yearly work income")
 abline(lm(i19wyg/1000~age19,data=shp_higherEd),col="red",lwd=2)
 ```
 <!-- x -->
@@ -429,6 +430,10 @@ Let's use the same notations as in Prop. \@ref(prp:chgeR2). Theorem \@ref(thm:FW
 
 Figure \@ref(fig:R2issue), below, illustrates the fact that one can obtain an $R^2$ of one by regressing a sample of length $n$ on any set of $n$ linearly-independent variables.
 
+```{r setseed1, echo=FALSE}
+set.seed(1)
+```
+
 ```{r R2issue, echo=TRUE, fig.cap="This figure illustrates the monotonous increase in the $R^2$ as a function of the number of explanatory variables. In the true model, there is no explanatory variables, i.e., $y_i = \\varepsilon_i$. We then take (independent) regressors and regress $y$ on the latter, progressively increasing the set of regressors.", fig.asp = .6, out.width = "90%", fig.align = 'left-aligned'}
 n <- 30;Y <- rnorm(n);X <- matrix(rnorm(n^2),n,n)
 all_R2 <- NULL;all_adjR2 <- NULL
@@ -468,7 +473,8 @@ s^2 = \frac{\bv{e}'\bv{e}}{n-K}.(\#eq:s2)
 \end{equation}
 (It is sometimes denoted by $\sigma^2_{OLS}$.)
 :::
-:::{.proof} We have:
+:::{.proof}
+We have:
 \begin{eqnarray*}
 \mathbb{E}(\bv{e}'\bv{e}|\bv{X})&=&\mathbb{E}(\boldsymbol{\varepsilon}'\bv{M}\boldsymbol{\varepsilon}|\bv{X})=\mathbb{E}(\mbox{Tr}(\boldsymbol{\varepsilon}'\bv{M}\boldsymbol{\varepsilon})|\bv{X}))\\
 &=&\mbox{Tr}(\bv{M}\mathbb{E}(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}'|\bv{X}))=\sigma^2 \mbox{Tr}(\bv{M}).
@@ -489,7 +495,8 @@ ii. $s^2$ and $\bv{b}$ are independent random variables (Prop. \@ref(prp:indeps2
 ::: {.proposition #s2distri}
 Under \@ref(hyp:fullrank) to \@ref(hyp:normality), we have: $\dfrac{s^2}{\sigma^2} | \bv{X} \sim \frac{1}{n-K}\chi^2(n-K)$.
 :::
-:::{.proof} We have $\bv{e}'\bv{e}=\boldsymbol\varepsilon'\bv{M}\boldsymbol\varepsilon$. $\bv{M}$ is an idempotent symmetric matrix. Therefore it can be decomposed as $PDP'$ where $D$ is a diagonal matrix and $P$ is an orthogonal matrix. As a result $\bv{e}'\bv{e} = (P'\boldsymbol\varepsilon)'D(P'\boldsymbol\varepsilon)$, i.e. $\bv{e}'\bv{e}$ is a weighted sum of independent squared Gaussian variables (the entries of $P'\boldsymbol\varepsilon$ are independent because they are Gaussian ---under \@ref(hyp:normality)--- and uncorrelated). The variance of each of these i.i.d. Gaussian variable is $\sigma^2$. Because $\bv{M}$ is an idempotent symmetric matrix, its eigenvalues are either 0 or 1, and its rank equals its trace (see Propositions \@ref(prp:rootsidempotent) and \@ref(prp:chi2idempotent)). Further, its trace is equal to $n-K$ (see proof of Eq. \@ref(eq:s2)). Therefore $D$ has $n-K$ entries equal to 1 and $K$ equal to 0. Hence,  $\bv{e}'\bv{e} = (P'\boldsymbol\varepsilon)'D(P'\boldsymbol\varepsilon)$ is a sum of $n-K$ squared independent Gaussian variables of variance $\sigma^2$. Therefore $\frac{\bv{e}'\bv{e}}{\sigma^2} = (n-K)\frac{s^2}{\sigma^2}$ is a sum of $n-k$ squared i.i.d. standard normal  variables. The result follows by the definition of the chi-square distribution (see Def. \@ref(def:chi2)).
+:::{.proof}
+We have $\bv{e}'\bv{e}=\boldsymbol\varepsilon'\bv{M}\boldsymbol\varepsilon$. $\bv{M}$ is an idempotent symmetric matrix. Therefore it can be decomposed as $PDP'$ where $D$ is a diagonal matrix and $P$ is an orthogonal matrix. As a result $\bv{e}'\bv{e} = (P'\boldsymbol\varepsilon)'D(P'\boldsymbol\varepsilon)$, i.e. $\bv{e}'\bv{e}$ is a weighted sum of independent squared Gaussian variables (the entries of $P'\boldsymbol\varepsilon$ are independent because they are Gaussian ---under \@ref(hyp:normality)--- and uncorrelated). The variance of each of these i.i.d. Gaussian variable is $\sigma^2$. Because $\bv{M}$ is an idempotent symmetric matrix, its eigenvalues are either 0 or 1, and its rank equals its trace (see Propositions \@ref(prp:rootsidempotent) and \@ref(prp:chi2idempotent)). Further, its trace is equal to $n-K$ (see proof of Eq. \@ref(eq:s2)). Therefore $D$ has $n-K$ entries equal to 1 and $K$ equal to 0. Hence,  $\bv{e}'\bv{e} = (P'\boldsymbol\varepsilon)'D(P'\boldsymbol\varepsilon)$ is a sum of $n-K$ squared independent Gaussian variables of variance $\sigma^2$. Therefore $\frac{\bv{e}'\bv{e}}{\sigma^2} = (n-K)\frac{s^2}{\sigma^2}$ is a sum of $n-k$ squared i.i.d. standard normal  variables. The result follows by the definition of the chi-square distribution (see Def. \@ref(def:chi2)).
 :::
 
 
@@ -598,8 +605,8 @@ Using the results presented in Example \@ref(exm:SHP0001), we can compute lower 
 
 ```{r shp1bis}
 n <- length(eq$residuals); K <- length(eq$coefficients)
-lower.b <- eq$coefficients - pt(.025,df=n-K)*sqrt(diag(vcov(eq)))
-upper.b <- eq$coefficients + pt(.025,df=n-K)*sqrt(diag(vcov(eq)))
+lower.b <- eq$coefficients + qt(.025,df=n-K)*sqrt(diag(vcov(eq)))
+upper.b <- eq$coefficients + qt(.975,df=n-K)*sqrt(diag(vcov(eq)))
 cbind(lower.b,upper.b)
 ```
 
@@ -970,6 +977,12 @@ stargazer::stargazer(eq.no.IV,eq.IV1,eq.IV2,type="text",no.space = TRUE,
 summary(eq.IV1,diagnostics = TRUE)$diagnostics
 ```
 
+The last three tests are interpreted as follows:
+
+* Since the p-value of the first test is small, we reject the null hypothesis according to which the instrument is weak. 
+* The small p-value of the Wu-Hausman test implies that we reject the null hypothesis according to which the OLS estimates are consistent (at the 10\% level only, though).
+* No over-identification (misspecification) is detected by the Sargan test (large p-value).
+
 :::
 
 
@@ -1333,7 +1346,8 @@ data <- subset(JST,iso=="USA");T <- dim(data)[1]
 data$infl <- c(NaN,100*log(data$cpi[2:T]/data$cpi[1:(T-1)]))
 data$infl[(data$infl< -5)|(data$infl>10)] <- NaN
 par(mfrow=c(1,2))
-plot(data$year,data$stir,ylim=c(-10,20),type="l",lwd=2,xlab="",ylab="",main="Nominal rate and inflation")
+plot(data$year,data$stir,ylim=c(-10,20),type="l",lwd=2,xlab="",
+     ylab="",main="Nominal rate and inflation")
 lines(data$year,data$infl,col="red",lwd=2)
 eq <- lm(stir~infl,data=data)
 plot(eq$residuals,type="l",col="blue",main="Residuals",xlab="",ylab="")
@@ -1377,7 +1391,7 @@ $$
 $$
 With these notations, Eq. \@ref(eq:BBB) rewrites:
 \begin{equation}
-\bv{b} - \boldsymbol\beta = \left(\sum_{g=1}^G \bv{X}_g'\bv{X}_g\right)^{-1}\bv{X}'\sum_{g=1}^G \bv{s}_g,(\#eq:cluster1)
+\bv{b} - \boldsymbol\beta = \left(\sum_{g=1}^G \bv{X}_g'\bv{X}_g\right)^{-1}\sum_{g=1}^G \bv{s}_g,(\#eq:cluster1)
 \end{equation}
 where
 \begin{equation}
@@ -1492,11 +1506,11 @@ rbind(coeftest(eq)[2,],
 
 Chosing the appropriate explanatory variables is often complicated, especially in the presence of many potentially relevant covariates. Keeping a large number of covariates results in large standard deviations for the estimated parameters (see Section \@ref(irrelevant)). In order to address this issue, shrinkage methods have been designed. The objective of these methods is to help select a limited number of variables by shrinking the regression coefficients of the less useful variables towards zero. The two best-known shrinkage techniques are **ridge regression** and the **lasso** approach.[^FootnoteLASSO] In both cases (ridge and lasso), the OLS minimization problem (see Section \@ref(LSquares)), i.e.,
 \begin{equation}
-\bv{b} = \underset{\boldsymbol\beta}{\mbox{argmin}}\; \sum_{i=1}^n(y_i - \bv{x}_i'\boldsymbol\beta)
+\bv{b} = \underset{\boldsymbol\beta}{\mbox{argmin}}\; \sum_{i=1}^n(y_i - \bv{x}_i'\boldsymbol\beta)^2
 \end{equation}
 is replaced with the following:
 \begin{equation}
-\bv{b}_\lambda = \underset{\boldsymbol\beta}{\mbox{argmin}}\; \sum_{i=1}^n(y_i - \bv{x}_i'\boldsymbol\beta) + \lambda f(\boldsymbol\beta),(\#eq:minLasso)
+\bv{b}_\lambda = \underset{\boldsymbol\beta}{\mbox{argmin}}\; \sum_{i=1}^n(y_i - \bv{x}_i'\boldsymbol\beta)^2 + \lambda f(\boldsymbol\beta),(\#eq:minLasso)
 \end{equation}
 where $\lambda f(\boldsymbol\beta)$ is a penalty term that positively depends on the "size" of the components of $\boldsymbol\beta$. This term is called the *shrinkage penalty* term.
 

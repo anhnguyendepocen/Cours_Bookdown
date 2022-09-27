@@ -63,7 +63,7 @@ library(AEC)
 <!-- ``` -->
 <!-- XXXX HC0, HC1... Davidson MacKinnon 2004 Section 5.5 XXXX -->
 
-**p.d.f. version**: [here](https://www.dropbox.com/s/td4bqpbzfuvwsev/ApplEcts.pdf?dl=0).
+<!-- **p.d.f. version**: [here](https://www.dropbox.com/s/td4bqpbzfuvwsev/ApplEcts.pdf?dl=0). -->
 
 
 

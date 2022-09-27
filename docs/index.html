@@ -110,8 +110,7 @@
 </ul>
 </li>
 </ul>
-<!-- <!-- To specify the corresponding covariance matrix vcov. to be used, there are three possibilities: 1. It is pre-computed and supplied in argument vcov.. 2. A function for extracting the covariance matrix from x is supplied, e.g., sandwich, vcovHC, vcovCL, or vcovHAC from package sandwich.  --><!-- ```{r shp2,warning=FALSE,message=FALSE} --><!-- library(AEC) --><!-- library(sandwich) --><!-- shp$income <- shp$i19ptotn/1000 --><!-- shp$female <- 1*(shp$sex19==2) --><!-- eq <- lm(income ~ edyear19 + age19 + I(age19^2) + female,data=shp) --><!-- #eq <- lm(income ~ edyear19 + age19 + I(age19^2) + female + I(female*ownkid19*(age19<40)),data=shp) --><!-- #lmtest::coeftest(eq,vcov. = sandwich) --><!-- #lmtest::coeftest(eq,vcov. = vcovHC) --><!-- #X <- cbind(1,shp$edyear19,shp$age19,shp$age19^2,shp$female) --><!-- #solve(t(X) %*% X) %*% t(X) %*% diag(eq$residuals^2) %*% X %*% solve(t(X) %*% X) --><!-- #vcovHC(eq,type="HC0") --><!-- #sandwich(eq) --><!-- #vcovHC(eq,type="HC1") --><!-- ``` --><!-- XXXX HC0, HC1... Davidson MacKinnon 2004 Section 5.5 XXXX --><p><strong>p.d.f. version</strong>: <a href="https://www.dropbox.com/s/td4bqpbzfuvwsev/ApplEcts.pdf?dl=0">here</a>.</p>
-
+<!-- <!-- To specify the corresponding covariance matrix vcov. to be used, there are three possibilities: 1. It is pre-computed and supplied in argument vcov.. 2. A function for extracting the covariance matrix from x is supplied, e.g., sandwich, vcovHC, vcovCL, or vcovHAC from package sandwich.  --><!-- ```{r shp2,warning=FALSE,message=FALSE} --><!-- library(AEC) --><!-- library(sandwich) --><!-- shp$income <- shp$i19ptotn/1000 --><!-- shp$female <- 1*(shp$sex19==2) --><!-- eq <- lm(income ~ edyear19 + age19 + I(age19^2) + female,data=shp) --><!-- #eq <- lm(income ~ edyear19 + age19 + I(age19^2) + female + I(female*ownkid19*(age19<40)),data=shp) --><!-- #lmtest::coeftest(eq,vcov. = sandwich) --><!-- #lmtest::coeftest(eq,vcov. = vcovHC) --><!-- #X <- cbind(1,shp$edyear19,shp$age19,shp$age19^2,shp$female) --><!-- #solve(t(X) %*% X) %*% t(X) %*% diag(eq$residuals^2) %*% X %*% solve(t(X) %*% X) --><!-- #vcovHC(eq,type="HC0") --><!-- #sandwich(eq) --><!-- #vcovHC(eq,type="HC1") --><!-- ``` --><!-- XXXX HC0, HC1... Davidson MacKinnon 2004 Section 5.5 XXXX --><!-- **p.d.f. version**: [here](https://www.dropbox.com/s/td4bqpbzfuvwsev/ApplEcts.pdf?dl=0). -->
 </div>
   <div class="chapter-nav">
 <div class="empty"></div>
@@ -134,7 +133,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Applied Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-09-27.</p>
+    <p>"<strong>Applied Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-09-28.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -674,17 +674,17 @@ The stationarity of the process depends only on the AR specification (or on the 
 
 We have seen that the $k^{th}$-order auto-correlation of a MA(q) process is null if $k>q$. This is exploited, in practice, to determine the order of a MA process. Moreover, since this is not the case for an AR process, this can be used to distinguish an AR from an MA process.
 
-There exists an equivalent approach to determine whether a process can be modeled as an AR process; it is based on partial auto-correlations (see Def. \@ref(def:partialAC)).
+There exists an equivalent approach to determine whether a process can be modeled as an AR process; it is based on partial auto-correlations:
 
-:::{.definition #partialC name="Partial correlation"}
-The partial correlation between $X$ and $Y$, given $Z$, is the correlation between:
+<!-- :::{.definition #partialC name="Partial correlation"} -->
+<!-- The partial correlation between $X$ and $Y$, given $Z$, is the correlation between: -->
 
-a. the residuals of the linear regression of $X$ on $Z$ and
-b. the residuals of the linear regression of $Y$ on $Z$.
-:::
+<!-- a. the residuals of the linear regression of $X$ on $Z$ and -->
+<!-- b. the residuals of the linear regression of $Y$ on $Z$. -->
+<!-- ::: -->
 
 :::{.definition #partialAC name="Partial auto-correlation"}
-In a time series context, the partial auto-correlation ($\phi_{h,h}$) of process $\{y_t\}$ is defined as the partial correlation of $y_{t+h}$ and $y_t$ given $y_{t+h-1},\dots,y_{t+1}$.
+In a time series context, the partial auto-correlation ($\phi_{h,h}$) of process $\{y_t\}$ is defined as the partial correlation of $y_{t+h}$ and $y_t$ given $y_{t+h-1},\dots,y_{t+1}$. (see Def. \@ref(def:partialcorrel) for the definition of partial correlation.)
 :::
 
 
@@ -1211,13 +1211,12 @@ These expressions can be plugged into Eq. \@ref(eq:recursMLE). But what about $f
 1. **Case 1**: We use the marginal distribution: $y_1 \sim \mathcal{N}\left(\dfrac{c}{1-\phi_1},\dfrac{\sigma^2}{1-\phi_1^2}\right)$.
 2. **Case 2**: $y_1$ is considered to be deterministic. In a way, that means that the first observation is "sacrificed".
 
-In the Gaussian AR(1) process, we have:
+For a Gaussian AR(1) process, we have:
 
 1. **Case 1**: The (exact) log-likelihood is:
 \begin{eqnarray}
 \log \mathcal{L}(\boldsymbol\theta;\bv{y})  &=& - \frac{T}{2} \log(2\pi) - T\log(\sigma) + \frac{1}{2}\log(1-\phi_1^2)\nonumber \\
-&& - \frac{(y_1 - c/(1-\phi_1))^2}{2\sigma^2/(1-\phi_1^2)}\\
-&& - \sum_{t=2}^T \left[\frac{(y_t - c - \phi_1 y_{t-1})^2}{2\sigma^2} \right].
+&& - \frac{(y_1 - c/(1-\phi_1))^2}{2\sigma^2/(1-\phi_1^2)} - \sum_{t=2}^T \left[\frac{(y_t - c - \phi_1 y_{t-1})^2}{2\sigma^2} \right].
 \end{eqnarray}
 The Maximum Likelihood Estimator of $\boldsymbol\theta= [c,\phi_1,\sigma^2]$ is obtained by numerical optimization.
 
@@ -1269,7 +1268,7 @@ where $f_{Y_p,\dots,Y_{1}}(y_p,\dots,y_{1};\boldsymbol\theta)$ is the marginal d
 \gamma_{p-1} & \gamma_{p-2} & \dots & \gamma_{0} \\
 \end{array}\right],
 \end{eqnarray*}
-where the $\gamma_i$'s are computed using the Yule-Walker equations (Eq. \@ref(eq:gammas)). Note that they depend, in a non-linear way, on the model parameters. Hence, the maximization of the exact log-likelihood necessitates numerical oprimization procedures. By contrast, the maximization of the conditional log-likelihood $\log \mathcal{L}^*(\boldsymbol\theta;\bv{y})$ only requires OLS, using Eqs. \@ref(eq:AROLSmean) and  \@ref(eq:AROLSsigma) with:
+where the $\gamma_i$'s are computed using the Yule-Walker equations (Eq. \@ref(eq:gammas)). Note that they depend, in a non-linear way, on the model parameters. Hence, the maximization of the exact log-likelihood necessitates numerical oprimization procedures. By contrast, the maximization of the conditional log-likelihood $\log \mathcal{L}^*(\boldsymbol\theta;\bv{y})$ only requires OLS, using Eqs. \@ref(eq:AROLSmean) and  \@ref(eq:AROLSsigma), with:
 $$
 Y = \left[\begin{array}{c}
 y_{p+1}\\
@@ -1328,7 +1327,12 @@ Let us consider the autocovariances of $\bv{v}_t = \bv{x}_t \varepsilon_t$, deno
 $$
 \gamma^v_j = \mathbb{E}(\varepsilon_t\varepsilon_{t-j}\bv{x}_t\bv{x}_{t-j}').
 $$
-If $j>0$, we have $\mathbb{E}(\varepsilon_t\varepsilon_{t-j}\bv{x}_t\bv{x}_{t-j}')=\mathbb{E}(\mathbb{E}[\varepsilon_t\varepsilon_{t-j}\bv{x}_t\bv{x}_{t-j}'|\varepsilon_{t-j},\bv{x}_t,\bv{x}_{t-j}])=$ $\mathbb{E}(\varepsilon_{t-j}\bv{x}_t\bv{x}_{t-j}'\mathbb{E}[\varepsilon_t|\varepsilon_{t-j},\bv{x}_t,\bv{x}_{t-j}])=0$. Note that, for $j>0$, we have $\mathbb{E}[\varepsilon_t|\varepsilon_{t-j},\bv{x}_t,\bv{x}_{t-j}]=0$ because $\{\varepsilon_t\}$ is an i.i.d. white noise sequence. If $j=0$, we have:
+If $j>0$, we have
+\begin{eqnarray*}
+\mathbb{E}(\varepsilon_t\varepsilon_{t-j}\bv{x}_t\bv{x}_{t-j}')=\mathbb{E}(\mathbb{E}[\varepsilon_t\varepsilon_{t-j}\bv{x}_t\bv{x}_{t-j}'|\varepsilon_{t-j},\bv{x}_t,\bv{x}_{t-j}])\\
+&=&\mathbb{E}(\varepsilon_{t-j}\bv{x}_t\bv{x}_{t-j}'\mathbb{E}[\varepsilon_t|\varepsilon_{t-j},\bv{x}_t,\bv{x}_{t-j}])=0.
+\end{eqnarray*}
+Note that, for $j>0$, we have $\mathbb{E}[\varepsilon_t|\varepsilon_{t-j},\bv{x}_t,\bv{x}_{t-j}]=0$ because $\{\varepsilon_t\}$ is an i.i.d. white noise sequence. If $j=0$, we have:
 $$
 \gamma^v_0 = \mathbb{E}(\varepsilon_t^2\bv{x}_t\bv{x}_{t}')= \mathbb{E}(\varepsilon_t^2) \mathbb{E}(\bv{x}_t\bv{x}_{t}')=\sigma^2\bv{Q}.
 $$
@@ -1388,15 +1392,15 @@ $$
 \varepsilon_t = \Theta(L)^{-1}(y_t - \mu),
 $$
 which implies that, if we knew all past values of $y_t$, we would also know $\varepsilon_t$. In this case, we can consistently estimate the $\varepsilon_t$'s by recursively computing the $\hat\varepsilon_t$'s as follows (for $t>0$):
-$$
-\hat\varepsilon_t = y_t - \mu - \theta_1 \hat\varepsilon_{t-1} - \dots  - \theta_q \hat\varepsilon_{t-q},
-$$
+\begin{equation}
+\hat\varepsilon_t = y_t - \mu - \theta_1 \hat\varepsilon_{t-1} - \dots  - \theta_q \hat\varepsilon_{t-q},(\#eq:condiVarepsiMABB)
+\end{equation}
 with
 \begin{equation}
 \hat\varepsilon_{0}=\dots=\hat\varepsilon_{-q+1}=0.(\#eq:condiVarepsiMA)
 \end{equation}
 
-In this context, a consistent estimate of the conditional log-likelihood is still given by Eq. \@ref(eq:MALstar).
+In this context, a consistent estimate of the conditional log-likelihood is still given by Eq. \@ref(eq:MALstar), using Eqs. \@ref(eq:condiVarepsiMABB) and \@ref(eq:condiVarepsiMA) to recursively compute the $\hat\varepsilon_t$'s.
 
 Note that we could determine the exact likelihood of an MA process. Indeed, vector $\bv{y} = [y_1,\dots,y_T]'$ is a Gaussian-distributed vector of mean $\boldsymbol\mu = [\mu,\dots,\mu]'$ and of variance:
 $$
@@ -1410,11 +1414,11 @@ $$
 {\color{red}0}&{\color{red}\dots}&{\color{red}0}&\gamma_q&\dots&\gamma_1&\gamma_0
 \end{array}\right],
 $$
-where the $\gamma_j$'s are given by Eq. \@ref(eq:autocovMA). The p.d.f. of $Y$ is then given by (see Prop. \@ref(prp:pdfMultivarGaussian)):
+where the $\gamma_j$'s are given by Eq. \@ref(eq:autocovMA). The p.d.f. of $\bv{y}$ is then given by (see Prop. \@ref(prp:pdfMultivarGaussian)):
 $$
 (2\pi)^{-T/2}|\boldsymbol\Omega|^{-1/2}\exp\left( -\frac{1}{2} (\bv{y}-\boldsymbol\mu)' \boldsymbol\Omega^{-1} (\bv{y}-\boldsymbol\mu)\right).
 $$
-However, for large samples, the computation of this likelihood becomes numerically demanding. 
+For large samples, the computation of this likelihood however becomes numerically demanding. 
 
 Finally, let us consider the MLE of an ARMA($p$,$q$) processes:
 $$
@@ -1432,7 +1436,7 @@ b. $\hat\varepsilon_p=\dots=\hat\varepsilon_{p-q+1}=0$ and actual values of the 
 
 ### Specification choice
 
-The previouss section explains how to fit a given ARMA specification. But how to choose an appropriate specification? A possibility is to employ the (P)ACF approach (see Figure \@ref(fig:pacf)). However, the previous approach leads to either an AR or a MA process (bit not an ARMA process). If one wants to consider various ARMA(p,q) specifications, for $p \in \{1,\dots,P\}$ and $q \in \{1,\dots,Q\}$, say, then one can resort to **information criteria**.
+The previouss section explains how to fit a given ARMA specification. But how to choose an appropriate specification? A possibility is to employ the (P)ACF approach (see Figure \@ref(fig:pacf)). However, the previous approach leads to either an AR or a MA process (and not an ARMA process). If one wants to consider various ARMA(p,q) specifications, for $p \in \{1,\dots,P\}$ and $q \in \{1,\dots,Q\}$, say, then one can resort to **information criteria**.
 
 In general, when choosing a specification, one faces the following dilemma:
 
@@ -1446,7 +1450,7 @@ The Akaike (AIC), Hannan-Quinn (HQ) and Schwarz information (BIC) criteria are o
 $$
 c^{(i)}(k) = \underbrace{\frac{- 2 \log \mathcal{L}(\hat{\boldsymbol\theta}_T(k);\bv{y})}{T}}_{\mbox{decreases w.r.t. $k$}} \quad +
 \underbrace{
-\frac{k\phi^{(i)}(T)}{T}}_{\mbox{increases w.r.t. $k$}}
+\frac{k\phi^{(i)}(T)}{T},}_{\mbox{increases w.r.t. $k$}}
 $$
 with  $(i) \in\{AIC,HQ,BIC\}$ and where $\hat{\boldsymbol\theta}_T(k)$ denotes the ML estimate of $\boldsymbol\theta_0(k)$, which is a vector of parameters of length $k$.
 
@@ -1468,7 +1472,7 @@ $$
 $$
 :::
 
-In the case of an ARMA(p,q) process, $k=2+p+q$
+In the case of an ARMA(p,q) process, $k=2+p+q$.
 
 
 :::{.proposition #infocriteria name="Consistency of the criteria-based lag selection"}
@@ -1522,7 +1526,7 @@ Hence $\hat{k}^{(i)} \approx \underset{k}{\mbox{argmin}} \quad  \log(SSR/T) + \d
 Consider a long historical time series of the Swiss GDP growth (see Figure \@ref(fig:autocov)), taken from the @JST_2017 dataset. Let us look for the best ARMA specification using the AIC criteria:
 
 ```{r lagSelectARMA, warning=FALSE, message=FALSE}
-library(AEC)
+library(AEC);data(JST)
 data <- subset(JST,iso=="CHE")
 T <- dim(data)[1]
 y <- c(NaN,log(data$gdp[2:T]/data$gdp[1:(T-1)]))
@@ -1533,13 +1537,11 @@ for(p in 0:max.p){
   for(q in 0:max.q){
     res <- arima(y,order=c(p,0,q))
     if(res$aic<min(all.AIC)){best.p<-p;best.q<-q}
-    all.AIC <- c(all.AIC,res$aic)
-  }
-}
+    all.AIC <- c(all.AIC,res$aic)}}
 print(c(best.p,best.q))
 ```
 
-The best specification is an AR(1) model.
+The best specification therefore is an AR(1) model. That is, although an AR(2) (say) would result in a better fit of the data, the fit improvement is not be large enough to compensate for the additional AIC cost associated with an additional parameter.
 :::
 
 ## Multivariate models {#VAR}
@@ -1548,17 +1550,17 @@ This section presents Vector Auto-Regressive Moving-Average (SVARMA) models. The
 
 In economics, VAR models are often employed in order to identify *structural* shocks, that are independent primitive exogenous forces that drive economic variables (@Ramey_2016_NBER). They are often given a specific economic meaning (e.g., demand and supply shocks).
 
-Working with these models (VAR and VARMA models) often is often based on two steps: in a first step, the **reduced-form** version of the model is estimated; in a second step,  structural shocks are identified and IRFs are produced.
+Working with these models (VAR and VARMA models) often is often based on two steps: in a first step, the **reduced-form** version of the model is estimated; in a second step,  **structural shocks** are identified and IRFs are produced.
 
 
-@Kilian_1998 See [this page](https://rdrr.io/cran/VAR.etp/man/VAR.Boot.html)
+<!-- @Kilian_1998 See [this page](https://rdrr.io/cran/VAR.etp/man/VAR.Boot.html) -->
 
-Sign restrictions: [package](https://github.com/chrstdanne/VARsignR), @Danne_2015.
+<!-- Sign restrictions: [package](https://github.com/chrstdanne/VARsignR), @Danne_2015. -->
 
-@vars
-<!-- toBibtex(citation("vars")) -->
+<!-- @vars -->
+<!-- <!-- toBibtex(citation("vars")) --> -->
 
-@bvartools: R package to estimate Bayesian VAR models.
+<!-- @bvartools: R package to estimate Bayesian VAR models. -->
 
 
 
@@ -1566,19 +1568,19 @@ Sign restrictions: [package](https://github.com/chrstdanne/VARsignR), @Danne_201
 
 
 :::{.definition #SVAR name="(S)VAR model"}
-Let $y_{t}$ denote a $n \times1$ vector of random variables. Process $y_{t}$ follows a $p^{th}$-order VAR if, for all $t$, we have
+Let $y_{t}$ denote a $n \times1$ vector of random variables. Process $y_{t}$ follows a $p^{th}$-order (S)VAR if, for all $t$, we have
 \begin{eqnarray}
 \begin{array}{rllll}
 VAR:& y_t &=& c + \Phi_1 y_{t-1} + \dots + \Phi_p y_{t-p} + \varepsilon_t,\\
 SVAR:& y_t &=& c + \Phi_1 y_{t-1} + \dots + \Phi_p y_{t-p} + B \eta_t,
 \end{array}(\#eq:yVAR)
 \end{eqnarray}
-with $\varepsilon_t = B\eta_t$. We assume that $\{\eta_{t}\}$ is a white noise sequence whose components are are mutually and serially independent.
+with $\varepsilon_t = B\eta_t$, where $\{\eta_{t}\}$ is a white noise sequence whose components are are mutually and serially independent.
 :::
 
 The first line of Eq. \@ref(eq:yVAR) corresponds to the **reduced-form** of the VAR model (**structural form** for the second line).
 
-While the **structural shocks** (the components of $\eta_t$) are mutually uncorrelated, this is not the case of the **innovations**, that are the components of $\varepsilon_t$. However, in boths cases, vectors $\eta_t$ and $\varepsilon_t$ are serially correlated (through time).
+While the structural shocks (the components of $\eta_t$) are mutually uncorrelated, this is not the case of the *innovations*, that are the components of $\varepsilon_t$. However, in boths cases, vectors $\eta_t$ and $\varepsilon_t$ are serially correlated (through time).
 
 As was the case for univariate models, VARs can be extended with MA terms in $\eta_t$:
 
@@ -1590,7 +1592,7 @@ VARMA:& y_t &=& c + \Phi_1 y_{t-1} + \dots + \Phi_p y_{t-p} + \varepsilon_t + \T
 SVARMA:& y_t &=& c + \Phi_1 y_{t-1} + \dots + \Phi_p y_{t-p} + B_0 \eta_t+ B_1 \eta_{t-1} + \dots +  B_q \eta_{t-q},
 \end{array}(\#eq:yVARMA)
 \end{eqnarray}
-with $\varepsilon_t = B_0\eta_t$ (and $B_j = \Theta_j B_0$, for $j \ge 0$). We assume that $\{\eta_{t}\}$ is a white noise sequence whose components are are mutually and serially independent.
+with $\varepsilon_t = B_0\eta_t$ (and $B_j = \Theta_j B_0$, for $j \ge 0$), where $\{\eta_{t}\}$ is a white noise sequence whose components are are mutually and serially independent.
 :::
 
 
@@ -1614,23 +1616,23 @@ One of the main objectives of macro-econometrics is to derive IRFs, that represe
 
 Formally, an IRF is a difference in conditional expectations:
 $$
-\boxed{\color{blue}{\Psi_{i,j,h}} = \mathbb{E}(y_{i,t+h}|\color{blue}{\eta_{j,t}=1}) - \mathbb{E}(y_{i,t+h})}
+\boxed{\Psi_{i,j,h} = \mathbb{E}(y_{i,t+h}|\eta_{j,t}=1) - \mathbb{E}(y_{i,t+h})}
 $$
 (effect on $y_{i,t+h}$ of a one-unit shock on $\eta_{j,t}$).
 
 If the dynamics of process $y_t$ can be described as a VARMA model, and if $y_t$ is covariance stationary (see Def. \@ref(def:covstat)), then $y_t$ admits the following infinite MA representation (MA($\infty$)):
 \begin{equation}
-y_t = \mu + \sum_{h=0}^\infty \color{blue}{\Psi_{h}} \eta_{t-h}.(\#eq:InfMA)
+y_t = \mu + \sum_{h=0}^\infty \Psi_{h} \eta_{t-h}.(\#eq:InfMA)
 \end{equation}
 This is also the Wold decomposition of process $\{y_t\}$ (see Theorem \@ref(thm:Wold)).
 
 Estimating IRFs amounts to estimating the $\Psi_{h}$'s. In general, there exist three main approaches for that:
 
 * Calibrate and solve a (purely structural) Dynamic Stochastic General Equilibrium (DSGE) model at the first order (linearization). The solution takes the form of Eq. \@ref(eq:InfMA).
-* Directly estimate the $\Psi_{h}$ based on **projection approaches** (see Section \@ref(LP)).
+* Directly estimate the $\Psi_{h}$ based on **projection approaches** (see Section \@ref(Projections)).
 * Approximate the infinite MA representation by estimating a parsimonious type of model, e.g. **VAR(MA) models** (see Section \@ref(estimVAR)). Once a (Structural) VARMA representation is obtained, Eq. \@ref(eq:InfMA) is easily deduced. For that, one can use the same recursive algorithm as for univariate processes (see Prop. \@ref(prp:computPsi)).
 
-Typically, consider the AR(2) case. The first steps of the algorithm are as follows:
+Typically, consider the AR(2) case. The first steps of the algorithm mentioned in the last bullet point are as follows:
 \begin{eqnarray*}
 y_t &=& \Phi_1 {\color{blue}y_{t-1}} + \Phi_2 y_{t-2} + B \eta_t  \\
 &=& \Phi_1 \color{blue}{(\Phi_1 y_{t-2} + \Phi_2 y_{t-3} + B \eta_{t-1})} + \Phi_2 y_{t-2} + B \eta_t  \\
@@ -1639,9 +1641,11 @@ y_t &=& \Phi_1 {\color{blue}y_{t-1}} + \Phi_2 y_{t-2} + B \eta_t  \\
 &=& \underbrace{B}_{=\Psi_0} \eta_t + \underbrace{\Phi_1 B}_{=\Psi_1} \eta_{t-1} + \underbrace{(\Phi_2 + \Phi_1^2)B}_{=\Psi_2} \eta_{t-2} + f(y_{t-3},y_{t-4}).
 \end{eqnarray*}
 
-In particular, we have $B = \Psi_0$. Matrix $B$ indeed captures the contemporaneous impact of $\eta_t$ on $y_t$.
+In particular, we have $B = \Psi_0$. Matrix $B$ indeed captures the contemporaneous impact of $\eta_t$ on $y_t$. That is why matrix $B$ is sometimes called *impulse matrix*.
 
-Let us consider the following VARMA(1,1) model:
+:::{.example #IRFVARMA name="IRFs of an SVARMA model"}
+
+Consider the following VARMA(1,1) model:
 \begin{eqnarray}
 \quad y_t &=&
 \underbrace{\left[\begin{array}{cc}
@@ -1678,33 +1682,36 @@ q <- dim(Theta)[3]
 Mu <- rep(0,n)
 C <- matrix(c(1,-1,2,1),2,2)
 Model <- list(
-  Mu = Mu,Phi = Phi,Theta = Theta,C = C,distri = distri
-)
+  Mu = Mu,Phi = Phi,Theta = Theta,C = C,distri = distri)
 Y0 <- rep(0,n)
 eta0 <- c(1,0)
 res.sim.1 <- simul.VARMA(Model,nb.sim,Y0,eta0,indic.IRF=1)
 eta0 <- c(0,1)
 res.sim.2 <- simul.VARMA(Model,nb.sim,Y0,eta0,indic.IRF=1)
-
-par(plt=c(.1,.95,.25,.8))
+par(plt=c(.15,.95,.25,.8))
 par(mfrow=c(2,2))
 plot(res.sim.1$Y[1,],las=1,
      type="l",lwd=3,xlab="",ylab="",
-     main=expression(paste("Response of ",y[1,"*,*",t]," to a one-unit increase in ",eta[1],sep="")))
+     main=expression(paste("Response of ",y[1,"*,*",t],
+                           " to a one-unit increase in ",eta[1],sep="")))
 abline(h=0,col="grey",lty=3)
 plot(res.sim.2$Y[1,],las=1,
      type="l",lwd=3,xlab="",ylab="",
-     main=expression(paste("Response of ",y[1,"*,*",t]," to a one-unit increase in ",eta[2],sep="")))
+     main=expression(paste("Response of ",y[1,"*,*",t],
+                           " to a one-unit increase in ",eta[2],sep="")))
 abline(h=0,col="grey",lty=3)
 plot(res.sim.1$Y[2,],las=1,
      type="l",lwd=3,xlab="",ylab="",
-     main=expression(paste("Response of ",y[2,"*,*",t]," to a one-unit increase in ",eta[1],sep="")))
+     main=expression(paste("Response of ",y[2,"*,*",t],
+                           " to a one-unit increase in ",eta[1],sep="")))
 abline(h=0,col="grey",lty=3)
 plot(res.sim.2$Y[2,],las=1,
      type="l",lwd=3,xlab="",ylab="",
-     main=expression(paste("Response of ",y[2,"*,*",t]," to a one-unit increase in ",eta[2],sep="")))
+     main=expression(paste("Response of ",y[2,"*,*",t],
+                           " to a one-unit increase in ",eta[2],sep="")))
 abline(h=0,col="grey",lty=3)
 ```
+:::
 
 <!-- \includegraphics[width=.9\linewidth]{figures/RcodesFigure_illustrIRF.pdf} -->
 
@@ -1720,17 +1727,15 @@ abline(h=0,col="grey",lty=3)
 
 Let's come back to the infinite MA case (Eq. \@ref(eq:InfMA)):
 $$
-y_t = \mu + \sum_{h=0}^\infty \color{blue}{\Psi_{h}} \eta_{t-h}.
+y_t = \mu + \sum_{h=0}^\infty \Psi_{h} \eta_{t-h}.
 $$
 For $y_t$ to be covariance-stationary (and ergodic for the mean), it has to be the case that
 \begin{equation}
 \sum_{i=0}^\infty \|\Psi_i\| < \infty,(\#eq:condiInfiniteMA)
 \end{equation}
-where $\|A\|$ denotes a norm of the matrix $A$ (e.g. $\|A\|=\sqrt{tr(AA')}$).
+where $\|A\|$ denotes a norm of the matrix $A$ (e.g. $\|A\|=\sqrt{tr(AA')}$). This notably implies that if $y_t$ is stationary (and ergodic for the mean), then $\|\Psi_h\|\rightarrow 0$ when $h$ gets large.
 
-This notably implies that if $y_t$ is stationary (and ergodic for the mean), then $\|\Psi_h\|\rightarrow 0$ when $h$ gets large.
-
-What should be satisfied by $\Phi_k$'s and $\Theta_k$'s for a VARMA-based process (Eq. \@ref{eq:VARMAstd)) to be stationary? The conditions will be similar to that we had in the univariate case (see Prop. \@ref(prp:stability)). Let us introduce the following notations:
+What should be satisfied by $\Phi_k$'s and $\Theta_k$'s for a VARMA-based process (Eq. \@ref(eq:VARMAstd)) to be stationary? The conditions will be similar to that we had in the univariate case (see Prop. \@ref(prp:stability)). Let us introduce the following notations:
 \begin{eqnarray}
 y_t &=& c + \underbrace{\Phi_1 y_{t-1} + \dots +\Phi_p y_{t-p}}_{\color{blue}{\mbox{AR component}}} +  (\#eq:VARMA2)\\
 &&\underbrace{B \eta_t+ \Theta_1 B \eta_{t-1}+ \dots+ \Theta_q B \eta_{t-q}}_{\color{red}{\mbox{MA component}}} \nonumber\\
@@ -1745,9 +1750,7 @@ I & 0 & \cdots & 0\\
 0 & \ddots & 0 & 0\\
 0 & 0 & I & 0\end{array}\right](\#eq:matrixPHI)
 \end{equation}
-lie strictly within the unit circle.
-
-Hence, as was the case for univariate processes, the covariance-stationarity of a VARMA model depends only on the specification of its AR part.
+lie strictly within the unit circle. Hence, as was the case for univariate processes, the covariance-stationarity of a VARMA model depends only on the specification of its AR part.
 
 Let's derive the first two unconditional moments of a (covariance-stationary) VARMA process.
 
@@ -1908,9 +1911,9 @@ where the component of $\Sigma_{22}$ corresponding to the covariance between $\h
 See @Hamilton_1994, Appendix of Chapter 11.
 :::
 
-Naturally, in practice, $\Omega$ is replaced with $\hat{\Omega}$, $Q$ is replaced with $\hat{\bv{Q}} = \frac{1}{T}\sum_{t=p}^T x_t x_t'$ and $\Sigma$ with the matrix whose components are of the form $\hat\sigma_{i,l}\hat\sigma_{j,m}+\hat\sigma_{i,m}\hat\sigma_{j,l}$, where the $\hat\sigma_{i,l}$'s are the components of $\hat\Omega$.
+Naturally, in practice, $\Omega$ is replaced with $\hat{\Omega}$, $\bv{Q}$ is replaced with $\hat{\bv{Q}} = \frac{1}{T}\sum_{t=p}^T x_t x_t'$ and $\Sigma$ with the matrix whose components are of the form $\hat\sigma_{i,l}\hat\sigma_{j,m}+\hat\sigma_{i,m}\hat\sigma_{j,l}$, where the $\hat\sigma_{i,l}$'s are the components of $\hat\Omega$.
 
-The simplicity of the VAR framework and the tractability of its MLE open the way to convenient econometric testing. Let's illustrate this with the likelihood ratio test. The maximum value achieved by the MLE is
+The simplicity of the VAR framework and the tractability of its MLE open the way to convenient econometric testing. Let's illustrate this with the likelihood ratio test (see Def. \@ref(def:LR)). The maximum value achieved by the MLE is
 $$
 \log\mathcal{L}(Y_{T};\hat{\Pi},\hat{\Omega}) = -\frac{Tn}{2}\log(2\pi)+\frac{T}{2}\log\left|\hat{\Omega}^{-1}\right| -\frac{1}{2}\sum_{t=1}^{T}\left[\hat{\varepsilon}_{t}'\hat{\Omega}^{-1}\hat{\varepsilon}_{t}\right].
 $$
@@ -1968,7 +1971,7 @@ y^{(2)}_{t-1}
 \end{array}
 \right] + \varepsilon_t.
 $$
-Using, e.g., a likelihood ratio test (see Def. \@ref(def:LR)), one can easily test for block exogeneity of $y_t^{(2)}$ (say). The null assumption can be expressed as $\Phi^{(2,1)}=0$ and $\Sigma^{(2,1)}=0$.
+Using, e.g., a likelihood ratio test (see Def. \@ref(def:LR)), one can easily test for block exogeneity of $y_t^{(2)}$ (say). The null assumption can be expressed as $\Phi^{(2,1)}=0$.
 
 
 <!-- **Companion Form and Stability of a VAR process** -->
@@ -2064,12 +2067,7 @@ Loosely speaking, we reject $H_{0}$ if some of the coefficients on the lagged $y
 $$
 F=\frac{(RSS-USS)/p}{USS/(T-2p-1)},
 $$
-where RSS is the Restricted sum of squared residuals and USS is the Unrestricted sum of squared residuals. Under $H_{0}$, the $F$-statistic is distributed as $\mathcal{F}(p,T-2p-1)$.
-
-Note that $pF\underset{T \rightarrow \infty}{\rightarrow}\chi^{2}(p)$. Therefore, for large samples and under $H_0$:
-$$
-F \sim \chi^{2}(p)/p.
-$$
+where RSS is the Restricted sum of squared residuals and USS is the Unrestricted sum of squared residuals. Under $H_{0}$, the $F$-statistic is distributed as $\mathcal{F}(p,T-2p-1)$. (We have $pF\underset{T \rightarrow \infty}{\rightarrow}\chi^{2}(p)$.)
 
 
 
@@ -2110,22 +2108,20 @@ b_{11}^2+b_{12}^2 & \color{red}{b_{11}b_{21}+b_{12}b_{22}} \\
 \right].
 \end{eqnarray*}
 
-We then have 3 linearly independent equations but 4 unknowns. Therefore, $B$ is not identified based on second-order moments. Additional restrictions are required to identify $B$.
+We then have 3 linearly independent equations but 4 unknowns. Therefore, $B$ is not identified based on second-order moments. Additional restrictions are required to identify $B$. This section covers two standard identification schemes: **short-run** and **long-run** restrictions:
 
-This section covers two standard identification schemes: **short-run** and **long-run** restrictions:
-
-1. a **short-run restriction (SRR)** prevents a structural shock from affecting an endogenous variable contemporaneously.
+1. A **short-run restriction (SRR)** prevents a structural shock from affecting an endogenous variable contemporaneously.
 * Easy to implement: the appropriate entries of $B$ are set to 0.
 * Particular case: **Cholesky, or recursive approach**.
 * Examples: @BERNANKE198649, @Sims_1986, @Gali_1992, @RubioRamirez_et_al_2010.
 
-2. a **long-run restriction (LRR)** prevents a structural shock from having a cumulative impact on one of the endogenous variables. 
+2. A **long-run restriction (LRR)** prevents a structural shock from having a cumulative impact on one of the endogenous variables. 
 * Additional computations are required to implement this. One needs to compute the cumulative effect of one of the structural shocks $u_{t}$ on one of the endogenous variable.
 * Examples: @Blanchard_Quah_1989, @Faust_Leeper_1997, @Gali_1999, @Erceg_et_al_2005, @NBERc11177.
 
 The two approaches can be combined (see, e.g., @Gerlach_Smets_1995).
 
-Let us consider a simple exmaple that could motivate short-run restrictions. Consider the following stylized macro model:
+Let us consider a simple example that could motivate short-run restrictions. Consider the following stylized macro model:
 \begin{equation}
 \begin{array}{clll}
 g_{t}&=& \bar{g}-\lambda(i_{t-1}-\mathbb{E}_{t-1}\pi_{t})+ \underbrace{{\color{blue}\sigma_d \eta_{d,t}}}_{\mbox{demand shock}}& (\mbox{IS curve})\\
@@ -2184,13 +2180,12 @@ Consider the following context:
 * A first shock (say, $\eta_{n_1,t}$) can affect instantaneously
 (i.e., on date $t$) only one of the endogenous variable (say, $y_{n_1,t}$);
 * A second shock (say, $\eta_{n_2,t}$) can affect instantaneously
-(i.e., on date $t$) the first two endogenous variables (say, $y_{n_1,t}$
-and $y_{n_2,t}$);
-* ...
+(i.e., on date $t$) two endogenous variables, $y_{n_1,t}$ (the same as before) and  $y_{n_2,t}$;
+* $\dots$
 
 This implies (1) that column $n_1$ of $B$ has only 1 non-zero entry (this is the $n_1^{th}$ entry), (2) that column $n_2$ of $B$ has 2 non-zero entries (the $n_1^{th}$ and the $n_2^{th}$ ones), etc. Without loss of generality, we can set $n_1=n$, $n_2=n-1$, etc. In this context, matrix $B$ is lower triangular.
 
-The Cholesky decomposition of $\Omega_{\varepsilon}$ then provides an appropriate estimate of $B$, that is a lower triangular matrix $B$ that is such that:
+The Cholesky decomposition of $\Omega_{\varepsilon}$ then provides an appropriate estimate of $B$, since this matrix decomposition yields to a lower triangular matrix satisfying:
 $$
 \Omega_\varepsilon = BB'.
 $$
@@ -2215,18 +2210,17 @@ B_{FS} & B_{Fr} & B_{FF}
 \boldsymbol\eta_{F,t}
 \end{array}\right],
 $$
-where $S$, $r$ and $F$ respectively correspond to *slow-moving variables*, the policy variable (short-term rate) and *fast-moving variables*. While $\eta_{r,t}$ is scalar, $\boldsymbol\eta_{S,t}$ and $\boldsymbol\eta_{F,t}$ may be vectors. The space spanned by $\boldsymbol\varepsilon_{S,t}$ is the same as that spanned by $\boldsymbol\eta_{S,t}$. As a result, because $\varepsilon_{r,t}$ is a linear combination of $\eta_{r,t}$ and $\boldsymbol\eta_{S,t}$ (which are $\perp$), it comes that the $B_{rr}\eta_{r,t}$'s are the (population) residuals in the regression of $\varepsilon_{r,t}$ on $\boldsymbol\varepsilon_{S,t}$. Because $\mathbb{V}ar(\eta_{r,t})=1$, $B_{rr}$ is given by the square root of the variance of  $B_{rr}\eta_{r,t}$. $B_{F,r}$ is finally obtained by regressing the components of $\boldsymbol\varepsilon_{F,t}$ on $\eta_{r,t}$.
+where $S$, $r$ and $F$ respectively correspond to *slow-moving variables*, the policy variable (short-term rate) and *fast-moving variables*. While $\eta_{r,t}$ is scalar, $\boldsymbol\eta_{S,t}$ and $\boldsymbol\eta_{F,t}$ may be vectors. The space spanned by $\boldsymbol\varepsilon_{S,t}$ is the same as that spanned by $\boldsymbol\eta_{S,t}$. As a result, because $\varepsilon_{r,t}$ is a linear combination of $\eta_{r,t}$ and $\boldsymbol\eta_{S,t}$ (which are $\perp$), it comes that the $B_{rr}\eta_{r,t}$'s are the (population) residuals in the regression of $\varepsilon_{r,t}$ on $\boldsymbol\varepsilon_{S,t}$. Because $\mathbb{V}ar(\eta_{r,t})=1$, $B_{rr}$ is given by the square root of the variance of  $B_{rr}\eta_{r,t}$. $B_{F,r}$ is finally obtained by regressing the components of $\boldsymbol\varepsilon_{F,t}$ on the estimates of $\eta_{r,t}$.
 
 An equivalent approach consists in computing the Cholesky decomposition of $BB'$ and the contemporaneous impacts of the monetary policy shock (on the $n$ endogenous variables) are the components of the column of $B$ corresponding to the policy variable.
 
 
-```{r CEE, fig.align = 'left-aligned', out.width = "95%", fig.cap = "Response to a monetary-policy shock. Identification approach of Christiano, Eichenbaum and Evans (1996)."}
+```{r CEE, fig.align = 'left-aligned', out.width = "95%", fig.cap = "Response to a monetary-policy shock. Identification approach of Christiano, Eichenbaum and Evans (1996). Confidence intervals are obtained by boostrapping the estimated VAR model (see inference section).",warning=FALSE,message=FALSE}
 library(AEC)
 library(vars)
 data("USmonthly")
 # Select sample period:
-First.date <- "1965-01-01"
-Last.date <- "1995-06-01"
+First.date <- "1965-01-01";Last.date <- "1995-06-01"
 indic.first <- which(USmonthly$DATES==First.date)
 indic.last  <- which(USmonthly$DATES==Last.date)
 USmonthly   <- USmonthly[indic.first:indic.last,]
@@ -2235,11 +2229,10 @@ y <- as.matrix(USmonthly[considered.variables])
 res.svar.ordering <- svar.ordering(y,p=3,
                                    posit.of.shock = 5,
                                    nb.periods.IRF = 20,
-                                   nb.bootstrap.replications = 100, # This is used in the parametric bootstrap only
+                                   nb.bootstrap.replications = 100,
                                    confidence.interval = 0.90, # expressed in pp.
                                    indic.plot = 1 # Plots are displayed if = 1.
 )
-
 ```
 
 Let us now turn to **Long-run restrictions**. Such a restriction concerns the long-run influence of a shock on an endogenous variable. Let us consider for instance a structural shock that is assumed to have no "long-run influence" on GDP. How to express this? The long-run change in GDP can be expressed as $GDP_{t+h} - GDP_t$, with $h$ large. Note further that:
@@ -2253,7 +2246,7 @@ $$
 
 This can be easily formulated as a function of $B$ and of the matrices $\Phi_i$ when $y_t$ (including $\Delta GDP_t$) follows a VAR process.
 
-Without loss of generality, we will only consider the VAR(1) case. Indeed, one can always write a VAR($p$) as a VAR(1). To see that, stack the last $p$ values of vector $y_t$ in vector $y_{t}^{*}=[y_t',\dots,y_{t-p+1}']'$; Eq. \@ref(eq:yVAR) can then be rewritten in its companion form:
+Without loss of generality, we will only consider the VAR(1) case. Indeed, one can always write a VAR($p$) as a VAR(1). To see that, stack the last $p$ values of vector $y_t$ in vector $y_{t}^{*}=[y_t',\dots,y_{t-p+1}']'$; Eq. \@ref(eq:yVAR) can then be rewritten in its **companion form**:
 \begin{equation}
 y_{t}^{*} =
 \underbrace{\left[\begin{array}{c}
@@ -2276,16 +2269,14 @@ y_{t-1}^{*}+
 where matrices $\Phi$ and $\Omega^* = \mathbb{V}ar(\varepsilon_t^*)$ are of dimension $np \times np$; $\Omega^*$ is filled with zeros, except the $n\times n$ upper-left block that is equal to $\Omega = \mathbb{V}ar(\varepsilon_t)$. (Matrix $\Phi$ had been introduced in Eq. \@ref(eq:matrixPHI).)
 
 Focusing on the VAR(1) case:
-\begin{eqnarray}
+\begin{eqnarray*}
 y_{t} &=& c+\Phi y_{t-1}+\varepsilon_{t}\\
-& = & c+\varepsilon_{t}+\Phi(c+\varepsilon_{t-1})+\ldots+\Phi^{k}(c+\varepsilon_{t-k})+\ldots \nonumber \\
+& = & c+\varepsilon_{t}+\Phi(c+\varepsilon_{t-1})+\ldots+\Phi^{k}(c+\varepsilon_{t-k})+\ldots \\
 & = & \mu +\varepsilon_{t}+\Phi\varepsilon_{t-1}+\ldots+\Phi^{k}\varepsilon_{t-k}+\ldots \\
 & = & \mu +B\eta_{t}+\Phi B\eta_{t-1}+\ldots+\Phi^{k}B\eta_{t-k}+\ldots,
-\end{eqnarray}
+\end{eqnarray*}
 
-The sequence of shocks $\{\eta_t\}$ determines the sequence $\{y_t\}$. What if $\{\eta_t\}$ is replaced with $\{\tilde{\eta}_t\}$, where $\tilde{\eta}_t=\eta_t$ if $t \ne s$ and $\tilde{\eta}_s=\eta_s + \gamma$?
-
-Assume $\{\tilde{y}_t\}$ is the associated "perturbated" sequence. We have $\tilde{y}_t = y_t$ if $t<s$. For $t \ge s$, the Wold decomposition of $\{\tilde{y}_t\}$ implies:
+The sequence of shocks $\{\eta_t\}$ determines the sequence $\{y_t\}$. What if $\{\eta_t\}$ is replaced with $\{\tilde{\eta}_t\}$, where $\tilde{\eta}_t=\eta_t$ if $t \ne s$ and $\tilde{\eta}_s=\eta_s + \gamma$? Assume $\{\tilde{y}_t\}$ is the associated "perturbated" sequence. We have $\tilde{y}_t = y_t$ if $t<s$. For $t \ge s$, the Wold decomposition of $\{\tilde{y}_t\}$ implies:
 $$
 \tilde{y}_t = y_t + \Phi^{t-s} B \gamma.
 $$
@@ -2311,7 +2302,7 @@ $$
 $$
 where $\Theta_{ij}$ is the element $(i,j)$ of $\Theta$.
 
-@Blanchard_Quah_1989 implement long-run restrictions in a small-scale VAR. Two variables are considered: GDP and unemployment. Consequently, the VAR is affected by two types of shocks. The authors want to identify **supply shocks** (that can have a permanent effect on output) and **demand shocks** (that cannot have a permanent effect on output).[^Footnote:BQstruct]
+@Blanchard_Quah_1989 have implemented such long-run restrictions in a small-scale VAR. Two variables are considered: GDP and unemployment. Consequently, the VAR is affected by two types of shocks. Specifically, authors want to identify **supply shocks** (that can have a permanent effect on output) and **demand shocks** (that cannot have a permanent effect on output).[^Footnote:BQstruct]
 
 [^Footnote:BQstruct]: The motivation of the authors regarding their long-run restrictions can be obtained from a traditional Keynesian view of fluctuations. The authors propose a variant of a model from @Fischer_1977.
 <!-- \begin{eqnarray} -->
@@ -2338,13 +2329,15 @@ where $\Theta_{ij}$ is the element $(i,j)$ of $\Theta$.
 library(AEC)
 data(BQ)
 par(mfrow=c(1,2))
-plot(BQ$Date,BQ$Dgdp,type="l",main="GDP quarterly growth rate",xlab="",ylab="",lwd=2)
-plot(BQ$Date,BQ$unemp,type="l",ylim=c(-3,6),main="Unemployment rate (gap)",xlab="",ylab="",lwd=2)
+plot(BQ$Date,BQ$Dgdp,type="l",main="GDP quarterly growth rate",
+     xlab="",ylab="",lwd=2)
+plot(BQ$Date,BQ$unemp,type="l",ylim=c(-3,6),main="Unemployment rate (gap)",
+     xlab="",ylab="",lwd=2)
 ```
 
 Estimate a reduced-form VAR(8) model:
 
-```{r BQ2}
+```{r BQ2, warning=FALSE, message=FALSE}
 library(vars)
 y <- BQ[,2:3]
 est.VAR <- VAR(y,p=8)
@@ -2371,17 +2364,19 @@ print(res.opt$par)
 
 (Note: one can use that type of approach, based on a loss function, to mix short- and long-run restrictions.) 
 
-Figure \@ref(fig:BQ4) displays the resulting IRFs. Note that, for GDP, we cumulate the GDP growth IRF, so as to have the response of the GDP level.
+Figure \@ref(fig:BQ4) displays the resulting IRFs. Note that, for GDP, we cumulate the GDP growth IRF, so as to have the response of the GDP in level.
 
 ```{r BQ4, fig.align = 'left-aligned', out.width = "95%", fig.cap = "IRF of GDP and unemployment to demand and supply shocks."}
 B.hat <- matrix(res.opt$par,2,2)
 print(cbind(Omega,B.hat %*% t(B.hat)))
 nb.sim <- 40
-par(mfrow=c(2,2))
-Y <- simul.VAR(c=matrix(0,2,1),Phi,B.hat,nb.sim,y0.star=rep(0,2*8),indic.IRF = 1,u.shock = c(1,0))
+par(mfrow=c(2,2));par(plt=c(.15,.95,.15,.8))
+Y <- simul.VAR(c=matrix(0,2,1),Phi,B.hat,nb.sim,y0.star=rep(0,2*8),
+               indic.IRF = 1,u.shock = c(1,0))
 plot(cumsum(Y[,1]),type="l",lwd=2,xlab="",ylab="",main="Demand shock on GDP")
 plot(Y[,2],type="l",lwd=2,xlab="",ylab="",main="Demand shock on UNEMP")
-Y <- simul.VAR(c=matrix(0,2,1),Phi,B.hat,nb.sim,y0.star=rep(0,2*8),indic.IRF = 1,u.shock = c(0,1))
+Y <- simul.VAR(c=matrix(0,2,1),Phi,B.hat,nb.sim,y0.star=rep(0,2*8),
+               indic.IRF = 1,u.shock = c(0,1))
 plot(cumsum(Y[,1]),type="l",lwd=2,xlab="",ylab="",main="Supply shock on GDP")
 plot(Y[,2],type="l",lwd=2,xlab="",ylab="",main="Supply shock on UNEMP")
 ```
@@ -2390,7 +2385,7 @@ plot(Y[,2],type="l",lwd=2,xlab="",ylab="",main="Supply shock on UNEMP")
 
 ### Sign restrictions {#Signs}
 
-To identifiy the structural shocks, we need to find a matrix $B$ that satisfies $\Omega_{\varepsilon} = BB'$ (with $\Omega = \mathbb{V}ar(\varepsilon_t)$) and other restrictions. Indeed, $\Omega_{\varepsilon} = BB'$ is not sufficent to identify $B$ since, if we take any orthogonal matrix $Q$ (see Def. \@ref(def:orthogonal)), then $\mathcal{P}=BQ$ also satisfies $\Omega = \mathcal{P}\mathcal{P}'$.
+To identifiy the structural shocks, we need to find a matrix $B$ that satisfies $\Omega = BB'$ (with $\Omega = \mathbb{V}ar(\varepsilon_t)$) and other restrictions. Indeed, as explained above, $\Omega = BB'$ is not sufficient to identify $B$ since, if we take any orthogonal matrix $Q$ (see Def. \@ref(def:orthogonal)), then $\mathcal{P}=BQ$ also satisfies $\Omega = \mathcal{P}\mathcal{P}'$.
 
 :::{.definition #orthogonal name="Orthogonal matrix"}
 An orthogonal matri $Q$ is a matrix such that $QQ' = I,$ i.e., all columns (rows) of $Q$ are are
@@ -2427,11 +2422,9 @@ a. **Yes**. Store the impulse response in the set of admissible response.
 b. **No**. Discard the impulse response.
 5. Perform $N$ replications and report the median impulse response (and its "confidence" intervals).
 
-Note: to take into account the uncertainty in $B$ and $\Phi$, you can draw $B$ and $\Phi$ in Steps 2 and 3 using an inference method.
+Note: to take into account the uncertainty in $B$ and $\Phi$, you can draw $B$ and $\Phi$ in Steps 2 and 3 using an inference method (see Section \@ref(Inference)).
 
-This method has the advantage of being relatively agnostic. Moreover, it is fairly flexible, as one can impose sign restrictions on any variable, at any horizon.
-
-A prominent example is @Uhlig_2005. Using US monthly data from 1965.I to 2003.XII, he employs sign restrictions to estimate the effect of monetary policy shocks.
+The sign-restriction approach method has the advantage of being relatively agnostic. Moreover, it is fairly flexible, as one can impose sign restrictions on any variable, at any horizon. A prominent example is @Uhlig_2005. Using US monthly data from 1965.I to 2003.XII, he employs sign restrictions to estimate the effect of monetary policy shocks.
 
 According to conventional wisdom, monetary contractions should:[^Footnote:Puzzles]
 
@@ -2459,7 +2452,7 @@ Last.date <- "1995-06-01"
 indic.first <- which(USmonthly$DATES==First.date)
 indic.last  <- which(USmonthly$DATES==Last.date)
 USmonthly   <- USmonthly[indic.first:indic.last,]
-considered.variables <- c("LIP","UNEMP","LCPI","LPCOM","FFR","NBR","TTR","M1")
+considered.variables<-c("LIP","UNEMP","LCPI","LPCOM","FFR","NBR","TTR","M1")
 n <- length(considered.variables)
 y <- as.matrix(USmonthly[considered.variables])
 sign.restrictions <- list()
@@ -2473,18 +2466,18 @@ sign.restrictions[[1]][1,3] <- 1
 sign.restrictions[[1]][2,5] <- -1
 sign.restrictions[[1]][3,6] <- 1
 horizon[[1]] <- 1:5
-res.svar.signs <- svar.signs(y,p=3,
-                             nb.shocks = 1, #number of identified shocks
-                             nb.periods.IRF = 20,
-                             bootstrap.replications = 1, # = 0 if no bootstrap
-                             confidence.interval = 0.80, # expressed in pp.
-                             indic.plot = 1, # Plots are displayed if = 1.
-                             nb.draws = 10000, # number of draws
-                             sign.restrictions,
-                             horizon,
-                             recursive =1 #  =0 <- draw Q directly, =1 <- draw q recursively
-)
-nb.rotations <- res.svar.signs$xx
+res.svar.signs <- 
+  svar.signs(y,p=3,
+             nb.shocks = 1, #number of identified shocks
+             nb.periods.IRF = 20,
+             bootstrap.replications = 1, # = 0 if no bootstrap
+             confidence.interval = 0.80, # expressed in pp.
+             indic.plot = 1, # Plots are displayed if = 1.
+             nb.draws = 10000, # number of draws
+             sign.restrictions,
+             horizon,
+             recursive =1 #  =0 <- draw Q directly, =1 <- draw q recursively
+  )
 ```
 
 <!-- Another approach -->
@@ -2528,7 +2521,7 @@ nb.rotations <- res.svar.signs$xx
 <!-- * For $1\le j\le l$, draw $u_j\in \mathbb{R}^{m+1-j}$ from a standard normal distribution and set $w_j = u_j/||u_j||$.  -->
 <!-- * Define $\begin{pmatrix}q_1&...&q_l\end{pmatrix}$ recursively by $q_j = K_jw_j$ for any matrix $K_j$ whose columns form an orthogonal basis for the null space of the matrix \[M_j = \begin{pmatrix} q_1&...&q_{j-1}\end{pmatrix}'\] ($q_j$ will be orthogonal to $\begin{pmatrix} q_1&...&q_{j-1}\end{pmatrix}$) -->
 
-A remarkable characteristic of sign restrictions is that it does not lead to a unique IRF. In that sense, we say that it is set-identified, not point-identified. By drawing the rotation matrices ($Q$) from a distribution and taking the median, we adopt an agnostic approach: "pure sign restriction approach".
+It has to be stressed that the sign restriction approach does not lead to a unique IRF, but to a set of admissible IRFs. Also, we say that this approach is set-identified, not point-identified.
 
 An alternative approach is the so-called **penalty-function approach** (PFA, @Uhlig_2005, present in @Danne_2015's package). This approach relies on a *penalty function*:
 $$
@@ -2686,7 +2679,7 @@ where $\Psi_{j,i}$ denotes row $i$ of $\Psi_{j}$, i.e., the response of variable
 The maximization problem subject to the side constraint $q_1'q_1=1$ can be written as a Lagrangian: $$
 L=q_1'Sq_1-\lambda(q_1'q_1-1),
 $$
-with the first-order condition $Sq_1=\lambda q_1$ (the side constraint is $q_1'q_1=1$). From this equation, we see that the solution $q_1$ is an eigenvector of $S$, the one associated with eigenvalue $\lambda$. We also see that $\sigma^2(\underline{h},\overline{h},q_1)=\lambda$. Thus, to maximize this variance, we need to find the eigenvector of $S$ that is associated with the maximal eigenvalue $\lambda$. That defines the first principal component (see XXXXXXX). That is, if $S$ admits the following spectral decomposition:
+with the first-order condition $Sq_1=\lambda q_1$ (the side constraint is $q_1'q_1=1$). From this equation, we see that the solution $q_1$ is an eigenvector of $S$, the one associated with eigenvalue $\lambda$. We also see that $\sigma^2(\underline{h},\overline{h},q_1)=\lambda$. Thus, to maximize this variance, we need to find the eigenvector of $S$ that is associated with the maximal eigenvalue $\lambda$. That defines the first principal component (see Section \@ref(PCAapp)). That is, if $S$ admits the following spectral decomposition:
 $$
 S = \mathcal{P}D\mathcal{P}',
 $$
@@ -3110,7 +3103,7 @@ i. The $\eta_t$'s are i.i.d. (across time) with $\mathbb{E}(\eta_t) = 0$ and $\m
 ii. The components $\eta_{1,t}, \ldots, \eta_{n,t}$ are mutually independent.
 iii We have
 $$
-\boxed{\varepsilon_t = B_0 \eta_t,}
+\varepsilon_t = B_0 \eta_t,
 $$
 with $\mathbb{V}ar(\varepsilon_t) = Id$ (i.e. $B_0$ is orthogonal).
 :::
@@ -3207,7 +3200,9 @@ The asymptotic variance-covariance matrix of $vec \sqrt{T} (\widehat{B_T} - B_0)
 
 Note that the potential misspecification of pseudo-distributions $g_i$ has no effect on the consistency of these specific PML estimators.
 
-Let us apply the PML-ICA approach on U.S. data coerving the period 1959:IV to 2015:I at the quarterly frequency ($T=224$). We consider three dependent variables: inflation ($\pi_t$), economic activity ($z_t$, the output gap) and the nominal  short-term interest rate ($r_t$). Changes in the log of oil prices added as an exogenous variable ($x_t$).
+:::{.example #GMR2017 name="Non-Gaussian monetary-policy shocks"}
+
+We apply the PML-ICA approach on U.S. data coerving the period 1959:IV to 2015:I at the quarterly frequency ($T=224$). We consider three dependent variables: inflation ($\pi_t$), economic activity ($z_t$, the output gap) and the nominal  short-term interest rate ($r_t$). Changes in the log of oil prices added as an exogenous variable ($x_t$).
 
 
 ```{r ICA0}
@@ -3249,11 +3244,10 @@ for(i in 1:n){
   U <- cbind(U,eq$residuals)
   effect.commo[i] <- eq$coef[length(eq$coef)]
 }
-Omega <- var(U) # Omega_1 is the covariance matrix of the OLS residuals.
-B <- t(chol(Omega)) # B_1 is the Cholesky matrix associated with Omega_1 (lower triangular)
+Omega <- var(U) # Covariance matrix of the OLS residuals.
+B <- t(chol(Omega)) # Cholesky matrix associated with Omega (lower triang.)
 Eps <- U %*% t(solve(B)) # Recover associated structural shocks
 ```
-
 
 
 We want to estimate the orthogonal matrix $B$ such that $u_t=SB \eta_t$, where
@@ -3327,10 +3321,12 @@ PHI <- list();for(i in 1:nb.lags){PHI[[i]]<-array(Phi,c(3,3,nb.lags))[,,i]}
 for(jjjj in 1:n){
   u.shock <- rep(0,n)
   u.shock[jjjj] <- 1
-  IRF.Chol[,,jjjj] <- t(simul.VAR(c=rep(0,3),Phi=PHI,B=B,nb.sim=41,
-                                  y0.star=rep(0,3*nb.lags),indic.IRF = 1,u.shock = u.shock))
-  IRF.ICA[,,jjjj]  <- t(simul.VAR(c=rep(0,3),Phi=PHI,B=B%*%C.PML,nb.sim=41,
-                                  y0.star=rep(0,3*nb.lags),indic.IRF = 1,u.shock = u.shock))
+  IRF.Chol[,,jjjj] <- 
+    t(simul.VAR(c=rep(0,3),Phi=PHI,B=B,nb.sim=41,
+                y0.star=rep(0,3*nb.lags),indic.IRF = 1,u.shock = u.shock))
+  IRF.ICA[,,jjjj]  <- 
+    t(simul.VAR(c=rep(0,3),Phi=PHI,B=B%*%C.PML,nb.sim=41,
+                y0.star=rep(0,3*nb.lags),indic.IRF = 1,u.shock = u.shock))
 }
 ```
 
@@ -3356,7 +3352,7 @@ for(shock in 1:n){
 
 
 According to Figure \@ref(fig:ICAFigIRF), Shock 1 is a supply shock, Shock 2 is a demand shock, and Shock 3 is a monetary-policy shock. Note that Shock 3 is close to the one resulting from the Cholesky approach.
-
+:::
 
 <!-- @Gourieroux_Monfort_Renne_2017 show that the asymptotic propoerties of the PML estimator can be exploited to build a test whose null hypothesis is: -->
 
@@ -3838,7 +3834,7 @@ Note that this approach implies that the vectorial space spanned by $(\hat{F}_t,
 Below, we employ this method on the dataset built by @McCracken_Ng_2016 ---the [FRED:MD](https://research.stlouisfed.org/wp/more/2015-012) database--- that includes 119 time series.
 
 
-```{r FAVAR, fig.align = 'left-aligned', out.width = "95%", fig.cap = "Responses of a monetary-policy shock. FAVAR approach of Bernanke, Boivin, and Eliasz (2005). FRED-MD dataset.", echo=FALSE,warning=FALSE,message=FALSE}
+```{r FAVAR, fig.align = 'left-aligned', out.width = "95%", fig.cap = "Responses of a monetary-policy shock. FAVAR approach of Bernanke, Boivin, and Eliasz (2005). FRED-MD dataset.",warning=FALSE,message=FALSE}
 library(BVAR)# contains the fred_md dataset
 library(vars)
 data <- fred_transform(fred_md,na.rm = FALSE, type = "fred_md")
@@ -3887,11 +3883,11 @@ for(i in 1:length(variables.2.plot)){
 
 
 
-### Projections Methods {#Projections}
+### Projection Methods {#Projections}
 
 Consider the infinite MA representation of $y_t$ (Eq. \@ref(eq:InfMA)):
 $$
-y_t = \mu + \sum_{h=0}^\infty \color{blue}{\Psi_{h}} \eta_{t-h}.
+y_t = \mu + \sum_{h=0}^\infty \Psi_{h} \eta_{t-h}.
 $$
 As seen in Section \@ref(IRFSVARMA), the entries $(i,j)$ of the sequence of the $\Psi_h$ matrices define the IRF of $\eta_{j,t}$ on $y_{i,t}$.
 
@@ -3913,7 +3909,7 @@ Assume that the structural shock of interest ($\eta_{1,t}$, say) can be consiste
 \end{equation}
 where $\mathbb{E}(x_t|w_t)$ is affine in $w_t$ and where $w_t$ is an affine transformation of $\eta_{2:n,t}$ and of past shocks $\eta_{t-1},\eta_{t-2},\dots$.
 
-Eq. \@ref(eq:xetaw) implies that, conditional on $w_t$, the additional knowledge of $x_t$ is useful only when it comes to forecast something that depends on $\eta_{1,t}$. Hence, given that $u_{i,1,t+h}$ (see Eq. \@ref(eq:OLS1)) is independent from $\eta_{1,t}$ (it depends on  $\eta_{t+h},\dots,\eta_{t+1},{\color{blue}\eta_{2:n,t}},\eta_{t-1},\eta_{t-2},\dots$), it comes that
+Eq. \@ref(eq:xetaw) implies that, conditional on $w_t$, the additional knowledge of $x_t$ is useful only when it comes to forecast something that depends on $\eta_{1,t}$. Hence, given that $u_{i,1,t+h}$ (see Eq. \@ref(eq:OLS1)) is independent from $\eta_{1,t}$ (it depends on  $\eta_{t+h},\dots,\eta_{t+1},\color{blue}{\eta_{2:n,t}},\eta_{t-1},\eta_{t-2},\dots$), it comes that
 $$
 \mathbb{E}(u_{i,1,t+h}|x_t,w_t)= \mathbb{E}(u_{i,1,t+h}|w_t).
 $$
@@ -4088,7 +4084,8 @@ USmonthly   <- USmonthly[indic.first:indic.last,]
 shock.name <- "FF4_TC" #"FF4_TC", "ED2_TC", "ff1_vr", "rrshock83b"
 indic.shock.name <- which(names(USmonthly)==shock.name)
 Z <- matrix(USmonthly[,indic.shock.name],ncol=1)
-plot(USmonthly$DATES,Z,type="l",xlab="",ylab="")
+par(plt=c(.1,.95,.1,.95))
+plot(USmonthly$DATES,Z,type="l",xlab="",ylab="",lwd=2)
 ```
 
 
@@ -4097,13 +4094,14 @@ considered.variables <- c("GS1","LIP","LCPI","EBP")
 y <- as.matrix(USmonthly[,considered.variables])
 n <- length(considered.variables)
 colnames(y) <- considered.variables
-res.svar.iv <- svar.iv(y,Z,p = 4,
-                       names.of.variables=considered.variables,
-                       nb.periods.IRF = 20,
-                       z.AR.order=1, # This is used in the parametric bootstrap only
-                       nb.bootstrap.replications = 100, # This is used in the parametric bootstrap only
-                       confidence.interval = 0.90, # This is used in the parametric bootstrap only
-                       indic.plot=1)
+par(plt=c(.15,.95,.15,.8))
+res.svar.iv <- 
+  svar.iv(y,Z,p = 4,names.of.variables=considered.variables,
+          nb.periods.IRF = 20,
+          z.AR.order=1, 
+          nb.bootstrap.replications = 100, 
+          confidence.interval = 0.90,
+          indic.plot=1)
 ```
 
 
@@ -4167,7 +4165,6 @@ If $z_t$ is  suspected to be correlated to past values of $\eta_{1,t}$ but not t
 In the general case, one can use lags of $y_t$ as controls. Note that, even if (IV.iii) holds, adding controls may reduce the variance of the regression error.
 
 As noted by @Stock_Watson_2018, the relevant variance is the long-run variance of the instrument-times-error term. They also recommend (p.926) using leads and lags of $z_t$ to improve efficiency.
-
 
 
 
@@ -4249,7 +4246,7 @@ where $d$ denotes convergence in distribution, $N(0,\Sigma_\beta)$ denotes the m
 Let $g(\beta) = (g_l(\beta),..., g_m(\beta))'$ be a continuously differentiable function with values in $\mathbb{R}^m$, and assume that $\partial g_i/\partial
 \beta' = (\partial g_i/\partial \beta_j)$ is nonzero at $\beta$ for $i = 1,\dots, m$. Then
 $$
-\sqrt{T}(\color{blue}{g}(\hat\beta)-\color{blue}{g}(\beta))\overset{d}{\rightarrow}\mathcal{N}\left(0,\color{blue}{\frac{\partial g}{\partial \beta'}}\Sigma_\beta\color{blue}{\frac{\partial g'}{\partial \beta}}\right).
+\sqrt{T}(g(\hat\beta)-g(\beta))\overset{d}{\rightarrow}\mathcal{N}\left(0,\frac{\partial g}{\partial \beta'}\Sigma_\beta\frac{\partial g'}{\partial \beta}\right).
 $$
 (This formula underlies the Delta method, see Eq. \@ref(eq:DeltaMethod).)
 
