@@ -301,8 +301,8 @@ Specifically, the number of restrictions is <span class="math inline">\(n_R \tim
 <span><span class="va">std.dev</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">V</span><span class="op">)</span><span class="op">)</span>;<span class="va">t.stud</span> <span class="op">&lt;-</span> <span class="va">theta</span><span class="op">/</span><span class="va">std.dev</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">theta</span>,<span class="va">std.dev</span>,<span class="va">t.stud</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##            theta    std.dev     t.stud
-## [1,]  -0.7355469  0.4653449 -1.5806490
-## [2,] -10.9859162 16.8406714 -0.6523443</code></pre>
+## [1,]  -0.7180716  0.4646617 -1.5453642
+## [2,] -11.2042452 17.1039449 -0.6550679</code></pre>
 <p>The Hansen statistic can be used to test the model (see Eq. <a href="estimation-methods.html#eq:HansenSargan">(4.5)</a>). If the model is correct, we have:
 <span class="math display">\[
 T g(\underline{y_T};{\boldsymbol\theta})'\, S^{-1} \, g(\underline{y_T};{\boldsymbol\theta}) \sim \,i.i.d.\,\chi^2(J - K),
@@ -314,7 +314,7 @@ where <span class="math inline">\(J\)</span> is the number of moment constraints
 <span><span class="va">pvalue</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html">pchisq</a></span><span class="op">(</span>q <span class="op">=</span> <span class="va">Hansen_stat</span>,df <span class="op">=</span> <span class="va">n_R</span><span class="op">*</span><span class="va">n_z</span> <span class="op">-</span> <span class="va">n_F</span><span class="op">)</span></span>
 <span><span class="va">pvalue</span></span></code></pre></div>
 <pre><code>##           [,1]
-## [1,] 0.8796173</code></pre>
+## [1,] 0.8789782</code></pre>
 </div>
 </div>
 <div id="secMLE" class="section level2" number="4.2">
@@ -1051,7 +1051,7 @@ Figure 4.6: The upper line of plot compares prior (black) and posterior (red) di
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Applied Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-09-28.</p>
+    <p>"<strong>Applied Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-10-05.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

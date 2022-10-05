@@ -23,7 +23,7 @@ css: "my-style.css"
 
 This course covers various econometric topics, including linear regression models, discrete-choice models, and time series analysis. It provides examples or simulations based on R codes.
 
-The R codes use various packages that can be obtained from [CRAN](https://cran.r-project.org). Several pieces of code also involve procedures and data from my `AEC` package. The latter is available on GitHub. To install it, one need to employ the `devtools` library:
+The R codes use various packages that can be obtained from [CRAN](https://cran.r-project.org). Several pieces of code also involve procedures and data from a companion package (`AEC`). Some of these procedures ---those pertaining to VAR models--- as well as the associated presentation (in Section \@ref(VAR)) have been prepared jointly with [Kenza Benhima](https://sites.google.com/site/benhimakenza/). This `AEC` package is available on GitHub. To install it, one need to employ the `devtools` library:
 
 ```{r installAEC, eval=FALSE}
 library(devtools)

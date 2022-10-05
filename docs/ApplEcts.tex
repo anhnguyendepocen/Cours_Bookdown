@@ -131,7 +131,7 @@
 
 \title{Applied Econometrics}
 \author{Jean-Paul Renne}
-\date{2022-09-28}
+\date{2022-10-05}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -164,7 +164,7 @@
 
 This course covers various econometric topics, including linear regression models, discrete-choice models, and time series analysis. It provides examples or simulations based on R codes.
 
-The R codes use various packages that can be obtained from \href{https://cran.r-project.org}{CRAN}. Several pieces of code also involve procedures and data from my \texttt{AEC} package. The latter is available on GitHub. To install it, one need to employ the \texttt{devtools} library:
+The R codes use various packages that can be obtained from \href{https://cran.r-project.org}{CRAN}. Several pieces of code also involve procedures and data from a companion package (\texttt{AEC}). Some of these procedures ---those pertaining to VAR models--- as well as the associated presentation (in Section \ref{VAR}) have been prepared jointly with \href{https://sites.google.com/site/benhimakenza/}{Kenza Benhima}. This \texttt{AEC} package is available on GitHub. To install it, one need to employ the \texttt{devtools} library:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3452,8 +3452,8 @@ Finally, let's compute the standard deviation of the parameter estimates, using 
 
 \begin{verbatim}
 ##            theta    std.dev     t.stud
-## [1,]  -0.7355469  0.4653449 -1.5806490
-## [2,] -10.9859162 16.8406714 -0.6523443
+## [1,]  -0.7180716  0.4646617 -1.5453642
+## [2,] -11.2042452 17.1039449 -0.6550679
 \end{verbatim}
 
 The Hansen statistic can be used to test the model (see Eq. \eqref{eq:HansenSargan}). If the model is correct, we have:
@@ -3473,7 +3473,7 @@ where \(J\) is the number of moment constraints (\(n_z \times n_r\) here) and \(
 
 \begin{verbatim}
 ##           [,1]
-## [1,] 0.8796173
+## [1,] 0.8789782
 \end{verbatim}
 
 \hypertarget{secMLE}{%
