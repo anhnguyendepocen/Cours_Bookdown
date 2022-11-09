@@ -318,7 +318,7 @@ where we use the notation <span class="math inline">\(\theta_0=1\)</span>, and <
 Then use the fact that <span class="math inline">\(\mathbb{E}(\varepsilon_t\varepsilon_s)=0\)</span> if <span class="math inline">\(t \ne s\)</span> (because <span class="math inline">\(\{\varepsilon_t\}_{t = -\infty}^{+\infty}\)</span> is a white noise process).</p>
 </div>
 <p>Figure <a href="TS.html#fig:simMA">6.6</a> displays simulated paths of two MA processes (an MA(1) and an MA(4)). Such simulations can be produced by using panel “ARMA(p,q)” of <a href="https://jrenne.shinyapps.io/MacroEc/">this web interface</a>.</p>
-<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
 <span><span class="cn">T</span> <span class="op">&lt;-</span> <span class="fl">100</span>;<span class="va">nb.sim</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span><span class="va">y.0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
@@ -559,7 +559,7 @@ y_t &amp;=&amp; 1.1 y_{t-1} -0.3 y_{t-2} + \varepsilon_t\\
 w_t &amp;=&amp; 1.4 y_{t-1} -0.7 w_{t-2} + \varepsilon_t\\
 z_t &amp;=&amp; 0.9 y_{t-1} +0.2 z_{t-2} + \varepsilon_t
 \end{eqnarray*}\]</span></p>
-<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="cn">F</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.9</span>,<span class="fl">1</span>,<span class="op">-</span><span class="fl">.2</span>,<span class="fl">0</span><span class="op">)</span>,<span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">lambda_x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/eigen.html">eigen</a></span><span class="op">(</span><span class="cn">F</span><span class="op">)</span><span class="op">$</span><span class="va">values</span></span>
 <span><span class="cn">F</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1.1</span>,<span class="op">-</span><span class="fl">.3</span><span class="op">)</span></span>
@@ -651,7 +651,7 @@ y_{t+h} = c + \phi_1 y_{t+h-1}+\dots+ \phi_p  y_{t+h-p} + \varepsilon_{t+h}.
 The residuals of the latter regressions (<span class="math inline">\(\varepsilon_{t+h}\)</span>) are uncorrelated to <span class="math inline">\(y_t\)</span>. Then the partial autocorrelation is zero for <span class="math inline">\(h&gt;p\)</span>.</p>
 <p>Besides, it can be shown that <span class="math inline">\(\phi_{p,p}=\phi_p\)</span>. Hence <span class="math inline">\(\phi_{p,p}=\phi_p\)</span> but <span class="math inline">\(\phi_{h,h}=0\)</span> for <span class="math inline">\(h&gt;p\)</span>. This can be used to determine the order of a AR process. By contrast (importantly) if <span class="math inline">\(y_t\)</span> follows an MA(q) process, then <span class="math inline">\(\phi_{k,k}\)</span> asymptotically approaches zero instead of cutting off abruptly.</p>
 <p>As illustrated below, functions <code>acf</code> and <code>pacf</code> can be conveniently used to employ the (P)ACF approach. (Note also the use of function <code>sim.arma</code> to simulate ARMA processes.)</p>
-<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>plt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.2</span>,<span class="fl">.9</span>,<span class="fl">.2</span>,<span class="fl">.95</span><span class="op">)</span><span class="op">)</span></span>
@@ -748,7 +748,7 @@ y_{t+h} = c + \phi_1 y_{t+h-1} + \dots + \phi_p y_{t+h-p} + \varepsilon_{t+h} + 
 </div>
 <p>Note that Proposition <a href="TS.html#prp:computPsi">6.8</a> constitutes a simple way to compute the MA(<span class="math inline">\(\infty\)</span>) representation (or Wold representation) of an ARMA process.</p>
 <p>One can use function <code>sim.arma</code> of package <code>AEC</code> to compute ARMA’s IRFs (with the argument <code>make.IRF = 1</code>):</p>
-<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="cn">T</span> <span class="op">&lt;-</span> <span class="fl">21</span> <span class="co"># number of periods for IRF</span></span>
 <span><span class="va">theta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>;<span class="va">phi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>;<span class="va">c</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
 <span><span class="va">y.sim</span> <span class="op">&lt;-</span> <span class="fu">sim.arma</span><span class="op">(</span><span class="va">c</span>,<span class="va">phi</span>,<span class="va">theta</span>,sigma<span class="op">=</span><span class="fl">1</span>,<span class="cn">T</span>,y.0<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">phi</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -777,7 +777,7 @@ Figure 6.8: IRFs associated with the three processes. Process 1 (MA(2)): <span c
 </p>
 </div>
 <p>Consider the annual Swiss GDP growth from the JST macro-history database. Let us first determine relevant orders for AR and MA processes using the (P)ACF approach.</p>
-<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">JST</span><span class="op">)</span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">JST</span>,<span class="va">iso</span><span class="op">==</span><span class="st">"CHE"</span><span class="op">)</span></span>
@@ -797,7 +797,7 @@ Figure 6.9: (P)ACF analysis of Swiss GDP growth.
 </p>
 </div>
 <p>The two bottom plots of Figure <a href="TS.html#fig:IRFgdp1">6.9</a> suggest that either an MA(2) or an AR(1) could be used to model the GDP growth rate series. Figure <a href="TS.html#fig:IRFgdp2">6.10</a> shows the IRFs based on these two respective specifications.</p>
-<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Fit an AR process:</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/arima.html">arima</a></span><span class="op">(</span><span class="va">growth</span>,order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">phi</span> <span class="op">&lt;-</span> <span class="va">res</span><span class="op">$</span><span class="va">coef</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
@@ -905,7 +905,7 @@ where we use the notation <span class="math inline">\(\beta_h=0\)</span> if <spa
 <p>It has to be stressed that the definition of the dynamic multipliers (Eq. <a href="TS.html#eq:dynmultX">(6.18)</a>) does not reflect a potential persistency of the shock occuring on date <span class="math inline">\(t\)</span> in process <span class="math inline">\(\{x\}\)</span> itself. Going in this direction would necessitate to model the joint dynamics of <span class="math inline">\(x_t\)</span> (for instance using a VAR model , see Section <a href="TS.html#VAR">6.3</a>).</p>
 <div class="example">
 <p><span id="exm:OrangeJuice" class="example"><strong>Example 6.3  (Influence of the number of freezing days on the price of orange juice) </strong></span>This example is based on data used in <span class="citation">J. Stock and Watson (<a href="references.html#ref-Stock_Watson_2003" role="doc-biblioref">2003</a>)</span> (Chapter 16). The objective is to study the influence of the number of freezing days on the price of orange juice. Let us first estimate a ARMAX(0,0,12) model:</p>
-<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AER</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"FrozenJuice"</span><span class="op">)</span></span>
@@ -925,7 +925,7 @@ where we use the notation <span class="math inline">\(\beta_h=0\)</span> if <spa
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">date</span>,<span class="va">FJ</span><span class="op">$</span><span class="va">fdd</span>,type<span class="op">=</span><span class="st">"l"</span>,xlab<span class="op">=</span><span class="st">""</span>,ylab<span class="op">=</span><span class="st">""</span>,</span>
 <span>     main<span class="op">=</span><span class="st">"(c) Number of freezing days (x)"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="ApplEcts_files/figure-html/freez-1.png" width="672"></div>
-<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nb.lags</span> <span class="op">&lt;-</span> <span class="fl">12</span></span>
 <span><span class="va">FDD</span> <span class="op">&lt;-</span> <span class="va">FJ</span><span class="op">$</span><span class="va">fdd</span><span class="op">[</span><span class="op">(</span><span class="va">nb.lags</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="cn">T</span><span class="op">]</span></span>
 <span><span class="va">names.FDD</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
@@ -983,7 +983,7 @@ where we use the notation <span class="math inline">\(\beta_h=0\)</span> if <spa
 ## =========================================
 ## Note:         *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
 <p>Let us now use function <code>estim.armax</code>, from package <code>AEC</code>to estimate an ARMA-X(2,0,1) model:</p>
-<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nb.lags</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span><span class="va">FDD</span> <span class="op">&lt;-</span> <span class="va">FJ</span><span class="op">$</span><span class="va">fdd</span><span class="op">[</span><span class="op">(</span><span class="va">nb.lags</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="cn">T</span><span class="op">]</span></span>
 <span><span class="va">names.FDD</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
@@ -1012,7 +1012,7 @@ where we use the notation <span class="math inline">\(\beta_h=0\)</span> if <spa
 ## beta  t-1  0.10015862 0.05972526  1.676989
 ## [1] "=================================================="</code></pre>
 <p>Figure <a href="TS.html#fig:freez4">6.11</a> shows the IRF associated with each of the two models.</p>
-<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nb.periods</span> <span class="op">&lt;-</span> <span class="fl">20</span></span>
 <span><span class="va">IRF1</span> <span class="op">&lt;-</span> <span class="fu">sim.arma</span><span class="op">(</span>c<span class="op">=</span><span class="fl">0</span>,phi<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,theta<span class="op">=</span><span class="va">eq</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">13</span><span class="op">]</span>,sigma<span class="op">=</span><span class="fl">1</span>,</span>
 <span>                 T<span class="op">=</span><span class="va">nb.periods</span>,y.0<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,nb.sim<span class="op">=</span><span class="fl">1</span>,make.IRF<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
@@ -1066,7 +1066,7 @@ Figure 6.11: Response of changes in orange juice price (in percent) to the numbe
 <!-- \end{frame} -->
 <div class="example">
 <p><span id="exm:Ramey1" class="example"><strong>Example 6.4  (Real effect of a monetary policy shock) </strong></span>In this example, we make use of monetary shocks identified through high-frequency data (see <span class="citation">Gertler and Karadi (<a href="references.html#ref-Gertler_Karadi_2015" role="doc-biblioref">2015</a>)</span>). This dataset comes from <a href="https://econweb.ucsd.edu/~vramey/research.html">Valerie Ramey’s website</a> (see <span class="citation">Ramey (<a href="references.html#ref-Ramey_2016_NBER" role="doc-biblioref">2016</a>)</span>).</p>
-<div class="sourceCode" id="cb162"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
 <span><span class="cn">T</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">Ramey</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="co"># Construct growth series:</span></span>
@@ -1085,7 +1085,7 @@ Figure 6.11: Response of changes in orange juice price (in percent) to the numbe
 Figure 6.12: The blue line corresponds to monetary-policy shocks identified by means of the Gertler and Karadi (2015)’s approach (high-frequency change in Euro-dollar futures). The black slid line is the year-on-year growth rate of industrial production.
 </p>
 </div>
-<div class="sourceCode" id="cb163"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Estimate ARMAX:</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">1</span>; <span class="va">q</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">estim.armax</span><span class="op">(</span><span class="va">Ramey</span><span class="op">$</span><span class="va">growth</span><span class="op">[</span><span class="va">indic.good.dates</span><span class="op">]</span>,<span class="va">p</span>,<span class="va">q</span>,</span>
@@ -1106,7 +1106,7 @@ Figure 6.12: The blue line corresponds to monetary-policy shocks identified by m
 ## beta  t-1 -0.0225707935 0.0086750938 -2.6017925
 ## beta  t-2 -0.0070131593 0.0086387440 -0.8118263
 ## [1] "=================================================="</code></pre>
-<div class="sourceCode" id="cb165"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Compute IRF:</span></span>
 <span><span class="va">irf</span> <span class="op">&lt;-</span> <span class="fu">sim.arma</span><span class="op">(</span><span class="fl">0</span>,<span class="va">x</span><span class="op">$</span><span class="va">phi</span>,<span class="va">x</span><span class="op">$</span><span class="va">beta</span>,<span class="va">x</span><span class="op">$</span><span class="va">sigma</span>,T<span class="op">=</span><span class="fl">60</span>,y.0<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">phi</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                nb.sim<span class="op">=</span><span class="fl">1</span>,make.IRF<span class="op">=</span><span class="fl">1</span>,X<span class="op">=</span><span class="cn">NaN</span>,beta<span class="op">=</span><span class="cn">NaN</span><span class="op">)</span></span></code></pre></div>
@@ -1284,7 +1284,7 @@ Note that, for <span class="math inline">\(j&gt;0\)</span>, we have <span class=
 The convergence in distribution of <span class="math inline">\(\sqrt{T}(X'\boldsymbol\varepsilon/T)=\sqrt{T}\frac{1}{T}\sum_{t=1}^Tv_t\)</span> results from Theorem <a href="TS.html#thm:CLTcovstat">6.1</a> (applied on <span class="math inline">\(\mathbf{v}_t=\mathbf{x}_t\varepsilon_t\)</span>), using the <span class="math inline">\(\gamma_j^v\)</span> computed above.</p>
 </div>
 <p>These two cases (exact or conditional log-likelihoods) can be implemented when asking R to fit an AR process by means of function <code>arima</code>. Let us for instance use the output gap of the <code>US3var</code> dataset (US quarterly data, covering the period 1959:2 to 2015:1, used in <span class="citation">Gouriéroux, Monfort, and Renne (<a href="references.html#ref-Gourieroux_Monfort_Renne_2017" role="doc-biblioref">2017</a>)</span>).</p>
-<div class="sourceCode" id="cb166"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb162"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">US3var</span><span class="op">$</span><span class="va">y.gdp.gap</span></span>
 <span><span class="va">ar3.Case1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/arima.html">arima</a></span><span class="op">(</span><span class="va">y</span>,order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>,method<span class="op">=</span><span class="st">"ML"</span><span class="op">)</span></span>
@@ -1444,7 +1444,7 @@ Hence <span class="math inline">\(\hat{k}^{(i)} \approx \underset{k}{\mbox{argmi
 </div>
 <div class="example">
 <p><span id="exm:SwissGrowthAIC" class="example"><strong>Example 6.6  (Swiss GDP growth) </strong></span>Consider a long historical time series of the Swiss GDP growth (see Figure <a href="TS.html#fig:autocov">6.3</a>), taken from the <span class="citation">Jordà, Schularick, and Taylor (<a href="references.html#ref-JST_2017" role="doc-biblioref">2017</a>)</span> dataset. Let us look for the best ARMA specification using the AIC criteria:</p>
-<div class="sourceCode" id="cb168"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb164"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span>;<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">JST</span><span class="op">)</span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">JST</span>,<span class="va">iso</span><span class="op">==</span><span class="st">"CHE"</span><span class="op">)</span></span>
 <span><span class="cn">T</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
@@ -1566,7 +1566,7 @@ y_{t-1} +
 \end{array}\right]}_{B}\eta_{t-1}.\tag{6.35}
 \end{eqnarray}\]</span></p>
 <p>We can use function <code>simul.VARMA</code> of package <code>AEC</code> to produce IRFs (using <code>indic.IRF=1</code> in the list of arguments):</p>
-<div class="sourceCode" id="cb170"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb166"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
 <span><span class="va">distri</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>type<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gaussian"</span>,<span class="st">"gaussian"</span><span class="op">)</span>,df<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">distri</span><span class="op">$</span><span class="va">type</span><span class="op">)</span> <span class="co"># dimension of y_t</span></span>
@@ -2058,7 +2058,7 @@ B_{FS} &amp; B_{Fr} &amp; B_{FF}
 \]</span>
 where <span class="math inline">\(S\)</span>, <span class="math inline">\(r\)</span> and <span class="math inline">\(F\)</span> respectively correspond to <em>slow-moving variables</em>, the policy variable (short-term rate) and <em>fast-moving variables</em>. While <span class="math inline">\(\eta_{r,t}\)</span> is scalar, <span class="math inline">\(\boldsymbol\eta_{S,t}\)</span> and <span class="math inline">\(\boldsymbol\eta_{F,t}\)</span> may be vectors. The space spanned by <span class="math inline">\(\boldsymbol\varepsilon_{S,t}\)</span> is the same as that spanned by <span class="math inline">\(\boldsymbol\eta_{S,t}\)</span>. As a result, because <span class="math inline">\(\varepsilon_{r,t}\)</span> is a linear combination of <span class="math inline">\(\eta_{r,t}\)</span> and <span class="math inline">\(\boldsymbol\eta_{S,t}\)</span> (which are <span class="math inline">\(\perp\)</span>), it comes that the <span class="math inline">\(B_{rr}\eta_{r,t}\)</span>’s are the (population) residuals in the regression of <span class="math inline">\(\varepsilon_{r,t}\)</span> on <span class="math inline">\(\boldsymbol\varepsilon_{S,t}\)</span>. Because <span class="math inline">\(\mathbb{V}ar(\eta_{r,t})=1\)</span>, <span class="math inline">\(B_{rr}\)</span> is given by the square root of the variance of <span class="math inline">\(B_{rr}\eta_{r,t}\)</span>. <span class="math inline">\(B_{F,r}\)</span> is finally obtained by regressing the components of <span class="math inline">\(\boldsymbol\varepsilon_{F,t}\)</span> on the estimates of <span class="math inline">\(\eta_{r,t}\)</span>.</p>
 <p>An equivalent approach consists in computing the Cholesky decomposition of <span class="math inline">\(BB'\)</span> and the contemporaneous impacts of the monetary policy shock (on the <span class="math inline">\(n\)</span> endogenous variables) are the components of the column of <span class="math inline">\(B\)</span> corresponding to the policy variable.</p>
-<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.pfaffikus.de">vars</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"USmonthly"</span><span class="op">)</span></span>
@@ -2161,7 +2161,7 @@ where <span class="math inline">\(\Theta_{ij}\)</span> is the element <span clas
 <!-- \end{eqnarray*} -->
 <!-- Then, it appears that the demand shocks have no long-run cumulative impact on $\Delta Y_{t}$, the GDP growth, i.e. no long-term impact on output $Y_t$. The vector of endogenous variables is $y_t = [\Delta Y_{t} \quad u_{t}]'$ where $\Delta Y_{t}$ denotes the GDP growth. -->&lt;/p&gt;"><sup>17</sup></a></p>
 <p><span class="citation">Blanchard and Quah (<a href="references.html#ref-Blanchard_Quah_1989" role="doc-biblioref">1989</a>)</span>’s dataset is quarterly, spanning the period from 1950:2 to 1987:4. Their VAR features 8 lags. Here are the data they use:</p>
-<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb168"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">BQ</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
@@ -2171,13 +2171,13 @@ where <span class="math inline">\(\Theta_{ij}\)</span> is the element <span clas
 <span>     xlab<span class="op">=</span><span class="st">""</span>,ylab<span class="op">=</span><span class="st">""</span>,lwd<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="ApplEcts_files/figure-html/BQ1-1.png" width="672"></div>
 <p>Estimate a reduced-form VAR(8) model:</p>
-<div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.pfaffikus.de">vars</a></span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">BQ</span><span class="op">[</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span>
 <span><span class="va">est.VAR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/vars/man/VAR.html">VAR</a></span><span class="op">(</span><span class="va">y</span>,p<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span>
 <span><span class="va">Omega</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">residuals</a></span><span class="op">(</span><span class="va">est.VAR</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Now, let us define a loss function (<code>loss</code>) that is equal to zero if (a) <span class="math inline">\(BB'=\Omega\)</span> and (b) the element (1,1) of <span class="math inline">\(\Theta B\)</span> is equal to zero:</p>
-<div class="sourceCode" id="cb174"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb170"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Compute (Id - Phi)^{-1}:</span></span>
 <span><span class="va">Phi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/vars/man/A.html">Acoef</a></span><span class="op">(</span><span class="va">est.VAR</span><span class="op">)</span></span>
 <span><span class="va">PHI</span> <span class="op">&lt;-</span> <span class="fu">make.PHI</span><span class="op">(</span><span class="va">Phi</span><span class="op">)</span></span>
@@ -2194,13 +2194,13 @@ where <span class="math inline">\(\Theta_{ij}\)</span> is the element <span clas
 <pre><code>## [1]  0.8570358 -0.2396345  0.1541395  0.1921221</code></pre>
 <p>(Note: one can use that type of approach, based on a loss function, to mix short- and long-run restrictions.)</p>
 <p>Figure <a href="TS.html#fig:BQ4">6.16</a> displays the resulting IRFs. Note that, for GDP, we cumulate the GDP growth IRF, so as to have the response of the GDP in level.</p>
-<div class="sourceCode" id="cb176"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">B.hat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">res.opt</span><span class="op">$</span><span class="va">par</span>,<span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">Omega</span>,<span class="va">B.hat</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">B.hat</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##             Dgdp       unemp                       
 ## Dgdp   0.7582704 -0.17576173  0.7582694 -0.17576173
 ## unemp -0.1757617  0.09433658 -0.1757617  0.09433558</code></pre>
-<div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb174"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nb.sim</span> <span class="op">&lt;-</span> <span class="fl">40</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>;<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>plt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.15</span>,<span class="fl">.95</span>,<span class="fl">.15</span>,<span class="fl">.8</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="fu">simul.VAR</span><span class="op">(</span>c<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>,<span class="va">Phi</span>,<span class="va">B.hat</span>,<span class="va">nb.sim</span>,y0.star<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">2</span><span class="op">*</span><span class="fl">8</span><span class="op">)</span>,</span>
@@ -2276,7 +2276,7 @@ positive. The random matrix <span class="math inline">\(Q\)</span> is orthogonal
 <li>Decreases in the federal funds rate</li>
 </ul>
 <p>What about output? Since is the response of interest, we leave it un-restricted.</p>
-<div class="sourceCode" id="cb179"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb175"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span>;<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.pfaffikus.de">vars</a></span><span class="op">)</span>;<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://Matrix.R-forge.R-project.org/">Matrix</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"USmonthly"</span><span class="op">)</span></span>
 <span><span class="va">First.date</span> <span class="op">&lt;-</span> <span class="st">"1965-01-01"</span></span>
@@ -2708,7 +2708,7 @@ A = (B(A)+Id)^{-1} (B(A)-Id).
 <p>Note that the potential misspecification of pseudo-distributions <span class="math inline">\(g_i\)</span> has no effect on the consistency of these specific PML estimators.</p>
 <div class="example">
 <p><span id="exm:GMR2017" class="example"><strong>Example 6.8  (Non-Gaussian monetary-policy shocks) </strong></span>We apply the PML-ICA approach on U.S. data coerving the period 1959:IV to 2015:I at the quarterly frequency (<span class="math inline">\(T=224\)</span>). We consider three dependent variables: inflation (<span class="math inline">\(\pi_t\)</span>), economic activity (<span class="math inline">\(z_t\)</span>, the output gap) and the nominal short-term interest rate (<span class="math inline">\(r_t\)</span>). Changes in the log of oil prices added as an exogenous variable (<span class="math inline">\(x_t\)</span>).</p>
-<div class="sourceCode" id="cb180"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb176"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
 <span><span class="va">First.date</span> <span class="op">&lt;-</span> <span class="st">"1959-04-01"</span></span>
 <span><span class="va">Last.date</span>  <span class="op">&lt;-</span> <span class="st">"2015-01-01"</span></span>
@@ -2724,7 +2724,7 @@ y_t  = \underbrace{\mu + \sum_{i=1}^{p} \Phi_i y_{t-i} + \Theta x_t}_{a(W_t;\the
 \]</span>
 where the <span class="math inline">\(u_t\)</span>’s are assumed to be serially independent, with zero mean and variance-covariance matrix <span class="math inline">\(\Sigma\)</span>.</p>
 <p>Matrices <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\Phi_i\)</span>, <span class="math inline">\(\Theta\)</span> and <span class="math inline">\(\Sigma\)</span> are consistently estimated by OLS. Jarque-Bera tests support the hypothesis of non-normality for all residuals.</p>
-<div class="sourceCode" id="cb181"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb177"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nb.lags</span> <span class="op">&lt;-</span> <span class="fl">6</span> <span class="co"># number of lags used in the VAR model</span></span>
 <span><span class="va">X</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">nb.lags</span><span class="op">)</span><span class="op">{</span></span>
@@ -2756,7 +2756,7 @@ where the <span class="math inline">\(u_t\)</span>’s are assumed to be seriall
 \]</span>
 By construction of <span class="math inline">\(\hat{S}_T^{-1}\)</span>, it comes that the covariance matrix of these residuals is <span class="math inline">\(Id\)</span>.</p>
 <p>The pseudo density functions are distinct and asymmetric mixtures of Gaussian distributions.</p>
-<div class="sourceCode" id="cb182"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">distri</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
 <span>  type<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"mixt.gaussian"</span>,<span class="st">"mixt.gaussian"</span>,<span class="st">"mixt.gaussian"</span><span class="op">)</span>,</span>
 <span>  df<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NaN</span>,<span class="cn">NaN</span>,<span class="cn">NaN</span><span class="op">)</span>,</span>
@@ -2800,7 +2800,7 @@ By construction of <span class="math inline">\(\hat{S}_T^{-1}\)</span>, it comes
 ##  [9,]  0.99222290 0.007785691 127.4418551</code></pre>
 <p>(Note: it is always useful to combine two optimization algorithms, such as <code>Nelder-Mead</code> and <code>BFGS</code>.)</p>
 <p>We would obtain close results by neglecting commodity prices. In that case, one can simply use the function <code>estim.SVAR.ICA</code> of the <code>AEC</code> package. Let us compare the <span class="math inline">\(C\)</span> matrix obtained in the two cases (with or without commodity prices):</p>
-<div class="sourceCode" id="cb184"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb180"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ICA.res.no.commo</span> <span class="op">&lt;-</span> <span class="fu">estim.SVAR.ICA</span><span class="op">(</span><span class="va">Y</span>,distri <span class="op">=</span> <span class="va">distri</span>,p<span class="op">=</span><span class="fl">6</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">ICA.res.no.commo</span><span class="op">$</span><span class="va">C.PML</span>,<span class="cn">NaN</span>,<span class="va">C.PML</span><span class="op">)</span>,<span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##        [,1]  [,2]   [,3] [,4]   [,5]  [,6]   [,7]
@@ -2816,7 +2816,7 @@ By construction of <span class="math inline">\(\hat{S}_T^{-1}\)</span>, it comes
 <strong>Demand shock</strong> have influences of same signs on economic activity and on inflation.</li>
 </ul>
 <p>Let us compute the IRFs associated with the three structural shocks. (For the sake of comparison, the first line of plots shows the IRFs to a monetary-policy shock obtained from a Cholesky-based approach where the short-term rate is ordered last.)</p>
-<div class="sourceCode" id="cb186"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb182"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">IRF.Chol</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html">array</a></span><span class="op">(</span><span class="cn">NaN</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">n</span>,<span class="fl">41</span>,<span class="va">n</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">IRF.ICA</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html">array</a></span><span class="op">(</span><span class="cn">NaN</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">n</span>,<span class="fl">41</span>,<span class="va">n</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">PHI</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>;<span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">nb.lags</span><span class="op">)</span><span class="op">{</span><span class="va">PHI</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/array.html">array</a></span><span class="op">(</span><span class="va">Phi</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="va">nb.lags</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>,,<span class="va">i</span><span class="op">]</span><span class="op">}</span></span>
@@ -3199,7 +3199,7 @@ where the <span class="math inline">\(e_t\)</span> are “small” serially and 
 <p>In their identification procedure, <span class="citation">Bernanke, Boivin, and Eliasz (<a href="references.html#ref-Bernanke_Boivin_Eliasz_2005" role="doc-biblioref">2005</a>)</span> exploit the fact that macro-finance variables can be decomposed in two sets —fast-moving and slow-moving variables— and that only the former reacts contemporaneously to monetary-policy shocks. Now, how to estimate the (unobserved) factors <span class="math inline">\(F_t\)</span>? <span class="citation">Bernanke, Boivin, and Eliasz (<a href="references.html#ref-Bernanke_Boivin_Eliasz_2005" role="doc-biblioref">2005</a>)</span> note that the first <span class="math inline">\(K+M\)</span> PCA of the whole dataset (<span class="math inline">\(y_t\)</span>), that they denote by <span class="math inline">\(\hat{C}(F_t,x_t)\)</span> should span the same space as <span class="math inline">\(F_t\)</span> and <span class="math inline">\(x_t)\)</span>. To get an estimate of <span class="math inline">\(F_t\)</span>, the dependence of <span class="math inline">\(\hat{C}(F_t,x_t)\)</span> in <span class="math inline">\(x_t)\)</span> has to be removed. This is done by regressing, by OLS, <span class="math inline">\(\hat{C}(F_t,x_t)\)</span> on <span class="math inline">\(x_t)\)</span> and on <span class="math inline">\(\hat{C}^*(F_t)\)</span>, where the latter is an estimate of the common components other than <span class="math inline">\(x_t\)</span>. To proxy for <span class="math inline">\(\hat{C}^*(F_t)\)</span>, <span class="citation">Bernanke, Boivin, and Eliasz (<a href="references.html#ref-Bernanke_Boivin_Eliasz_2005" role="doc-biblioref">2005</a>)</span> take principal components from the set of slow-moving variables, that are not comtemporaneously correlated to <span class="math inline">\(x_t\)</span>. Vector <span class="math inline">\(\hat{F}_t\)</span> is then computed as <span class="math inline">\(\hat{C}(F_t,x_t) - b_x x_t\)</span>, where <span class="math inline">\(b_x\)</span> are the coefficients coming from the previous OLS regressions.</p>
 <p>Note that this approach implies that the vectorial space spanned by <span class="math inline">\((\hat{F}_t,x_t)\)</span> is the same as that spanned by <span class="math inline">\(\hat{C}(F_t,x_t)\)</span>.</p>
 <p>Below, we employ this method on the dataset built by <span class="citation">McCracken and Ng (<a href="references.html#ref-McCracken_Ng_2016" role="doc-biblioref">2016</a>)</span> —the <a href="https://research.stlouisfed.org/wp/more/2015-012">FRED:MD</a> database— that includes 119 time series.</p>
-<div class="sourceCode" id="cb187"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb183"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/nk027/bvar">BVAR</a></span><span class="op">)</span><span class="co"># contains the fred_md dataset</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.pfaffikus.de">vars</a></span><span class="op">)</span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BVAR/man/fred_transform.html">fred_transform</a></span><span class="op">(</span><span class="va">fred_md</span>,na.rm <span class="op">=</span> <span class="cn">FALSE</span>, type <span class="op">=</span> <span class="st">"fred_md"</span><span class="op">)</span></span>
@@ -3397,7 +3397,7 @@ S_{\varepsilon,e}&amp; \sigma^2_{e}
 \]</span>
 where <span class="math inline">\(\widehat{\rho}(L)\)</span> and <span class="math inline">\(\sigma^2_{e}\)</span> result from the estimation of an AR process for <span class="math inline">\(z_t\)</span>, and where <span class="math inline">\(\Omega\)</span> and <span class="math inline">\(S_{\varepsilon,e}\)</span> are sample covariances for the VAR/AR residuals.</p>
 <p>For each simulated sample (of <span class="math inline">\(\tilde{y}_t\)</span> and <span class="math inline">\(\tilde{z}_t\)</span>, say), estimate <span class="math inline">\(\{\widetilde{\widehat{\Phi}}_1,\dots,\widetilde{\widehat{\Phi}}_p,\widetilde{\widehat{B}}_1\}\)</span> and associated <span class="math inline">\(\widetilde{\Psi}_{i,1,h}\)</span>. This provides e.g. a sequence of <span class="math inline">\(N\)</span> estimates of <span class="math inline">\(\Psi_{i,1,h}\)</span>, from which quantiles and conf. intervals can be deduced.</p>
-<div class="sourceCode" id="cb188"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb184"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load vars package:</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.pfaffikus.de">vars</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
@@ -3418,7 +3418,7 @@ where <span class="math inline">\(\widehat{\rho}(L)\)</span> and <span class="ma
 Figure 6.25: Gertler-Karadi monthly shocks, fed funds futures 3 months.
 </p>
 </div>
-<div class="sourceCode" id="cb189"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb185"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">considered.variables</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"GS1"</span>,<span class="st">"LIP"</span>,<span class="st">"LCPI"</span>,<span class="st">"EBP"</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">USmonthly</span><span class="op">[</span>,<span class="va">considered.variables</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">considered.variables</span><span class="op">)</span></span>
@@ -3476,7 +3476,7 @@ where <span class="math inline">\(\mathbf{S}\)</span> is the long-run variance o
 <p>If <span class="math inline">\(z_t\)</span> is suspected to be correlated to past values of <span class="math inline">\(\eta_{1,t}\)</span> but not to the <span class="math inline">\(\eta_{j,t}\)</span>’s, <span class="math inline">\(j&gt;1\)</span>, then one can add lags of <span class="math inline">\(z_t\)</span> as controls (method e.g. advocated by Ramey, 2016, p.108, considering the instrument by <span class="citation">Gertler and Karadi (<a href="references.html#ref-Gertler_Karadi_2015" role="doc-biblioref">2015</a>)</span>).</p>
 <p>In the general case, one can use lags of <span class="math inline">\(y_t\)</span> as controls. Note that, even if (IV.iii) holds, adding controls may reduce the variance of the regression error.</p>
 <p>As noted by <span class="citation">James H. Stock and Watson (<a href="references.html#ref-Stock_Watson_2018" role="doc-biblioref">2018</a>)</span>, the relevant variance is the long-run variance of the instrument-times-error term. They also recommend (p.926) using leads and lags of <span class="math inline">\(z_t\)</span> to improve efficiency.</p>
-<div class="sourceCode" id="cb190"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb186"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res.LP.IV</span> <span class="op">&lt;-</span> <span class="fu">make.LPIV.irf</span><span class="op">(</span><span class="va">y</span>,<span class="va">Z</span>,</span>
 <span>                           nb.periods.IRF <span class="op">=</span> <span class="fl">20</span>,</span>
 <span>                           nb.lags.Y.4.control<span class="op">=</span><span class="fl">4</span>,</span>
@@ -3604,7 +3604,7 @@ with <span class="math inline">\(\hat\varepsilon_{t}^{(k)}=\hat\varepsilon_{s_t^
 <p>In step 5, check if the largest eigenvalue of <span class="math inline">\(\tilde\Phi\)</span> is of modulus &lt;1.
 If not, shrink the bias: for all <span class="math inline">\(j\)</span>s, set <span class="math inline">\(\widehat{\Theta}_j^{(i+1)}=\delta_{i+1}\widehat{\Theta}_j^{(i)}\)</span>, with <span class="math inline">\(\delta_{i+1}=\delta_i-0.01\)</span>, starting with <span class="math inline">\(\delta_1=1\)</span> and <span class="math inline">\(\widehat{\Theta}_j^{(1)} =\widehat{\Theta}_j\)</span>, and compute <span class="math inline">\(\widetilde{\Phi}_j^{(i+1)}=\widehat{\Phi}_j-\widehat{\Theta}_j^{(i+1)}\)</span> until the largest eigenvalue of <span class="math inline">\(\tilde\Phi^{(i+1)}\)</span> has modulus &lt;1.</p>
 <p>Function <code>VAR.Boot</code> of package <code>VAR.etp</code> (<span class="citation">Kim (<a href="references.html#ref-VARetp" role="doc-biblioref">2022</a>)</span>) can be used to operate the bias-correction approach of <span class="citation">Kilian (<a href="references.html#ref-Kilian_1998" role="doc-biblioref">1998</a>)</span>:</p>
-<div class="sourceCode" id="cb191"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb187"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">VAR.etp</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.pfaffikus.de">vars</a></span><span class="op">)</span> <span class="co">#standard VAR models</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="co"># part of VAR.etp package</span></span>
@@ -3830,13 +3830,13 @@ where <span class="math inline">\(\Phi\)</span> is the c.d.f. of the standard no
 <div class="example">
 <p><span id="exm:SwissOutOfSample" class="example"><strong>Example 6.14  (Forecasting Swiss GDP growth) </strong></span>We use a long historical time series of the Swiss GDP growth taken from the <span class="citation">Jordà, Schularick, and Taylor (<a href="references.html#ref-JST_2017" role="doc-biblioref">2017</a>)</span> dataset (see Figure <a href="TS.html#fig:autocov">6.3</a>, and Example <a href="TS.html#exm:SwissGrowthAIC">6.6</a>).</p>
 <p>We want to forecast this GDP growth. We envision two specifications : an AR(1) specification (the one advocated by the AIC criteria, see Example <a href="TS.html#exm:SwissGrowthAIC">6.6</a>), and an ARMA(2,2) specification. We are interested in 2-year-ahead forecasts (i.e., <span class="math inline">\(h=2\)</span> since the data are yearly).</p>
-<div class="sourceCode" id="cb193"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb189"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://pkg.robjhyndman.com/forecast/">forecast</a></span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Registered S3 method overwritten by 'quantmod':
 ##   method            from
 ##   as.zoo.data.frame zoo</code></pre>
-<div class="sourceCode" id="cb195"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb191"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">JST</span>,<span class="va">iso</span><span class="op">==</span><span class="st">"CHE"</span><span class="op">)</span></span>
 <span><span class="cn">T</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NaN</span>,<span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">gdp</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="cn">T</span><span class="op">]</span><span class="op">/</span><span class="va">data</span><span class="op">$</span><span class="va">gdp</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="cn">T</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
@@ -3859,7 +3859,7 @@ where <span class="math inline">\(\Phi\)</span> is the c.d.f. of the standard no
 ## alternative hypothesis: greater</code></pre>
 <p>With <code>alternative = "greater"</code> The alternative hypothesis is that method 2 is more accurate than method 1. Since we do not reject the null (the p-value being of 0.795), we are not led to use the more sophisticated model (ARMA(2,2)) and we keep the simple AR(1) model.</p>
 <p>Assume now that we want to compare the AR(1) process to a VAR model (see Def. <a href="TS.html#def:SVAR">6.21</a>). We consider a bivariate VAR, where GDP growth is complemented with CPI-based inflation rate.</p>
-<div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb193"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.pfaffikus.de">vars</a></span><span class="op">)</span></span>
 <span><span class="va">infl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NaN</span>,<span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">cpi</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="cn">T</span><span class="op">]</span><span class="op">/</span><span class="va">data</span><span class="op">$</span><span class="va">cpi</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="cn">T</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">y_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">y</span>,<span class="va">infl</span><span class="op">)</span></span>
@@ -3937,7 +3937,7 @@ where <span class="math inline">\(\Phi\)</span> is the c.d.f. of the standard no
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Applied Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-10-05.</p>
+    <p>"<strong>Applied Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-11-09.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

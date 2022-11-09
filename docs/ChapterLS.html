@@ -750,7 +750,7 @@ and that the <span class="math inline">\((\mathbf{x}_i,\varepsilon_i)\)</span>�
 </div>
 <p>In practice, <span class="math inline">\(\sigma^2\)</span> is approximated by <span class="math inline">\(s^2=\frac{\mathbf{e}'\mathbf{e}}{n-K}\)</span> (Eq. <a href="ChapterLS.html#eq:s2">(2.9)</a>) and <span class="math inline">\(\mathbf{Q}^{-1}\)</span> by <span class="math inline">\(\left(\frac{\mathbf{X}'\mathbf{X}}{n}\right)^{-1}\)</span>. That is, the covariance matrix of the estimator is approximated by:
 <span class="math display" id="eq:sXX">\[\begin{equation}
-\widehat{\mathbb{V}ar}(\mathbf{b}) = s^2 (\mathbf{X}'\mathbf{X})^{-1}.\tag{2.18}
+\boxed{\widehat{\mathbb{V}ar}(\mathbf{b}) = s^2 (\mathbf{X}'\mathbf{X})^{-1}.}\tag{2.18}
 \end{equation}\]</span></p>
 <p>Eqs. <a href="ChapterLS.html#eq:Qasympt">(2.16)</a> and <a href="ChapterLS.html#eq:convgceOLS">(2.17)</a> respectively correspond to convergences in probability and in distribution (see Definitions <a href="append.html#def:convergenceproba">7.15</a> and <a href="append.html#def:cvgceDistri">7.18</a>, respectively).</p>
 </div>
@@ -799,9 +799,9 @@ If one computes <span class="math inline">\(\mathbf{b}_1\)</span> by regressing 
 \]</span></p>
 <p>This results in the omitted-variable formula:
 <span class="math display">\[
-\boxed{\mathbb{E}(\mathbf{b}_1|\mathbf{X}) = \boldsymbol\beta_1 + \underbrace{(\mathbf{X}_1'\mathbf{X}_1)^{-1}(\mathbf{X}_1'\mathbf{X}_2)}_{K_1 \times K_2}\boldsymbol\beta_2}
+\mathbb{E}(\mathbf{b}_1|\mathbf{X}) = \boldsymbol\beta_1 + \underbrace{(\mathbf{X}_1'\mathbf{X}_1)^{-1}(\mathbf{X}_1'\mathbf{X}_2)}_{K_1 \times K_2}\boldsymbol\beta_2.
 \]</span>
-(each column of <span class="math inline">\((\mathbf{X}_1'\mathbf{X}_1)^{-1}(\mathbf{X}_1'\mathbf{X}_2)\)</span> are the OLS regressors obtained when regressing the columns of <span class="math inline">\(\mathbf{X}_2\)</span> on <span class="math inline">\(\mathbf{X}_1\)</span>). Unless the variables included in <span class="math inline">\(\mathbf{X}_1\)</span> are orthogonal to those in <span class="math inline">\(\mathbf{X}_2\)</span>, we obtain a bias. A way to address this potential pitfall is to introduce “controls” in the specification.</p>
+(Each column of <span class="math inline">\((\mathbf{X}_1'\mathbf{X}_1)^{-1}(\mathbf{X}_1'\mathbf{X}_2)\)</span> are the OLS regressors obtained when regressing the columns of <span class="math inline">\(\mathbf{X}_2\)</span> on <span class="math inline">\(\mathbf{X}_1\)</span>.) Unless the variables included in <span class="math inline">\(\mathbf{X}_1\)</span> are orthogonal to those in <span class="math inline">\(\mathbf{X}_2\)</span>, we obtain a bias. A way to address this potential pitfall is to introduce “controls” in the specification.</p>
 <!-- XXXXX -->
 <!-- :::{.example #wageeduc} -->
 <!-- Consider the "true model": -->
@@ -1029,7 +1029,7 @@ Figure 2.5: This figure illustrates the situation prevailing when estimating a p
 <span><span class="va">eq.1st.stage</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">education</span> <span class="op">~</span> <span class="va">urban</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">ethnicity</span> <span class="op">+</span> <span class="va">unemp</span> <span class="op">+</span> <span class="va">distance</span>,</span>
 <span>                   data <span class="op">=</span> <span class="va">CollegeDistance</span><span class="op">)</span></span>
 <span><span class="va">CollegeDistance</span><span class="op">$</span><span class="va">ed.pred</span><span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">eq.1st.stage</span><span class="op">)</span></span>
-<span><span class="va">eq.2nd.stage</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">wage</span> <span class="op">~</span> <span class="va">urban</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">ethnicity</span> <span class="op">+</span> <span class="va">unemp</span> <span class="op">+</span> <span class="va">ed.pred</span> ,</span>
+<span><span class="va">eq.2nd.stage</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">wage</span> <span class="op">~</span> <span class="va">urban</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">ethnicity</span> <span class="op">+</span> <span class="va">unemp</span> <span class="op">+</span> <span class="va">ed.pred</span>,</span>
 <span>                   data <span class="op">=</span> <span class="va">CollegeDistance</span><span class="op">)</span></span>
 <span><span class="va">eqOLS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">wage</span> <span class="op">~</span> <span class="va">urban</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">ethnicity</span> <span class="op">+</span> <span class="va">unemp</span> <span class="op">+</span> <span class="va">education</span>,</span>
 <span>            data<span class="op">=</span><span class="va">CollegeDistance</span><span class="op">)</span></span>
@@ -1087,7 +1087,7 @@ Figure 2.5: This figure illustrates the situation prevailing when estimating a p
 <span class="math display" id="eq:assumGLS2">\[\begin{eqnarray}
 \mathbb{V}ar(\boldsymbol\varepsilon | \mathbf{X}) = \mathbb{E}(\boldsymbol\varepsilon \boldsymbol\varepsilon'| \mathbf{X}) &amp;=&amp; \boldsymbol\Sigma. \tag{2.23}
 \end{eqnarray}\]</span></p>
-<p>Note that Eq. (<a href="ChapterLS.html#eq:assumGLS2">(2.23)</a>) is more general than Hypothesis <a href="ChapterLS.html#hyp:homoskedasticity">2.3</a> and <a href="ChapterLS.html#hyp:noncorrelResid">2.4</a> because the diagonal entries of <span class="math inline">\(\boldsymbol\Sigma\)</span> may be different (as opposed to under Hypothesis <a href="ChapterLS.html#hyp:homoskedasticity">2.3</a>), and the non-diagonal entries of <span class="math inline">\(\boldsymbol\Sigma\)</span> can be non-null (as opposed to under Hypothesis <a href="ChapterLS.html#hyp:noncorrelResid">2.4</a>).</p>
+<p>Note that Eq. <a href="ChapterLS.html#eq:assumGLS2">(2.23)</a> is more general than Hypothesis <a href="ChapterLS.html#hyp:homoskedasticity">2.3</a> and <a href="ChapterLS.html#hyp:noncorrelResid">2.4</a> because the diagonal entries of <span class="math inline">\(\boldsymbol\Sigma\)</span> may be different (as opposed to under Hypothesis <a href="ChapterLS.html#hyp:homoskedasticity">2.3</a>), and the non-diagonal entries of <span class="math inline">\(\boldsymbol\Sigma\)</span> can be non-null (as opposed to under Hypothesis <a href="ChapterLS.html#hyp:noncorrelResid">2.4</a>).</p>
 <div class="definition">
 <p><span id="def:GRM" class="definition"><strong>Definition 2.3  (General Regression Model (GRM)) </strong></span>Hypothesis <a href="ChapterLS.html#hyp:fullrank">2.1</a> and <a href="ChapterLS.html#hyp:exogeneity">2.2</a>, together with Eq. <a href="ChapterLS.html#eq:assumGLS2">(2.23)</a>, form the General Regression Model (GRM) framework.</p>
 </div>
@@ -1702,7 +1702,7 @@ f(\boldsymbol\beta) &amp; = &amp; \sum_{j=2}^K |\beta_j| \quad \mbox{(lasso)}.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Applied Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-10-05.</p>
+    <p>"<strong>Applied Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-11-09.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

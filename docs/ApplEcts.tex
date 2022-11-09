@@ -131,7 +131,7 @@
 
 \title{Applied Econometrics}
 \author{Jean-Paul Renne}
-\date{2022-10-05}
+\date{2022-11-09}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -1005,7 +1005,7 @@ Since \(\mathbf{b} = \boldsymbol\beta + \left( \frac{\mathbf{X}'\mathbf{X}}{n}\r
 
 In practice, \(\sigma^2\) is approximated by \(s^2=\frac{\mathbf{e}'\mathbf{e}}{n-K}\) (Eq. \eqref{eq:s2}) and \(\mathbf{Q}^{-1}\) by \(\left(\frac{\mathbf{X}'\mathbf{X}}{n}\right)^{-1}\). That is, the covariance matrix of the estimator is approximated by:
 \begin{equation}
-\widehat{\mathbb{V}ar}(\mathbf{b}) = s^2 (\mathbf{X}'\mathbf{X})^{-1}.\label{eq:sXX}
+\boxed{\widehat{\mathbb{V}ar}(\mathbf{b}) = s^2 (\mathbf{X}'\mathbf{X})^{-1}.}\label{eq:sXX}
 \end{equation}
 
 Eqs. \eqref{eq:Qasympt} and \eqref{eq:convgceOLS} respectively correspond to convergences in probability and in distribution (see Definitions \ref{def:convergenceproba} and \ref{def:cvgceDistri}, respectively).
@@ -1053,9 +1053,9 @@ If one computes \(\mathbf{b}_1\) by regressing \(\mathbf{y}\) on \(\mathbf{X}_1\
 
 This results in the omitted-variable formula:
 \[
-\boxed{\mathbb{E}(\mathbf{b}_1|\mathbf{X}) = \boldsymbol\beta_1 + \underbrace{(\mathbf{X}_1'\mathbf{X}_1)^{-1}(\mathbf{X}_1'\mathbf{X}_2)}_{K_1 \times K_2}\boldsymbol\beta_2}
+\mathbb{E}(\mathbf{b}_1|\mathbf{X}) = \boldsymbol\beta_1 + \underbrace{(\mathbf{X}_1'\mathbf{X}_1)^{-1}(\mathbf{X}_1'\mathbf{X}_2)}_{K_1 \times K_2}\boldsymbol\beta_2.
 \]
-(each column of \((\mathbf{X}_1'\mathbf{X}_1)^{-1}(\mathbf{X}_1'\mathbf{X}_2)\) are the OLS regressors obtained when regressing the columns of \(\mathbf{X}_2\) on \(\mathbf{X}_1\)). Unless the variables included in \(\mathbf{X}_1\) are orthogonal to those in \(\mathbf{X}_2\), we obtain a bias. A way to address this potential pitfall is to introduce ``controls'' in the specification.
+(Each column of \((\mathbf{X}_1'\mathbf{X}_1)^{-1}(\mathbf{X}_1'\mathbf{X}_2)\) are the OLS regressors obtained when regressing the columns of \(\mathbf{X}_2\) on \(\mathbf{X}_1\).) Unless the variables included in \(\mathbf{X}_1\) are orthogonal to those in \(\mathbf{X}_2\), we obtain a bias. A way to address this potential pitfall is to introduce ``controls'' in the specification.
 
 \begin{example}
 \protect\hypertarget{exm:CASchools}{}\label{exm:CASchools}
@@ -1338,7 +1338,7 @@ In this example, we make use of another dataset proposed by \citet{Stock_Watson_
 \NormalTok{eq}\FloatTok{.1}\NormalTok{st.stage }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(education }\SpecialCharTok{\textasciitilde{}}\NormalTok{ urban }\SpecialCharTok{+}\NormalTok{ gender }\SpecialCharTok{+}\NormalTok{ ethnicity }\SpecialCharTok{+}\NormalTok{ unemp }\SpecialCharTok{+}\NormalTok{ distance,}
                    \AttributeTok{data =}\NormalTok{ CollegeDistance)}
 \NormalTok{CollegeDistance}\SpecialCharTok{$}\NormalTok{ed.pred}\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(eq}\FloatTok{.1}\NormalTok{st.stage)}
-\NormalTok{eq}\FloatTok{.2}\NormalTok{nd.stage }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(wage }\SpecialCharTok{\textasciitilde{}}\NormalTok{ urban }\SpecialCharTok{+}\NormalTok{ gender }\SpecialCharTok{+}\NormalTok{ ethnicity }\SpecialCharTok{+}\NormalTok{ unemp }\SpecialCharTok{+}\NormalTok{ ed.pred ,}
+\NormalTok{eq}\FloatTok{.2}\NormalTok{nd.stage }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(wage }\SpecialCharTok{\textasciitilde{}}\NormalTok{ urban }\SpecialCharTok{+}\NormalTok{ gender }\SpecialCharTok{+}\NormalTok{ ethnicity }\SpecialCharTok{+}\NormalTok{ unemp }\SpecialCharTok{+}\NormalTok{ ed.pred,}
                    \AttributeTok{data =}\NormalTok{ CollegeDistance)}
 \NormalTok{eqOLS }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(wage }\SpecialCharTok{\textasciitilde{}}\NormalTok{ urban }\SpecialCharTok{+}\NormalTok{ gender }\SpecialCharTok{+}\NormalTok{ ethnicity }\SpecialCharTok{+}\NormalTok{ unemp }\SpecialCharTok{+}\NormalTok{ education,}
             \AttributeTok{data=}\NormalTok{CollegeDistance)}
@@ -1403,7 +1403,7 @@ It will prove useful to introduce the following notation:
 \mathbb{V}ar(\boldsymbol\varepsilon | \mathbf{X}) = \mathbb{E}(\boldsymbol\varepsilon \boldsymbol\varepsilon'| \mathbf{X}) &=& \boldsymbol\Sigma. \label{eq:assumGLS2}
 \end{eqnarray}
 
-Note that Eq. (\eqref{eq:assumGLS2}) is more general than Hypothesis \ref{hyp:homoskedasticity} and \ref{hyp:noncorrelResid} because the diagonal entries of \(\boldsymbol\Sigma\) may be different (as opposed to under Hypothesis \ref{hyp:homoskedasticity}), and the non-diagonal entries of \(\boldsymbol\Sigma\) can be non-null (as opposed to under Hypothesis \ref{hyp:noncorrelResid}).
+Note that Eq. \eqref{eq:assumGLS2} is more general than Hypothesis \ref{hyp:homoskedasticity} and \ref{hyp:noncorrelResid} because the diagonal entries of \(\boldsymbol\Sigma\) may be different (as opposed to under Hypothesis \ref{hyp:homoskedasticity}), and the non-diagonal entries of \(\boldsymbol\Sigma\) can be non-null (as opposed to under Hypothesis \ref{hyp:noncorrelResid}).
 
 \begin{definition}[General Regression Model (GRM)]
 \protect\hypertarget{def:GRM}{}\label{def:GRM}Hypothesis \ref{hyp:fullrank} and \ref{hyp:exogeneity}, together with Eq. \eqref{eq:assumGLS2}, form the General Regression Model (GRM) framework.
@@ -2245,7 +2245,7 @@ where
 \]
 
 \hypertarget{three-standard-cases}{%
-\subsection{Three standard cases}\label{three-standard-cases}}
+\section{Three standard cases}\label{three-standard-cases}}
 
 There are three typical situations:
 
@@ -2260,7 +2260,7 @@ There are three typical situations:
   \[
   y_{i,t} = \mathbf{x}'_{i,t}\boldsymbol\beta + \alpha +  \underbrace{{\color{blue}u_i + \varepsilon_{i,t}}}_{\mbox{compound error}},
   \]
-  where \(\alpha = \mathbb{E}(\mathbf{z}'_{i}\boldsymbol\alpha)\) and \(u_i = \mathbf{z}'_{i}\boldsymbol\alpha - \mathbb{E}(\mathbf{z}'_{i}\boldsymbol\alpha) \perp \mathbf{x}_i\). In that case, the OLS is consistent, but not efficient. GLS can be used to gain efficiencies over OLS (see Section @ref(\#GLS) for a presentation of the GLS approach).
+  where \(\alpha = \mathbb{E}(\mathbf{z}'_{i}\boldsymbol\alpha)\) and \(u_i = \mathbf{z}'_{i}\boldsymbol\alpha - \mathbb{E}(\mathbf{z}'_{i}\boldsymbol\alpha) \perp \mathbf{x}_i\). In that case, the OLS is consistent, but not efficient. GLS can be used to gain efficiencies over OLS (see Section \ref{GLS} for a presentation of the GLS approach).
 \end{itemize}
 
 \hypertarget{FixedEffect}{%
@@ -2298,7 +2298,7 @@ These assumptions are analogous to those introduced in the standard linear regre
 \def\labelenumi{(\roman{enumi})}
 \tightlist
 \item
-  \(\leftrightarrow\) \ref{hyp:fullrank}, (ii) \(\leftrightarrow\) \ref{hyp:exogeneity}, (iii) \(\leftrightarrow\) \ref{hyp:homoskedasticity} + \ref{hyp:noncorrelResid}.
+  \(\leftrightarrow\) Hyp. \ref{hyp:fullrank}, (ii) \(\leftrightarrow\) Hyp. \ref{hyp:exogeneity}, (iii) \(\leftrightarrow\) Hyp. \ref{hyp:homoskedasticity} + \ref{hyp:noncorrelResid}.
 \end{enumerate}
 
 In matrix form, for a given \(i\), the model writes:
@@ -2633,24 +2633,6 @@ Let us come back to Example \ref{exm:JSTPanel} (relationship between changes in 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(plm);}\FunctionTok{library}\NormalTok{(stargazer)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## Please cite as:
-\end{verbatim}
-
-\begin{verbatim}
-##  Hlavac, Marek (2022). stargazer: Well-Formatted Regression and Summary Statistics Tables.
-\end{verbatim}
-
-\begin{verbatim}
-##  R package version 5.2.3. https://CRAN.R-project.org/package=stargazer
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{eq.RE }\OtherTok{\textless{}{-}} \FunctionTok{plm}\NormalTok{(dhpreal }\SpecialCharTok{\textasciitilde{}}\NormalTok{ stir }\SpecialCharTok{+}\NormalTok{ ltrate,}\AttributeTok{data=}\NormalTok{JST,}\AttributeTok{index=}\FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{,}\StringTok{"YEAR"}\NormalTok{),}
              \AttributeTok{model=}\StringTok{"random"}\NormalTok{,}\AttributeTok{effect=}\StringTok{"twoways"}\NormalTok{)}
 \NormalTok{eq.FE }\OtherTok{\textless{}{-}} \FunctionTok{plm}\NormalTok{(dhpreal }\SpecialCharTok{\textasciitilde{}}\NormalTok{ stir }\SpecialCharTok{+}\NormalTok{ ltrate,}\AttributeTok{data=}\NormalTok{JST,}\AttributeTok{index=}\FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{,}\StringTok{"YEAR"}\NormalTok{),}
@@ -2759,7 +2741,7 @@ Let us regress prices on the covariates as well as on district dummies:
 ## Note:                                      *p<0.1; **p<0.05; ***p<0.01
 \end{verbatim}
 
-Figure \ref{fig:airbnb3} compares the residuals with and without fixed effects. The sizes of the circles are proportional to the absolute values of the residuals, the color indicates the sign (blue for negative).
+Figure \ref{fig:airbnb3} compares the residuals with and without fixed effects. The sizes of the circles are proportional to the absolute values of the residuals, the color indicates the sign (blue for positive).
 
 \begin{figure}
 \includegraphics[width=0.95\linewidth]{ApplEcts_files/figure-latex/airbnb3-1} \caption{Regression residuals. The sizes of the circles are proportional to the absolute values of the residuals, the color indicates the sign (blue for negative).}\label{fig:airbnb3}
@@ -2787,7 +2769,7 @@ which correlates to the corresponding error, that is:
 \tilde{\varepsilon}_{i,t} = \varepsilon_{i,t} - \frac{1}{T} \sum_{s=1}^{T} \varepsilon_{i,s}.
 \]
 
-The previous equation shows that the \emph{within-group} estimator (LSDV) introduces all realizations of the \(\varepsilon_{i,t}\) errors into the transformed error term (\(\tilde{\varepsilon}_{i,t}\)). As a result, in large \(n\), fixed \(T\) panels, it is consistent only if all the right-hand-side variables of the regression are strictly exogenous (i.e., do not correlate to past, present, and future errors \(\varepsilon_{i,t}\)).\footnote{Although the bias may vanish for large \(T\)'s, it does not if \(n\) only goes to infinity.} This is not the case when there are lags of \(y_{i,t}\) on the right-hand side of the regression formula.
+The previous equation shows that the \emph{within-group} estimator (LSDV) introduces all realizations of the \(\varepsilon_{i,t}\) errors into the transformed error term (\(\tilde{\varepsilon}_{i,t}\)). As a result, in large-\(n\) fixed-\(T\) panels, it is consistent only if all the right-hand-side variables of the regression are strictly exogenous (i.e., do not correlate to past, present, and future errors \(\varepsilon_{i,t}\)).\footnote{Although the bias may vanish for large \(T\)'s, it does not if \(n\) only goes to infinity.} This is not the case when there are lags of \(y_{i,t}\) on the right-hand side of the regression formula.
 
 The following simulation illustrate this bias. The \(x\)-coordinates of the dots are the fixed effects \(\alpha_i\)'s, and the \(y\)-coordinates are their LSDV estimates. The blue line is the 45-degree line.
 
@@ -3064,9 +3046,9 @@ Therefore, in this context, estimating \(\mathbb{E}(Y_1-Y_0)\) amounts to comput
 
 More accurate estimates can be obtained through regressions. Assume that the model reads:
 \[
-Y_{i} = W_{i} \beta_{1} + Z_i'\boldsymbol\beta_z + \varepsilon_i,
+Y_{i} = W_{i} \beta_{1} + X_i'\boldsymbol\beta_z + \varepsilon_i,
 \]
-where \(\mathbb{E}(\varepsilon_i|Z_i) = 0\) (and \(W_i\) is independent from \(Z_i\) and \(\varepsilon_i\)). In this case, we obtain a consistent estimate of \(\beta_0\) by regressing \(\mathbf{y}\) on \(\mathbf{X} = [\mathbf{w},\mathbf{Z}]\).
+where \(\mathbb{E}(\varepsilon_i|X_i) = 0\) (and \(W_i\) is independent from \(X_i\) and \(\varepsilon_i\)). In this case, we obtain a consistent estimate of \(\beta_1\) by regressing \(\mathbf{y}\) on \(\mathbf{Z} = [\mathbf{w},\mathbf{X}]\).
 
 \hypertarget{difference-in-difference-did-approach}{%
 \subsection{Difference-in-Difference (DiD) approach}\label{difference-in-difference-did-approach}}
@@ -3115,7 +3097,7 @@ In practice, implementing this approach consists in running a linear regression 
 \hypertarget{application-of-the-did-approach}{%
 \subsection{Application of the DiD approach}\label{application-of-the-did-approach}}
 
-This example is based on the data used in \citet{Meyer_Viscusi_Durbin_1995}. This dataset is part of the \texttt{wooldridge} package. This paper examines the effect of workers' compensation for injury on time out of work. It exploits a \textbf{natural experiment} approach of comparing individuals injured before and after increases in the maximum weekly benefit amount. Specifically, in 1980, the cap on weekly earnings covered by worker's compensation was increased. Let us check whether this new policy was followed by an increase in the amount of time workers spent unemployed (for example, higher compensation may reduce workers' incentives to avoid injury).
+This example is based on the data used in \citet{Meyer_Viscusi_Durbin_1995}. This dataset is part of the \texttt{wooldridge} package. This paper examines the effect of workers' compensation for injury on time out of work. It exploits a \textbf{natural experiment} approach of comparing individuals injured before and after increases in the maximum weekly benefit amount. Specifically, in 1980, the cap on weekly earnings covered by worker's compensation was increased in Kentucky and Michigan. Let us check whether this new policy was followed by an increase in the amount of time workers spent unemployed (for example, higher compensation may reduce workers' incentives to avoid injury).
 
 As shown in Figure \ref{fig:figMeyer}, the measure has only affected high-earning workers. The idea exploited by \citet{Meyer_Viscusi_Durbin_1995} was to compare the increase in time out of work before-after 1980 for higher-earnings workers on the one hand (entities who received the treatment) and low-earnings workers on the other hand (control group).
 
@@ -4612,9 +4594,11 @@ We consider three specifications. The first one (\texttt{eq0}), with no explanat
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{eq0 }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(Default }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}\AttributeTok{data=}\NormalTok{credit,}\AttributeTok{family=}\FunctionTok{binomial}\NormalTok{(}\AttributeTok{link=}\StringTok{"probit"}\NormalTok{))}
-\NormalTok{eq1 }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(Default }\SpecialCharTok{\textasciitilde{}} \FunctionTok{log}\NormalTok{(loan\_amnt) }\SpecialCharTok{+}\NormalTok{ amt2income }\SpecialCharTok{+}\NormalTok{ delinq\_2yrs }\SpecialCharTok{+} \FunctionTok{log}\NormalTok{(annual\_inc)}\SpecialCharTok{+} \FunctionTok{I}\NormalTok{(}\FunctionTok{log}\NormalTok{(annual\_inc)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{),}
+\NormalTok{eq1 }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(Default }\SpecialCharTok{\textasciitilde{}} \FunctionTok{log}\NormalTok{(loan\_amnt) }\SpecialCharTok{+}\NormalTok{ amt2income }\SpecialCharTok{+}\NormalTok{ delinq\_2yrs }\SpecialCharTok{+} 
+             \FunctionTok{log}\NormalTok{(annual\_inc)}\SpecialCharTok{+} \FunctionTok{I}\NormalTok{(}\FunctionTok{log}\NormalTok{(annual\_inc)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{),}
            \AttributeTok{data=}\NormalTok{credit,}\AttributeTok{family=}\FunctionTok{binomial}\NormalTok{(}\AttributeTok{link=}\StringTok{"probit"}\NormalTok{))}
-\NormalTok{eq2 }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(Default }\SpecialCharTok{\textasciitilde{}}\NormalTok{ grade }\SpecialCharTok{+} \FunctionTok{log}\NormalTok{(loan\_amnt) }\SpecialCharTok{+}\NormalTok{ amt2income }\SpecialCharTok{+}\NormalTok{ delinq\_2yrs }\SpecialCharTok{+} \FunctionTok{log}\NormalTok{(annual\_inc)}\SpecialCharTok{+} \FunctionTok{I}\NormalTok{(}\FunctionTok{log}\NormalTok{(annual\_inc)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{),}
+\NormalTok{eq2 }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(Default }\SpecialCharTok{\textasciitilde{}}\NormalTok{ grade }\SpecialCharTok{+} \FunctionTok{log}\NormalTok{(loan\_amnt) }\SpecialCharTok{+}\NormalTok{ amt2income }\SpecialCharTok{+}\NormalTok{ delinq\_2yrs }\SpecialCharTok{+} 
+             \FunctionTok{log}\NormalTok{(annual\_inc)}\SpecialCharTok{+} \FunctionTok{I}\NormalTok{(}\FunctionTok{log}\NormalTok{(annual\_inc)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{),}
            \AttributeTok{data=}\NormalTok{credit,}\AttributeTok{family=}\FunctionTok{binomial}\NormalTok{(}\AttributeTok{link=}\StringTok{"probit"}\NormalTok{))}
 \NormalTok{stargazer}\SpecialCharTok{::}\FunctionTok{stargazer}\NormalTok{(eq0,eq1,eq2,}\AttributeTok{type=}\StringTok{"text"}\NormalTok{,}\AttributeTok{no.space =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
@@ -4694,7 +4678,7 @@ Let us now compute the (average) marginal effects, using method ii of Section \r
 ##          0.001574178         -0.154701321          0.006813694
 \end{verbatim}
 
-There is an issue for the \texttt{annual\_inc} variable. Indeed, the previous computation does not realize that this variable appears twice among the explanatory variables (through \texttt{log(annual\_inc)} and \texttt{I(log(annual\_inc)\^{}2)}). To address this, one can proceed as follows: (1) we construct a new counterfactual dataset where annual incomes are increase by 1\%, (2) we use the model to compute model-implied probabilities of default on this new dataset and (3), we subtract the probabilities resulting from the original dataset from these counterfactual probabilities:
+There is an issue for the \texttt{annual\_inc} variable. Indeed, the previous computation does not realize that this variable appears twice among the explanatory variables (through \texttt{log(annual\_inc)} and \texttt{I(log(annual\_inc)\^{}2)}). To address this, one can proceed as follows: (1) we construct a new counterfactual dataset where annual incomes are increased by 1\%, (2) we use the model to compute model-implied probabilities of default on this new dataset and (3), we subtract the probabilities resulting from the original dataset from these counterfactual probabilities:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5128,7 +5112,7 @@ where \(\overline{\boldsymbol\theta}^{(i)}_{s}\) does not depend on \(j\). Note 
 
 \textbf{Random Utility models}
 
-The general multinomial logit model may arise as the natural specification arising in strucrural contexts where agents compare (random) utilities associated with \(J\) potential outcomes (see Section \ref{latent} for the binary situation).
+The general multinomial logit model may arise as the natural specification arising in structural contexts where agents compare (random) utilities associated with \(J\) potential outcomes (see Section \ref{latent} for the binary situation).
 
 Let's drop the \(i\) subscript for simplicity and assume that the utility derived form choosing \(j\) is given by \(U_j = V_j + \varepsilon_j\), where \(V_j\) is deterministic (may depend on observed covariates) and \(\varepsilon_j\) is stochastic. We have (with obvious notations):
 \begin{eqnarray*}

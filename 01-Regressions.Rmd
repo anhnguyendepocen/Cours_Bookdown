@@ -709,7 +709,7 @@ Since $\bv{b} = \boldsymbol\beta + \left( \frac{\bv{X}'\bv{X}}{n}\right)^{-1}\le
 
 In practice, $\sigma^2$ is approximated by $s^2=\frac{\bv{e}'\bv{e}}{n-K}$ (Eq. \@ref(eq:s2)) and $\bv{Q}^{-1}$ by $\left(\frac{\bv{X}'\bv{X}}{n}\right)^{-1}$. That is, the covariance matrix of the estimator is approximated by:
 \begin{equation}
-\widehat{\mathbb{V}ar}(\bv{b}) = s^2 (\bv{X}'\bv{X})^{-1}.(\#eq:sXX)
+\boxed{\widehat{\mathbb{V}ar}(\bv{b}) = s^2 (\bv{X}'\bv{X})^{-1}.}(\#eq:sXX)
 \end{equation}
 
 Eqs. \@ref(eq:Qasympt) and \@ref(eq:convgceOLS) respectively correspond to convergences in probability and in distribution (see Definitions \@ref(def:convergenceproba) and \@ref(def:cvgceDistri), respectively).
@@ -756,9 +756,9 @@ $$
 
 This results in the omitted-variable formula:
 $$
-\boxed{\mathbb{E}(\bv{b}_1|\bv{X}) = \boldsymbol\beta_1 + \underbrace{(\bv{X}_1'\bv{X}_1)^{-1}(\bv{X}_1'\bv{X}_2)}_{K_1 \times K_2}\boldsymbol\beta_2}
+\mathbb{E}(\bv{b}_1|\bv{X}) = \boldsymbol\beta_1 + \underbrace{(\bv{X}_1'\bv{X}_1)^{-1}(\bv{X}_1'\bv{X}_2)}_{K_1 \times K_2}\boldsymbol\beta_2.
 $$
-(each column of $(\bv{X}_1'\bv{X}_1)^{-1}(\bv{X}_1'\bv{X}_2)$ are the OLS regressors obtained when regressing the columns of $\bv{X}_2$ on $\bv{X}_1$). Unless the variables included in $\bv{X}_1$ are orthogonal to those in $\bv{X}_2$, we obtain a bias. A way to address this potential pitfall is to introduce "controls" in the specification.
+(Each column of $(\bv{X}_1'\bv{X}_1)^{-1}(\bv{X}_1'\bv{X}_2)$ are the OLS regressors obtained when regressing the columns of $\bv{X}_2$ on $\bv{X}_1$.) Unless the variables included in $\bv{X}_1$ are orthogonal to those in $\bv{X}_2$, we obtain a bias. A way to address this potential pitfall is to introduce "controls" in the specification.
 
 <!-- XXXXX -->
 <!-- :::{.example #wageeduc} -->
@@ -998,7 +998,7 @@ data("CollegeDistance", package = "AER")
 eq.1st.stage <- lm(education ~ urban + gender + ethnicity + unemp + distance,
                    data = CollegeDistance)
 CollegeDistance$ed.pred<- predict(eq.1st.stage)
-eq.2nd.stage <- lm(wage ~ urban + gender + ethnicity + unemp + ed.pred ,
+eq.2nd.stage <- lm(wage ~ urban + gender + ethnicity + unemp + ed.pred,
                    data = CollegeDistance)
 eqOLS <- lm(wage ~ urban + gender + ethnicity + unemp + education,
             data=CollegeDistance)
@@ -1024,7 +1024,7 @@ It will prove useful to introduce the following notation:
 \mathbb{V}ar(\boldsymbol\varepsilon | \bv{X}) = \mathbb{E}(\boldsymbol\varepsilon \boldsymbol\varepsilon'| \bv{X}) &=& \boldsymbol\Sigma. (\#eq:assumGLS2)
 \end{eqnarray}
 
-Note that Eq. (\@ref(eq:assumGLS2)) is more general than Hypothesis \@ref(hyp:homoskedasticity) and \@ref(hyp:noncorrelResid) because the diagonal entries of $\boldsymbol\Sigma$ may be different (as opposed to under Hypothesis \@ref(hyp:homoskedasticity)), and the non-diagonal entries of $\boldsymbol\Sigma$ can be non-null (as opposed to under Hypothesis \@ref(hyp:noncorrelResid)).
+Note that Eq. \@ref(eq:assumGLS2) is more general than Hypothesis \@ref(hyp:homoskedasticity) and \@ref(hyp:noncorrelResid) because the diagonal entries of $\boldsymbol\Sigma$ may be different (as opposed to under Hypothesis \@ref(hyp:homoskedasticity)), and the non-diagonal entries of $\boldsymbol\Sigma$ can be non-null (as opposed to under Hypothesis \@ref(hyp:noncorrelResid)).
 
 :::{.definition #GRM name="General Regression Model (GRM)"}
 Hypothesis \@ref(hyp:fullrank) and \@ref(hyp:exogeneity), together with Eq. \@ref(eq:assumGLS2), form the General Regression Model (GRM) framework.

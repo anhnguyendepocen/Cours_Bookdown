@@ -197,28 +197,28 @@ where
 <span class="math display">\[
 \bar{y}_i = \frac{1}{T} \sum_{t=1}^T y_{i,t}, \quad \bar{\varepsilon}_i = \frac{1}{T}\sum_{t=1}^T \varepsilon_{i,t} \quad \mbox{and} \quad \bar{\mathbf{x}}_i = \frac{1}{T}\sum_{t=1}^T \mathbf{x}_{i,t}.
 \]</span></p>
-<div id="three-standard-cases" class="section level3" number="3.1.1">
-<h3>
-<span class="header-section-number">3.1.1</span> Three standard cases<a class="anchor" aria-label="anchor" href="#three-standard-cases"><i class="fas fa-link"></i></a>
-</h3>
+</div>
+<div id="three-standard-cases" class="section level2" number="3.2">
+<h2>
+<span class="header-section-number">3.2</span> Three standard cases<a class="anchor" aria-label="anchor" href="#three-standard-cases"><i class="fas fa-link"></i></a>
+</h2>
 <p>There are three typical situations:</p>
 <ul>
 <li>
 <strong>Pooled regression</strong>: <span class="math inline">\(\mathbf{z}_i \equiv 1\)</span>. This case amounts to the case studied in Chapter <a href="ChapterLS.html#ChapterLS">2</a>.</li>
 <li>
-<strong>Fixed Effects</strong> (Section <a href="Panel.html#FixedEffect">3.2</a>): <span class="math inline">\(\mathbf{z}_i\)</span> is unobserved, but correlates with <span class="math inline">\(\mathbf{x}_i\)</span> <span class="math inline">\(\Rightarrow\)</span> <span class="math inline">\(\mathbf{b}\)</span> is biased and inconsistent in the OLS regression of <span class="math inline">\(\mathbf{y}\)</span> on <span class="math inline">\(\mathbf{X}\)</span> (omitted variable, see Section <a href="ChapterLS.html#Omitted">2.3.2</a>).</li>
+<strong>Fixed Effects</strong> (Section <a href="Panel.html#FixedEffect">3.3</a>): <span class="math inline">\(\mathbf{z}_i\)</span> is unobserved, but correlates with <span class="math inline">\(\mathbf{x}_i\)</span> <span class="math inline">\(\Rightarrow\)</span> <span class="math inline">\(\mathbf{b}\)</span> is biased and inconsistent in the OLS regression of <span class="math inline">\(\mathbf{y}\)</span> on <span class="math inline">\(\mathbf{X}\)</span> (omitted variable, see Section <a href="ChapterLS.html#Omitted">2.3.2</a>).</li>
 <li>
-<strong>Random Effects</strong> (Section <a href="Panel.html#RandomEffect">3.3</a>): <span class="math inline">\(\mathbf{z}_i\)</span> is unobserved, but uncorrelated with <span class="math inline">\(\mathbf{x}_i\)</span>. The model writes:
+<strong>Random Effects</strong> (Section <a href="Panel.html#RandomEffect">3.4</a>): <span class="math inline">\(\mathbf{z}_i\)</span> is unobserved, but uncorrelated with <span class="math inline">\(\mathbf{x}_i\)</span>. The model writes:
 <span class="math display">\[
 y_{i,t} = \mathbf{x}'_{i,t}\boldsymbol\beta + \alpha +  \underbrace{{\color{blue}u_i + \varepsilon_{i,t}}}_{\mbox{compound error}},
 \]</span>
-where <span class="math inline">\(\alpha = \mathbb{E}(\mathbf{z}'_{i}\boldsymbol\alpha)\)</span> and <span class="math inline">\(u_i = \mathbf{z}'_{i}\boldsymbol\alpha - \mathbb{E}(\mathbf{z}'_{i}\boldsymbol\alpha) \perp \mathbf{x}_i\)</span>. In that case, the OLS is consistent, but not efficient. GLS can be used to gain efficiencies over OLS (see Section @ref(#GLS) for a presentation of the GLS approach).</li>
+where <span class="math inline">\(\alpha = \mathbb{E}(\mathbf{z}'_{i}\boldsymbol\alpha)\)</span> and <span class="math inline">\(u_i = \mathbf{z}'_{i}\boldsymbol\alpha - \mathbb{E}(\mathbf{z}'_{i}\boldsymbol\alpha) \perp \mathbf{x}_i\)</span>. In that case, the OLS is consistent, but not efficient. GLS can be used to gain efficiencies over OLS (see Section <a href="ChapterLS.html#GLS">2.5.2</a> for a presentation of the GLS approach).</li>
 </ul>
 </div>
-</div>
-<div id="FixedEffect" class="section level2" number="3.2">
+<div id="FixedEffect" class="section level2" number="3.3">
 <h2>
-<span class="header-section-number">3.2</span> Estimation of Fixed-Effects Models<a class="anchor" aria-label="anchor" href="#FixedEffect"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.3</span> Estimation of Fixed-Effects Models<a class="anchor" aria-label="anchor" href="#FixedEffect"><i class="fas fa-link"></i></a>
 </h2>
 <div class="hypothesis">
 <p><span id="hyp:FE" class="hypothesis"><strong>Hypothesis 3.1  (Fixed-effect model) </strong></span>We assume that:</p>
@@ -241,7 +241,7 @@ where <span class="math inline">\(\alpha = \mathbb{E}(\mathbf{z}'_{i}\boldsymbol
 <p>These assumptions are analogous to those introduced in the standard linear regression:</p>
 <ol style="list-style-type: lower-roman">
 <li>
-<span class="math inline">\(\leftrightarrow\)</span> <a href="ChapterLS.html#hyp:fullrank">2.1</a>, (ii) <span class="math inline">\(\leftrightarrow\)</span> <a href="ChapterLS.html#hyp:exogeneity">2.2</a>, (iii) <span class="math inline">\(\leftrightarrow\)</span> <a href="ChapterLS.html#hyp:homoskedasticity">2.3</a> + <a href="ChapterLS.html#hyp:noncorrelResid">2.4</a>.</li>
+<span class="math inline">\(\leftrightarrow\)</span> Hyp. <a href="ChapterLS.html#hyp:fullrank">2.1</a>, (ii) <span class="math inline">\(\leftrightarrow\)</span> Hyp. <a href="ChapterLS.html#hyp:exogeneity">2.2</a>, (iii) <span class="math inline">\(\leftrightarrow\)</span> Hyp. <a href="ChapterLS.html#hyp:homoskedasticity">2.3</a> + <a href="ChapterLS.html#hyp:noncorrelResid">2.4</a>.</li>
 </ol>
 <p>In matrix form, for a given <span class="math inline">\(i\)</span>, the model writes:
 <span class="math display">\[
@@ -474,9 +474,9 @@ where the <span class="math inline">\(T\)</span>-dimensional vector <span class=
 ## Note:                       *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
 </div>
 </div>
-<div id="RandomEffect" class="section level2" number="3.3">
+<div id="RandomEffect" class="section level2" number="3.4">
 <h2>
-<span class="header-section-number">3.3</span> Estimation of random effects models<a class="anchor" aria-label="anchor" href="#RandomEffect"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.4</span> Estimation of random effects models<a class="anchor" aria-label="anchor" href="#RandomEffect"><i class="fas fa-link"></i></a>
 </h2>
 <p>Here, the individual effects are assumed to be not correlated to other variables (the <span class="math inline">\(\mathbf{x}_i\)</span>’s). In that context, the OLS estimator is consistent. However, it is not efficient. The GLS approach can be employed to gain efficiency.</p>
 <p><strong>Random-effect models</strong> write:
@@ -546,13 +546,8 @@ The previous equation can be consistently estimated by OLS. (Although the residu
 and therefore use <span class="math inline">\(s^2_{pooled} - \hat{\sigma}_e^2\)</span> as an approximation to <span class="math inline">\(\sigma_u^2\)</span>.</p>
 <p>Let us come back to Example <a href="Panel.html#exm:JSTPanel">3.1</a> (relationship between changes in housing prices and interest rates). In the following, we use the random effect specification; and compare the results with those obtained with the pooled regression and with the fixed-effect model. For that, we use the function <code>plm</code> of the package of the same name. (Note that <code>eq.FE</code> is similar to <code>eq1</code> in Example <a href="Panel.html#exm:JSTPanel">3.1</a>.)</p>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://cran.r-project.org/package=plm">plm</a></span><span class="op">)</span>;<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">stargazer</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## 
-## Please cite as:</code></pre>
-<pre><code>##  Hlavac, Marek (2022). stargazer: Well-Formatted Regression and Summary Statistics Tables.</code></pre>
-<pre><code>##  R package version 5.2.3. https://CRAN.R-project.org/package=stargazer</code></pre>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">eq.RE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/plm/man/plm.html">plm</a></span><span class="op">(</span><span class="va">dhpreal</span> <span class="op">~</span> <span class="va">stir</span> <span class="op">+</span> <span class="va">ltrate</span>,data<span class="op">=</span><span class="va">JST</span>,index<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"iso"</span>,<span class="st">"YEAR"</span><span class="op">)</span>,</span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://cran.r-project.org/package=plm">plm</a></span><span class="op">)</span>;<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">stargazer</span><span class="op">)</span></span>
+<span><span class="va">eq.RE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/plm/man/plm.html">plm</a></span><span class="op">(</span><span class="va">dhpreal</span> <span class="op">~</span> <span class="va">stir</span> <span class="op">+</span> <span class="va">ltrate</span>,data<span class="op">=</span><span class="va">JST</span>,index<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"iso"</span>,<span class="st">"YEAR"</span><span class="op">)</span>,</span>
 <span>             model<span class="op">=</span><span class="st">"random"</span>,effect<span class="op">=</span><span class="st">"twoways"</span><span class="op">)</span></span>
 <span><span class="va">eq.FE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/plm/man/plm.html">plm</a></span><span class="op">(</span><span class="va">dhpreal</span> <span class="op">~</span> <span class="va">stir</span> <span class="op">+</span> <span class="va">ltrate</span>,data<span class="op">=</span><span class="va">JST</span>,index<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"iso"</span>,<span class="st">"YEAR"</span><span class="op">)</span>,</span>
 <span>             model<span class="op">=</span><span class="st">"within"</span>,effect<span class="op">=</span><span class="st">"twoways"</span><span class="op">)</span></span>
@@ -586,7 +581,7 @@ and therefore use <span class="math inline">\(s^2_{pooled} - \hat{\sigma}_e^2\)<
 ## ==================================================
 ## Note:                  *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
 <p>One can run an <span class="citation">Hausman (<a href="references.html#ref-Hausman_1978" role="doc-biblioref">1978</a>)</span> test in order to check whether or not the fixed-effect model is needed. Indeed, if this is not the case (i.e., if the covariates are not correlated to the disturbances), then it is preferable to use the random-effect estimation as the latter is more efficient.</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/plm/man/phtest.html">phtest</a></span><span class="op">(</span><span class="va">eq.FE</span>,<span class="va">eq.RE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ##  Hausman Test
@@ -604,7 +599,7 @@ Figure 3.3: Airbnb prices for the Zurich area, 22 June 2017. The size of the cir
 </p>
 </div>
 <p>Let us regress prices on the covariates as well as on district dummies:</p>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eq_noFE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">price</span><span class="op">~</span><span class="va">bedrooms</span><span class="op">+</span><span class="va">accommodates</span>,data<span class="op">=</span><span class="va">airbnb</span><span class="op">)</span></span>
 <span><span class="va">eq_FE</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">price</span><span class="op">~</span><span class="va">bedrooms</span><span class="op">+</span><span class="va">accommodates</span><span class="op">+</span><span class="va">neighborhood</span>,data<span class="op">=</span><span class="va">airbnb</span><span class="op">)</span></span>
 <span><span class="co"># Adjust standard errors:</span></span>
@@ -638,7 +633,7 @@ Figure 3.3: Airbnb prices for the Zurich area, 22 June 2017. The size of the cir
 ## Observations    1,321        1,321          1,321          1,321      
 ## ======================================================================
 ## Note:                                      *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
-<p>Figure <a href="Panel.html#fig:airbnb3">3.4</a> compares the residuals with and without fixed effects. The sizes of the circles are proportional to the absolute values of the residuals, the color indicates the sign (blue for negative).</p>
+<p>Figure <a href="Panel.html#fig:airbnb3">3.4</a> compares the residuals with and without fixed effects. The sizes of the circles are proportional to the absolute values of the residuals, the color indicates the sign (blue for positive).</p>
 <div class="figure" style="text-align: left-aligned">
 <span style="display:block;" id="fig:airbnb3"></span>
 <img src="ApplEcts_files/figure-html/airbnb3-1.png" alt="Regression residuals. The sizes of the circles are proportional to the absolute values of the residuals, the color indicates the sign (blue for negative)." width="95%"><p class="caption">
@@ -739,9 +734,9 @@ Figure 3.4: Regression residuals. The sizes of the circles are proportional to t
 <!-- %\end{scriptsize} -->
 <!-- %\end{frame} -->
 </div>
-<div id="DynPanel" class="section level2" number="3.4">
+<div id="DynPanel" class="section level2" number="3.5">
 <h2>
-<span class="header-section-number">3.4</span> Dynamic Panel Regressions<a class="anchor" aria-label="anchor" href="#DynPanel"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.5</span> Dynamic Panel Regressions<a class="anchor" aria-label="anchor" href="#DynPanel"><i class="fas fa-link"></i></a>
 </h2>
 <p>In what precedes, it has been assumed that there is no correlation between the observations indexed by <span class="math inline">\((i,t)\)</span> and those indexed by <span class="math inline">\((j,s)\)</span> as long as <span class="math inline">\(j \ne i\)</span> or <span class="math inline">\(t \ne s\)</span>. If one suspects that the errors <span class="math inline">\(\varepsilon_{i,t}\)</span> are correlated (across entities <span class="math inline">\(i\)</span> for a given date <span class="math inline">\(t\)</span>, or across dates for a given entity, or both), then one should employ a robust covariance matrix (see Section <a href="ChapterLS.html#Clusters">2.5.5</a>).</p>
 <p>In several cases, auto-correlation in the variable of interest may stem from an auto-regressive specification. That is, Eq. <a href="Panel.html#eq:panel1">(3.1)</a> is then replaced by:
@@ -756,9 +751,9 @@ which correlates to the corresponding error, that is:
 <span class="math display">\[
 \tilde{\varepsilon}_{i,t} = \varepsilon_{i,t} - \frac{1}{T} \sum_{s=1}^{T} \varepsilon_{i,s}.
 \]</span></p>
-<p>The previous equation shows that the <em>within-group</em> estimator (LSDV) introduces all realizations of the <span class="math inline">\(\varepsilon_{i,t}\)</span> errors into the transformed error term (<span class="math inline">\(\tilde{\varepsilon}_{i,t}\)</span>). As a result, in large <span class="math inline">\(n\)</span>, fixed <span class="math inline">\(T\)</span> panels, it is consistent only if all the right-hand-side variables of the regression are strictly exogenous (i.e., do not correlate to past, present, and future errors <span class="math inline">\(\varepsilon_{i,t}\)</span>).<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Although the bias may vanish for large &lt;span class="math inline"&gt;\(T\)&lt;/span&gt;’s, it does not if &lt;span class="math inline"&gt;\(n\)&lt;/span&gt; only goes to infinity.&lt;/p&gt;'><sup>5</sup></a> This is not the case when there are lags of <span class="math inline">\(y_{i,t}\)</span> on the right-hand side of the regression formula.</p>
+<p>The previous equation shows that the <em>within-group</em> estimator (LSDV) introduces all realizations of the <span class="math inline">\(\varepsilon_{i,t}\)</span> errors into the transformed error term (<span class="math inline">\(\tilde{\varepsilon}_{i,t}\)</span>). As a result, in large-<span class="math inline">\(n\)</span> fixed-<span class="math inline">\(T\)</span> panels, it is consistent only if all the right-hand-side variables of the regression are strictly exogenous (i.e., do not correlate to past, present, and future errors <span class="math inline">\(\varepsilon_{i,t}\)</span>).<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Although the bias may vanish for large &lt;span class="math inline"&gt;\(T\)&lt;/span&gt;’s, it does not if &lt;span class="math inline"&gt;\(n\)&lt;/span&gt; only goes to infinity.&lt;/p&gt;'><sup>5</sup></a> This is not the case when there are lags of <span class="math inline">\(y_{i,t}\)</span> on the right-hand side of the regression formula.</p>
 <p>The following simulation illustrate this bias. The <span class="math inline">\(x\)</span>-coordinates of the dots are the fixed effects <span class="math inline">\(\alpha_i\)</span>’s, and the <span class="math inline">\(y\)</span>-coordinates are their LSDV estimates. The blue line is the 45-degree line.</p>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">400</span>;<span class="cn">T</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
 <span><span class="va">rho</span> <span class="op">&lt;-</span> <span class="fl">0.8</span>;<span class="va">sigma</span> <span class="op">&lt;-</span> <span class="fl">.5</span></span>
 <span><span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
@@ -789,7 +784,7 @@ Figure 3.5: illustration of the bias pertianing to the LSDV estimation approach 
 The OLS estimates of the parameters are biased because <span class="math inline">\(\varepsilon_{i,t-1}\)</span> —which is part of the error <span class="math inline">\(\Delta\varepsilon_{i,t}\)</span>— is correlated to <span class="math inline">\(y_{i,t-1}\)</span> —which is part of the “explanatory variable”, namely <span class="math inline">\(\Delta y_{i,t-1}\)</span>. But consistent estimates can be obtained using 2SLS with instrumental variables that are correlated with <span class="math inline">\(\Delta y_{i,t}\)</span> but orthogonal to <span class="math inline">\(\Delta\varepsilon_{i,t}\)</span>. One can for instance use <span class="math inline">\(\{y_{i,t-2},\mathbf{x}_{i,t-2}\}\)</span> as instruments. Note that this approach can be implemented only if there are more than 3 time observations per entity <span class="math inline">\(i\)</span>.</p>
 <p>If the explanatory variables <span class="math inline">\(\mathbf{x}_{i,t}\)</span> are assumed to be predetermined (i.e., do not contemporaneous correlate with the errors <span class="math inline">\(\varepsilon_{i,t}\)</span>), then <span class="math inline">\(\mathbf{x}_{i,t-1}\)</span> can be added to the instruments associated with <span class="math inline">\(\Delta y_{i,t}\)</span>. Further, if these variables (the <span class="math inline">\(\mathbf{x}_{i,t}\)</span>’s) are exogenous (i.e., do not contemporaneous correlate with any of the errors <span class="math inline">\(\varepsilon_{i,s}\)</span>, <span class="math inline">\(\forall s\)</span>), then <span class="math inline">\(\mathbf{x}_{i,t}\)</span> also constitute a valid instrument.</p>
 <p>Using the previous (simulated) example, this approach consists in the following steps:</p>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Dy</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">all_y</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="cn">T</span>,<span class="op">]</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">all_y</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="op">(</span><span class="cn">T</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>,<span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">Dy_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">all_y</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="op">(</span><span class="cn">T</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>,<span class="op">]</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">all_y</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="cn">T</span><span class="op">-</span><span class="fl">2</span><span class="op">)</span>,<span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">y_2</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">all_y</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="cn">T</span><span class="op">-</span><span class="fl">2</span><span class="op">)</span>,<span class="op">]</span><span class="op">)</span></span>
@@ -840,7 +835,7 @@ H = \left[\begin{array}{ccccccc}
 \]</span></p>
 <p>It is straightforward to extend these GMM methods to cases where there is more than one lag of the dependent variable on the right-hand side of the equation or in cases where disturbances feature limited moving-average serial correlation.</p>
 <p>The <code>pdynmc</code> package allows to run these GMM approaches (see <span class="citation">Fritsch, Pua, and Schnurbus (<a href="references.html#ref-Fritsch_et_al_2019" role="doc-biblioref">2019</a>)</span>). The following lines of code allow to replicate the results of <span class="citation">Arellano and Bond (<a href="references.html#ref-Arellano_Bond_1991" role="doc-biblioref">1991</a>)</span>:</p>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/markusfritsch/pdynmc">pdynmc</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">EmplUK</span>, package <span class="op">=</span> <span class="st">"plm"</span><span class="op">)</span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">EmplUK</span></span>
@@ -911,7 +906,7 @@ H = \left[\begin{array}{ccccccc}
 ## -0.02135806 -0.03111604 -0.01799335 -0.02336762</code></pre>
 <p><span class="citation">Arellano and Bond (<a href="references.html#ref-Arellano_Bond_1991" role="doc-biblioref">1991</a>)</span> have proposed a specification test. If the model is correctly specified, then the errors of Eq. <a href="Panel.html#eq:paneldynFisrtDiff">(3.9)</a> —that is the first-difference equation— should feature non-zero first-order auto-correlations, but zero higher-order autocorrelations.</p>
 <p>Function <code>mtest.fct</code> of package <code>pdynmc</code> implements this test. Here is its result in the present case:</p>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/pdynmc/man/mtest.fct.html">mtest.fct</a></span><span class="op">(</span><span class="va">m1</span>,order<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ##  Arellano and Bond (1991) serial correlation test of degree 3
@@ -920,7 +915,7 @@ H = \left[\begin{array}{ccccccc}
 ## normal = 0.045945, p-value = 0.9634
 ## alternative hypothesis: serial correlation of order 3 in the error terms</code></pre>
 <p>One can also implement the Hansen J-test of the over-identifying restrictions (see Section <a href="estimation-methods.html#overidentif">4.1.3</a>):</p>
-<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/pdynmc/man/jtest.fct.html">jtest.fct</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ##  J-Test of Hansen
@@ -928,7 +923,7 @@ H = \left[\begin{array}{ccccccc}
 ## data:  1step GMM Estimation
 ## chisq = 70.82, df = 25, p-value = 2.905e-06
 ## alternative hypothesis: overidentifying restrictions invalid</code></pre>
-<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/pdynmc/man/jtest.fct.html">jtest.fct</a></span><span class="op">(</span><span class="va">m2</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ##  J-Test of Hansen
@@ -937,14 +932,14 @@ H = \left[\begin{array}{ccccccc}
 ## chisq = 31.381, df = 25, p-value = 0.1767
 ## alternative hypothesis: overidentifying restrictions invalid</code></pre>
 </div>
-<div id="introduction-to-program-evaluation" class="section level2" number="3.5">
+<div id="introduction-to-program-evaluation" class="section level2" number="3.6">
 <h2>
-<span class="header-section-number">3.5</span> Introduction to program evaluation<a class="anchor" aria-label="anchor" href="#introduction-to-program-evaluation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.6</span> Introduction to program evaluation<a class="anchor" aria-label="anchor" href="#introduction-to-program-evaluation"><i class="fas fa-link"></i></a>
 </h2>
 <p>This section brielfy introduces the econometrics of program evaluation. Program evaluation refer to the analysis of the causal effects of some “treatments” in a broad sense. These treatment can, e.g., correspond to the implementation (or announcement) of policy measures. A comprehensive review is proposed by <span class="citation">Abadie and Cattaneo (<a href="references.html#ref-Abadie_Cattaneo_2018" role="doc-biblioref">2018</a>)</span>. A seminal book on the subject is that of <span class="citation">Angrist and Pischke (<a href="references.html#ref-angrist_mostly_2008" role="doc-biblioref">2008</a>)</span>.</p>
-<div id="presentation-of-the-problem" class="section level3" number="3.5.1">
+<div id="presentation-of-the-problem" class="section level3" number="3.6.1">
 <h3>
-<span class="header-section-number">3.5.1</span> Presentation of the problem<a class="anchor" aria-label="anchor" href="#presentation-of-the-problem"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.6.1</span> Presentation of the problem<a class="anchor" aria-label="anchor" href="#presentation-of-the-problem"><i class="fas fa-link"></i></a>
 </h3>
 <p>To begin with, let us consider a single entity. To simplify notations, we drop the entity index (<span class="math inline">\(i\)</span>). Let us denote by <span class="math inline">\(Y\)</span> the outcome variable (for the variable of interest), by <span class="math inline">\(W\)</span> is a binary variable indicating whether the considered entity has received treatment (<span class="math inline">\(W=1\)</span>) or not (<span class="math inline">\(W=0\)</span>), and by <span class="math inline">\(X\)</span> a vector of covariates, assumed to be predetermined relative to the treatment. That is, <span class="math inline">\(W\)</span> and <span class="math inline">\(X\)</span> could be correlated, but the values of <span class="math inline">\(X\)</span> have been determined before that of <span class="math inline">\(W\)</span> (in such a way that the realization of <span class="math inline">\(W\)</span> does not affect <span class="math inline">\(X\)</span>). Typcally, <span class="math inline">\(X\)</span> contains characteristics of the considered entity.</p>
 <p>We are interested in the effect of the treatment, that is:
@@ -969,21 +964,21 @@ that is easier to estimate. Indeed, a consistent estimate of <span class="math i
 \mathbb{E}(Y_0) &amp;=&amp; \mathbb{E}(Y_0|W=0)\mathbb{P}(W=0)+\mathbb{E}(Y_0|W=1)\mathbb{P}(W=1). \tag{3.11}
 \end{eqnarray}\]</span></p>
 </div>
-<div id="randomized-controlled-trials-rcts" class="section level3" number="3.5.2">
+<div id="randomized-controlled-trials-rcts" class="section level3" number="3.6.2">
 <h3>
-<span class="header-section-number">3.5.2</span> Randomized controlled trials (RCTs)<a class="anchor" aria-label="anchor" href="#randomized-controlled-trials-rcts"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.6.2</span> Randomized controlled trials (RCTs)<a class="anchor" aria-label="anchor" href="#randomized-controlled-trials-rcts"><i class="fas fa-link"></i></a>
 </h3>
 <p>In the context of Randomized controlled trials (RCTs), entities are randomly assigned to receive the treatment. As a result, we have <span class="math inline">\(\mathbb{E}(Y_1) = \mathbb{E}(Y_1|W=0) = \mathbb{E}(Y_1|W=1)\)</span> and <span class="math inline">\(\mathbb{E}(Y_0) = \mathbb{E}(Y_0|W=0) = \mathbb{E}(Y_0|W=1)\)</span>. Using this into Eqs. <a href="Panel.html#eq:EY1a">(3.10)</a> and <a href="Panel.html#eq:EY0a">(3.11)</a> yields <span class="math inline">\(ATE = \alpha\)</span>.</p>
 <p>Therefore, in this context, estimating <span class="math inline">\(\mathbb{E}(Y_1-Y_0)\)</span> amounts to computing the difference between two sample means, namely (a) the sample mean of the subset of <span class="math inline">\(Y_i\)</span>’s corresponding to the entities for which <span class="math inline">\(W_i=1\)</span>, and (b) the one for which <span class="math inline">\(W_i=0\)</span>.</p>
 <p>More accurate estimates can be obtained through regressions. Assume that the model reads:
 <span class="math display">\[
-Y_{i} = W_{i} \beta_{1} + Z_i'\boldsymbol\beta_z + \varepsilon_i,
+Y_{i} = W_{i} \beta_{1} + X_i'\boldsymbol\beta_z + \varepsilon_i,
 \]</span>
-where <span class="math inline">\(\mathbb{E}(\varepsilon_i|Z_i) = 0\)</span> (and <span class="math inline">\(W_i\)</span> is independent from <span class="math inline">\(Z_i\)</span> and <span class="math inline">\(\varepsilon_i\)</span>). In this case, we obtain a consistent estimate of <span class="math inline">\(\beta_0\)</span> by regressing <span class="math inline">\(\mathbf{y}\)</span> on <span class="math inline">\(\mathbf{X} = [\mathbf{w},\mathbf{Z}]\)</span>.</p>
+where <span class="math inline">\(\mathbb{E}(\varepsilon_i|X_i) = 0\)</span> (and <span class="math inline">\(W_i\)</span> is independent from <span class="math inline">\(X_i\)</span> and <span class="math inline">\(\varepsilon_i\)</span>). In this case, we obtain a consistent estimate of <span class="math inline">\(\beta_1\)</span> by regressing <span class="math inline">\(\mathbf{y}\)</span> on <span class="math inline">\(\mathbf{Z} = [\mathbf{w},\mathbf{X}]\)</span>.</p>
 </div>
-<div id="difference-in-difference-did-approach" class="section level3" number="3.5.3">
+<div id="difference-in-difference-did-approach" class="section level3" number="3.6.3">
 <h3>
-<span class="header-section-number">3.5.3</span> Difference-in-Difference (DiD) approach<a class="anchor" aria-label="anchor" href="#difference-in-difference-did-approach"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.6.3</span> Difference-in-Difference (DiD) approach<a class="anchor" aria-label="anchor" href="#difference-in-difference-did-approach"><i class="fas fa-link"></i></a>
 </h3>
 <p>The DiD approach is a popular methodology implemented in cases where <span class="math inline">\(W\)</span> cannot be considered as an independent variable. It exploits two dimensions: entities (<span class="math inline">\(i\)</span>), and time (<span class="math inline">\(t\)</span>). To simplify the exposition, we consider only two periods here (<span class="math inline">\(t=0\)</span> and <span class="math inline">\(t=1\)</span>).</p>
 <p>Consider the following model:
@@ -1016,11 +1011,11 @@ Figure 3.6: Source: Abadie et al., (1998).
 <p>In practice, implementing this approach consists in running a linear regression of the type of Eq. <a href="Panel.html#eq:DiD">(3.12)</a>. These regressions also usually involve controls on top of the fixed effects <span class="math inline">\(\mu_i\)</span>. As illustrated in the next subsection, the parameter of interest (<span class="math inline">\(\beta_1\)</span>) is often associated with an interaction term.</p>
 <!-- Diff-in-Diff: [Card and Krueger (1994)](https://towardsdatascience.com/analyze-causal-effect-using-diff-in-diff-model-85e07b17e7b7) -->
 </div>
-<div id="application-of-the-did-approach" class="section level3" number="3.5.4">
+<div id="application-of-the-did-approach" class="section level3" number="3.6.4">
 <h3>
-<span class="header-section-number">3.5.4</span> Application of the DiD approach<a class="anchor" aria-label="anchor" href="#application-of-the-did-approach"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.6.4</span> Application of the DiD approach<a class="anchor" aria-label="anchor" href="#application-of-the-did-approach"><i class="fas fa-link"></i></a>
 </h3>
-<p>This example is based on the data used in <span class="citation">Meyer, Viscusi, and Durbin (<a href="references.html#ref-Meyer_Viscusi_Durbin_1995" role="doc-biblioref">1995</a>)</span>. This dataset is part of the <code>wooldridge</code> package. This paper examines the effect of workers’ compensation for injury on time out of work. It exploits a <strong>natural experiment</strong> approach of comparing individuals injured before and after increases in the maximum weekly benefit amount. Specifically, in 1980, the cap on weekly earnings covered by worker’s compensation was increased. Let us check whether this new policy was followed by an increase in the amount of time workers spent unemployed (for example, higher compensation may reduce workers’ incentives to avoid injury).</p>
+<p>This example is based on the data used in <span class="citation">Meyer, Viscusi, and Durbin (<a href="references.html#ref-Meyer_Viscusi_Durbin_1995" role="doc-biblioref">1995</a>)</span>. This dataset is part of the <code>wooldridge</code> package. This paper examines the effect of workers’ compensation for injury on time out of work. It exploits a <strong>natural experiment</strong> approach of comparing individuals injured before and after increases in the maximum weekly benefit amount. Specifically, in 1980, the cap on weekly earnings covered by worker’s compensation was increased in Kentucky and Michigan. Let us check whether this new policy was followed by an increase in the amount of time workers spent unemployed (for example, higher compensation may reduce workers’ incentives to avoid injury).</p>
 <p>As shown in Figure <a href="Panel.html#fig:figMeyer">3.7</a>, the measure has only affected high-earning workers. The idea exploited by <span class="citation">Meyer, Viscusi, and Durbin (<a href="references.html#ref-Meyer_Viscusi_Durbin_1995" role="doc-biblioref">1995</a>)</span> was to compare the increase in time out of work before-after 1980 for higher-earnings workers on the one hand (entities who received the treatment) and low-earnings workers on the other hand (control group).</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:figMeyer"></span>
@@ -1031,7 +1026,7 @@ Figure 3.7: Source: Meyer et al., (1995).
 <p>The next lines of codes replicate some of their results. The dependent variable is the logarithm of the duration of benefits. For more information use <code><a href="https://justinmshea.github.io/wooldridge/reference/injury.html">?injury</a></code>, after having loaded the <code>wooldridge</code> library.</p>
 <p>In the table of results below, the parameter of interest is the one associated with the interaction term <code>afchnge:highearn</code>. Columns 2 and 3 correspond to the first two column of Table 6 in <span class="citation">Meyer, Viscusi, and Durbin (<a href="references.html#ref-Meyer_Viscusi_Durbin_1995" role="doc-biblioref">1995</a>)</span>.</p>
 <!-- See [this page](https://evalf20.classes.andrewheiss.com/example/diff-in-diff/) -->
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://justinmshea.github.io/wooldridge/">wooldridge</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">injury</span><span class="op">)</span></span>
 <span><span class="va">injury</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">injury</span>,<span class="va">ky</span><span class="op">==</span><span class="fl">1</span><span class="op">)</span></span>
@@ -1097,18 +1092,17 @@ Figure 3.7: Source: Meyer et al., (1995).
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#Panel"><span class="header-section-number">3</span> Panel regressions</a></li>
+<li><a class="nav-link" href="#specification-and-notations"><span class="header-section-number">3.1</span> Specification and notations</a></li>
+<li><a class="nav-link" href="#three-standard-cases"><span class="header-section-number">3.2</span> Three standard cases</a></li>
+<li><a class="nav-link" href="#FixedEffect"><span class="header-section-number">3.3</span> Estimation of Fixed-Effects Models</a></li>
+<li><a class="nav-link" href="#RandomEffect"><span class="header-section-number">3.4</span> Estimation of random effects models</a></li>
+<li><a class="nav-link" href="#DynPanel"><span class="header-section-number">3.5</span> Dynamic Panel Regressions</a></li>
 <li>
-<a class="nav-link" href="#specification-and-notations"><span class="header-section-number">3.1</span> Specification and notations</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#three-standard-cases"><span class="header-section-number">3.1.1</span> Three standard cases</a></li></ul>
-</li>
-<li><a class="nav-link" href="#FixedEffect"><span class="header-section-number">3.2</span> Estimation of Fixed-Effects Models</a></li>
-<li><a class="nav-link" href="#RandomEffect"><span class="header-section-number">3.3</span> Estimation of random effects models</a></li>
-<li><a class="nav-link" href="#DynPanel"><span class="header-section-number">3.4</span> Dynamic Panel Regressions</a></li>
-<li>
-<a class="nav-link" href="#introduction-to-program-evaluation"><span class="header-section-number">3.5</span> Introduction to program evaluation</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#presentation-of-the-problem"><span class="header-section-number">3.5.1</span> Presentation of the problem</a></li>
-<li><a class="nav-link" href="#randomized-controlled-trials-rcts"><span class="header-section-number">3.5.2</span> Randomized controlled trials (RCTs)</a></li>
-<li><a class="nav-link" href="#difference-in-difference-did-approach"><span class="header-section-number">3.5.3</span> Difference-in-Difference (DiD) approach</a></li>
-<li><a class="nav-link" href="#application-of-the-did-approach"><span class="header-section-number">3.5.4</span> Application of the DiD approach</a></li>
+<a class="nav-link" href="#introduction-to-program-evaluation"><span class="header-section-number">3.6</span> Introduction to program evaluation</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#presentation-of-the-problem"><span class="header-section-number">3.6.1</span> Presentation of the problem</a></li>
+<li><a class="nav-link" href="#randomized-controlled-trials-rcts"><span class="header-section-number">3.6.2</span> Randomized controlled trials (RCTs)</a></li>
+<li><a class="nav-link" href="#difference-in-difference-did-approach"><span class="header-section-number">3.6.3</span> Difference-in-Difference (DiD) approach</a></li>
+<li><a class="nav-link" href="#application-of-the-did-approach"><span class="header-section-number">3.6.4</span> Application of the DiD approach</a></li>
 </ul>
 </li>
 </ul>
@@ -1127,7 +1121,7 @@ Figure 3.7: Source: Meyer et al., (1995).
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Applied Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-10-05.</p>
+    <p>"<strong>Applied Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-11-09.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

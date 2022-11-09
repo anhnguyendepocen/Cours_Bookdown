@@ -123,7 +123,7 @@ $$
 $$
 
 
-### Three standard cases
+## Three standard cases
 
 There are three typical situations:
 
@@ -133,7 +133,7 @@ There are three typical situations:
 $$
 y_{i,t} = \bv{x}'_{i,t}\boldsymbol\beta + \alpha +  \underbrace{{\color{blue}u_i + \varepsilon_{i,t}}}_{\mbox{compound error}},
 $$
-where $\alpha = \mathbb{E}(\bv{z}'_{i}\boldsymbol\alpha)$ and $u_i = \bv{z}'_{i}\boldsymbol\alpha - \mathbb{E}(\bv{z}'_{i}\boldsymbol\alpha) \perp \bv{x}_i$. In that case, the OLS is consistent, but not efficient. GLS can be used to gain efficiencies over OLS (see Section \@ref(#GLS) for a presentation of the GLS approach).
+where $\alpha = \mathbb{E}(\bv{z}'_{i}\boldsymbol\alpha)$ and $u_i = \bv{z}'_{i}\boldsymbol\alpha - \mathbb{E}(\bv{z}'_{i}\boldsymbol\alpha) \perp \bv{x}_i$. In that case, the OLS is consistent, but not efficient. GLS can be used to gain efficiencies over OLS (see Section \@ref(GLS) for a presentation of the GLS approach).
 
 
 ## Estimation of Fixed-Effects Models {#FixedEffect}
@@ -160,7 +160,7 @@ $$
 
 These assumptions are analogous to those introduced in the standard linear regression:
 
-(i) $\leftrightarrow$ \@ref(hyp:fullrank), (ii) $\leftrightarrow$ \@ref(hyp:exogeneity), (iii) $\leftrightarrow$  \@ref(hyp:homoskedasticity) + \@ref(hyp:noncorrelResid).
+(i) $\leftrightarrow$ Hyp. \@ref(hyp:fullrank), (ii) $\leftrightarrow$ Hyp. \@ref(hyp:exogeneity), (iii) $\leftrightarrow$ Hyp. \@ref(hyp:homoskedasticity) + \@ref(hyp:noncorrelResid).
 
 
 In matrix form, for a given $i$, the model writes:
@@ -461,7 +461,7 @@ and therefore use $s^2_{pooled} - \hat{\sigma}_e^2$ as an approximation to $\sig
 
 Let us come back to Example \@ref(exm:JSTPanel) (relationship between changes in housing prices and interest rates). In the following, we use the random effect specification; and compare the results with those obtained with the pooled regression and with the fixed-effect model. For that, we use the function `plm` of the package of the same name. (Note that `eq.FE` is similar to `eq1` in Example \@ref(exm:JSTPanel).)
 
-```{r JSTpanel2, warning=FALSE}
+```{r JSTpanel2, warning=FALSE,message=FALSE}
 library(plm);library(stargazer)
 eq.RE <- plm(dhpreal ~ stir + ltrate,data=JST,index=c("iso","YEAR"),
              model="random",effect="twoways")
@@ -520,7 +520,7 @@ stargazer::stargazer(eq_FE, eq_noFE, eq_FE, eq_noFE, type = "text",
 ```
 
 
-Figure \@ref(fig:airbnb3) compares the residuals with and without fixed effects. The sizes of the circles are proportional to the absolute values of the residuals, the color indicates the sign (blue for negative).
+Figure \@ref(fig:airbnb3) compares the residuals with and without fixed effects. The sizes of the circles are proportional to the absolute values of the residuals, the color indicates the sign (blue for positive).
 
 ```{r airbnb3, echo=FALSE, warning=FALSE, message=FALSE, fig.align = 'left-aligned', out.width = "95%", fig.cap = "Regression residuals. The sizes of the circles are proportional to the absolute values of the residuals, the color indicates the sign (blue for negative)."}
 par(mfrow=c(1,2))
@@ -664,7 +664,7 @@ $$
 \tilde{\varepsilon}_{i,t} = \varepsilon_{i,t} - \frac{1}{T} \sum_{s=1}^{T} \varepsilon_{i,s}.
 $$
 
-The previous equation shows that the *within-group* estimator (LSDV) introduces all realizations of the $\varepsilon_{i,t}$ errors into the transformed error term ($\tilde{\varepsilon}_{i,t}$). As a result, in large $n$, fixed $T$ panels, it is consistent only if all the right-hand-side variables of the regression are strictly exogenous (i.e., do not correlate to past, present, and future errors $\varepsilon_{i,t}$).[^footnote1] This is not the case when there are lags of $y_{i,t}$ on the right-hand side of the regression formula.
+The previous equation shows that the *within-group* estimator (LSDV) introduces all realizations of the $\varepsilon_{i,t}$ errors into the transformed error term ($\tilde{\varepsilon}_{i,t}$). As a result, in large-$n$ fixed-$T$ panels, it is consistent only if all the right-hand-side variables of the regression are strictly exogenous (i.e., do not correlate to past, present, and future errors $\varepsilon_{i,t}$).[^footnote1] This is not the case when there are lags of $y_{i,t}$ on the right-hand side of the regression formula.
 
 [^footnote1]: Although the bias may vanish for large $T$'s, it does not if $n$ only goes to infinity.
 
@@ -889,9 +889,9 @@ Therefore, in this context, estimating $\mathbb{E}(Y_1-Y_0)$ amounts to computin
 
 More accurate estimates can be obtained through regressions. Assume that the model reads:
 $$
-Y_{i} = W_{i} \beta_{1} + Z_i'\boldsymbol\beta_z + \varepsilon_i,
+Y_{i} = W_{i} \beta_{1} + X_i'\boldsymbol\beta_z + \varepsilon_i,
 $$
-where $\mathbb{E}(\varepsilon_i|Z_i) = 0$ (and $W_i$ is independent from $Z_i$ and $\varepsilon_i$). In this case, we obtain a consistent estimate of $\beta_0$ by regressing $\bv{y}$ on $\bv{X} = [\bv{w},\bv{Z}]$.
+where $\mathbb{E}(\varepsilon_i|X_i) = 0$ (and $W_i$ is independent from $X_i$ and $\varepsilon_i$). In this case, we obtain a consistent estimate of $\beta_1$ by regressing $\bv{y}$ on $\bv{Z} = [\bv{w},\bv{X}]$.
 
 ### Difference-in-Difference (DiD) approach
 
@@ -937,7 +937,7 @@ In practice, implementing this approach consists in running a linear regression 
 
 ### Application of the DiD approach
 
-This example is based on the data used in @Meyer_Viscusi_Durbin_1995. This dataset is part of the `wooldridge` package. This paper examines the effect of workers' compensation for injury on time out of work. It exploits a **natural experiment** approach of comparing individuals injured before and after increases in the maximum weekly benefit amount. Specifically, in 1980, the cap on weekly earnings covered by worker’s compensation was increased. Let us check whether this new policy was followed by an increase in the amount of time workers spent unemployed (for example, higher compensation may reduce workers' incentives to avoid injury).
+This example is based on the data used in @Meyer_Viscusi_Durbin_1995. This dataset is part of the `wooldridge` package. This paper examines the effect of workers' compensation for injury on time out of work. It exploits a **natural experiment** approach of comparing individuals injured before and after increases in the maximum weekly benefit amount. Specifically, in 1980, the cap on weekly earnings covered by worker’s compensation was increased in Kentucky and Michigan. Let us check whether this new policy was followed by an increase in the amount of time workers spent unemployed (for example, higher compensation may reduce workers' incentives to avoid injury).
 
 As shown in Figure \@ref(fig:figMeyer), the measure has only affected high-earning workers. The idea exploited by @Meyer_Viscusi_Durbin_1995 was to compare the increase in time out of work before-after 1980 for higher-earnings workers on the one hand (entities who received the treatment) and low-earnings workers on the other hand (control group).
 

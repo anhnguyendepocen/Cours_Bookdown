@@ -310,9 +310,11 @@ We consider three specifications. The first one (`eq0`), with no explanatory var
 
 ```{r Probitlending2,warning=FALSE}
 eq0 <- glm(Default ~ 1,data=credit,family=binomial(link="probit"))
-eq1 <- glm(Default ~ log(loan_amnt) + amt2income + delinq_2yrs + log(annual_inc)+ I(log(annual_inc)^2),
+eq1 <- glm(Default ~ log(loan_amnt) + amt2income + delinq_2yrs + 
+             log(annual_inc)+ I(log(annual_inc)^2),
            data=credit,family=binomial(link="probit"))
-eq2 <- glm(Default ~ grade + log(loan_amnt) + amt2income + delinq_2yrs + log(annual_inc)+ I(log(annual_inc)^2),
+eq2 <- glm(Default ~ grade + log(loan_amnt) + amt2income + delinq_2yrs + 
+             log(annual_inc)+ I(log(annual_inc)^2),
            data=credit,family=binomial(link="probit"))
 stargazer::stargazer(eq0,eq1,eq2,type="text",no.space = TRUE)
 ```
@@ -332,7 +334,7 @@ Let us now compute the (average) marginal effects, using method ii of Section \@
 mean(dnorm(predict(eq2)),na.rm=TRUE)*eq2$coefficients
 ```
 
-There is an issue for the `annual_inc` variable. Indeed, the previous computation does not realize that this variable appears twice among the explanatory variables (through `log(annual_inc)` and `I(log(annual_inc)^2)`). To address this, one can proceed as follows: (1) we construct a new counterfactual dataset where annual incomes are increase by 1\%, (2) we use the model to compute model-implied probabilities of default on this new dataset and (3), we subtract the probabilities resulting from the original dataset from these counterfactual probabilities:
+There is an issue for the `annual_inc` variable. Indeed, the previous computation does not realize that this variable appears twice among the explanatory variables (through `log(annual_inc)` and `I(log(annual_inc)^2)`). To address this, one can proceed as follows: (1) we construct a new counterfactual dataset where annual incomes are increased by 1\%, (2) we use the model to compute model-implied probabilities of default on this new dataset and (3), we subtract the probabilities resulting from the original dataset from these counterfactual probabilities:
 
 ```{r Probitlending4}
 new_credit <- credit
@@ -636,7 +638,7 @@ where $\overline{\boldsymbol\theta}^{(i)}_{s}$ does not depend on $j$. Note that
 
 **Random Utility models**
 
-The general multinomial logit model may arise as the natural specification arising in strucrural contexts where agents compare (random) utilities associated with $J$ potential outcomes (see Section \@ref(latent) for the binary situation).
+The general multinomial logit model may arise as the natural specification arising in structural contexts where agents compare (random) utilities associated with $J$ potential outcomes (see Section \@ref(latent) for the binary situation).
 
 Let's drop the $i$ subscript for simplicity and assume that the utility derived form choosing $j$ is given by $U_j = V_j + \varepsilon_j$, where $V_j$ is deterministic (may depend on observed covariates) and $\varepsilon_j$ is stochastic. We have (with obvious notations):
 \begin{eqnarray*}
