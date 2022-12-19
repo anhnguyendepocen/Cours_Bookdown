@@ -131,7 +131,7 @@
 
 \title{Applied Econometrics}
 \author{Jean-Paul Renne}
-\date{2022-11-09}
+\date{2022-11-13}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -3692,10 +3692,6 @@ Under regularity conditions (Assumptions \ref{hyp:MLEregularity}), the MLE is:
   \begin{equation}
   \boxed{\sqrt{n}(\boldsymbol\theta_{MLE} - \boldsymbol\theta_{0}) \overset{d}{\rightarrow} \mathcal{N}(0,\mathcal{I}_Y(\boldsymbol\theta_0)^{-1}).} \label{eq:normMLE}
   \end{equation}
-  where
-  \[
-  \mathbf{I}(\boldsymbol\theta_0) = - \mathbb{E}_0 \left( \frac{\partial^2 \log \mathcal{L}({\boldsymbol\theta_0};\mathbf{y})}{\partial \boldsymbol\theta \partial \boldsymbol\theta'}\right) = n \mathcal{I}_Y(\boldsymbol\theta_0). \quad \mbox{(Fisher Info. matrix)}
-  \]
 \item
   \textbf{Asymptotically efficient}: \(\boldsymbol\theta_{MLE}\) is asymptotically efficient and achieves the Freechet-Darmois-Cramer-Rao lower bound for consistent estimators.
 \item
@@ -4568,7 +4564,7 @@ R^2_{MF} = 1 - \frac{\log \mathcal{L}(\boldsymbol\theta;\mathbf{y})}{\log \mathc
 Intuitively, \(R^2_{MF}=0\) if the explanatory variables do not convey any information on the outcome \(y\). Indeed, in this case, the model is not better than the reference model, that simply captures the fraction of \(y_i\)'s that are equal to 1.
 
 \begin{example}[Credit and defaults (Lending-club dataset)]
-\protect\hypertarget{exm:creditProbit}{}\label{exm:creditProbit}This example makes use of the \texttt{credit} data of package \texttt{AEC}. The objective is to model the default probabilities of lenders.
+\protect\hypertarget{exm:creditProbit}{}\label{exm:creditProbit}This example makes use of the \texttt{credit} data of package \texttt{AEC}. The objective is to model the default probabilities of borrowers.
 
 Let us first represent the relationship between the fraction of households that have defaulted on their loan and their annual income:
 
@@ -4878,9 +4874,9 @@ We have:
 \begin{eqnarray*}
 g_j(\mathbf{x}_i;\boldsymbol\theta,\boldsymbol\alpha) = \mathbb{P}(y_i = j | \mathbf{x}_i) &=& \mathbb{P}(\alpha_{j-1} <y^*_i < \alpha_{j} |\mathbf{x}_i) \\
 &=& \mathbb{P}(\alpha_{j-1} - \boldsymbol\theta'\mathbf{x}_i  <\varepsilon_i < \alpha_{j} - \boldsymbol\theta'\mathbf{x}_i) \\
-&=& F(\alpha_{j} - \boldsymbol\theta'\mathbf{x}_i) - F(\alpha_{j-1} - \boldsymbol\theta'\mathbf{x}_i),
+&=& \Phi(\alpha_{j} - \boldsymbol\theta'\mathbf{x}_i) - \Phi(\alpha_{j-1} - \boldsymbol\theta'\mathbf{x}_i),
 \end{eqnarray*}
-where \(F\) is the c.d.f. of \(\mathcal{N}(0,1)\).
+where \(\Phi\) is the c.d.f. of \(\mathcal{N}(0,1)\).
 
 If, for all \(i\), one of the components of \(\mathbf{x}_i\) is equal to 1 (which is what is done in linear regression to introduce an intercept in the specification), then one of the \(\alpha_j\) (\(j\in\{1,\dots,J-1\}\)) is not identified. One can then arbitrarily set \(\alpha_1=0\). This is what is done in the binary logit/probit cases.
 
@@ -4893,7 +4889,7 @@ Let us stress that we have two types of parameters to estimate: those included i
 
 The estimated values of the \(\theta_j\)'s are slightly more complicated to interpret (at least in term of sign) than in the binary case. Indeed, we have:
 \[
-\mathbb{P}(y_i \le j | \mathbf{x}_i) = F(\alpha_{j} - \boldsymbol\theta'\mathbf{x}_i) \Rightarrow \frac{\partial \mathbb{P}(y_i \le j | \mathbf{x}_i)}{\mathbf{x}_i} =- \underbrace{F'(\alpha_{j} - \boldsymbol\theta'\mathbf{x}_i)}_{>0}\boldsymbol\theta.
+\mathbb{P}(y_i \le j | \mathbf{x}_i) = \Phi(\alpha_{j} - \boldsymbol\theta'\mathbf{x}_i) \Rightarrow \frac{\partial \mathbb{P}(y_i \le j | \mathbf{x}_i)}{\mathbf{x}_i} =- \underbrace{\Phi'(\alpha_{j} - \boldsymbol\theta'\mathbf{x}_i)}_{>0}\boldsymbol\theta.
 \]
 Hence the sign of \(\theta_k\) indicates whether \(\mathbb{P}(y_i \le j | \mathbf{x}_i)\) increases or decreases w.r.t. \(x_{i,k}\) (the \(k^{th}\) component of \(\mathbf{x}_i\)). By contrast:
 \[

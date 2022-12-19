@@ -342,7 +342,7 @@ R^2_{MF} = 1 - \frac{\log \mathcal{L}(\boldsymbol\theta;\mathbf{y})}{\log \mathc
 \]</span>
 Intuitively, <span class="math inline">\(R^2_{MF}=0\)</span> if the explanatory variables do not convey any information on the outcome <span class="math inline">\(y\)</span>. Indeed, in this case, the model is not better than the reference model, that simply captures the fraction of <span class="math inline">\(y_i\)</span>’s that are equal to 1.</p>
 <div class="example">
-<p><span id="exm:creditProbit" class="example"><strong>Example 5.3  (Credit and defaults (Lending-club dataset)) </strong></span>This example makes use of the <code>credit</code> data of package <code>AEC</code>. The objective is to model the default probabilities of lenders.</p>
+<p><span id="exm:creditProbit" class="example"><strong>Example 5.3  (Credit and defaults (Lending-club dataset)) </strong></span>This example makes use of the <code>credit</code> data of package <code>AEC</code>. The objective is to model the default probabilities of borrowers.</p>
 <p>Let us first represent the relationship between the fraction of households that have defaulted on their loan and their annual income:</p>
 <div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
@@ -566,9 +566,9 @@ with <span class="math inline">\(\varepsilon_i \sim \,i.i.d.\,\mathcal{N}(0,1)\)
 <span class="math display">\[\begin{eqnarray*}
 g_j(\mathbf{x}_i;\boldsymbol\theta,\boldsymbol\alpha) = \mathbb{P}(y_i = j | \mathbf{x}_i) &amp;=&amp; \mathbb{P}(\alpha_{j-1} &lt;y^*_i &lt; \alpha_{j} |\mathbf{x}_i) \\
 &amp;=&amp; \mathbb{P}(\alpha_{j-1} - \boldsymbol\theta'\mathbf{x}_i  &lt;\varepsilon_i &lt; \alpha_{j} - \boldsymbol\theta'\mathbf{x}_i) \\
-&amp;=&amp; F(\alpha_{j} - \boldsymbol\theta'\mathbf{x}_i) - F(\alpha_{j-1} - \boldsymbol\theta'\mathbf{x}_i),
+&amp;=&amp; \Phi(\alpha_{j} - \boldsymbol\theta'\mathbf{x}_i) - \Phi(\alpha_{j-1} - \boldsymbol\theta'\mathbf{x}_i),
 \end{eqnarray*}\]</span>
-where <span class="math inline">\(F\)</span> is the c.d.f. of <span class="math inline">\(\mathcal{N}(0,1)\)</span>.</p>
+where <span class="math inline">\(\Phi\)</span> is the c.d.f. of <span class="math inline">\(\mathcal{N}(0,1)\)</span>.</p>
 <p>If, for all <span class="math inline">\(i\)</span>, one of the components of <span class="math inline">\(\mathbf{x}_i\)</span> is equal to 1 (which is what is done in linear regression to introduce an intercept in the specification), then one of the <span class="math inline">\(\alpha_j\)</span> (<span class="math inline">\(j\in\{1,\dots,J-1\}\)</span>) is not identified. One can then arbitrarily set <span class="math inline">\(\alpha_1=0\)</span>. This is what is done in the binary logit/probit cases.</p>
 <p>This model can be estimated by maximizing the likelihood function (see Section <a href="estimation-methods.html#secMLE">4.2</a>). This function is given by:
 <span class="math display" id="eq:multipleLogLik">\[\begin{equation}
@@ -577,7 +577,7 @@ where <span class="math inline">\(F\)</span> is the c.d.f. of <span class="math 
 <p>Let us stress that we have two types of parameters to estimate: those included in vector <span class="math inline">\(\boldsymbol\theta\)</span>, and the <span class="math inline">\(\alpha_j\)</span>’s, gathered in vector <span class="math inline">\(\boldsymbol\alpha\)</span>.</p>
 <p>The estimated values of the <span class="math inline">\(\theta_j\)</span>’s are slightly more complicated to interpret (at least in term of sign) than in the binary case. Indeed, we have:
 <span class="math display">\[
-\mathbb{P}(y_i \le j | \mathbf{x}_i) = F(\alpha_{j} - \boldsymbol\theta'\mathbf{x}_i) \Rightarrow \frac{\partial \mathbb{P}(y_i \le j | \mathbf{x}_i)}{\mathbf{x}_i} =- \underbrace{F'(\alpha_{j} - \boldsymbol\theta'\mathbf{x}_i)}_{&gt;0}\boldsymbol\theta.
+\mathbb{P}(y_i \le j | \mathbf{x}_i) = \Phi(\alpha_{j} - \boldsymbol\theta'\mathbf{x}_i) \Rightarrow \frac{\partial \mathbb{P}(y_i \le j | \mathbf{x}_i)}{\mathbf{x}_i} =- \underbrace{\Phi'(\alpha_{j} - \boldsymbol\theta'\mathbf{x}_i)}_{&gt;0}\boldsymbol\theta.
 \]</span>
 Hence the sign of <span class="math inline">\(\theta_k\)</span> indicates whether <span class="math inline">\(\mathbb{P}(y_i \le j | \mathbf{x}_i)\)</span> increases or decreases w.r.t. <span class="math inline">\(x_{i,k}\)</span> (the <span class="math inline">\(k^{th}\)</span> component of <span class="math inline">\(\mathbf{x}_i\)</span>). By contrast:
 <span class="math display">\[
@@ -1829,7 +1829,7 @@ Typically, <span class="math inline">\(f_1\)</span> corresponds to a logit model
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Applied Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-11-09.</p>
+    <p>"<strong>Applied Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2022-11-13.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

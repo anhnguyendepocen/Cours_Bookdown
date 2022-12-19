@@ -521,10 +521,6 @@ b. **Asymptotically normal**:
 \begin{equation}
 \boxed{\sqrt{n}(\boldsymbol\theta_{MLE} - \boldsymbol\theta_{0}) \overset{d}{\rightarrow} \mathcal{N}(0,\mathcal{I}_Y(\boldsymbol\theta_0)^{-1}).} (\#eq:normMLE)
 \end{equation}
-where
-$$
-\bv{I}(\boldsymbol\theta_0) = - \mathbb{E}_0 \left( \frac{\partial^2 \log \mathcal{L}({\boldsymbol\theta_0};\bv{y})}{\partial \boldsymbol\theta \partial \boldsymbol\theta'}\right) = n \mathcal{I}_Y(\boldsymbol\theta_0). \quad \mbox{(Fisher Info. matrix)}
-$$
 c. **Asymptotically efficient**: $\boldsymbol\theta_{MLE}$ is asymptotically efficient and achieves the Freechet-Darmois-Cramer-Rao lower bound for consistent estimators.
 d. **Invariant**: The MLE of $g(\boldsymbol\theta_0)$ is $g(\boldsymbol\theta_{MLE})$ if $g$ is a continuous and continuously differentiable function.
 :::

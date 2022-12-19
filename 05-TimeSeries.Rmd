@@ -454,10 +454,18 @@ F = \left[
 
 Note that this matrix $F$ is such that if $y_t$ follows Eq. \@ref(eq:AR), then  process $\bv{y}_t$ follows: 
 $$
-\bv{y}_t = F \bv{y}_{t-1} + \boldsymbol\xi_t
+\bv{y}_t = \bv{c} + F \bv{y}_{t-1} + \boldsymbol\xi_t
 $$
 with
 $$
+\bv{c} =
+\left[\begin{array}{c}
+c\\
+0\\
+\vdots\\
+0
+\end{array}\right],
+\quad
 \boldsymbol\xi_t =
 \left[\begin{array}{c}
 \varepsilon_t\\
@@ -587,10 +595,10 @@ and
 
 In the following lines of codes, we compute the eigenvalues of the $F$ matrices associated with the following processes (where $\varepsilon_t$ is a white noise):
 \begin{eqnarray*}
-x_t &=& 0.9 y_{t-1} -0.2 x_{t-2} + \varepsilon_t\\
+x_t &=& 0.9 x_{t-1} -0.2 x_{t-2} + \varepsilon_t\\
 y_t &=& 1.1 y_{t-1} -0.3 y_{t-2} + \varepsilon_t\\
-w_t &=& 1.4 y_{t-1} -0.7 w_{t-2} + \varepsilon_t\\
-z_t &=& 0.9 y_{t-1} +0.2 z_{t-2} + \varepsilon_t
+w_t &=& 1.4 w_{t-1} -0.7 w_{t-2} + \varepsilon_t\\
+z_t &=& 0.9 z_{t-1} +0.2 z_{t-2} + \varepsilon_t
 \end{eqnarray*}
 
 ```{r simulAR}
@@ -694,7 +702,7 @@ y_{t+h} = c + \phi_1 y_{t+h-1}+\dots+ \phi_p  y_{t+h-p} + \varepsilon_{t+h}.
 $$
 The residuals of the latter regressions ($\varepsilon_{t+h}$) are uncorrelated to $y_t$. Then the partial autocorrelation is zero for $h>p$.
 
-Besides, it can be shown that $\phi_{p,p}=\phi_p$. Hence  $\phi_{p,p}=\phi_p$ but  $\phi_{h,h}=0$ for $h>p$. This can be used to determine the order of a AR process. By contrast (importantly) if $y_t$ follows an MA(q) process, then $\phi_{k,k}$ asymptotically approaches zero instead of cutting off abruptly.
+Besides, it can be shown that $\phi_{p,p}=\phi_p$. Hence  $\phi_{p,p}=\phi_p$ but  $\phi_{h,h}=0$ for $h>p$. This can be used to determine the order of an AR process. By contrast (importantly) if $y_t$ follows an MA(q) process, then $\phi_{k,k}$ asymptotically approaches zero instead of cutting off abruptly.
 
 As illustrated below, functions `acf` and `pacf` can be conveniently used to employ the (P)ACF approach. (Note also the use of function `sim.arma` to simulate ARMA processes.)
 
@@ -1799,9 +1807,7 @@ where $\phi_i$ is the $i^{th}$ row of $\Phi_1$, and where $\varepsilon_{i,t}$ is
 
 Since $y_{t-1}$ (the regressor) is correlated to $\eta_{t-1}$, it is also correlated to $\varepsilon_{i,t}$.
 
-The OLS regression of $y_{i,t}$ on $y_{t-1}$ yields a biased estimator of $\phi_i$.
-
-Estimation methods of VARMA models will be presented in Section \@ref(Section:AlternII).
+The OLS regression of $y_{i,t}$ on $y_{t-1}$ yields a biased estimator of $\phi_i$. Hence, SVARMA models cannot be consistently estimated by simple OLS regressions (contrary to VAR models, as we will see in the next section); instrumental-variable approaches can be employed to estimate SVARMA models.
 
 
 
@@ -2072,8 +2078,6 @@ where RSS is the Restricted sum of squared residuals and USS is the Unrestricted
 
 
 ### Identification problem and standard identification techniques
-
-**The Identification Issue**
 
 In Section \@ref(estimVAR), we have seen how to estimate $\mathbb{V}ar(\varepsilon_t) =\Omega$ and the $\Phi_k$ matrices in the context of a VAR model. But the IRFs are functions of $B$ and the $\Phi_k$'s, not of $\Omega$ the $\Phi_k$'s (see Section \@ref(IRFSVARMA)). We have $\Omega = BB'$, but this is not sufficient to recover $B$.
 
@@ -2388,7 +2392,7 @@ plot(Y[,2],type="l",lwd=2,xlab="",ylab="",main="Supply shock on UNEMP")
 To identifiy the structural shocks, we need to find a matrix $B$ that satisfies $\Omega = BB'$ (with $\Omega = \mathbb{V}ar(\varepsilon_t)$) and other restrictions. Indeed, as explained above, $\Omega = BB'$ is not sufficient to identify $B$ since, if we take any orthogonal matrix $Q$ (see Def. \@ref(def:orthogonal)), then $\mathcal{P}=BQ$ also satisfies $\Omega = \mathcal{P}\mathcal{P}'$.
 
 :::{.definition #orthogonal name="Orthogonal matrix"}
-An orthogonal matri $Q$ is a matrix such that $QQ' = I,$ i.e., all columns (rows) of $Q$ are are
+An orthogonal matrix $Q$ is a matrix such that $QQ' = I,$ i.e., all columns (rows) of $Q$ are are
 orthogonal and unit vectors:
 \[q_i'q_j=0\text{ if }i\neq j\text{ and }q_i'q_j=1\text{ if }i= j,\]
 where $q_i$ is the $i^{th}$ column of $Q$.
