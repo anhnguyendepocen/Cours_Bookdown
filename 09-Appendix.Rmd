@@ -355,6 +355,18 @@ $Z$ follows a $\chi^2$ distribution with $\nu$ d.f. if $Z = \sum_{i=1}^{\nu}X_i^
 We have $\mathbb{E}(Z)=\nu$. (See Table \@ref(tab:Chi2) for quantiles.)
 :::
 
+:::{.definition #Cauchy name="Cauchy distribution"}
+The probability distribution function of the Cauchy distribution defined by a location parameter $\mu$ and a scale parameter $\gamma$ is:
+$$
+f(x) = \frac{1}{\pi \gamma \left(1 + \left[\frac{x-\mu}{\gamma}\right]^2\right)}.
+$$
+The mean and variance of this distribution are undefined.
+```{r Cauchy, fig.cap="Pdf of the Cauchy distribution ($\\mu=0$, $\\gamma=1$).", fig.asp = .6, out.width = "95%", fig.align = "left-aligned",echo=FALSE,warning=FALSE}
+x <- seq(-5,5,by=.1)
+plot(x,dcauchy(x),type="l",lwd=2,xlab="",ylab="")
+```
+:::
+
 :::{.proposition #waldtypeproduct name="Inner product of a multivariate Gaussian variable"}
 Let $X$ be a $n$-dimensional multivariate Gaussian variable: $X \sim \mathcal{N}(0,\Sigma)$. We have:
 $$
@@ -381,7 +393,7 @@ G(\bv{Y};\boldsymbol\rho) &\equiv&  G(Y_{1,1},\dots,Y_{1,K_1},\dots,Y_{J,1},\dot
 :::
 
 
-### Stochastic convergences
+### Stochastic convergences {#StochConvergences}
 
 :::{.proposition #chebychev name="Chebychev's inequality"}
 If $\mathbb{E}(|X|^r)$ is finite for some $r>0$ then:
@@ -514,7 +526,7 @@ $$
 
 
 
-### Central limit theorem
+### Central limit theorem {#CLTappend}
 
 :::{.theorem #LLNappendix name="Law of large numbers"}
 The sample mean is a consistent estimator of the population mean.

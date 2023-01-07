@@ -1,11 +1,11 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.11.3)  13 NOV 2022 11:21
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.1.3)  6 JAN 2023 13:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **ApplEcts.tex
 (./ApplEcts.tex
-LaTeX2e <2022-11-01>
-L3 programming layer <2022-10-26> (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/base/book.cls
+LaTeX2e <2022-11-01> patch level 1
+L3 programming layer <2022-12-17> (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/base/book.cls
 Document Class: book 2022/07/02 v1.4n Standard LaTeX document class
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/base/bk12.clo
 File: bk12.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
@@ -19,12 +19,12 @@ File: bk12.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
 \c@subparagraph=\count187
 \c@figure=\count188
 \c@table=\count189
-\abovecaptionskip=\skip47
-\belowcaptionskip=\skip48
+\abovecaptionskip=\skip48
+\belowcaptionskip=\skip49
 \bibindent=\dimen140
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2022/04/08 v2.17n AMS math features
-\@mathmargin=\skip49
+\@mathmargin=\skip50
 For additional information on amsmath, use the `?' option.
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2021/08/26 v2.01 AMS text
@@ -80,8 +80,8 @@ LaTeX Info: Redefining \Relbar on input line 971.
 \totwidth@=\dimen148
 \lineht@=\dimen149
 \@envbody=\toks19
-\multlinegap=\skip50
-\multlinetaggap=\skip51
+\multlinegap=\skip51
+\multlinetaggap=\skip52
 \mathdisplay@stack=\toks20
 LaTeX Info: Redefining \[ on input line 2953.
 LaTeX Info: Redefining \] on input line 2954.
@@ -131,7 +131,7 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2022/02/03 v1.0f TeX engine tests
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math.sty (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2022-10-26 L3 programming layer (loader) 
+Package: expl3 2022-12-17 L3 programming layer (loader) 
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
 File: l3backend-xetex.def 2022-10-26 L3 backend support: XeTeX
 \g__graphics_track_int=\count268
@@ -144,9 +144,9 @@ Package: unicode-math 2020/01/31 v0.8q Unicode maths in XeLaTeX and LuaLaTeX
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math-xetex.sty
 Package: unicode-math-xetex 2020/01/31 v0.8q Unicode maths in XeLaTeX and LuaLaTeX
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
-Package: xparse 2022-06-22 L3 Experimental document command parser
+Package: xparse 2022-12-17 L3 Experimental document command parser
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e.sty
-Package: l3keys2e 2022-06-22 LaTeX2e option processing using LaTeX3 keys
+Package: l3keys2e 2022-12-17 LaTeX2e option processing using LaTeX3 keys
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/fontspec/fontspec.sty
 Package: fontspec 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTeX
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/fontspec/fontspec-xetex.sty
@@ -208,17 +208,17 @@ Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
 \FV@OutFile=\write3
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/framed/framed.sty
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
-\OuterFrameSep=\skip52
+\OuterFrameSep=\skip53
 \fb@frw=\dimen153
 \fb@frh=\dimen154
 \FrameRule=\dimen155
 \FrameSep=\dimen156
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
 Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
-\LTleft=\skip53
-\LTright=\skip54
-\LTpre=\skip55
-\LTpost=\skip56
+\LTleft=\skip54
+\LTright=\skip55
+\LTpre=\skip56
+\LTpost=\skip57
 \LTchunksize=\count289
 \LTcapwidth=\dimen157
 \LT@head=\box55
@@ -256,8 +256,8 @@ Package: array 2022/09/04 v2.5g Tabular extension package (FMi)
 \ar@mcellbox=\box60
 \extrarowheight=\dimen172
 \NC@list=\toks23
-\extratabsurround=\skip57
-\backup@length=\skip58
+\extratabsurround=\skip58
+\backup@length=\skip59
 \ar@cellbox=\box61
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
@@ -265,12 +265,12 @@ Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
 \calc@Bcount=\count299
 \calc@Adimen=\dimen173
 \calc@Bdimen=\dimen174
-\calc@Askip=\skip59
-\calc@Bskip=\skip60
+\calc@Askip=\skip60
+\calc@Bskip=\skip61
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
 \calc@Ccount=\count300
-\calc@Cskip=\skip61
+\calc@Cskip=\skip62
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count301
@@ -298,9 +298,9 @@ Package: amsthm 2020/05/29 v2.20.6
 \thm@headfont=\toks26
 \thm@notefont=\toks27
 \thm@headpunct=\toks28
-\thm@preskip=\skip62
-\thm@postskip=\skip63
-\thm@headsep=\skip64
+\thm@preskip=\skip63
+\thm@postskip=\skip64
+\thm@headsep=\skip65
 \dth@everypar=\toks29
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
@@ -321,12 +321,12 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 \Gm@dimlist=\toks30
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/natbib/natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
-\bibhang=\skip65
-\bibsep=\skip66
+\bibhang=\skip66
+\bibsep=\skip67
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count305
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2022-09-22 v7.00t Hypertext links for LaTeX
+Package: hyperref 2022-11-13 v7.00u Hypertext links for LaTeX
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
 Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
@@ -364,7 +364,7 @@ Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 \Hy@linkcounter=\count307
 \Hy@pagecounter=\count308
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2022-09-22 v7.00t Hyperref: PDFDocEncoding definition (HO)
+File: pd1enc.def 2022-11-13 v7.00u Hyperref: PDFDocEncoding definition (HO)
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/etexcmds/etexcmds.sty
@@ -372,7 +372,7 @@ Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
 \Hy@SavedSpaceFactor=\count309
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
-File: puenc.def 2022-09-22 v7.00t Hyperref: PDF Unicode definition (HO)
+File: puenc.def 2022-11-13 v7.00u Hyperref: PDF Unicode definition (HO)
 )
 Package hyperref Info: Option `unicode' set `true' on input line 4045.
 Package hyperref Info: Hyper figures OFF on input line 4162.
@@ -414,7 +414,7 @@ package with kernel methods
 )
 Package hyperref Info: Driver (autodetected): hxetex.
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hxetex.def
-File: hxetex.def 2022-09-22 v7.00t Hyperref driver for XeTeX
+File: hxetex.def 2022-11-13 v7.00u Hyperref driver for XeTeX
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty
 Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
 )
@@ -433,7 +433,7 @@ Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
 )
-\Hy@SectionHShift=\skip67
+\Hy@SectionHShift=\skip68
 )
 \c@theorem=\count319
 \c@lemma=\count320
@@ -459,6 +459,15 @@ LaTeX Warning: Label `eq:olsar1' multiply defined.
 
 
 LaTeX Warning: Label `eq:Qols' multiply defined.
+
+
+LaTeX Warning: Label `def:asmyptlevel' multiply defined.
+
+
+LaTeX Warning: Label `def:asmyptconsisttest' multiply defined.
+
+
+LaTeX Warning: Label `thm:LindbergLevyCLT' multiply defined.
 
 )
 \openout1 = `ApplEcts.aux'.
@@ -822,193 +831,250 @@ Underfull \hbox (badness 10000) in paragraph at lines 198--200
 
 ]
 Chapter 2.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 12.0pt on input line 210.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 8.4pt on input line 210.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 6.0pt on input line 210.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 12.0011pt on input line 210.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 8.40076pt on input line 210.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 6.00055pt on input line 210.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 11.99872pt on input line 210.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 8.3991pt on input line 210.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 5.99936pt on input line 210.
-[7]
-File: ApplEcts_files/figure-latex/heteroskedasticity-1.pdf Graphic file (type pdf)
-<use ApplEcts_files/figure-latex/heteroskedasticity-1.pdf>
-[8]
-File: ApplEcts_files/figure-latex/exmpSalarayPhDSHP-1.pdf Graphic file (type pdf)
-<use ApplEcts_files/figure-latex/exmpSalarayPhDSHP-1.pdf>
-[9]
-
-LaTeX Warning: Reference `def:FOC' on page 10 undefined on input line 381.
-
-[10]
-Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
-Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
-Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
-Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
-Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
-Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
-Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
-[11] [12] [13]
-LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <12> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 705.
-File: ApplEcts_files/figure-latex/R2issue-1.pdf Graphic file (type pdf)
-<use ApplEcts_files/figure-latex/R2issue-1.pdf>
-[14] [15]
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 802.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00046pt on input line 802.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 802.
-File: ApplEcts_files/figure-latex/chartStudent-1.pdf Graphic file (type pdf)
-<use ApplEcts_files/figure-latex/chartStudent-1.pdf>
-[16] [17] [18]
-Overfull \hbox (7.91254pt too wide) in paragraph at lines 969--970
-[]\TU/lmr/m/n/12 By Proposition []7.5[] (in Appendix []7.2[]), we have: $[][] [] [] [] [][][][][][][][][][][][][][][][][][][][][][][][] []
+File: ApplEcts_files/figure-latex/essai3d2-1.pdf Graphic file (type pdf)
+<use ApplEcts_files/figure-latex/essai3d2-1.pdf>
+File: ApplEcts_files/figure-latex/essai3d-1.pdf Graphic file (type pdf)
+<use ApplEcts_files/figure-latex/essai3d-1.pdf>
+[7] [8]
+Underfull \hbox (badness 2762) in paragraph at lines 309--310
+[]\TU/lmr/m/n/12 If $[]$ and $[]$ are independent, then $[][][][][][][][][][][] [] [][][][][][][][][][][][][][]$ and
  []
 
-[19] [20] [21]
-Underfull \hbox (badness 1442) in paragraph at lines 1170--1173
+[9]
+File: ApplEcts_files/figure-latex/mixtureG-1.pdf Graphic file (type pdf)
+<use ApplEcts_files/figure-latex/mixtureG-1.pdf>
+File: ApplEcts_files/figure-latex/Buffon-1.pdf Graphic file (type pdf)
+<use ApplEcts_files/figure-latex/Buffon-1.pdf>
+[10]
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 5.0pt on input line 428.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 5.00046pt on input line 428.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 4.99947pt on input line 428.
+[11]
+File: ApplEcts_files/figure-latex/figCauchy-1.pdf Graphic file (type pdf)
+<use ApplEcts_files/figure-latex/figCauchy-1.pdf>
+[12]
+Chapter 3.
+File: ApplEcts_files/figure-latex/incomeDistri-1.pdf Graphic file (type pdf)
+<use ApplEcts_files/figure-latex/incomeDistri-1.pdf>
+[13
+
+] [14]
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
+(Font)              scaled to size 12.0pt on input line 561.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
+(Font)              scaled to size 8.4pt on input line 561.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
+(Font)              scaled to size 6.0pt on input line 561.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
+(Font)              scaled to size 12.0011pt on input line 561.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
+(Font)              scaled to size 8.40076pt on input line 561.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
+(Font)              scaled to size 6.00055pt on input line 561.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
+(Font)              scaled to size 11.99872pt on input line 561.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
+(Font)              scaled to size 8.3991pt on input line 561.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
+(Font)              scaled to size 5.99936pt on input line 561.
+[15]
+File: ApplEcts_files/figure-latex/RcompMeans-1.pdf Graphic file (type pdf)
+<use ApplEcts_files/figure-latex/RcompMeans-1.pdf>
+[16]
+Chapter 4.
+[17
+
+]
+File: ApplEcts_files/figure-latex/Illusttest1-1.pdf Graphic file (type pdf)
+<use ApplEcts_files/figure-latex/Illusttest1-1.pdf>
+File: ApplEcts_files/figure-latex/Illusttest2-1.pdf Graphic file (type pdf)
+<use ApplEcts_files/figure-latex/Illusttest2-1.pdf>
+File: ApplEcts_files/figure-latex/IllusTestOneSided1-1.pdf Graphic file (type pdf)
+<use ApplEcts_files/figure-latex/IllusTestOneSided1-1.pdf>
+File: ApplEcts_files/figure-latex/IllusTestOneSided2-1.pdf Graphic file (type pdf)
+<use ApplEcts_files/figure-latex/IllusTestOneSided2-1.pdf>
+[18] [19] [20]
+File: ApplEcts_files/figure-latex/Factory-1.pdf Graphic file (type pdf)
+<use ApplEcts_files/figure-latex/Factory-1.pdf>
+
+LaTeX Warning: Reference `exm:factory' on page 21 undefined on input line 812.
+
+[21] [22]
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <12> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 923.
+[23]
+File: ApplEcts_files/figure-latex/JBTest2-1.pdf Graphic file (type pdf)
+<use ApplEcts_files/figure-latex/JBTest2-1.pdf>
+File: ApplEcts_files/figure-latex/JBTest3-1.pdf Graphic file (type pdf)
+<use ApplEcts_files/figure-latex/JBTest3-1.pdf>
+[24] [25] [26
+
+]
+Chapter 5.
+[27]
+File: ApplEcts_files/figure-latex/heteroskedasticity-1.pdf Graphic file (type pdf)
+<use ApplEcts_files/figure-latex/heteroskedasticity-1.pdf>
+[28]
+File: ApplEcts_files/figure-latex/exmpSalarayPhDSHP-1.pdf Graphic file (type pdf)
+<use ApplEcts_files/figure-latex/exmpSalarayPhDSHP-1.pdf>
+[29]
+
+LaTeX Warning: Reference `def:FOC' on page 30 undefined on input line 1147.
+
+[30]
+Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
+Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
+Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
+Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
+Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
+Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
+Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
+[31] [32] [33]
+File: ApplEcts_files/figure-latex/R2issue-1.pdf Graphic file (type pdf)
+<use ApplEcts_files/figure-latex/R2issue-1.pdf>
+[34] [35]
+File: ApplEcts_files/figure-latex/chartStudent-1.pdf Graphic file (type pdf)
+<use ApplEcts_files/figure-latex/chartStudent-1.pdf>
+[36] [37] [38]
+Overfull \hbox (19.67255pt too wide) in paragraph at lines 1735--1736
+[]\TU/lmr/m/n/12 By Proposition []10.5[] (in Appendix []10.2[]), we have: $[][] [] [] [] [][][][][][][][][][][][][][][][][][][][][][][][] []
+ []
+
+[39] [40] [41]
+Underfull \hbox (badness 1442) in paragraph at lines 1936--1939
 \TU/lmr/m/n/12 By continuity of the inverse function (everywhere but at 0): $[][] []
  []
 
-[22] [23]
+[42] [43]
 File: ApplEcts_files/figure-latex/figureIV-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/figureIV-1.pdf>
 
 LaTeX Font Warning: Font shape `TU/lmtt/bx/it' in size <12> not available
-(Font)              Font shape `TU/lmtt/b/sl' tried instead on input line 1265.
+(Font)              Font shape `TU/lmtt/b/sl' tried instead on input line 2031.
 
-[24] [25] [26]
+[44] [45] [46]
 Overfull \hbox (24.24126pt too wide) has occurred while \output is active
-\TU/lmr/m/sl/12 2.5.  GENERAL REGRESSION MODEL (GRM) AND ROBUST COVARIANCE MATRICES \TU/lmr/m/n/12 27
+\TU/lmr/m/sl/12 5.5.  GENERAL REGRESSION MODEL (GRM) AND ROBUST COVARIANCE MATRICES \TU/lmr/m/n/12 47
  []
 
-[27] [28]
+[47] [48]
 File: ApplEcts_files/figure-latex/simulHeterosk-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/simulHeterosk-1.pdf>
 
 Overfull \hbox (24.24126pt too wide) has occurred while \output is active
-\TU/lmr/m/sl/12 2.5.  GENERAL REGRESSION MODEL (GRM) AND ROBUST COVARIANCE MATRICES \TU/lmr/m/n/12 29
+\TU/lmr/m/sl/12 5.5.  GENERAL REGRESSION MODEL (GRM) AND ROBUST COVARIANCE MATRICES \TU/lmr/m/n/12 49
  []
 
-[29] [30]
+[49] [50]
 Overfull \hbox (24.24126pt too wide) has occurred while \output is active
-\TU/lmr/m/sl/12 2.5.  GENERAL REGRESSION MODEL (GRM) AND ROBUST COVARIANCE MATRICES \TU/lmr/m/n/12 31
+\TU/lmr/m/sl/12 5.5.  GENERAL REGRESSION MODEL (GRM) AND ROBUST COVARIANCE MATRICES \TU/lmr/m/n/12 51
  []
 
-[31]
+[51]
 File: ApplEcts_files/figure-latex/DB-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/DB-1.pdf>
-[32]
+[52]
 Overfull \hbox (24.24126pt too wide) has occurred while \output is active
-\TU/lmr/m/sl/12 2.5.  GENERAL REGRESSION MODEL (GRM) AND ROBUST COVARIANCE MATRICES \TU/lmr/m/n/12 33
+\TU/lmr/m/sl/12 5.5.  GENERAL REGRESSION MODEL (GRM) AND ROBUST COVARIANCE MATRICES \TU/lmr/m/n/12 53
  []
 
-[33] [34] [35] [36]
+[53] [54] [55] [56]
 File: ApplEcts_files/figure-latex/lasso4-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/lasso4-1.pdf>
-[37]
+[57]
 File: ApplEcts_files/figure-latex/lasso6-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/lasso6-1.pdf>
-[38] [39] [40
+[58] [59] [60
 
 ]
-Chapter 3.
+Chapter 6.
 File: ApplEcts_files/figure-latex/simulPanel-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/simulPanel-1.pdf>
 File: ApplEcts_files/figure-latex/cigarettes-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/cigarettes-1.pdf>
-[41] [42] [43] [44] [45]
+[61] [62] [63] [64] [65]
 Underfull \vbox (badness 1496) has occurred while \output is active []
 
-[46] [47]
+[66] [67]
 File: ApplEcts_files/figure-latex/airbnb-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/airbnb-1.pdf>
-[48] [49]
+[68] [69]
 File: ApplEcts_files/figure-latex/airbnb3-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/airbnb3-1.pdf>
-[50]
+[70]
 File: ApplEcts_files/figure-latex/dynpanel1-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/dynpanel1-1.pdf>
-[51] [52] [53] [54] [55]
+[71] [72] [73] [74] [75]
 File: images/Abadie_et_al_2018.pdf Graphic file (type pdf)
 <use images/Abadie_et_al_2018.pdf>
-[56]
+[76]
 File: images/Figure_Meyer_et_al.pdf Graphic file (type pdf)
 <use images/Figure_Meyer_et_al.pdf>
-[57] [58]
-Chapter 4.
-[59
+[77] [78]
+Chapter 7.
+[79
 
-] [60] [61] [62] [63]
+] [80] [81] [82] [83]
 File: ApplEcts_files/figure-latex/MLE1-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/MLE1-1.pdf>
 File: ApplEcts_files/figure-latex/MLE2-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/MLE2-1.pdf>
 File: ApplEcts_files/figure-latex/MLE3-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/MLE3-1.pdf>
-[64] [65] [66]
-Underfull \hbox (badness 1721) in paragraph at lines 3630--3631
+[84] [85] [86]
+Underfull \hbox (badness 1721) in paragraph at lines 4396--4397
 []\TU/lmr/m/n/12 The Cauchy-Schwarz inequality implies that $[] []
  []
 
 
-Underfull \hbox (badness 4001) in paragraph at lines 3630--3631
+Underfull \hbox (badness 4001) in paragraph at lines 4396--4397
 [][][][][][][][][][][][] [][][][] [][][][][]$\TU/lmr/m/n/12 . Now, $[][][][][][][][][] [][][][] [][][] [] [][] [][][][][][][][][] [][][][] []
  []
 
 
-Overfull \hbox (20.45732pt too wide) in paragraph at lines 3630--3631
+Overfull \hbox (20.45732pt too wide) in paragraph at lines 4396--4397
 [] [][] [][][][][][][][] [][][][] [] []$ \TU/lmr/m/n/12 because $[]$ is unbiased. Therefore $[][][][][][][][][][][] [] [][][][][][][][][][] [][][][][][][][][][]$.
  []
 
-[67] [68]
+[87] [88]
 File: ApplEcts_files/figure-latex/smiData-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/smiData-1.pdf>
-[69] [70]
+[89] [90]
 File: ApplEcts_files/figure-latex/smidistri-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/smidistri-1.pdf>
-[71] [72]
+[91] [92]
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 10.0pt on input line 4026.
+(Font)              scaled to size 10.0pt on input line 4792.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 7.0pt on input line 4026.
+(Font)              scaled to size 7.0pt on input line 4792.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 5.0pt on input line 4026.
+(Font)              scaled to size 5.0pt on input line 4792.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 10.00092pt on input line 4026.
+(Font)              scaled to size 10.00092pt on input line 4792.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 7.00064pt on input line 4026.
+(Font)              scaled to size 7.00064pt on input line 4792.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 5.00046pt on input line 4026.
+(Font)              scaled to size 5.00046pt on input line 4792.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 9.99893pt on input line 4026.
+(Font)              scaled to size 9.99893pt on input line 4792.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 6.99925pt on input line 4026.
+(Font)              scaled to size 6.99925pt on input line 4792.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 4.99947pt on input line 4026.
-[73] [74] [75]
+(Font)              scaled to size 4.99947pt on input line 4792.
+[93] [94] [95]
 File: ApplEcts_files/figure-latex/MCMC1-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/MCMC1-1.pdf>
-[76]
+[96]
 File: ApplEcts_files/figure-latex/MCMC8-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/MCMC8-1.pdf>
-[77] [78]
-Chapter 5.
+[97] [98]
+Chapter 8.
 File: ApplEcts_files/figure-latex/LPM-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/LPM-1.pdf>
-[79
+[99
 
 ]
 File: ApplEcts_files/figure-latex/ProbLogit-1.pdf Graphic file (type pdf)
@@ -1018,281 +1084,283 @@ File: ApplEcts_files/figure-latex/LPM2-1.pdf Graphic file (type pdf)
 
 Overfull \vbox (284.20262pt too high) has occurred while \output is active []
 
-[80]
+[100]
 File: ApplEcts_files/figure-latex/Latent-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/Latent-1.pdf>
-[81] [82] [83]
+[101] [102] [103]
 File: ApplEcts_files/figure-latex/Probitlending-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/Probitlending-1.pdf>
-[84] [85] [86] [87]
+[104] [105] [106] [107]
 File: ApplEcts_files/figure-latex/fishing3-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/fishing3-1.pdf>
-[88] [89] [90] [91] [92]
+[108] [109] [110] [111] [112]
 File: ApplEcts_files/figure-latex/Gumbel-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/Gumbel-1.pdf>
-[93] [94]
+[113] [114]
 File: images/Figure_GEV.png Graphic file (type bmp)
 <images/Figure_GEV.png>
-[95] [96] [97]
+[115] [116] [117]
 File: ApplEcts_files/figure-latex/tobit1-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/tobit1-1.pdf>
-[98] [99]
-Underfull \hbox (badness 2809) in paragraph at lines 5450--5451
+[118] [119]
+Underfull \hbox (badness 2809) in paragraph at lines 6216--6217
 []\TU/lmr/m/n/12 Results usually heavily rely on distributional assumptions (more than in uncen-
  []
 
 
-Underfull \hbox (badness 1365) in paragraph at lines 5450--5451
+Underfull \hbox (badness 1365) in paragraph at lines 6216--6217
 \TU/lmr/m/n/12 sored/untruncated case). The framework is easy to extend to an heteroskedastic
  []
 
 File: ApplEcts_files/figure-latex/tobit2-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/tobit2-1.pdf>
-[100]
+[120]
 File: ApplEcts_files/figure-latex/tobit3-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/tobit3-1.pdf>
-[101] [102]
+[121] [122]
 File: ApplEcts_files/figure-latex/tobit5-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/tobit5-1.pdf>
-[103]
+[123]
 File: ApplEcts_files/figure-latex/SampleSelec-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/SampleSelec-1.pdf>
-[104] [105] [106] [107] [108]
+[124] [125] [126] [127] [128]
 File: ApplEcts_files/figure-latex/countdata1-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/countdata1-1.pdf>
-[109] [110] [111] [112]
-Overfull \hbox (6.10477pt too wide) in paragraph at lines 6217--6217
+[129] [130] [131] [132]
+Overfull \hbox (6.10477pt too wide) in paragraph at lines 6983--6983
 []\TU/lmtt/m/n/12 ## Model 2: mdvis ~ idp + lpi + fmde + physlm + disea + hlthg + hlthf + hlthp[] 
  []
 
-[113] [114
+[133] [134
 
 ]
-Chapter 6.
-[115]
+Chapter 9.
+[135]
 File: ApplEcts_files/figure-latex/nonstat1-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/nonstat1-1.pdf>
 File: ApplEcts_files/figure-latex/nonstat2-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/nonstat2-1.pdf>
-[116]
+[136]
 File: ApplEcts_files/figure-latex/autocov-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/autocov-1.pdf>
 File: ApplEcts_files/figure-latex/autocov2-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/autocov2-1.pdf>
-[117] [118]
+[137] [138]
 File: ApplEcts_files/figure-latex/TVTCL-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/TVTCL-1.pdf>
-[119] [120]
+[139] [140]
 File: ApplEcts_files/figure-latex/simMA-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/simMA-1.pdf>
-[121] [122] [123] [124] [125]
+[141] [142] [143] [144] [145]
 File: ApplEcts_files/figure-latex/pacf-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/pacf-1.pdf>
-[126] [127]
+[146] [147]
 File: ApplEcts_files/figure-latex/IRFarma-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/IRFarma-1.pdf>
 File: ApplEcts_files/figure-latex/IRFgdp1-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/IRFgdp1-1.pdf>
-[128]
+[148]
 File: ApplEcts_files/figure-latex/IRFgdp2-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/IRFgdp2-1.pdf>
-[129] [130]
+[149] [150]
 File: ApplEcts_files/figure-latex/freez-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/freez-1.pdf>
 
 Underfull \vbox (badness 4144) has occurred while \output is active []
 
-[131] [132] [133]
+[151] [152] [153]
 File: ApplEcts_files/figure-latex/freez4-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/freez4-1.pdf>
 File: ApplEcts_files/figure-latex/Ramey1fig-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/Ramey1fig-1.pdf>
-[134]
+[154]
 File: ApplEcts_files/figure-latex/Ramey3-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/Ramey3-1.pdf>
 
-Underfull \hbox (badness 3009) in paragraph at lines 7367--7368
-[][]\TU/lmr/bx/n/12 Definition 6.19 \TU/lmr/m/n/12 (Markovian process)\TU/lmr/bx/n/12 . []\TU/lmr/m/n/12 Process $[][]$ is Markovian of order one if
+Underfull \hbox (badness 3009) in paragraph at lines 8141--8142
+[][]\TU/lmr/bx/n/12 Definition 9.19 \TU/lmr/m/n/12 (Markovian process)\TU/lmr/bx/n/12 . []\TU/lmr/m/n/12 Process $[][]$ is Markovian of order one if
  []
 
-[135] [136] [137]
-Overfull \hbox (2.51427pt too wide) in alignment at lines 7529--7532
+[155] [156] [157]
+Overfull \hbox (2.51427pt too wide) in alignment at lines 8303--8306
  [][][] []
  []
 
-[138] [139] [140]
-Overfull \hbox (18.64902pt too wide) in paragraph at lines 7722--7724
+[158] [159] [160]
+Overfull \hbox (18.64902pt too wide) in paragraph at lines 8496--8498
 \TU/lmr/m/n/12 If $[][] [][][][] [] []$, we have: $[][] [] [] [] [][][][][] []
  []
 
-[141] [142] [143]
+[161] [162] [163]
 File: ApplEcts_files/figure-latex/simVAR-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/simVAR-1.pdf>
 
-LaTeX Warning: Reference `eq:VARMAstd' on page 144 undefined on input line 7947.
+LaTeX Warning: Reference `eq:VARMAstd' on page 164 undefined on input line 8721.
 
-[144] [145]
-
-LaTeX Warning: Reference `Section:AlternII' on page 146 undefined on input line 8011.
-
-[146] [147] [148] [149] [150] [151]
+[164] [165] [166] [167] [168] [169] [170] [171]
 File: ApplEcts_files/figure-latex/CEE-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/CEE-1.pdf>
-[152]
+[172]
 File: ApplEcts_files/figure-latex/BQ1-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/BQ1-1.pdf>
-[153] [154]
+
+Underfull \vbox (badness 1590) has occurred while \output is active []
+
+[173] [174]
 File: ApplEcts_files/figure-latex/BQ4-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/BQ4-1.pdf>
-[155] [156]
+[175] [176]
 File: ApplEcts_files/figure-latex/signrestr1-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/signrestr1-1.pdf>
-[157] [158]
+[177] [178]
 File: images/Figure_A.pdf Graphic file (type pdf)
 <use images/Figure_A.pdf>
-[159]
+[179]
 File: ApplEcts_files/figure-latex/preMadeFigureICA2-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/preMadeFigureICA2-1.pdf>
-[160]
+[180]
 File: images/Figure_C.pdf Graphic file (type pdf)
 <use images/Figure_C.pdf>
 Missing character: There is no 𝜂 (U+1D702) in font [lmroman12-regular]:mapping=tex-text;!
 Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-regular]:mapping=tex-text;!
 File: images/Figure_E.pdf Graphic file (type pdf)
 <use images/Figure_E.pdf>
-[161]
-Overfull \hbox (9.64821pt too wide) in paragraph at lines 8951--8951
+[181]
+Overfull \hbox (9.64821pt too wide) in paragraph at lines 9721--9721
 []|\TU/lmr/m/n/12 Gaussian|  
  []
 
 
-Overfull \hbox (3.24022pt too wide) in paragraph at lines 8952--8952
+Overfull \hbox (3.24022pt too wide) in paragraph at lines 9722--9722
 []|\TU/lmr/m/n/12 Student 
  []
 
 
-Overfull \hbox (19.22421pt too wide) in paragraph at lines 8953--8953
+Overfull \hbox (19.22421pt too wide) in paragraph at lines 9723--9723
 []|\TU/lmr/m/n/12 Hyperbolic 
  []
 
 
-Overfull \hbox (25.89621pt too wide) in paragraph at lines 8954--8954
+Overfull \hbox (25.89621pt too wide) in paragraph at lines 9724--9724
 []|\TU/lmr/m/n/12 Subgaussian|  
  []
 
-[162] [163] [164]
+[182] [183] [184]
 File: ApplEcts_files/figure-latex/ICAFigIRF-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/ICAFigIRF-1.pdf>
-[165] [166] [167]
+[185] [186] [187]
 File: ApplEcts_files/figure-latex/FAVAR-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/FAVAR-1.pdf>
-[168]
-Overfull \hbox (7.32959pt too wide) in paragraph at lines 9283--9284
+[188]
+Overfull \hbox (7.32959pt too wide) in paragraph at lines 10053--10054
 []\TU/lmr/m/n/12 The IRFs can be estimated by LP, taking $[][] [] [][]$ and $[][] [] [][][][][][][] [][][] [][][][][][] [][][] [][][][]$. 
  []
 
-[169]
+[189]
 File: images/GSS2005_HFI.pdf Graphic file (type pdf)
 <use images/GSS2005_HFI.pdf>
-[170] [171]
+[190] [191]
 File: ApplEcts_files/figure-latex/essaiIV0-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/essaiIV0-1.pdf>
 File: ApplEcts_files/figure-latex/essaiIV1-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/essaiIV1-1.pdf>
-[172] [173]
+[192] [193]
 
-LaTeX Warning: Reference `LLNappendix' on page 174 undefined on input line 9577.
+LaTeX Warning: Reference `LLNappendix' on page 194 undefined on input line 10347.
 
-[174] [175] [176]
-Overfull \hbox (24.6448pt too wide) in paragraph at lines 9755--9755
+[194] [195] [196]
+Overfull \hbox (24.6448pt too wide) in paragraph at lines 10525--10525
 []\TU/lmtt/m/n/12 ##         inv(-1)   inc(-1)  con(-1)    inv(-2)   inc(-2)   con(-2)       const[] 
  []
 
 
-Overfull \hbox (24.53693pt too wide) in paragraph at lines 9755--9755
+Overfull \hbox (24.53693pt too wide) in paragraph at lines 10525--10525
 []\TU/lmtt/m/n/12 ## [1,] -0.3228276 0.0698514 1.066291 -0.1555651 0.1350925 1.0044744 -0.01895355[] 
  []
 
 
-Overfull \hbox (24.48894pt too wide) in paragraph at lines 9755--9755
+Overfull \hbox (24.48894pt too wide) in paragraph at lines 10525--10525
 []\TU/lmtt/m/n/12 ## [2,] -0.3196310 0.1459888 0.961219 -0.1605511 0.1146050 0.9343938 -0.01672199[] 
  []
 
 
-Overfull \hbox (24.48894pt too wide) in paragraph at lines 9755--9755
+Overfull \hbox (24.48894pt too wide) in paragraph at lines 10525--10525
 []\TU/lmtt/m/n/12 ## [3,] -0.3196310 0.1459888 0.961219 -0.1605511 0.1146050 0.9343938 -0.01672199[] 
  []
 
-[177] [178] [179]
+[197] [198] [199]
 
-LaTeX Warning: Reference `def:NW' on page 180 undefined on input line 9994.
+LaTeX Warning: Reference `def:NW' on page 200 undefined on input line 10764.
 
-[180] [181] [182
+[200] [201] [202
 
 ]
-Chapter 7.
-[183]
+Chapter 10.
+[203]
 File: ApplEcts_files/figure-latex/USydsPCA1-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/USydsPCA1-1.pdf>
-[184] [185] [186]
-Underfull \hbox (badness 2237) in paragraph at lines 10441--10442
+[204] [205] [206]
+Underfull \hbox (badness 2237) in paragraph at lines 11211--11212
 []$[] [] [] [][][][]$ \TU/lmr/m/n/12 is a convex function. Therefore $[][][][] [] [][][][][][][][][][][] []
  []
 
-[187] [188] [189] [190]
-Overfull \hbox (31.16508pt too wide) in paragraph at lines 10664--10665
+[207]
+File: ApplEcts_files/figure-latex/Cauchy-1.pdf Graphic file (type pdf)
+<use ApplEcts_files/figure-latex/Cauchy-1.pdf>
+[208] [209] [210]
+Overfull \hbox (31.16508pt too wide) in paragraph at lines 11449--11450
 []\TU/lmr/m/n/12 Let us introduce the r.v. $[][] [][] [][][] [] [][]$. We have $[][][][][] [] [][]$.
  []
 
 
-Overfull \hbox (2.44241pt too wide) in alignment at lines 10665--10668
+Overfull \hbox (2.44241pt too wide) in alignment at lines 11450--11453
  [][][] []
  []
 
-[191]
+[211]
 File: ApplEcts_files/figure-latex/inverseMills-1.pdf Graphic file (type pdf)
 <use ApplEcts_files/figure-latex/inverseMills-1.pdf>
-[192]
+[212]
 
-LaTeX Warning: Reference `(' on page 193 undefined on input line 10807.
+LaTeX Warning: Reference `(' on page 213 undefined on input line 11592.
 
-[193]
+[213] [214]
 
-LaTeX Warning: Reference `(' on page 194 undefined on input line 10931.
+LaTeX Warning: Reference `(' on page 215 undefined on input line 11716.
 
-[194]
-Overfull \hbox (16.5456pt too wide) detected at line 10940
+
+Overfull \hbox (16.5456pt too wide) detected at line 11725
 [] [] [] [][][] [][][][][] [][][] [] [] [][][][][] [][][][] [] [][][][] [][][][] [][][] [] [] [][][][] [][][][][]
  []
 
 
-LaTeX Warning: Reference `(' on page 195 undefined on input line 10945.
+LaTeX Warning: Reference `(' on page 215 undefined on input line 11730.
 
-[195]
+[215] [216]
 
-LaTeX Warning: Reference `prp:multivarG' on page 196 undefined on input line 11035.
+LaTeX Warning: Reference `prp:multivarG' on page 217 undefined on input line 11820.
 
 
-LaTeX Warning: Reference `XXX' on page 196 undefined on input line 11035.
+LaTeX Warning: Reference `XXX' on page 217 undefined on input line 11820.
 
-[196] [197]
-Overfull \hbox (58.59421pt too wide) in paragraph at lines 11084--11086
+[217]
+Overfull \hbox (58.59421pt too wide) in paragraph at lines 11869--11871
 \TU/lmr/m/n/12 If $[] [] []$, we have $[][][][][][][][][][][] [] [][][][][][][][][][][][][][][][] [][][] [][][][] []$ $[][][][][][][][][][][][][][][][] [][][] [][][][] []
  []
 
-[198]
-Overfull \hbox (7.9091pt too wide) in paragraph at lines 11179--11244
+[218] [219]
+Overfull \hbox (7.9091pt too wide) in paragraph at lines 11964--12029
  [][] 
  []
 
 
-Overfull \hbox (58.83711pt too wide) in paragraph at lines 11356--11409
+Overfull \hbox (58.83711pt too wide) in paragraph at lines 12141--12194
  [][] 
  []
 
-(./ApplEcts.bbl [199] [200] [201] [202] [203
+(./ApplEcts.bbl [220] [221] [222] [223
 
-] [204] [205] [206]) [207] (./ApplEcts.aux)
+] [224] [225] [226]) [227] (./ApplEcts.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -1300,15 +1368,15 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `ApplEcts.out' has not changed.
-(rerunfilecheck)             Checksum: B2059660DCD5CBACD71573AA326E9A56;6739.
+(rerunfilecheck)             Checksum: 5687B5B4C760F44627438B2DB5AE4C3D;9621.
  ) 
 Here is how much of TeX's memory you used:
- 19595 strings out of 477647
- 373890 string characters out of 5840488
- 1004953 words of memory out of 5000000
- 40372 multiletter control sequences out of 15000+600000
- 481842 words of font info for 136 fonts, out of 8000000 for 9000
+ 19813 strings out of 478777
+ 382042 string characters out of 5850045
+ 2001979 words of memory out of 5000000
+ 39443 multiletter control sequences out of 15000+600000
+ 524886 words of font info for 142 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 86i,17n,121p,1846b,593s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 86i,17n,121p,1846b,595s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on ApplEcts.pdf (207 pages).
+Output written on ApplEcts.pdf (227 pages).

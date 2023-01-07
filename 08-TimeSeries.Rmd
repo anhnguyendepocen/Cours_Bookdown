@@ -1583,7 +1583,7 @@ VAR:& y_t &=& c + \Phi_1 y_{t-1} + \dots + \Phi_p y_{t-p} + \varepsilon_t,\\
 SVAR:& y_t &=& c + \Phi_1 y_{t-1} + \dots + \Phi_p y_{t-p} + B \eta_t,
 \end{array}(\#eq:yVAR)
 \end{eqnarray}
-with $\varepsilon_t = B\eta_t$, where $\{\eta_{t}\}$ is a white noise sequence whose components are are mutually and serially independent.
+with $\varepsilon_t = B\eta_t$, where $\{\eta_{t}\}$ is a white noise sequence whose components are mutually and serially independent.
 :::
 
 The first line of Eq. \@ref(eq:yVAR) corresponds to the **reduced-form** of the VAR model (**structural form** for the second line).
@@ -1600,7 +1600,7 @@ VARMA:& y_t &=& c + \Phi_1 y_{t-1} + \dots + \Phi_p y_{t-p} + \varepsilon_t + \T
 SVARMA:& y_t &=& c + \Phi_1 y_{t-1} + \dots + \Phi_p y_{t-p} + B_0 \eta_t+ B_1 \eta_{t-1} + \dots +  B_q \eta_{t-q},
 \end{array}(\#eq:yVARMA)
 \end{eqnarray}
-with $\varepsilon_t = B_0\eta_t$ (and $B_j = \Theta_j B_0$, for $j \ge 0$), where $\{\eta_{t}\}$ is a white noise sequence whose components are are mutually and serially independent.
+with $\varepsilon_t = B_0\eta_t$ (and $B_j = \Theta_j B_0$, for $j \ge 0$), where $\{\eta_{t}\}$ is a white noise sequence whose components are mutually and serially independent.
 :::
 
 

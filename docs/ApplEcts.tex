@@ -131,7 +131,7 @@
 
 \title{Applied Econometrics}
 \author{Jean-Paul Renne}
-\date{2022-11-13}
+\date{2023-01-06}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -200,6 +200,772 @@ The R codes use various packages that can be obtained from \href{https://cran.r-
     My own tutorial: \url{https://jrenne.shinyapps.io/Rtuto_publiShiny/}
   \end{itemize}
 \end{itemize}
+
+\hypertarget{Basics}{%
+\chapter{Basic statistical results}\label{Basics}}
+
+\hypertarget{cumulative-and-probability-density-funtions-c.d.f.-and-p.d.f.}{%
+\section{Cumulative and probability density funtions (c.d.f. and p.d.f.)}\label{cumulative-and-probability-density-funtions-c.d.f.-and-p.d.f.}}
+
+\begin{definition}[Cumulative distribution function (c.d.f.)]
+\protect\hypertarget{def:cdf}{}\label{def:cdf}The random variable (r.v.) \(X\) admits the cumulative distribution function \(F\) if, for all \(a\):
+\[
+F(a)=\mathbb{P}(X \le a).
+\]
+\end{definition}
+
+\begin{definition}[Probability distribution function (p.d.f.)]
+\protect\hypertarget{def:pdf}{}\label{def:pdf}A continuous random variable \(X\) admits the probability density function \(f\) if, for all \(a\) and \(b\) such that \(a<b\):
+\[
+\mathbb{P}(a < X \le b) = \int_{a}^{b}f(x)dx,
+\]
+where \(f(x) \ge 0\) for all \(x\).
+\end{definition}
+
+In particular, we have:
+\begin{equation}
+f(x) = \lim_{\varepsilon \rightarrow 0} \frac{\mathbb{P}(x < X \le x + \varepsilon)}{\varepsilon} = \lim_{\varepsilon \rightarrow 0} \frac{F(x + \varepsilon)-F(x)}{\varepsilon}.\label{eq:flim}
+\end{equation}
+and
+\[
+F(a) = \int_{-\infty}^{a}f(x)dx.
+\]
+This \href{https://jrenne.shinyapps.io/density/}{web interface} illustrates the link between p.d.f. and c.d.f. Nonparametric estimates of p.d.f. are obtained by kernel-based methods (see this \href{https://www.dropbox.com/s/lxkllp9yewh98d8/Additional_Kernel.pdf?dl=0}{extra material}).
+
+\begin{definition}[Joint cumulative distribution function (c.d.f.)]
+\protect\hypertarget{def:jointcdf}{}\label{def:jointcdf}The random variables \(X\) and \(Y\) admit the joint cumulative distribution function \(F_{XY}\) if, for all \(a\) and \(b\):
+\[
+F_{XY}(a,b)=\mathbb{P}(X \le a,Y \le b).
+\]
+\end{definition}
+
+\begin{figure}
+\includegraphics[width=0.95\linewidth]{ApplEcts_files/figure-latex/essai3d2-1} \caption{The volume between the horizontal plane ($z=0$) and the surface is equal to $F_{XY}(0.5,1)=\mathbb{P}(X<0.5,Y<1)$.}\label{fig:essai3d2}
+\end{figure}
+
+\begin{definition}[Joint probability density function (p.d.f.)]
+\protect\hypertarget{def:jointpdf}{}\label{def:jointpdf}The continuous random variables \(X\) and \(Y\) admit the joint p.d.f. \(f_{XY}\), where \(f_{XY}(x,y) \ge 0\) for all \(x\) and \(y\), if:
+\[
+\mathbb{P}(a < X \le b,c < Y \le d) = \int_{a}^{b}\int_{c}^{d}f_{XY}(x,y)dx dy, \quad \forall a \le b,\;c \le d.
+\]
+\end{definition}
+
+In particular, we have:
+\begin{eqnarray*}
+&&f_{XY}(x,y)\\
+&=& \lim_{\varepsilon \rightarrow 0} \frac{\mathbb{P}(x < X \le x + \varepsilon,y < Y \le y + \varepsilon)}{\varepsilon^2} \\
+&=& \lim_{\varepsilon \rightarrow 0} \frac{F_{XY}(x + \varepsilon,y + \varepsilon)-F_{XY}(x,y + \varepsilon)-F_{XY}(x + \varepsilon,y)+F_{XY}(x,y)}{\varepsilon^2}.
+\end{eqnarray*}
+
+\begin{figure}
+\includegraphics[width=0.95\linewidth]{ApplEcts_files/figure-latex/essai3d-1} \caption{Assume that the basis of the black column is defined by those points whose $x$-coordinates are between $x$ and $x+\varepsilon$ and $y$-coordinates are between $y$ and $y+\varepsilon$. Then the volume of the black column is equal to $\mathbb{P}(x < X \le x+\varepsilon,y < Y \le y+\varepsilon)$, which is approximately equal to $f_{XY}(x,y)\varepsilon^2$ if $\varepsilon$ is small.}\label{fig:essai3d}
+\end{figure}
+
+\begin{definition}[Conditional probability distribution function]
+\protect\hypertarget{def:condcdf}{}\label{def:condcdf}If \(X\) and \(Y\) are continuous r.v., then the distribution of \(X\) conditional on \(Y=y\), which we denote by \(f_{X|Y}(x,y)\), satisfies:
+\[
+f_{X|Y}(x,y)=\lim_{\varepsilon \rightarrow 0} \frac{\mathbb{P}(x < X \le x + \varepsilon|Y=y)}{\varepsilon}.
+\]
+\end{definition}
+
+\begin{proposition}[Conditional probability distribution function]
+\protect\hypertarget{prp:condcdf}{}\label{prp:condcdf}We have
+\[
+f_{X|Y}(x,y)=\frac{f_{XY}(x,y)}{f_Y(y)}.
+\]
+\end{proposition}
+
+\begin{proof}
+We have:
+\begin{eqnarray*}
+f_{X|Y}(x,y)&=&\lim_{\varepsilon \rightarrow 0} \frac{\mathbb{P}(x < X \le x + \varepsilon|Y=y)}{\varepsilon}\\
+&=&\lim_{\varepsilon \rightarrow 0} \frac{1}{\varepsilon}\mathbb{P}(x < X \le x + \varepsilon|y<Y\le y+\varepsilon)\\
+&=&\lim_{\varepsilon \rightarrow 0} \frac{1}{\varepsilon}\frac{\mathbb{P}(x < X \le x + \varepsilon,y<Y\le y+\varepsilon)}{\mathbb{P}(y<Y\le y+\varepsilon)}\\
+&=&\lim_{\varepsilon \rightarrow 0} \frac{1}{\varepsilon} \frac{\varepsilon^2f_{XY}(x,y)}{\varepsilon f_{Y}(y)}.
+\end{eqnarray*}
+\end{proof}
+
+\begin{definition}[Independent random variables]
+\protect\hypertarget{def:independent}{}\label{def:independent}Consider two r.v., \(X\) and \(Y\), with respective c.d.f. \(F_X\) and \(F_Y\), and respective p.d.f. \(f_X\) and \(f_Y\).
+
+These random variables are independent if and only if (iff) the joint c.d.f. of \(X\) and \(Y\) (see Def. \ref{def:jointcdf}) is given by:
+\[
+F_{XY}(x,y) = F_{X}(x) \times F_{Y}(y),
+\]
+or, equivalently, iff the joint p.d.f. of \((X,Y)\) (see Def. \ref{def:jointpdf}) is given by:
+\[
+f_{XY}(x,y) = f_{X}(x) \times f_{Y}(y).
+\]
+\end{definition}
+
+We have the following:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  If \(X\) and \(Y\) are independent, \(f_{X|Y}(x,y)=f_{X}(x)\). This implies, in particular, that \(\mathbb{E}(g(X)|Y)=\mathbb{E}(g(X))\), where \(g\) is any function.
+\item
+  If \(X\) and \(Y\) are independent, then \(\mathbb{E}(g(X)h(Y))=\mathbb{E}(g(X))\mathbb{E}(h(Y))\) and \(\mathbb{C}ov(g(X),h(Y))=0\), where \(g\) and \(h\) are any functions.
+\end{enumerate}
+
+It is important to note that the absence of correlation between two variables is not a sufficient condition to have independence. Consider for instance the case where \(X=Y^2\), with \(Y \sim\mathcal{N}(0,1)\). In this case, we have \(\mathbb{C}ov(X,Y)=0\), but \(X\) and \(Y\) are not independent. Indeed, we have for instance \(\mathbb{E}(Y^2 \times X)=3\), which is not equal to \(\mathbb{E}(Y^2) \times \mathbb{E}(X)=1\). (If \(X\) and \(Y\) were independent, we should have \(\mathbb{E}(Y^2 \times X)=\mathbb{E}(Y^2) \times \mathbb{E}(X)\) according to point 2 above.)
+
+\hypertarget{law-of-iterated-expectations}{%
+\section{Law of iterated expectations}\label{law-of-iterated-expectations}}
+
+\begin{proposition}[Law of iterated expectations]
+\protect\hypertarget{prp:lawiteratedexpect}{}\label{prp:lawiteratedexpect}If \(X\) and \(Y\) are two random variables and if \(\mathbb{E}(|X|)<\infty\), we have:
+\[
+\boxed{\mathbb{E}(X) = \mathbb{E}(\mathbb{E}(X|Y)).}
+\]
+\end{proposition}
+
+\begin{proof}
+(in the case where the p.d.f. of \((X,Y)\) exists) Let us denote by \(f_X\), \(f_Y\) and \(f_{XY}\) the probability distribution functions (p.d.f.) of \(X\), \(Y\) and \((X,Y)\), respectively. We have:
+\[
+f_{X}(x) = \int f_{XY}(x,y) dy.
+\]
+Besides, we have (Bayes equality, Prop. \ref{prp:condcdf}):
+\[
+f_{XY}(x,y) = f_{X|Y}(x,y)f_{Y}(y).
+\]
+Therefore:
+\begin{eqnarray*}
+\mathbb{E}(X) &=& \int x f_X(x)dx = \int x  \underbrace{ \int  f_{XY}(x,y) dy}_{=f_X(x)} dx =\int  \int x f_{X|Y}(x,y)f_{Y}(y) dydx \\
+& = & \int \underbrace{\left(\int x f_{X|Y}(x,y)dx\right)}_{\mathbb{E}[X|Y=y]}f_{Y}(y) dy = \mathbb{E} \left( \mathbb{E}[X|Y] \right).
+\end{eqnarray*}
+\end{proof}
+
+\begin{example}[Mixture of Gaussian distributions]
+\protect\hypertarget{exm:mixture}{}\label{exm:mixture}By definition, \(X\) is drawn from a mixture of Gaussian distributions if:
+\[
+X = \color{blue}{B \times Y_1} + \color{red}{(1-B) \times Y_2},
+\]
+where \(B\), \(Y_1\) and \(Y_2\) are three independent variables drawn as follows:
+\[
+B \sim \mbox{Bernoulli}(p),\quad Y_1 \sim \mathcal{N}(\mu_1,\sigma_1^2), \quad \mbox{and}\quad Y_2 \sim \mathcal{N}(\mu_2,\sigma_2^2).
+\]
+
+Figure \ref{fig:mixtureG} displays the pdfs associated with three different mixtures of Gaussian distributions. (This \href{https://jrenne.shinyapps.io/density/}{web-interface} allows to produce the pdf associated for any other parameterization.)
+
+\begin{figure}
+\includegraphics[width=0.95\linewidth]{ApplEcts_files/figure-latex/mixtureG-1} \caption{Example of pdfs of mixtures of Gaussian distribututions.}\label{fig:mixtureG}
+\end{figure}
+
+The law of iterated expectations gives:
+\[
+\mathbb{E}(X) = \mathbb{E}(\mathbb{E}(X|B)) = \mathbb{E}(B\mu_1+(1-B)\mu_2)=p\mu_1 + (1-p)\mu_2.
+\]
+\end{example}
+
+\begin{example}[Buffon (1733)'s needles]
+\protect\hypertarget{exm:Buffon}{}\label{exm:Buffon}Suppose we have a floor made of parallel strips of wood, each the same width {[}\(w=1\){]}. We drop a needle, of length \(1/2\), onto the floor. What is the probability that the needle crosses the grooves of the floor?
+
+Let's define the random variable \(X\) by
+\[
+X = \left\{
+\begin{array}{cl}
+1 & \mbox{if the needle crosses a line}\\
+0 & \mbox{otherwise}
+\end{array}
+\right.
+\]
+Conditionally on \(\theta\), it can be seen that we have \(\mathbb{E}(X|\theta)=\cos(\theta)/2\) (see Figure \ref{fig:Buffon}).
+
+\begin{figure}
+\includegraphics[width=0.95\linewidth]{ApplEcts_files/figure-latex/Buffon-1} \caption{Schematic representation of the problem.}\label{fig:Buffon}
+\end{figure}
+
+It is reasonable to assume that \(\theta\) is uniformly distributed on \([-\pi/2,\pi/2]\), therefore:
+\[
+\mathbb{E}(X)=\mathbb{E}(\mathbb{E}(X|\theta))=\mathbb{E}(\cos(\theta)/2)=\int_{-\pi/2}^{\pi/2}\frac{1}{2}\cos(\theta)\left(\frac{d\theta}{\pi}\right)=\frac{1}{\pi}.
+\]
+
+{[}This \href{https://jrenne.shinyapps.io/StatEcoII/}{web-interface} allows to simulate the present experiment (select Worksheet ``Buffon's needles'').{]}
+\end{example}
+
+\hypertarget{law-of-total-variance}{%
+\section{Law of total variance}\label{law-of-total-variance}}
+
+\begin{proposition}[Law of total variance]
+\protect\hypertarget{prp:lawtotalvariance}{}\label{prp:lawtotalvariance}If \(X\) and \(Y\) are two random variables and if the variance of \(X\) is finite, we have:
+\[
+\boxed{\mathbb{V}ar(X) = \mathbb{E}(\mathbb{V}ar(X|Y)) + \mathbb{V}ar(\mathbb{E}(X|Y)).}
+\]
+\end{proposition}
+
+\begin{proof}
+We have:
+\begin{eqnarray*}
+\mathbb{V}ar(X) &=& \mathbb{E}(X^2) - \mathbb{E}(X)^2\\
+&=& \mathbb{E}(\mathbb{E}(X^2|Y)) - \mathbb{E}(X)^2\\
+&=& \mathbb{E}(\mathbb{E}(X^2|Y) \color{blue}{- \mathbb{E}(X|Y)^2}) +  \color{blue}{\mathbb{E}(\mathbb{E}(X|Y)^2)}  - \color{red}{\mathbb{E}(X)^2}\\
+&=& \mathbb{E}(\underbrace{\mathbb{E}(X^2|Y) - \mathbb{E}(X|Y)^2}_{\mathbb{V}ar(X|Y)}) + \underbrace{\mathbb{E}(\mathbb{E}(X|Y)^2) - \color{red}{\mathbb{E}(\mathbb{E}(X|Y))^2}}_{\mathbb{V}ar(\mathbb{E}(X|Y))}.
+\end{eqnarray*}
+\end{proof}
+
+\begin{example}[Mixture of Gaussian distributions (cont'd)]
+\protect\hypertarget{exm:mixture2}{}\label{exm:mixture2}Consider the case of a mixture of Gaussian distributions (Example \ref{exm:mixture}). We have:
+\begin{eqnarray*}
+\mathbb{V}ar(X) &=& \color{blue}{\mathbb{E}(\mathbb{V}ar(X|B))} + \color{red}{\mathbb{V}ar(\mathbb{E}(X|B))}\\
+&=&  \color{blue}{p\sigma_1^2+(1-p)\sigma_2^2} + \color{red}{p(1-p)(\mu_1 - \mu_2)^2}.
+\end{eqnarray*}
+\end{example}
+
+\hypertarget{about-consistent-estimators}{%
+\section{About consistent estimators}\label{about-consistent-estimators}}
+
+The objective of econometrics is to estimate parameters out of data observations (samples). Examples of parameters of interest include, among many others: causal effect of a variable on another, elasticities, parameters defining some distribution of interest, preference parameters (risk aversion)\ldots{}
+
+Except in degenerate cases, the estimates are different from the ``true'' (or \emph{population}) value. A good estimator is expected to converge to the true value when the sample size increases. That is, we are interested in the \emph{consistency} of the estimator.
+
+Denote by \(\hat\theta_n\) the estimate of \(\theta\) based on a sample of length \(n\). We say that \(\hat\theta\) is a consistent estimator of \(\theta\) if, for any \(\varepsilon>0\) (even if very small), the probability that \(\hat\theta_n\) is in \([\theta - \varepsilon,\theta + \varepsilon]\) goes to 1 when \(n\) goes to \(\infty\). Formally:
+\[
+\lim_{n \rightarrow + \infty} \mathbb{P}\left(\hat\theta_n \in [\theta - \varepsilon,\theta + \varepsilon]\right) = 1.
+\]
+
+That is, \(\hat\theta\) is a consistent estimator if \(\hat\theta_n\) \emph{converges in probability} (Def. \ref{def:convergenceproba}) to \(\theta\). Note that there exist different types of stochastic convergence.\footnote{Appendix \ref{StochConvergences} notably provides the definitions of the convergence in distribution (Def. \ref{def:cvgceDistri}) and the mean-square convergence (Def. \ref{def:convergenceLr}).}
+
+\begin{example}[Example of non-convergent estimator]
+\protect\hypertarget{exm:NonConsist}{}\label{exm:NonConsist}
+
+Assume that \(X_i \sim i.i.d. \mbox{Cauchy}\) with a location parameter of 1 and a scale parameter of 1 (Def. \ref{def:Cauchy}). The sample mean \(\bar{X}_n = \frac{1}{n}\sum_{i=1}^{n} X_i\) does not converge in probability. This is because a Cauchy distribution has no mean; hence the law of large numbers (Theorem \ref{thm:LLN}) does not apply.
+
+\begin{figure}
+\includegraphics[width=0.95\linewidth]{ApplEcts_files/figure-latex/figCauchy-1} \caption{Simulation of $\bar{X}_n$ when $X_i \sim i.i.d. \mbox{Cauchy}$.}\label{fig:figCauchy}
+\end{figure}
+
+\end{example}
+
+\hypertarget{TCL}{%
+\chapter{Central Limit Theorem}\label{TCL}}
+
+The law of large numbers (LLN) and the central limit theorem (CLT) are two fundamental theorems of probability. The former states that the sample mean converges in probability to the population mean (when it exists). The latter states that the distribution of the sum (or average) of a large number of independent, identically distributed (i.i.d.) variables with finite variance is approximately normal, regardless of the underlying distribution (as long as it features a finite variance).
+
+\hypertarget{law-of-large-numbers}{%
+\section{Law of large numbers}\label{law-of-large-numbers}}
+
+\begin{definition}[Sample and Population]
+\protect\hypertarget{def:smplpop}{}\label{def:smplpop}In statistics, a \emph{sample} refers to a finite set of observations drawn from a \emph{population}.
+\end{definition}
+
+Most of the time, it is necessary to use samples for research, because it is impractical to study the whole population. Typically, it is rare to observe the population mean, and we often use instead sample means (or averages). The sample average of \(\{x_1,\dots,x_n\}\) is given by:
+\[
+\overline{x}_n = \frac{1}{n}\sum_{i=1}^n x_i.
+\]
+This sample mean is an estimator of the true (population) mean \(\mathbb{E}(x_i)\) (assuming the latter exists). According to the law of large numbers (Theorem \ref{thm:LLN}), this estimator is \emph{consistent}. (see Def. \ref{def:convergenceproba} for the definition of convergence in probability.)
+
+\begin{theorem}[Law of large numbers]
+\protect\hypertarget{thm:LLN}{}\label{thm:LLN}The sample mean is a consistent estimator of the population mean. In other words, the sample mean converges in probability to the population mean.
+\end{theorem}
+
+\begin{proof}
+See Appendix \ref{CLTappend}.
+\end{proof}
+
+\begin{example}
+\protect\hypertarget{exm:doctorVisits}{}\label{exm:doctorVisits}
+
+Suppose one is interested in the average number of doctor consultations over 12 months, for Swiss people. One can get an estimate by computing the sample average of a large dataset, for instance using the \href{https://forscenter.ch/projects/swiss-household-panel/}{Swiss Household Panel (SHP)}:
+
+Figure \ref{fig:incomeDistri} shows the empirical distribution of the number of doctor visits.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(AEC) }\CommentTok{\# to load the shp data{-}frame.}
+\NormalTok{Nb.doct.visits }\OtherTok{\textless{}{-}}\NormalTok{ shp}\SpecialCharTok{$}\NormalTok{p19c15}
+\NormalTok{Nb.doct.visits }\OtherTok{\textless{}{-}}\NormalTok{ Nb.doct.visits[Nb.doct.visits}\SpecialCharTok{\textgreater{}=}\DecValTok{0}\NormalTok{] }\CommentTok{\# remove irrelevant observations}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{plt=}\FunctionTok{c}\NormalTok{(.}\DecValTok{15}\NormalTok{,.}\DecValTok{95}\NormalTok{,.}\DecValTok{2}\NormalTok{,.}\DecValTok{95}\NormalTok{))}
+\FunctionTok{barplot}\NormalTok{(}\FunctionTok{table}\NormalTok{(Nb.doct.visits),}\AttributeTok{xlim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{25}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\includegraphics{ApplEcts_files/figure-latex/incomeDistri-1} \caption{Distribution of the number of doctor visits. Source: Swiss Household Panel.}\label{fig:incomeDistri}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cbind}\NormalTok{(}\FunctionTok{mean}\NormalTok{(Nb.doct.visits),}\FunctionTok{var}\NormalTok{(Nb.doct.visits))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          [,1]     [,2]
+## [1,] 5.253816 79.50575
+\end{verbatim}
+
+Let us compute the sample mean and variance:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cbind}\NormalTok{(}\FunctionTok{mean}\NormalTok{(Nb.doct.visits),}\FunctionTok{var}\NormalTok{(Nb.doct.visits))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          [,1]     [,2]
+## [1,] 5.253816 79.50575
+\end{verbatim}
+
+\end{example}
+
+How to know whether the sample mean is a good estimate of the true (population) average? In other words, how to measure the accuracy of the estimator?
+
+A first answer is provided by the Chebychev inequality. Assume the \(x_i\)'s are independently drawn from a distribution of mean \(\mu\) and variance \(\sigma^2\). We have:
+\[
+\mathbb{E}(\bar{x}_n) = \mu \quad \mbox{ and } \quad \mathbb{V}ar(\mu - \bar{x}_n) = \frac{1}{n}\sigma^2 \underset{n \rightarrow \infty}{\rightarrow} 0.
+\]
+The Chebychev inequality (Proposition \ref{prp:chebychev}) states that, for any \(\varepsilon > 0\) (even very small), we have:
+\[
+\mathbb{P}(|\bar{x}_n-\mu|>\varepsilon) \le \frac{\mathbb{V}ar(\mu - \bar{x}_n)}{\varepsilon^2} = \frac{\sigma^2}{n\varepsilon^2} \underset{n \rightarrow \infty}{\rightarrow} 0.
+\]
+Consider for instance the estimation of the average number of doctor visits (Example \ref{exm:doctorVisits}). In this example, the sample length is \(n=\) 4389, we have \(\bar{x}_n=\) 5.25, and the variance \(\sigma^2\) was approximately equal to 79.51. Therefore, taking \(\varepsilon=0.5\), we have that \(\mathbb{P}(\bar{x}_n-0.5<\mu<\bar{x}_n+0.5)\) is lower than \(\frac{\sigma^2}{n\varepsilon^2} \approx\)
+0.072.
+
+However, this only gives bounds for such probabilities. The central limit theorem provides richer information, as it gives the approximate distribution of the estimation error.
+
+\hypertarget{central-limit-theorem-clt}{%
+\section{Central Limit Theorem (CLT)}\label{central-limit-theorem-clt}}
+
+\begin{theorem}[Lindberg-Levy Central limit theorem, CLT]
+\protect\hypertarget{thm:LindbergLevyCLT}{}\label{thm:LindbergLevyCLT}If \(x_n\) is an i.i.d. sequence of random variables with mean \(\mu\) and (finite) variance, then:
+\[
+\boxed{\sqrt{n} (\bar{x}_n - \mu) \overset{d}{\rightarrow} \mathcal{N}(0,\sigma^2), \quad \mbox{where} \quad \bar{x}_n = \frac{1}{n} \sum_{i=1}^{n} x_i.}
+\]
+{[}``\(\overset{d}{\rightarrow}\)'' denotes the convergence in distribution (see Def. \ref{def:cvgceDistri}){]}
+\end{theorem}
+
+\begin{proof}
+See Appendix \ref{CLTappend}.
+\end{proof}
+
+According to the CLT, when \(n\) is large and whatever the distribution of the \(x_i\)'s (as long as it features an average \(\mu\) and a variance \(\sigma^2\)), the error between \(\bar{x}_n\) and \(\mu\) can be seen as a random variable that is normally distributed; it is of mean zero and its standard deviation is \(\sigma/\sqrt{n}\). (We then say that the convergence rate is \emph{in \(\sqrt{n}\)}.) The knowledge of the quantiles of the normal distribution can then be used to compute approximate confidence intervals for \(\mu\) (based on the sample \(\{x_1,\dots,x_n\}\)).
+
+This \href{https://jrenne.shinyapps.io/StatEcoII/}{web interface} illustrates the CLT with simulations (select the ``CLT'' block).
+
+The CL theorem was first postulated by the mathematician Abraham de Moivre. In an article published in 1733, he used the normal distribution to approximate the distribution of the number of heads resulting from many tosses of a fair coin. This finding was nearly forgotten until Pierre-Simon Laplace recalled it in his\href{https://archive.org/details/thorieanalytiqu01laplgoog}{Théorie analytique des probabilités}, published in 1812. Laplace expanded De Moivre's finding by approximating the binomial distribution with the normal distribution.
+
+\begin{exercise}
+\protect\hypertarget{exr:ExoBuffon}{}\label{exr:ExoBuffon}Consider Buffon's experiment (Example \ref{exm:Buffon}). We have seen that \(\pi\) can be estimated by counting the fraction of times the needles cross the grooves of the floor.\footnote{More precisely, the expectation of this fraction is equal to \(1/\pi\).} Using the CLT, determine the (approximate) minimal number \(n\) of needles that one has to throw to get an estimate \(\hat\pi\) (\(= 1/\bar{X}_n\)) of \(\pi\) that is such that there is a 95\% chance that \(\pi \in [\hat\pi-0.01,\hat\pi+0.01]\)?
+\end{exercise}
+
+\begin{exercise}
+\protect\hypertarget{exr:ExoPileFace}{}\label{exr:ExoPileFace}Assume you have a lot of time and a coin. How would you approximate the 100 percentiles of the \(\mathcal{N}(0,1)\) distribution?
+\end{exercise}
+
+The CLT can be extended to the case where each \(x_i\) is a vector. (In that case, and if the dimension of \(x_i\) is \(m\), then \(\mathbb{V}ar(x_i)\) is a \(m\times m\) matrix.) Here is the multivariate CLT:
+
+\begin{theorem}[Multivariate Central limit theorem, CLT]
+\protect\hypertarget{thm:MCLT}{}\label{thm:MCLT}If \(\mathbf{x}_n\) is an i.i.d. sequence of \(m\)-dimensional random variables with mean \(\boldsymbol\mu\) and variance \(\Sigma\), where \(\Sigma\) is a positive definite matrix, then:
+\[
+\boxed{\sqrt{n} (\bar{\mathbf{x}}_n - \boldsymbol\mu) \overset{d}{\rightarrow} \mathcal{N}(\mathbf{0},\Sigma), \quad \mbox{where} \quad \bar{\mathbf{x}}_n = \frac{1}{n} \sum_{i=1}^{n} \mathbf{x}_i.}
+\]
+\end{theorem}
+
+\hypertarget{comparison-of-sample-means}{%
+\section{Comparison of sample means}\label{comparison-of-sample-means}}
+
+As said at the beginning of this chapter, the CLT is a key statistical result that has numerous applications. An important one is the statistical comparision of sample means:
+
+Consider two samples \(\{m_1,\dots,m_{n_m}\}\) and \(\{w_1,\dots,w_{n_w}\}\). Assume that the \(m_i\)'s (respectively the \(w_i\)'s) are i.i.d., with mean \(\mu_m\) and variance \(\sigma^2_m\) and of \(w_i\)'s (resp. with mean \(\mu_w\) and variance \(\sigma^2_w\)).
+
+If \(n\) is large, according to the CLT, we approximately have:
+\[
+\sqrt{n_m}(\bar{m} - \mu_m) \sim \mathcal{N}(0,\sigma^2_m) \quad and \quad \sqrt{n_w}(\bar{w} - \mu_w) \sim \mathcal{N}(0,\sigma^2_w),
+\]
+or
+\[
+\bar{m} \sim \mathcal{N}(\mu_m,\sigma^2_m/n_m) \quad and \quad \bar{w} \sim \mathcal{N}(\mu_w,\sigma^2_w/n_w).
+\]
+
+if the \(m_i\)'s and the \(w_i\)'s are independent, then \(\bar{m}\) and \(\bar{w}\) also are, and we get:
+\[
+\bar{m} - \bar{w} \sim \mathcal{N}\left(\mu_m-\mu_w,\sigma^2\right) \quad with \quad \sigma^2 = \frac{\sigma^2_m}{n_m}+\frac{\sigma^2_w}{n_w}.
+\]
+This can be used to test the null hypothesis \(H_0: \; \bar{m} - \bar{w} = 0\) (see Section \ref{Tests}). Indeed under this assumption, the probability that \(\bar{m} - \bar{w}\) is in \([-1.96\sigma,1.96\sigma]\) (respectively in \([-2.58\sigma,2.58\sigma]\)) is approximately 0.95 (respectively 0.99) {[}see Table \ref{tab:Normal}{]}.
+
+For instance, if we find, using our sample, that \(\bar{m} - \bar{w}\) is not in \([-2.58\sigma,2.58\sigma]\), then we reject the null hypothesis at the 1¥\% significance level.
+
+\begin{example}[Comparison of sample means]
+\protect\hypertarget{exm:comparSmplMeans}{}\label{exm:comparSmplMeans}Let us use the \href{https://forscenter.ch/projects/swiss-household-panel/}{Swiss Household Panel (SHP)} dataset to test the equality between men and women incomes, for Swiss people under the age of 35.
+
+Figure \ref{fig:RcompMeans} displays the empirical densities of incomes for men and women. Vertical dashed lines indicate sample means.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(AEC);}\FunctionTok{library}\NormalTok{(logKDE)}
+\NormalTok{dataset.m }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(shp,(sex19}\SpecialCharTok{==}\DecValTok{1}\NormalTok{)}\SpecialCharTok{\&}\NormalTok{(age19}\SpecialCharTok{\textless{}=}\DecValTok{35}\NormalTok{))}
+\NormalTok{dataset.w }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(shp,(sex19}\SpecialCharTok{==}\DecValTok{2}\NormalTok{)}\SpecialCharTok{\&}\NormalTok{(age19}\SpecialCharTok{\textless{}=}\DecValTok{35}\NormalTok{))}
+\NormalTok{income.m }\OtherTok{\textless{}{-}}\NormalTok{ dataset.m}\SpecialCharTok{$}\NormalTok{i19ptotg}
+\NormalTok{income.w }\OtherTok{\textless{}{-}}\NormalTok{ dataset.w}\SpecialCharTok{$}\NormalTok{i19ptotg}
+\NormalTok{income.m }\OtherTok{\textless{}{-}}\NormalTok{ income.m[income.m}\SpecialCharTok{\textgreater{}=}\DecValTok{0}\NormalTok{] }\CommentTok{\# remove irrelevant data}
+\NormalTok{income.w }\OtherTok{\textless{}{-}}\NormalTok{ income.w[income.w}\SpecialCharTok{\textgreater{}=}\DecValTok{0}\NormalTok{] }\CommentTok{\# remove irrelevant data}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{plt=}\FunctionTok{c}\NormalTok{(.}\DecValTok{1}\NormalTok{,.}\DecValTok{95}\NormalTok{,.}\DecValTok{2}\NormalTok{,.}\DecValTok{95}\NormalTok{)) }\CommentTok{\# adjust margins}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{logdensity}\NormalTok{(income.w),}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{,}\AttributeTok{xlim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{200000}\NormalTok{),}\AttributeTok{main=}\StringTok{""}\NormalTok{,}
+     \AttributeTok{xlab=}\StringTok{"Yearly gross income (in CHF)"}\NormalTok{,}\AttributeTok{ylab=}\StringTok{""}\NormalTok{) }\CommentTok{\# x and y labels}
+\FunctionTok{lines}\NormalTok{(}\FunctionTok{logdensity}\NormalTok{(income.m),}\AttributeTok{col=}\StringTok{"red"}\NormalTok{,}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v=}\FunctionTok{mean}\NormalTok{(income.m),}\AttributeTok{col=}\StringTok{"red"}\NormalTok{,}\AttributeTok{lty=}\DecValTok{3}\NormalTok{,}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v=}\FunctionTok{mean}\NormalTok{(income.w),}\AttributeTok{col=}\StringTok{"black"}\NormalTok{,}\AttributeTok{lty=}\DecValTok{3}\NormalTok{,}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{,}\FunctionTok{c}\NormalTok{(}\StringTok{"men yearly income"}\NormalTok{,}\StringTok{"women"}\NormalTok{),}\AttributeTok{lty=}\DecValTok{1}\NormalTok{,}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{,}\AttributeTok{col=}\FunctionTok{c}\NormalTok{(}\StringTok{"red"}\NormalTok{,}\StringTok{"black"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\includegraphics{ApplEcts_files/figure-latex/RcompMeans-1} \caption{Distribution of yearly gross incomes for Swiss residents under the age of 35. Source: SHP. Vertical dashed lines indicates the sample mean.}\label{fig:RcompMeans}
+\end{figure}
+
+Let us compute \(\bar{m}\), \(\bar{w}\), and \(\sigma\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m.bar }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(income.m)}
+\NormalTok{w.bar }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(income.w)}
+\NormalTok{sigma }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{var}\NormalTok{(income.m)}\SpecialCharTok{/}\FunctionTok{length}\NormalTok{(income.m) }\SpecialCharTok{+} \FunctionTok{var}\NormalTok{(income.w)}\SpecialCharTok{/}\FunctionTok{length}\NormalTok{(income.w))}
+\FunctionTok{c}\NormalTok{(m.bar,w.bar,sigma)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 53035.023 42708.227  2427.425
+\end{verbatim}
+
+Under the ``equality assumption'', their would a probability of only 5\% (respectively 1\%) for \(\bar{m} - \bar{w}\) not to be in \([\)-4758,4758\(]\) (respectively in \([\)-6263,6263\(]\)). Since \(\bar{m} - \bar{w}\) is equal to 10327, we reject the null hypothesis at the 5\%, and even 1\%, significance levels.
+\end{example}
+
+\hypertarget{Tests}{%
+\chapter{Statistical tests}\label{Tests}}
+
+We run a statistical test when we want to know whether some hypothesis about a vector of parameters \(\theta\) ---that is imperfectly observed--- is consistent with data that are seen as random, and whose randomness depend on \(\theta\).
+
+Typically, assume you observe a sample \(\{x_1,\dots,x_n\}\) where the \(x_i\)'s are i.i.d., of mean \(\mu\) and variance \(\sigma^2\) (these two parameters being unobseved). One may want to know whether \(\mu=0\).
+
+The hypothesis the researcher wants to test is called the \emph{null hypothesis}, often denoted by \(H_0\). It is a conjecture about a given property of a population. Without loss of generality, it can be stated as:
+\[
+H_0:\;\{\theta \in \Theta\}.
+\]
+It can also be defined through a function \(h\) (say):\footnote{We can relate the previous and the next equation through \(\Theta = \{\theta, \,s.t.\,h(\theta)=0\}\).}
+\[
+H_0:\;h(\theta)=0.
+\]
+
+The \emph{alternative hypothesis}, often denoted \(H_1\) is then defined by \(H_1:\;\{\theta \in \Theta^c\}\).\footnote{Note that researchers may want to find support for the null hypothesis \(H_0\) as well as for the alternative hypothesis \(H_1\).}
+
+The general reasoning underlying a statistical test is as follows
+
+\begin{itemize}
+\tightlist
+\item
+  Assume the null is assumed to be true;
+\item
+  Under this assumption, look for the distribution of a given statistic (called \emph{test statistic});
+\item
+  Compute this statistic (\(S\), say) using observed data;
+\item
+  If the obtained statistic is located in some ``plausible'' parts of the distribution (i.e., not far in the tails), \(H_0\) is not rejected; otherwise it is.
+\end{itemize}
+
+Hence, the ingredients of a statistical are as follows:
+
+\begin{itemize}
+\tightlist
+\item
+  a vector of (unknown) parameters (\(\theta\)),
+\item
+  a \textbf{test statistic} (say \(S\)) and
+\item
+  a \textbf{critical region} (say \(\Omega\)).
+\end{itemize}
+
+There are two possible outcomes for a statisitcal test:
+
+\begin{itemize}
+\tightlist
+\item
+  \(H_0\) is rejected if \(S \in \Omega\);
+\item
+  \(H_0\) is not rejected if \(S \not\in \Omega\).
+\end{itemize}
+
+This implies that there are two types of errors one can make in the context of a statistical test:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Type I error}: Reject \(H_0\) while it is true = False Positive (FP).
+\item
+  \textbf{Type II error}: Absence of rejection of \(H_0\) while it is false = False Negative (FN).
+\end{itemize}
+
+\begin{example}[Early Warning Signals (practical illustration of type-I and type-II errors)]
+\protect\hypertarget{exm:FPFN}{}\label{exm:FPFN}Early warning systems (EWS) are approaches designed to warn policy makers of potential future economic and financial crises. See, e.g., \href{http://www.ecb.europa.eu/events/pdf/conferences/140623/Vasicek-et-al_Comparing-Different-Early-Warning-Systems.pdf?F96bbb525a26071ecf97f9154fb3cc73}{ECB (2014)}
+
+To implement such approaches, researchers look for signals/indices forecasting crises. Suppose one index (\(W\), say) appears to be large before financial crises; one may define an EWS by saying that a crisis is coming when \(W>a\), where \(a\) is a given threshold. It is easliy seen that the lower (respectively higeher) \(a\), the larger the fraction of FP (resp. of FN).
+\end{example}
+
+\hypertarget{size-and-power-of-a-test}{%
+\section{Size and power of a test}\label{size-and-power-of-a-test}}
+
+\begin{definition}[Size and Power of a test]
+\protect\hypertarget{def:sizepower}{}\label{def:sizepower}
+
+For a given test,
+
+\begin{itemize}
+\tightlist
+\item
+  the probability of type-I errors, denoted by \(\alpha\), is called the \textbf{size}, or \textbf{significance level}, of the test,
+\item
+  the \textbf{power} of a test is equal to \(1 - \beta\), where \(\beta\) is the probability of type-II errors.
+\end{itemize}
+
+\end{definition}
+
+Formally, the previous definitions can be written as follows:
+\begin{eqnarray}
+\alpha &=& \mathbb{P}(S \in \Omega|H_0) \quad \mbox{(Proba. of a false positive)}\\
+\beta &=& \mathbb{P}(S \not\in \Omega|H_1) \quad \mbox{(Proba. of a false negative)}.
+\end{eqnarray}
+
+The power is the probability that the test will lead to the rejection of the null hypothesis if the latter is false (almost ruling out false negatives). Therefore, for a given size, we prefer tests with high power.
+
+In most cases, there is a trade-off between size and power, whch is easily understood in the EWS context (Example \ref{exm:FPFN}): increasing the threshold \(a\) reduces the fraction of FP (thereby reducing the size of the test), but it increases the fraction of FN (thereby reducing the power of the test).
+
+\hypertarget{the-different-types-of-statistical-tests}{%
+\section{The different types of statistical tests}\label{the-different-types-of-statistical-tests}}
+
+How to determine the critical region? Loosely speaking, we want the critical region to be a set of ``implausible'' values of the test statistic \(S\) under the null hypothesis \(H_0\). The lower the size of the test (\(\alpha\)), the more implausible these values. Recall that, by definition of the size of the test, \(\alpha = \mathbb{P}(S \in \Omega|H_0)\). That is, if \(\alpha\) is small, there is only a small probability that \(S\) lies in \(\Omega\) under \(H_0\).
+
+Consider the case where, under \(H_0\), the distribution of the test statistic is symmetrical (as in the case of the normal distribution or of the Student-t distribution). In this case, the critical region is usually defined by the union of the two tails of the distribution. The test is then said to be a \textbf{two-tailed test} or a \textbf{two-sided test}. This situation is illustrated by Figures \ref{fig:Illusttest1} and \ref{fig:Illusttest2}. (Use this \href{https://jrenne.shinyapps.io/tests/}{web interface} to explore alternative situations.)
+
+Figure \ref{fig:Illusttest2} also illustrates the notion of \emph{p-value} (in the case of a two-sided test). The p-value can be defined as the value of the size of the test \(\alpha\) that is such that the computed test statistic, \(S\), is at the ``frontier'' of the critical region. Given this definition, if the p-value is smaller (respoectively larger) than the size of the test, we reject (resp. cannot rejet) the null hypothesis at the \(\alpha\) significance level.
+
+\begin{figure}
+\includegraphics{ApplEcts_files/figure-latex/Illusttest1-1} \caption{Two-sided test. Under $H_0$, $S \sim t(5)$. $\alpha$ is the size of the test.}\label{fig:Illusttest1}
+\end{figure}
+
+\begin{figure}
+\includegraphics{ApplEcts_files/figure-latex/Illusttest2-1} \caption{Two-sided test. Under $H_0$, $S \sim t(5)$. $\alpha$ is the size of the test.}\label{fig:Illusttest2}
+\end{figure}
+
+Figures \ref{fig:IllusTestOneSided1} and \ref{fig:IllusTestOneSided2} illustrate the \textbf{one-tailed}, or \textbf{one-sided} situation. These tests are tyxpically employed when the distribution of the test statistic under the null hypothesis has a support on \(\mathbb{R}^+\) (e.g.~\(\chi^2\)).
+
+Figure \ref{fig:IllusTestOneSided2} also illustrates the notion of p-value associated with a one-sided statistical test.
+
+\begin{figure}
+\includegraphics{ApplEcts_files/figure-latex/IllusTestOneSided1-1} \caption{One-sided test. Under $H_0$, $S \sim \chi^2(5)$. $\alpha$ is the size of the test.}\label{fig:IllusTestOneSided1}
+\end{figure}
+
+\begin{figure}
+\includegraphics{ApplEcts_files/figure-latex/IllusTestOneSided2-1} \caption{One-sided test. Under $H_0$, $S \sim \chi^2(5)$. $\alpha$ is the size of the test.}\label{fig:IllusTestOneSided2}
+\end{figure}
+
+\hypertarget{a-practical-illustration-of-size-and-power}{%
+\section{A practical illustration of size and power}\label{a-practical-illustration-of-size-and-power}}
+
+Consider a factory that produces metal cylinders whose diameter has to be equal to 1cm. The tolerance is \(a=0.01cm\). That is, more than 90\% of the pieces have to satisfy the tolerance for the whole production (say 1.000.000 pieces) to be bought by the client.
+
+The production technology is such that a proportion \(\theta\) (imperfectly known) of the pieces does not satisfy the tolerance. (The parameter \(\theta\) could be computed by measuring all the pieces but this would be costly.) Instead, it is decided that \(n \ll 1.000.000\) pieces will be measured.
+
+In this ocntext, the null hypothesis \(H_0\) is \(\theta < 10\%\). The producing firm would like it to be true.
+
+Let us denote by \(d_i\) the binary indicator defined as:
+\[
+d_i = \left\{
+\begin{array}{cll}
+0 & \mbox{if the size of the $i^{th}$ cylinder is in $[1-a,1+a]$;}\\
+1 & \mbox{otherwise.}
+\end{array}
+\right.
+\]
+
+We set \(x_n=\sum_{i=1}^n d_i\). That is, \(x_n\) is the number of measured pieces that do not satisfy the tolerance (out of \(n\)).
+
+A decision rule is: accept \(H_0\) if \(\dfrac{x_n}{n} \le b\), reject otherwise.
+
+In that case, the test statistic is \(S_n=\frac{x_n}{n}\) and the critical region is \(\Omega = [b,1]\). The probability to reject \(H_0\) is:
+\begin{eqnarray*}
+\mathbb{P}_\theta(S_n \in \Omega) = \sum_{i=b \times n+1}^{n}C_{n}^i\theta^i(1-\theta)^{n-i}.
+\end{eqnarray*}
+
+\href{https://jrenne.shinyapps.io/Factory/}{web interface}.
+
+\begin{figure}
+\includegraphics{ApplEcts_files/figure-latex/Factory-1} \caption{Factory example.}\label{fig:Factory}
+\end{figure}
+
+\begin{definition}[Asymptotic level]
+\protect\hypertarget{def:asmyptlevel}{}\label{def:asmyptlevel}An asymptotic test with critical region \(\Omega_n\) has an asymptotic level equal to \(\alpha\) if:
+\[
+\underset{\theta \in \Theta}{\mbox{sup}} \quad \underset{n \rightarrow \infty}{\mbox{lim}} \mathbb{P}_\theta (S_n \in \Omega_n) = \alpha.
+\]
+\end{definition}
+
+\begin{definition}[Asymptotically consistent test]
+\protect\hypertarget{def:asmyptconsisttest}{}\label{def:asmyptconsisttest}An asymptotic test with critical region \(\Omega_n\) is consistent if:
+\[
+\forall \theta \in \Theta^c, \quad \mathbb{P}_\theta (S_n \in \Omega_n) \rightarrow 1.
+\]
+\end{definition}
+
+Back to the Factory example (Exmpl. \ref{exm:factory}): Asymptotic level
+
+Because \(S_n =\bar{d}_n\), and since \(\mathbb{E}(d_i)=\theta\) and \(\mathbb{V}ar(d_i)=\theta(1-\theta)\), the CLT (Thm \ref{thm:LindbergLevyCLT}) leads to:
+\[
+    S_n \sim \mathcal{N}\left(\theta,\frac{1}{n}\theta(1-\theta)\right) \quad or \quad \frac{\sqrt{n}(S_n-\theta)}{\sqrt{\theta(1-\theta)}} \sim \mathcal{N}(0,1)
+    \]
+
+Hence, \(\mathbb{P}_\theta (S_n \in \Omega_n)=\mathbb{P}_\theta (S_n > b) \approx 1-\Phi\left(\frac{\sqrt{n}(b-\theta)}{\sqrt{\theta(1-\theta)}}\right)\).
+
+\(\theta \rightarrow 1-\Phi\left(\frac{\sqrt{n}(b-\theta)}{\sqrt{\theta(1-\theta)}}\right)\) increases w.r.t. \(\theta\), therefore:
+\[
+    \underset{\theta \in \Theta=[0,0.1]}{\mbox{sup}} \quad \mathbb{P}_\theta (S_n > b_n) = \mathbb{P}_{\theta=0.1} (S_n \in \Omega_n)\approx\]
+\[
+    1-\Phi\left(\frac{\sqrt{n}(b_n-0.1)}{0.3}\right).
+    \]
+Hence, if we set \(b_n = 0.1 + 0.3\Phi^{-1}(1-\alpha)/\sqrt{n}\), then we have \({\mbox{sup}}_{\theta \in \Theta=[0,0.1]} \quad \mathbb{P}_\theta (S_n > b_n) \approx \alpha\) for large values of \(n\).
+
+We proceed under the assumption that \(\theta>0.1\) and we consider \(b_n = b = 0.1\).
+
+We still have:
+\[
+    \mathbb{P}_\theta (S_n \in \Omega_n)=\mathbb{P}_\theta (S_n > b) \approx 1-\Phi\left(\frac{\sqrt{n}(b-\theta)}{\sqrt{\theta(1-\theta)}}\right).
+    \]
+
+Because \(\frac{\sqrt{n}(b-\theta)}{\sqrt{\theta(1-\theta)}} \underset{n \rightarrow \infty}{\rightarrow} -\infty\), we have
+\[
+    \mathbb{P}_\theta (S_n > b) \approx 1- \underbrace{\Phi\left(\frac{\sqrt{n}(b-\theta)}{\sqrt{\theta(1-\theta)}}\right)}_{\underset{n \rightarrow \infty}{\rightarrow} 0} \underset{n \rightarrow \infty}{\rightarrow} 1.
+    \]
+Therefore, with \(b_n=b=0.1\), the test is consistent.
+
+\hypertarget{normality-tests}{%
+\section{Normality tests}\label{normality-tests}}
+
+Let \(f\) be the p.d.f. of \(Y\). The \(k^{th}\) \textbf{standardized moment} of \(Y\) is defined as:
+\[
+    \psi_k = \frac{\mu_k}{\left(\sqrt{\mathbb{V}ar(Y)}\right)^k},
+    \]
+where \(\mathbb{E}(Y)=\mu\) and
+\[
+    \mu_k = \mathbb{E}[(Y-\mu)^k]= \int_{-\infty}^{\infty} (y-\mu)^k f(y) dy
+    \]
+is the \(k^{th}\) \{\color{blue}central moment\} of \(Y\).
+
+In particular, \(\mu_2 = \mathbb{V}ar(Y)=\sigma^2\), say. Therefore:
+\[
+    \psi_k = \frac{\mu_k}{\left(\mu_2^{1/2}\right)^k},
+    \]
+
+The skewness corresponds to \(\psi_3\) and the kurtosis to \(\psi_4\) (Def. \ref{def:skewnesskurtosis}).
+
+\begin{proposition}[Skewness and kurtosis of the normal distribution]
+\protect\hypertarget{prp:normSkewKurt}{}\label{prp:normSkewKurt}For a Gaussian var., the skewness (\(\psi_3\)) is 0 and the kurtosis (\(\psi_4\)) is 3.
+\end{proposition}
+
+\begin{proof}
+For a centered Gaussian distribution, \((-y)^3f(-y)=-y^3f(y)\). This implies that \(\int_{-\infty}^{\infty}y^3f(y)dy=\int_{-\infty}^{0}y^3f(y)dy+\int_{0}^{\infty}y^3f(y)dy=-\int_{0}^{\infty}y^3f(y)dy+\int_{0}^{\infty}y^3f(y)dy=0\), which leads to the skewness result.
+
+Moreover, for a Gaussian distribution, \(df(y)/dy=-yf(y)\) and therefore \(\frac{d}{dy}(y^3f(y))=3y^2f(y)-y^4f(y)\). Partial integration leads to the kurtosis result.
+\end{proof}
+
+\(k^{th}\) \textbf{central sample moment} of \(Y\):
+\[
+    m_k = \frac{1}{n}\sum_{i=1}^n(y_i - \bar{y})^k.
+    \]
+\(k^{th}\) \textbf{standardized sample moment} of \(Y\):
+\[
+    g_k = \frac{m_k}{m_2^{k/2}}.
+    \]
+
+\begin{proposition}[Consistency of central sample moments]
+\protect\hypertarget{prp:conssitCentralMoments}{}\label{prp:conssitCentralMoments}If the \(k^{th}\) central moment of \(Y\), exists, then the sample central moment \(m_k\) is a consistent estimate of the central moment \(\mu_k\).
+\end{proposition}
+
+\begin{proposition}[Asymptotic distribution of 3rd-order sample central moment of a normal distribution]
+\protect\hypertarget{prp:Asymptg3Normal}{}\label{prp:Asymptg3Normal}If \(Y\sim\mathcal{N}(\mu,\sigma^2)\), then \(\sqrt{n}g_3 \overset{d}{\rightarrow} \mathcal{N}(0,6)\).
+\end{proposition}
+
+\begin{proof}
+See, e.g.~\href{http://www.springer.com/la/book/9780387985954}{Lehmann (1999)}.
+\end{proof}
+
+\begin{proposition}[Asymptotic distribution of 4th-order sample central moment of a normal distribution]
+\protect\hypertarget{prp:Asymptg4Normal}{}\label{prp:Asymptg4Normal}If \(Y\sim\mathcal{N}(\mu,\sigma^2)\), then \(\sqrt{n}(g_4-3) \overset{d}{\rightarrow} \mathcal{N}(0,24)\).
+\end{proposition}
+
+\begin{proposition}[Joint asymptotic distribution of 3rd and 4th-order sample central moments of a normal distribution]
+\protect\hypertarget{prp:Asymptg3g4Normal}{}\label{prp:Asymptg3g4Normal}Asymptotically, the vector \((\sqrt{n}g_3,\sqrt{n}(g_4-3))\) is bivariate Gaussian. Further its elements are uncorrelated and therefore independent.
+\end{proposition}
+
+The Jarque-Bera statistic is defined by:
+\[
+JB = n \left( \frac{g_3^2}{6}+\frac{(g_4-3)^2}{24} \right) = \frac{n}{6}\left(g_3^2 + \frac{(g_4-3)^2}{4}\right).
+\]
+
+\begin{proposition}[Jarque-Bera asympt. distri.]
+\protect\hypertarget{prp:JB}{}\label{prp:JB}If \(Y\) is Gaussian, \(JB \overset{d}{\rightarrow} \chi^2(2)\).
+\end{proposition}
+
+\begin{proof}
+This directly derives from Proposition \ref{prp:Asymptg3g4Normal}.
+\end{proof}
+
+\begin{example}[Consistency of the Jarque-Bera normality test]
+\protect\hypertarget{exm:JB}{}\label{exm:JB}
+
+This example illustrates the consistency of the JB test (see Def. \ref{def:asmyptconsisttest}).
+
+First, let us write the function computing the JB test statistic:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{JB }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x)\{}
+\NormalTok{  x}\FloatTok{.1} \OtherTok{\textless{}{-}} \FunctionTok{dim}\NormalTok{(x)[}\DecValTok{1}\NormalTok{]}
+\NormalTok{  x}\FloatTok{.2} \OtherTok{\textless{}{-}} \FunctionTok{dim}\NormalTok{(x)[}\DecValTok{2}\NormalTok{]}
+\NormalTok{  n }\OtherTok{\textless{}{-}}\NormalTok{ x}\FloatTok{.2}
+\NormalTok{  x.bar }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(x,}\DecValTok{1}\NormalTok{,mean)}
+\NormalTok{  x.x.bar }\OtherTok{\textless{}{-}}\NormalTok{ x }\SpecialCharTok{{-}} \FunctionTok{matrix}\NormalTok{(x.bar,x}\FloatTok{.1}\NormalTok{,x}\FloatTok{.2}\NormalTok{)}
+\NormalTok{  m}\FloatTok{.2} \OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(x.x.bar,}\DecValTok{1}\NormalTok{,}\ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{mean}\NormalTok{(x}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)\})}
+\NormalTok{  m}\FloatTok{.3} \OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(x.x.bar,}\DecValTok{1}\NormalTok{,}\ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{mean}\NormalTok{(x}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{)\})}
+\NormalTok{  m}\FloatTok{.4} \OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(x.x.bar,}\DecValTok{1}\NormalTok{,}\ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{mean}\NormalTok{(x}\SpecialCharTok{\^{}}\DecValTok{4}\NormalTok{)\})}
+\NormalTok{  g}\FloatTok{.3} \OtherTok{\textless{}{-}}\NormalTok{ m}\FloatTok{.3}\SpecialCharTok{/}\NormalTok{m}\FloatTok{.2}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{3}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)}
+\NormalTok{  g}\FloatTok{.4} \OtherTok{\textless{}{-}}\NormalTok{ m}\FloatTok{.4}\SpecialCharTok{/}\NormalTok{m}\FloatTok{.2}\SpecialCharTok{\^{}}\NormalTok{(}\DecValTok{4}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)}
+  \FunctionTok{return}\NormalTok{(n}\SpecialCharTok{*}\NormalTok{(g}\FloatTok{.3}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\DecValTok{6} \SpecialCharTok{+}\NormalTok{ (g}\FloatTok{.4}\DecValTok{{-}3}\NormalTok{)}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\DecValTok{24}\NormalTok{))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Let us first consider the case where \(H_0\) (normality of the \(y_i\)'s) is satisfied. Figure \ref{fig:JBTest2} displays the distribution of the JB statistics when the \(y_i\)'s are normal, consistently with \(H_0\). It appears that when \(n\) grows, the distribution indeed converges to the \(\chi^2(2)\) distribution.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{all.n }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{20}\NormalTok{,}\DecValTok{100}\NormalTok{)}
+\NormalTok{nb.sim }\OtherTok{\textless{}{-}} \DecValTok{10000}
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rnorm}\NormalTok{(nb.sim}\SpecialCharTok{*}\FunctionTok{max}\NormalTok{(all.n)),nb.sim,}\FunctionTok{max}\NormalTok{(all.n))}
+
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{));}\FunctionTok{par}\NormalTok{(}\AttributeTok{plt=}\FunctionTok{c}\NormalTok{(.}\DecValTok{1}\NormalTok{,.}\DecValTok{95}\NormalTok{,.}\DecValTok{15}\NormalTok{,.}\DecValTok{8}\NormalTok{))}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(all.n))\{}
+\NormalTok{  n }\OtherTok{\textless{}{-}}\NormalTok{ all.n[i]}
+  \FunctionTok{hist}\NormalTok{(}\FunctionTok{JB}\NormalTok{(y[,}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n]),}\AttributeTok{nclass =} \DecValTok{200}\NormalTok{,}\AttributeTok{freq =} \ConstantTok{FALSE}\NormalTok{,}
+       \AttributeTok{main=}\FunctionTok{paste}\NormalTok{(}\StringTok{"n = "}\NormalTok{,}\FunctionTok{toString}\NormalTok{(n),}\AttributeTok{sep=}\StringTok{""}\NormalTok{),}\AttributeTok{xlim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{10}\NormalTok{))}
+\NormalTok{  xx }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{10}\NormalTok{,}\AttributeTok{by=}\NormalTok{.}\DecValTok{01}\NormalTok{)}
+  \FunctionTok{lines}\NormalTok{(xx,}\FunctionTok{dchisq}\NormalTok{(xx,}\AttributeTok{df =} \DecValTok{2}\NormalTok{),}\AttributeTok{col=}\StringTok{"red"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\includegraphics{ApplEcts_files/figure-latex/JBTest2-1} \caption{Distribution of the JB test statistic under $H_0$ (normality).}\label{fig:JBTest2}
+\end{figure}
+
+Now, replace \texttt{rnorm} with \texttt{runif}. That is, let us now consider what happens for the distribution of the JB statistics when the \(y_i\)'s are drawn from a uniform distribution. Figure \ref{fig:JBTest3} then shows that, when \(n\) grows, the distributions shift to the right. This results in the consistency of the JB test (see Def. \ref{def:asmyptconsisttest}).
+
+\begin{figure}
+\includegraphics{ApplEcts_files/figure-latex/JBTest3-1} \caption{Distribution of the JB test statistic when the $y_i$'s are drawn from a uniform distribution (hence $H_0$ is not satisfied).}\label{fig:JBTest3}
+\end{figure}
+
+\end{example}
 
 \hypertarget{ChapterLS}{%
 \chapter{Linear Regressions}\label{ChapterLS}}
@@ -6657,10 +7423,18 @@ F = \left[
 
 Note that this matrix \(F\) is such that if \(y_t\) follows Eq. \eqref{eq:AR}, then process \(\mathbf{y}_t\) follows:
 \[
-\mathbf{y}_t = F \mathbf{y}_{t-1} + \boldsymbol\xi_t
+\mathbf{y}_t = \mathbf{c} + F \mathbf{y}_{t-1} + \boldsymbol\xi_t
 \]
 with
 \[
+\mathbf{c} =
+\left[\begin{array}{c}
+c\\
+0\\
+\vdots\\
+0
+\end{array}\right],
+\quad
 \boldsymbol\xi_t =
 \left[\begin{array}{c}
 \varepsilon_t\\
@@ -6740,10 +7514,10 @@ and
 
 In the following lines of codes, we compute the eigenvalues of the \(F\) matrices associated with the following processes (where \(\varepsilon_t\) is a white noise):
 \begin{eqnarray*}
-x_t &=& 0.9 y_{t-1} -0.2 x_{t-2} + \varepsilon_t\\
+x_t &=& 0.9 x_{t-1} -0.2 x_{t-2} + \varepsilon_t\\
 y_t &=& 1.1 y_{t-1} -0.3 y_{t-2} + \varepsilon_t\\
-w_t &=& 1.4 y_{t-1} -0.7 w_{t-2} + \varepsilon_t\\
-z_t &=& 0.9 y_{t-1} +0.2 z_{t-2} + \varepsilon_t
+w_t &=& 1.4 w_{t-1} -0.7 w_{t-2} + \varepsilon_t\\
+z_t &=& 0.9 z_{t-1} +0.2 z_{t-2} + \varepsilon_t
 \end{eqnarray*}
 
 \begin{Shaded}
@@ -6847,7 +7621,7 @@ y_{t+h} = c + \phi_1 y_{t+h-1}+\dots+ \phi_p  y_{t+h-p} + \varepsilon_{t+h}.
 \]
 The residuals of the latter regressions (\(\varepsilon_{t+h}\)) are uncorrelated to \(y_t\). Then the partial autocorrelation is zero for \(h>p\).
 
-Besides, it can be shown that \(\phi_{p,p}=\phi_p\). Hence \(\phi_{p,p}=\phi_p\) but \(\phi_{h,h}=0\) for \(h>p\). This can be used to determine the order of a AR process. By contrast (importantly) if \(y_t\) follows an MA(q) process, then \(\phi_{k,k}\) asymptotically approaches zero instead of cutting off abruptly.
+Besides, it can be shown that \(\phi_{p,p}=\phi_p\). Hence \(\phi_{p,p}=\phi_p\) but \(\phi_{h,h}=0\) for \(h>p\). This can be used to determine the order of an AR process. By contrast (importantly) if \(y_t\) follows an MA(q) process, then \(\phi_{k,k}\) asymptotically approaches zero instead of cutting off abruptly.
 
 As illustrated below, functions \texttt{acf} and \texttt{pacf} can be conveniently used to employ the (P)ACF approach. (Note also the use of function \texttt{sim.arma} to simulate ARMA processes.)
 
@@ -7793,7 +8567,7 @@ VAR:& y_t &=& c + \Phi_1 y_{t-1} + \dots + \Phi_p y_{t-p} + \varepsilon_t,\\
 SVAR:& y_t &=& c + \Phi_1 y_{t-1} + \dots + \Phi_p y_{t-p} + B \eta_t,
 \end{array}\label{eq:yVAR}
 \end{eqnarray}
-with \(\varepsilon_t = B\eta_t\), where \(\{\eta_{t}\}\) is a white noise sequence whose components are are mutually and serially independent.
+with \(\varepsilon_t = B\eta_t\), where \(\{\eta_{t}\}\) is a white noise sequence whose components are mutually and serially independent.
 \end{definition}
 
 The first line of Eq. \eqref{eq:yVAR} corresponds to the \textbf{reduced-form} of the VAR model (\textbf{structural form} for the second line).
@@ -7810,7 +8584,7 @@ VARMA:& y_t &=& c + \Phi_1 y_{t-1} + \dots + \Phi_p y_{t-p} + \varepsilon_t + \T
 SVARMA:& y_t &=& c + \Phi_1 y_{t-1} + \dots + \Phi_p y_{t-p} + B_0 \eta_t+ B_1 \eta_{t-1} + \dots +  B_q \eta_{t-q},
 \end{array}\label{eq:yVARMA}
 \end{eqnarray}
-with \(\varepsilon_t = B_0\eta_t\) (and \(B_j = \Theta_j B_0\), for \(j \ge 0\)), where \(\{\eta_{t}\}\) is a white noise sequence whose components are are mutually and serially independent.
+with \(\varepsilon_t = B_0\eta_t\) (and \(B_j = \Theta_j B_0\), for \(j \ge 0\)), where \(\{\eta_{t}\}\) is a white noise sequence whose components are mutually and serially independent.
 \end{definition}
 
 \hypertarget{IRFSVARMA}{%
@@ -8006,9 +8780,7 @@ where \(\phi_i\) is the \(i^{th}\) row of \(\Phi_1\), and where \(\varepsilon_{i
 
 Since \(y_{t-1}\) (the regressor) is correlated to \(\eta_{t-1}\), it is also correlated to \(\varepsilon_{i,t}\).
 
-The OLS regression of \(y_{i,t}\) on \(y_{t-1}\) yields a biased estimator of \(\phi_i\).
-
-Estimation methods of VARMA models will be presented in Section \ref{Section:AlternII}.
+The OLS regression of \(y_{i,t}\) on \(y_{t-1}\) yields a biased estimator of \(\phi_i\). Hence, SVARMA models cannot be consistently estimated by simple OLS regressions (contrary to VAR models, as we will see in the next section); instrumental-variable approaches can be employed to estimate SVARMA models.
 
 \hypertarget{estimVAR}{%
 \subsection{VAR estimation}\label{estimVAR}}
@@ -8220,8 +8992,6 @@ where RSS is the Restricted sum of squared residuals and USS is the Unrestricted
 
 \hypertarget{identification-problem-and-standard-identification-techniques}{%
 \subsection{Identification problem and standard identification techniques}\label{identification-problem-and-standard-identification-techniques}}
-
-\textbf{The Identification Issue}
 
 In Section \ref{estimVAR}, we have seen how to estimate \(\mathbb{V}ar(\varepsilon_t) =\Omega\) and the \(\Phi_k\) matrices in the context of a VAR model. But the IRFs are functions of \(B\) and the \(\Phi_k\)'s, not of \(\Omega\) the \(\Phi_k\)'s (see Section \ref{IRFSVARMA}). We have \(\Omega = BB'\), but this is not sufficient to recover \(B\).
 
@@ -8587,7 +9357,7 @@ Figure \ref{fig:BQ4} displays the resulting IRFs. Note that, for GDP, we cumulat
 To identifiy the structural shocks, we need to find a matrix \(B\) that satisfies \(\Omega = BB'\) (with \(\Omega = \mathbb{V}ar(\varepsilon_t)\)) and other restrictions. Indeed, as explained above, \(\Omega = BB'\) is not sufficient to identify \(B\) since, if we take any orthogonal matrix \(Q\) (see Def. \ref{def:orthogonal}), then \(\mathcal{P}=BQ\) also satisfies \(\Omega = \mathcal{P}\mathcal{P}'\).
 
 \begin{definition}[Orthogonal matrix]
-\protect\hypertarget{def:orthogonal}{}\label{def:orthogonal}An orthogonal matri \(Q\) is a matrix such that \(QQ' = I,\) i.e., all columns (rows) of \(Q\) are are
+\protect\hypertarget{def:orthogonal}{}\label{def:orthogonal}An orthogonal matrix \(Q\) is a matrix such that \(QQ' = I,\) i.e., all columns (rows) of \(Q\) are are
 orthogonal and unit vectors:
 \[q_i'q_j=0\text{ if }i\neq j\text{ and }q_i'q_j=1\text{ if }i= j,\]
 where \(q_i\) is the \(i^{th}\) column of \(Q\).
@@ -10472,6 +11242,21 @@ We have \(\mathbb{E}(Z)=0\), and \(\mathbb{V}ar(Z)=\frac{\nu}{\nu-2}\) if \(\nu>
 We have \(\mathbb{E}(Z)=\nu\). (See Table \ref{tab:Chi2} for quantiles.)
 \end{definition}
 
+\begin{definition}[Cauchy distribution]
+\protect\hypertarget{def:Cauchy}{}\label{def:Cauchy}
+
+The probability distribution function of the Cauchy distribution defined by a location parameter \(\mu\) and a scale parameter \(\gamma\) is:
+\[
+f(x) = \frac{1}{\pi \gamma \left(1 + \left[\frac{x-\mu}{\gamma}\right]^2\right)}.
+\]
+The mean and variance of this distribution are undefined.
+
+\begin{figure}
+\includegraphics[width=0.95\linewidth]{ApplEcts_files/figure-latex/Cauchy-1} \caption{Pdf of the Cauchy distribution ($\mu=0$, $\gamma=1$).}\label{fig:Cauchy}
+\end{figure}
+
+\end{definition}
+
 \begin{proposition}[Inner product of a multivariate Gaussian variable]
 \protect\hypertarget{prp:waldtypeproduct}{}\label{prp:waldtypeproduct}Let \(X\) be a \(n\)-dimensional multivariate Gaussian variable: \(X \sim \mathcal{N}(0,\Sigma)\). We have:
 \[
@@ -10498,8 +11283,8 @@ G(\mathbf{Y};\boldsymbol\rho) &\equiv&  G(Y_{1,1},\dots,Y_{1,K_1},\dots,Y_{J,1},
 \end{eqnarray*}
 \end{definition}
 
-\hypertarget{stochastic-convergences}{%
-\subsection{Stochastic convergences}\label{stochastic-convergences}}
+\hypertarget{StochConvergences}{%
+\subsection{Stochastic convergences}\label{StochConvergences}}
 
 \begin{proposition}[Chebychev's inequality]
 \protect\hypertarget{prp:chebychev}{}\label{prp:chebychev}If \(\mathbb{E}(|X|^r)\) is finite for some \(r>0\) then:
@@ -10634,8 +11419,8 @@ We have \(x_n \overset{p}{\rightarrow} 0\) but \(x_n \overset{L^r}{\nrightarrow}
 \]
 \end{theorem}
 
-\hypertarget{central-limit-theorem}{%
-\subsection{Central limit theorem}\label{central-limit-theorem}}
+\hypertarget{CLTappend}{%
+\subsection{Central limit theorem}\label{CLTappend}}
 
 \begin{theorem}[Law of large numbers]
 \protect\hypertarget{thm:LLNappendix}{}\label{thm:LLNappendix}The sample mean is a consistent estimator of the population mean.
