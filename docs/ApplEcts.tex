@@ -131,7 +131,7 @@
 
 \title{Applied Econometrics}
 \author{Jean-Paul Renne}
-\date{2023-01-06}
+\date{2023-01-08}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -367,7 +367,7 @@ Let's define the random variable \(X\) by
 X = \left\{
 \begin{array}{cl}
 1 & \mbox{if the needle crosses a line}\\
-0 & \mbox{otherwise}
+0 & \mbox{otherwise.}
 \end{array}
 \right.
 \]
@@ -577,21 +577,21 @@ If \(n\) is large, according to the CLT, we approximately have:
 \]
 or
 \[
-\bar{m} \sim \mathcal{N}(\mu_m,\sigma^2_m/n_m) \quad and \quad \bar{w} \sim \mathcal{N}(\mu_w,\sigma^2_w/n_w).
+\bar{m} \sim \mathcal{N}\left(\mu_m,\frac{\sigma^2_m}{n_m}\right) \quad and \quad \bar{w} \sim \mathcal{N}\left(\mu_w,\frac{\sigma^2_w}{n_w}\right).
 \]
 
 if the \(m_i\)'s and the \(w_i\)'s are independent, then \(\bar{m}\) and \(\bar{w}\) also are, and we get:
 \[
 \bar{m} - \bar{w} \sim \mathcal{N}\left(\mu_m-\mu_w,\sigma^2\right) \quad with \quad \sigma^2 = \frac{\sigma^2_m}{n_m}+\frac{\sigma^2_w}{n_w}.
 \]
-This can be used to test the null hypothesis \(H_0: \; \bar{m} - \bar{w} = 0\) (see Section \ref{Tests}). Indeed under this assumption, the probability that \(\bar{m} - \bar{w}\) is in \([-1.96\sigma,1.96\sigma]\) (respectively in \([-2.58\sigma,2.58\sigma]\)) is approximately 0.95 (respectively 0.99) {[}see Table \ref{tab:Normal}{]}.
+This can be used to test the null hypothesis \(H_0: \; \mu_m-\mu_w = 0\) (see Section \ref{Tests}). Indeed under this assumption, the probability that \(\bar{m} - \bar{w}\) is in \([-1.96\sigma,1.96\sigma]\) (respectively in \([-2.58\sigma,2.58\sigma]\)) is approximately 0.95 (respectively 0.99) {[}see Table \ref{tab:Normal}{]}.
 
-For instance, if we find, using our sample, that \(\bar{m} - \bar{w}\) is not in \([-2.58\sigma,2.58\sigma]\), then we reject the null hypothesis at the 1¥\% significance level.
+For instance, if we find, using our sample, that \(\bar{m} - \bar{w}\) is not in \([-2.58\sigma,2.58\sigma]\), then we reject the null hypothesis at the 1\% significance level.
 
 \begin{example}[Comparison of sample means]
 \protect\hypertarget{exm:comparSmplMeans}{}\label{exm:comparSmplMeans}Let us use the \href{https://forscenter.ch/projects/swiss-household-panel/}{Swiss Household Panel (SHP)} dataset to test the equality between men and women incomes, for Swiss people under the age of 35.
 
-Figure \ref{fig:RcompMeans} displays the empirical densities of incomes for men and women. Vertical dashed lines indicate sample means.
+The next lines of codes construct two samples of incomes; one for men (\texttt{income.m}), and one for women (\texttt{income.w}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -602,6 +602,13 @@ Figure \ref{fig:RcompMeans} displays the empirical densities of incomes for men 
 \NormalTok{income.w }\OtherTok{\textless{}{-}}\NormalTok{ dataset.w}\SpecialCharTok{$}\NormalTok{i19ptotg}
 \NormalTok{income.m }\OtherTok{\textless{}{-}}\NormalTok{ income.m[income.m}\SpecialCharTok{\textgreater{}=}\DecValTok{0}\NormalTok{] }\CommentTok{\# remove irrelevant data}
 \NormalTok{income.w }\OtherTok{\textless{}{-}}\NormalTok{ income.w[income.w}\SpecialCharTok{\textgreater{}=}\DecValTok{0}\NormalTok{] }\CommentTok{\# remove irrelevant data}
+\end{Highlighting}
+\end{Shaded}
+
+Figure \ref{fig:RcompMeans} displays the empirical densities of incomes for men and women. Vertical dashed lines indicate sample means:
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \FunctionTok{par}\NormalTok{(}\AttributeTok{plt=}\FunctionTok{c}\NormalTok{(.}\DecValTok{1}\NormalTok{,.}\DecValTok{95}\NormalTok{,.}\DecValTok{2}\NormalTok{,.}\DecValTok{95}\NormalTok{)) }\CommentTok{\# adjust margins}
 \FunctionTok{plot}\NormalTok{(}\FunctionTok{logdensity}\NormalTok{(income.w),}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{,}\AttributeTok{xlim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{200000}\NormalTok{),}\AttributeTok{main=}\StringTok{""}\NormalTok{,}
      \AttributeTok{xlab=}\StringTok{"Yearly gross income (in CHF)"}\NormalTok{,}\AttributeTok{ylab=}\StringTok{""}\NormalTok{) }\CommentTok{\# x and y labels}
@@ -623,7 +630,7 @@ Let us compute \(\bar{m}\), \(\bar{w}\), and \(\sigma\):
 \NormalTok{m.bar }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(income.m)}
 \NormalTok{w.bar }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(income.w)}
 \NormalTok{sigma }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{var}\NormalTok{(income.m)}\SpecialCharTok{/}\FunctionTok{length}\NormalTok{(income.m) }\SpecialCharTok{+} \FunctionTok{var}\NormalTok{(income.w)}\SpecialCharTok{/}\FunctionTok{length}\NormalTok{(income.w))}
-\FunctionTok{c}\NormalTok{(m.bar,w.bar,sigma)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{c}\NormalTok{(m.bar,w.bar,sigma))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -639,9 +646,9 @@ Under the ``equality assumption'', their would a probability of only 5\% (respec
 
 We run a statistical test when we want to know whether some hypothesis about a vector of parameters \(\theta\) ---that is imperfectly observed--- is consistent with data that are seen as random, and whose randomness depend on \(\theta\).
 
-Typically, assume you observe a sample \(\{x_1,\dots,x_n\}\) where the \(x_i\)'s are i.i.d., of mean \(\mu\) and variance \(\sigma^2\) (these two parameters being unobseved). One may want to know whether \(\mu=0\).
+Typically, assume you observe a sample \(\{x_1,\dots,x_n\}\) where the \(x_i\)'s are i.i.d., of mean \(\mu\) and variance \(\sigma^2\) (these two parameters being unobseved). One may want to know whether \(\mu=0\) or, maybe, whether \(\sigma = 1\).
 
-The hypothesis the researcher wants to test is called the \emph{null hypothesis}, often denoted by \(H_0\). It is a conjecture about a given property of a population. Without loss of generality, it can be stated as:
+The hypothesis the researcher wants to test is called the \emph{null hypothesis}. It is often denoted by \(H_0\). It is a conjecture about a given property of a population. Without loss of generality, it can be stated as:
 \[
 H_0:\;\{\theta \in \Theta\}.
 \]
@@ -652,33 +659,21 @@ H_0:\;h(\theta)=0.
 
 The \emph{alternative hypothesis}, often denoted \(H_1\) is then defined by \(H_1:\;\{\theta \in \Theta^c\}\).\footnote{Note that researchers may want to find support for the null hypothesis \(H_0\) as well as for the alternative hypothesis \(H_1\).}
 
-The general reasoning underlying a statistical test is as follows
-
-\begin{itemize}
-\tightlist
-\item
-  Assume the null is assumed to be true;
-\item
-  Under this assumption, look for the distribution of a given statistic (called \emph{test statistic});
-\item
-  Compute this statistic (\(S\), say) using observed data;
-\item
-  If the obtained statistic is located in some ``plausible'' parts of the distribution (i.e., not far in the tails), \(H_0\) is not rejected; otherwise it is.
-\end{itemize}
-
-Hence, the ingredients of a statistical are as follows:
+The ingredients of a statistical are as follows:
 
 \begin{itemize}
 \tightlist
 \item
   a vector of (unknown) parameters (\(\theta\)),
 \item
-  a \textbf{test statistic} (say \(S\)) and
+  a \textbf{test statistic}, that is a function of the components of a sample (\(S(\mathbf{x})\), where \(\mathbf{x}=\{x_1,\dots,x_n\}\), say), and
 \item
-  a \textbf{critical region} (say \(\Omega\)).
+  a \textbf{critical region} (\(\Omega\), say), defined as a set of implausible values of \(S\) under \(H_0\).
 \end{itemize}
 
-There are two possible outcomes for a statisitcal test:
+To implement a test statistic, we need to know the distribution of \(S\) under the null hypothesis \(H_0\). Equipped, with such a distribution, we compute \(S(\mathbf{x})\) and we look at its location; more specifically, we look whether it lies within the critical region \(\Omega\). The latter corresponds to ``implausible'' regions of this distribution (typically the tails). If \(S \in \Omega\), then we reject the null hypothesis, which amounts to saying: if \(H_0\) were true, it would have been unlikely to get such a large (or small) draw for \(S\).
+
+Hence, there are two possible outcomes for a statisitcal test:
 
 \begin{itemize}
 \tightlist

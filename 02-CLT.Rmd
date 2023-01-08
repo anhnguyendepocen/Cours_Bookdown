@@ -110,24 +110,24 @@ $$
 $$
 or
 $$
-\bar{m} \sim \mathcal{N}(\mu_m,\sigma^2_m/n_m) \quad and \quad \bar{w} \sim \mathcal{N}(\mu_w,\sigma^2_w/n_w).
+\bar{m} \sim \mathcal{N}\left(\mu_m,\frac{\sigma^2_m}{n_m}\right) \quad and \quad \bar{w} \sim \mathcal{N}\left(\mu_w,\frac{\sigma^2_w}{n_w}\right).
 $$
 
 if the $m_i$'s and the $w_i$'s are independent, then $\bar{m}$ and $\bar{w}$ also are, and we get:
 $$
 \bar{m} - \bar{w} \sim \mathcal{N}\left(\mu_m-\mu_w,\sigma^2\right) \quad with \quad \sigma^2 = \frac{\sigma^2_m}{n_m}+\frac{\sigma^2_w}{n_w}.
 $$
-This can be used to test the null hypothesis $H_0: \; \bar{m} - \bar{w} = 0$ (see Section \@ref(Tests)). Indeed under this assumption, the probability that $\bar{m} - \bar{w}$ is in $[-1.96\sigma,1.96\sigma]$ (respectively in $[-2.58\sigma,2.58\sigma]$) is approximately 0.95 (respectively 0.99) [see Table \@ref(tab:Normal)].
+This can be used to test the null hypothesis $H_0: \; \mu_m-\mu_w = 0$ (see Section \@ref(Tests)). Indeed under this assumption, the probability that $\bar{m} - \bar{w}$ is in $[-1.96\sigma,1.96\sigma]$ (respectively in $[-2.58\sigma,2.58\sigma]$) is approximately 0.95 (respectively 0.99) [see Table \@ref(tab:Normal)].
 
-For instance, if we find, using our sample, that $\bar{m} - \bar{w}$ is not in $[-2.58\sigma,2.58\sigma]$, then we reject the null hypothesis at the 1¥\% significance level.
+For instance, if we find, using our sample, that $\bar{m} - \bar{w}$ is not in $[-2.58\sigma,2.58\sigma]$, then we reject the null hypothesis at the 1\% significance level.
 
 :::{.example #comparSmplMeans name="Comparison of sample means"}
 
 Let us use the  [Swiss Household Panel (SHP)](https://forscenter.ch/projects/swiss-household-panel/) dataset to test the equality between men and women incomes, for Swiss people under the age of 35.
 
-Figure \@ref(fig:RcompMeans) displays the empirical densities of incomes for men and women. Vertical dashed lines indicate sample means.
+The next lines of codes construct two samples of incomes; one for men (`income.m`), and one for women (`income.w`).
 
-```{r RcompMeans, fig.cap="Distribution of yearly gross incomes for Swiss residents under the age of 35. Source: SHP. Vertical dashed lines indicates the sample mean.", fig.align = 'left-aligned'}
+```{r RcompMeans0}
 library(AEC);library(logKDE)
 dataset.m <- subset(shp,(sex19==1)&(age19<=35))
 dataset.w <- subset(shp,(sex19==2)&(age19<=35))
@@ -135,6 +135,11 @@ income.m <- dataset.m$i19ptotg
 income.w <- dataset.w$i19ptotg
 income.m <- income.m[income.m>=0] # remove irrelevant data
 income.w <- income.w[income.w>=0] # remove irrelevant data
+```
+
+Figure \@ref(fig:RcompMeans) displays the empirical densities of incomes for men and women. Vertical dashed lines indicate sample means:
+
+```{r RcompMeans, fig.cap="Distribution of yearly gross incomes for Swiss residents under the age of 35. Source: SHP. Vertical dashed lines indicates the sample mean.", fig.align = 'left-aligned'}
 par(plt=c(.1,.95,.2,.95)) # adjust margins
 plot(logdensity(income.w),lwd=2,xlim=c(0,200000),main="",
      xlab="Yearly gross income (in CHF)",ylab="") # x and y labels
@@ -150,7 +155,7 @@ Let us compute $\bar{m}$, $\bar{w}$, and $\sigma$:
 m.bar <- mean(income.m)
 w.bar <- mean(income.w)
 sigma <- sqrt(var(income.m)/length(income.m) + var(income.w)/length(income.w))
-c(m.bar,w.bar,sigma)
+print(c(m.bar,w.bar,sigma))
 ```
 
 Under the "equality assumption", their would a  probability of only 5\% (respectively 1\%) for $\bar{m} - \bar{w}$ not to be in $[$`r -round(1.96*sigma,0)`,`r round(1.96*sigma,0)`$]$ (respectively in $[$`r -round(2.58*sigma,0)`,`r round(2.58*sigma,0)`$]$). Since $\bar{m} - \bar{w}$ is equal to `r format(round(m.bar-w.bar,0),scientific=FALSE)`, we  reject the null hypothesis at the 5\%, and even 1\%, significance levels.

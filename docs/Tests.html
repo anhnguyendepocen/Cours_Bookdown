@@ -88,8 +88,8 @@
 <span class="header-section-number">4</span> Statistical tests<a class="anchor" aria-label="anchor" href="#Tests"><i class="fas fa-link"></i></a>
 </h1>
 <p>We run a statistical test when we want to know whether some hypothesis about a vector of parameters <span class="math inline">\(\theta\)</span> —that is imperfectly observed— is consistent with data that are seen as random, and whose randomness depend on <span class="math inline">\(\theta\)</span>.</p>
-<p>Typically, assume you observe a sample <span class="math inline">\(\{x_1,\dots,x_n\}\)</span> where the <span class="math inline">\(x_i\)</span>’s are i.i.d., of mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span> (these two parameters being unobseved). One may want to know whether <span class="math inline">\(\mu=0\)</span>.</p>
-<p>The hypothesis the researcher wants to test is called the <em>null hypothesis</em>, often denoted by <span class="math inline">\(H_0\)</span>. It is a conjecture about a given property of a population. Without loss of generality, it can be stated as:
+<p>Typically, assume you observe a sample <span class="math inline">\(\{x_1,\dots,x_n\}\)</span> where the <span class="math inline">\(x_i\)</span>’s are i.i.d., of mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span> (these two parameters being unobseved). One may want to know whether <span class="math inline">\(\mu=0\)</span> or, maybe, whether <span class="math inline">\(\sigma = 1\)</span>.</p>
+<p>The hypothesis the researcher wants to test is called the <em>null hypothesis</em>. It is often denoted by <span class="math inline">\(H_0\)</span>. It is a conjecture about a given property of a population. Without loss of generality, it can be stated as:
 <span class="math display">\[
 H_0:\;\{\theta \in \Theta\}.
 \]</span>
@@ -98,20 +98,14 @@ It can also be defined through a function <span class="math inline">\(h\)</span>
 H_0:\;h(\theta)=0.
 \]</span></p>
 <p>The <em>alternative hypothesis</em>, often denoted <span class="math inline">\(H_1\)</span> is then defined by <span class="math inline">\(H_1:\;\{\theta \in \Theta^c\}\)</span>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Note that researchers may want to find support for the null hypothesis &lt;span class="math inline"&gt;\(H_0\)&lt;/span&gt; as well as for the alternative hypothesis &lt;span class="math inline"&gt;\(H_1\)&lt;/span&gt;.&lt;/p&gt;'><sup>4</sup></a></p>
-<p>The general reasoning underlying a statistical test is as follows</p>
-<ul>
-<li>Assume the null is assumed to be true;</li>
-<li>Under this assumption, look for the distribution of a given statistic (called <em>test statistic</em>);</li>
-<li>Compute this statistic (<span class="math inline">\(S\)</span>, say) using observed data;</li>
-<li>If the obtained statistic is located in some “plausible” parts of the distribution (i.e., not far in the tails), <span class="math inline">\(H_0\)</span> is not rejected; otherwise it is.</li>
-</ul>
-<p>Hence, the ingredients of a statistical are as follows:</p>
+<p>The ingredients of a statistical are as follows:</p>
 <ul>
 <li>a vector of (unknown) parameters (<span class="math inline">\(\theta\)</span>),</li>
-<li>a <strong>test statistic</strong> (say <span class="math inline">\(S\)</span>) and</li>
-<li>a <strong>critical region</strong> (say <span class="math inline">\(\Omega\)</span>).</li>
+<li>a <strong>test statistic</strong>, that is a function of the components of a sample (<span class="math inline">\(S(\mathbf{x})\)</span>, where <span class="math inline">\(\mathbf{x}=\{x_1,\dots,x_n\}\)</span>, say), and</li>
+<li>a <strong>critical region</strong> (<span class="math inline">\(\Omega\)</span>, say), defined as a set of implausible values of <span class="math inline">\(S\)</span> under <span class="math inline">\(H_0\)</span>.</li>
 </ul>
-<p>There are two possible outcomes for a statisitcal test:</p>
+<p>To implement a test statistic, we need to know the distribution of <span class="math inline">\(S\)</span> under the null hypothesis <span class="math inline">\(H_0\)</span>. Equipped, with such a distribution, we compute <span class="math inline">\(S(\mathbf{x})\)</span> and we look at its location; more specifically, we look whether it lies within the critical region <span class="math inline">\(\Omega\)</span>. The latter corresponds to “implausible” regions of this distribution (typically the tails). If <span class="math inline">\(S \in \Omega\)</span>, then we reject the null hypothesis, which amounts to saying: if <span class="math inline">\(H_0\)</span> were true, it would have been unlikely to get such a large (or small) draw for <span class="math inline">\(S\)</span>.</p>
+<p>Hence, there are two possible outcomes for a statisitcal test:</p>
 <ul>
 <li>
 <span class="math inline">\(H_0\)</span> is rejected if <span class="math inline">\(S \in \Omega\)</span>;</li>
@@ -308,7 +302,7 @@ JB = n \left( \frac{g_3^2}{6}+\frac{(g_4-3)^2}{24} \right) = \frac{n}{6}\left(g_
 <div class="example">
 <p><span id="exm:JB" class="example"><strong>Example 4.2  (Consistency of the Jarque-Bera normality test) </strong></span>This example illustrates the consistency of the JB test (see Def. <a href="Tests.html#def:asmyptconsisttest">4.3</a>).</p>
 <p>First, let us write the function computing the JB test statistic:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">JB</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="va">x.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span>  <span class="va">x.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
@@ -323,7 +317,7 @@ JB = n \left( \frac{g_3^2}{6}+\frac{(g_4-3)^2}{24} \right) = \frac{n}{6}\left(g_
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">n</span><span class="op">*</span><span class="op">(</span><span class="va">g.3</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="fl">6</span> <span class="op">+</span> <span class="op">(</span><span class="va">g.4</span><span class="op">-</span><span class="fl">3</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="fl">24</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Let us first consider the case where <span class="math inline">\(H_0\)</span> (normality of the <span class="math inline">\(y_i\)</span>’s) is satisfied. Figure <a href="Tests.html#fig:JBTest2">4.6</a> displays the distribution of the JB statistics when the <span class="math inline">\(y_i\)</span>’s are normal, consistently with <span class="math inline">\(H_0\)</span>. It appears that when <span class="math inline">\(n\)</span> grows, the distribution indeed converges to the <span class="math inline">\(\chi^2(2)\)</span> distribution.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">all.n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">10</span>,<span class="fl">20</span>,<span class="fl">100</span><span class="op">)</span></span>
 <span><span class="va">nb.sim</span> <span class="op">&lt;-</span> <span class="fl">10000</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">nb.sim</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">all.n</span><span class="op">)</span><span class="op">)</span>,<span class="va">nb.sim</span>,<span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">all.n</span><span class="op">)</span><span class="op">)</span></span>
@@ -431,7 +425,7 @@ Figure 4.7: Distribution of the JB test statistic when the <span class="math inl
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Applied Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2023-01-06.</p>
+    <p>"<strong>Applied Econometrics</strong>" was written by Jean-Paul Renne. It was last built on 2023-01-08.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

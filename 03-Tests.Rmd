@@ -2,9 +2,9 @@
 
 We run a statistical test when we want to know whether some hypothesis about a vector of parameters $\theta$ ---that is imperfectly observed--- is consistent with data that are seen as random, and whose randomness depend on $\theta$.
 
-Typically, assume you observe a sample $\{x_1,\dots,x_n\}$ where the $x_i$'s are i.i.d., of mean $\mu$ and variance $\sigma^2$ (these two parameters being unobseved). One may want to know whether $\mu=0$.
+Typically, assume you observe a sample $\{x_1,\dots,x_n\}$ where the $x_i$'s are i.i.d., of mean $\mu$ and variance $\sigma^2$ (these two parameters being unobseved). One may want to know whether $\mu=0$ or, maybe, whether $\sigma = 1$.
 
-The hypothesis the researcher wants to test is called the *null hypothesis*, often denoted by $H_0$. It is a conjecture about a given property of a population. Without loss of generality, it can be stated as:
+The hypothesis the researcher wants to test is called the *null hypothesis*. It is often denoted by $H_0$. It is a conjecture about a given property of a population. Without loss of generality, it can be stated as:
 $$
 H_0:\;\{\theta \in \Theta\}.
 $$
@@ -15,20 +15,15 @@ $$
 
 The *alternative hypothesis*, often denoted $H_1$ is then defined by $H_1:\;\{\theta \in \Theta^c\}$.^[Note that researchers may want to find support for the null hypothesis $H_0$ as well as for the alternative hypothesis $H_1$.]
 
-The general reasoning underlying a statistical test is as follows
-
-* Assume the null is assumed to be true;
-* Under this assumption, look for the distribution of a given statistic (called *test statistic*);
-* Compute this statistic ($S$, say) using observed data;
-* If the obtained statistic is located in some "plausible" parts of the distribution (i.e., not far in the tails), $H_0$ is not rejected; otherwise it is.
-
-Hence, the ingredients of a statistical are as follows:
+The ingredients of a statistical are as follows:
 
 * a vector of (unknown) parameters ($\theta$),
-* a **test statistic** (say $S$) and
-* a **critical region** (say $\Omega$).
+* a **test statistic**, that is a function of the components of a sample ($S(\bv{x})$, where $\bv{x}=\{x_1,\dots,x_n\}$, say), and
+* a **critical region** ($\Omega$, say), defined as a set of implausible values of $S$ under $H_0$.
 
-There are two possible outcomes for a statisitcal test:
+To implement a test statistic, we need to know the distribution of $S$ under the null hypothesis $H_0$. Equipped, with such a distribution, we compute $S(\bv{x})$ and we look at its location; more specifically, we look whether it lies within the critical region $\Omega$. The latter corresponds to "implausible" regions of this distribution (typically the tails). If $S \in \Omega$, then we reject the null hypothesis, which amounts to saying: if $H_0$ were true, it would have been unlikely to get such a large (or small) draw for $S$.
+
+Hence, there are two possible outcomes for a statisitcal test:
 
 * $H_0$ is rejected if $S \in \Omega$;
 * $H_0$ is not rejected if $S \not\in \Omega$.
