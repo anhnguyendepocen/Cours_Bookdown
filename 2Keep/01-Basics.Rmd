@@ -10,23 +10,23 @@ $$
 :::
 
 ::: {.definition #pdf name="Probability distribution function (p.d.f.)"}
-A continuous random variable $X$ admits the probability density function $f$ if:
+A continuous random variable $X$ admits the probability density function $f$ if, for all $a$ and $b$ such that $a<b$:
 $$
-\mathbb{P}(a < X \le b) = \int_{a}^{b}f(x)dx, \quad \forall a \le b,
+\mathbb{P}(a < X \le b) = \int_{a}^{b}f(x)dx,
 $$
 where $f(x) \ge 0$ for all $x$.
 :::
 
 
-In particular (if this limit exists), we have:
+In particular, we have:
 \begin{equation}
-	f(x) = \lim_{\varepsilon \rightarrow 0} \frac{\mathbb{P}(x < X \le x + \varepsilon)}{\varepsilon} = \lim_{\varepsilon \rightarrow 0} \frac{F(x + \varepsilon)-F(x)}{\varepsilon}.(\#eq:flim)
+f(x) = \lim_{\varepsilon \rightarrow 0} \frac{\mathbb{P}(x < X \le x + \varepsilon)}{\varepsilon} = \lim_{\varepsilon \rightarrow 0} \frac{F(x + \varepsilon)-F(x)}{\varepsilon}.(\#eq:flim)
 \end{equation}
 and
 $$
 F(a) = \int_{-\infty}^{a}f(x)dx.
 $$
-This [web interface](https://jrenne.shinyapps.io/density/) illustrates the link between pdf. and cdf. Nonparametric estimates of pdf are obtained by kernel-based methods (see this [extra material](https://www.dropbox.com/s/lxkllp9yewh98d8/Additional_Kernel.pdf?dl=0)).
+This [web interface](https://jrenne.shinyapps.io/density/) illustrates the link between p.d.f. and c.d.f. Nonparametric estimates of p.d.f. are obtained by kernel-based methods (see this [extra material](https://www.dropbox.com/s/lxkllp9yewh98d8/Additional_Kernel.pdf?dl=0)).
 
 
 
@@ -109,10 +109,10 @@ $$
 $$
 :::
 
-In particular (if this limit exists), we have:
+In particular, we have:
 \begin{eqnarray*}
 &&f_{XY}(x,y)\\
- &=& \lim_{\varepsilon \rightarrow 0} \frac{\mathbb{P}(x < X \le x + \varepsilon,y < Y \le y + \varepsilon)}{\varepsilon^2} \\
+&=& \lim_{\varepsilon \rightarrow 0} \frac{\mathbb{P}(x < X \le x + \varepsilon,y < Y \le y + \varepsilon)}{\varepsilon^2} \\
 &=& \lim_{\varepsilon \rightarrow 0} \frac{F_{XY}(x + \varepsilon,y + \varepsilon)-F_{XY}(x,y + \varepsilon)-F_{XY}(x + \varepsilon,y)+F_{XY}(x,y)}{\varepsilon^2}.
 \end{eqnarray*}
 
@@ -195,7 +195,7 @@ lines(trans3d(x=c(min.x,max.x), y = c(max(all.y),max(all.y)),
 
 
 :::{.definition #condcdf name="Conditional probability distribution function"}
-If $X$ and $Y$ are continuous r.v., then the distribution of $X$ conditional on $Y=y$, is denoted by $f_{X|Y}(x,y)$ and satisfies:
+If $X$ and $Y$ are continuous r.v., then the distribution of $X$ conditional on $Y=y$, which we denote by $f_{X|Y}(x,y)$, satisfies:
 $$
 f_{X|Y}(x,y)=\lim_{\varepsilon \rightarrow 0} \frac{\mathbb{P}(x < X \le x + \varepsilon|Y=y)}{\varepsilon}.
 $$
@@ -218,11 +218,11 @@ f_{X|Y}(x,y)&=&\lim_{\varepsilon \rightarrow 0} \frac{\mathbb{P}(x < X \le x + \
 :::
 
 :::{.definition #independent name="Independent random variables"}
-Consider two r.v., $X$ and $Y$, with c.d.f. and p.d.f. $F_X$, $F_Y$, $f_X$ and $f_Y$.
+Consider two r.v., $X$ and $Y$, with respective c.d.f. $F_X$ and $F_Y$, and respective p.d.f. $f_X$ and $f_Y$.
 
 These random variables are independent if and only if (iff) the joint c.d.f. of $X$ and $Y$ (see Def. \@ref(def:jointcdf)) is given by:
 $$
-F_{XY}(x,y) = F_{X}(x) \times F_{Y}(y)
+F_{XY}(x,y) = F_{X}(x) \times F_{Y}(y),
 $$
 or, equivalently, iff the joint p.d.f. of $(X,Y)$ (see Def. \@ref(def:jointpdf)) is given by:
 $$
@@ -233,12 +233,12 @@ $$
 
 We have the following:
 
-* If $X$ and $Y$ are independent, $f_{X|Y}(x,y)=f_{X}(x)$. This implies, in particular, that $\mathbb{E}(g(X)|Y)=\mathbb{E}(g(X))$ where $g$ is any function.
-* If $X$ and $Y$ are independent, then $\mathbb{E}(g(X)h(Y))=\mathbb{E}(g(X))\mathbb{E}(h(Y))$ and $\mathbb{C}ov(g(X),h(Y))=0$, where $g$ and $h$ are any functions.
-* If $X$ and $Y$ are uncorrelated, they are not necessarily independent (Example: $X=Y^2-1$ and $Y \sim\mathcal{N}(0,1)$).
+1. If $X$ and $Y$ are independent, $f_{X|Y}(x,y)=f_{X}(x)$. This implies, in particular, that $\mathbb{E}(g(X)|Y)=\mathbb{E}(g(X))$, where $g$ is any function.
+2. If $X$ and $Y$ are independent, then $\mathbb{E}(g(X)h(Y))=\mathbb{E}(g(X))\mathbb{E}(h(Y))$ and $\mathbb{C}ov(g(X),h(Y))=0$, where $g$ and $h$ are any functions.
 
+It is important to note that the absence of correlation between two variables is not a sufficient condition to have independence. Consider for instance the case where $X=Y^2$, with $Y \sim\mathcal{N}(0,1)$. In this case, we have $\mathbb{C}ov(X,Y)=0$, but $X$ and $Y$ are not independent. Indeed, we have for instance $\mathbb{E}(Y^2 \times X)=3$, which is not equal to $\mathbb{E}(Y^2) \times \mathbb{E}(X)=1$. (If $X$ and $Y$ were independent, we should have $\mathbb{E}(Y^2 \times X)=\mathbb{E}(Y^2) \times \mathbb{E}(X)$ according to point 2 above.)
 
-## Law of iterated expectations and law of total variance
+## Law of iterated expectations
 
 :::{.proposition #lawiteratedexpect name="Law of iterated expectations"}
 If $X$ and $Y$ are two random variables and if $\mathbb{E}(|X|)<\infty$, we have:
@@ -264,15 +264,16 @@ Therefore:
 
 
 :::{.example #mixture name="Mixture of Gaussian distributions"}
-$X$ is drawn from a mixture of Gaussian distributions if:
+By definition, $X$ is drawn from a mixture of Gaussian distributions if:
 $$
 X = \color{blue}{B \times Y_1} + \color{red}{(1-B) \times Y_2},
 $$
-where $B$, $Y_1$ and $Y_2$ are three independent variables:
+where $B$, $Y_1$ and $Y_2$ are three independent variables drawn as follows:
+$$
+B \sim \mbox{Bernoulli}(p),\quad Y_1 \sim \mathcal{N}(\mu_1,\sigma_1^2), \quad \mbox{and}\quad Y_2 \sim \mathcal{N}(\mu_2,\sigma_2^2).
+$$
 
-$B \sim \mbox{Bernoulli}(p)$, $Y_1 \sim \mathcal{N}(\mu_1,\sigma_1^2)$ and $Y_2 \sim \mathcal{N}(\mu_2,\sigma_2^2)$. 
-
-Figure \@ref(fig:mixtureG) displays the pdfs associated with three different mixtures of Gaussian distributions. This [web-interface](https://jrenne.shinyapps.io/density/) allows to produce the pdf associated for any parameterization.
+Figure \@ref(fig:mixtureG) displays the pdfs associated with three different mixtures of Gaussian distributions. (This [web-interface](https://jrenne.shinyapps.io/density/) allows to produce the pdf associated for any other parameterization.)
 
 ```{r mixtureG, fig.cap="Example of pdfs of mixtures of Gaussian distribututions.", fig.asp = .6, out.width = "95%", fig.align = "left-aligned",echo=FALSE,warning=FALSE}
 x <- seq(-5,5,by=.1)
@@ -324,23 +325,18 @@ $$
 
 :::{.example #Buffon name="Buffon (1733)'s needles"}
 
-Suppose we have a floor made of parallel strips of wood, each the same width [$w=1$], and we drop a needle onto the floor. What is the probability that the needle lands on a line?
-
-Assumption: needles' length = 1/2.
+Suppose we have a floor made of parallel strips of wood, each the same width [$w=1$]. We drop a needle, of length $1/2$, onto the floor. What is the probability that the needle crosses the grooves of the floor?
 
 Let's define the random variable $X$ by
 $$
 X = \left\{
 \begin{array}{cl}
 1 & \mbox{if the needle crosses a line}\\
-0 & \mbox{otherwise}
+0 & \mbox{otherwise.}
 \end{array}
 \right.
 $$
-
-Conditionally on $\theta$: $\mathbb{E}(X|\theta)=\cos(\theta)/2$.
-
-$\theta$ is uniformly distributed on $[-\pi/2,\pi/2]$, therefore:
+Conditionally on $\theta$, it can be seen that we have $\mathbb{E}(X|\theta)=\cos(\theta)/2$ (see Figure \@ref(fig:Buffon)).
 
 ```{r Buffon, fig.cap="Schematic representation of the problem.", fig.asp = .6, out.width = "95%", fig.align = "left-aligned",echo=FALSE,warning=FALSE}
 par(mfrow=c(1,1))
@@ -362,10 +358,12 @@ arrows(x0=0, y0=0, x1 = 1, y1 = 0, length = 0.1, angle = 30,
 text(1/2,0+.02,"w=1")
 ```
 
+It is reasonable to assume that $\theta$ is uniformly distributed on $[-\pi/2,\pi/2]$, therefore:
 $$
 \mathbb{E}(X)=\mathbb{E}(\mathbb{E}(X|\theta))=\mathbb{E}(\cos(\theta)/2)=\int_{-\pi/2}^{\pi/2}\frac{1}{2}\cos(\theta)\left(\frac{d\theta}{\pi}\right)=\frac{1}{\pi}.
 $$
-This [web-interface](https://jrenne.shinyapps.io/StatEcoII/) allows to simulate the present experiment (select Worksheet "Buffon's needles").
+
+[This [web-interface](https://jrenne.shinyapps.io/StatEcoII/) allows to simulate the present experiment (select Worksheet "Buffon's needles").]
 
 :::
 
@@ -391,6 +389,8 @@ This [web-interface](https://jrenne.shinyapps.io/StatEcoII/) allows to simulate 
 
 
 
+## Law of total variance
+
 :::{.proposition #lawtotalvariance name="Law of total variance"}
 
 If $X$ and $Y$ are two random variables and if the variance of $X$ is finite, we have:
@@ -411,7 +411,7 @@ We have:
 
 :::{.example #mixture2 name="Mixture of Gaussian distributions (cont'd)"}
 
-Consider the case of a mixture of Gaussian distributions (Example \@ref(exmpl:mixture)). We have:
+Consider the case of a mixture of Gaussian distributions (Example \@ref(exm:mixture)). We have:
 \begin{eqnarray*}
 \mathbb{V}ar(X) &=& \color{blue}{\mathbb{E}(\mathbb{V}ar(X|B))} + \color{red}{\mathbb{V}ar(\mathbb{E}(X|B))}\\
 &=&  \color{blue}{p\sigma_1^2+(1-p)\sigma_2^2} + \color{red}{p(1-p)(\mu_1 - \mu_2)^2}.
@@ -428,15 +428,15 @@ The objective of econometrics is to estimate parameters out of data observations
 Except in degenerate cases, the estimates are different from the "true" (or *population*) value. A good estimator is expected to converge to the true value when the sample size increases. That is, we are interested in the *consistency* of the estimator.
 
 Denote by $\hat\theta_n$ the estimate of $\theta$ based on a sample of length $n$. We say that $\hat\theta$ is a consistent estimator of $\theta$ if, for any $\varepsilon>0$ (even if very small), the probability that $\hat\theta_n$ is in $[\theta - \varepsilon,\theta + \varepsilon]$ goes to 1 when $n$ goes to $\infty$. Formally:
-	$$
-	\lim_{n \rightarrow + \infty} \mathbb{P}\left(\hat\theta_n \in [\theta - \varepsilon,\theta + \varepsilon]\right) = 1.
-	$$
+$$
+\lim_{n \rightarrow + \infty} \mathbb{P}\left(\hat\theta_n \in [\theta - \varepsilon,\theta + \varepsilon]\right) = 1.
+$$
 
 That is, $\hat\theta$ is a consistent estimator if $\hat\theta_n$ *converges in probability* (Def. \@ref(def:convergenceproba)) to $\theta$. Note that there exist different types of stochastic convergence.^[Appendix \@ref(StochConvergences) notably provides the definitions of the convergence in distribution (Def. \@ref(def:cvgceDistri)) and the mean-square convergence (Def. \@ref(def:convergenceLr)).]
 
 :::{.example #NonConsist name="Example of non-convergent estimator"}
 
-Assume that $X_i \sim i.i.d. \mbox{Cauchy}$ with a location parameter of 1 and a scale parameter of 1 (Def. \@ref(def:Cauchy)). The sample mean $\bar{X}_n = \frac{1}{n}\sum_{i=1}^{n} X_i$ does not converge in probability. This is because a Cauchy distribution has no mean; hence the law of large numbers cannot apply.
+Assume that $X_i \sim i.i.d. \mbox{Cauchy}$ with a location parameter of 1 and a scale parameter of 1 (Def. \@ref(def:Cauchy)). The sample mean $\bar{X}_n = \frac{1}{n}\sum_{i=1}^{n} X_i$ does not converge in probability. This is because a Cauchy distribution has no mean; hence the law of large numbers (Theorem \@ref(thm:LLN)) does not apply.
 
 ```{r figCauchy, fig.cap="Simulation of $\\bar{X}_n$ when $X_i \\sim i.i.d. \\mbox{Cauchy}$.", fig.asp = .6, out.width = "95%", fig.align = "left-aligned",echo=FALSE,warning=FALSE}
 max.n <- 5000
@@ -449,7 +449,6 @@ plot(X.bar,type="l",xlab="sample size (n)",
      ylab="",main=expression(bar(X)[n]),lwd=2)
 abline(h=0,lty=2,col="grey")
 ```
-
 :::
 
 

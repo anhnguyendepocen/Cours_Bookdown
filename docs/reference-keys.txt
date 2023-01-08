@@ -33,9 +33,12 @@ fig:Illusttest1
 fig:Illusttest2
 fig:IllusTestOneSided1
 fig:IllusTestOneSided2
-fig:Factory
+exm:Factory
+fig:FactoryR
 def:asmyptlevel
+exm:FactAsymptlevel
 def:asmyptconsisttest
+exm:FactAsymptConsist
 prp:normSkewKurt
 prp:conssitCentralMoments
 prp:Asymptg3Normal
@@ -474,8 +477,8 @@ comparison-of-sample-means
 Tests
 size-and-power-of-a-test
 the-different-types-of-statistical-tests
-a-practical-illustration-of-size-and-power
-normality-tests
+asymptotic-properties-of-statistical-tests
+example-normality-tests
 ChapterLS
 linearHyp
 LSquares

@@ -2,7 +2,7 @@
 
 We run a statistical test when we want to know whether some hypothesis about a vector of parameters $\theta$ ---that is imperfectly observed--- is consistent with data that are seen as random, and whose randomness depend on $\theta$.
 
-Typically, assume you observe a sample $\{x_1,\dots,x_n\}$ where the $x_i$'s are i.i.d., of mean $\mu$ and variance $\sigma^2$ (these two parameters being unobseved). One may want to know whether $\mu=0$ or, maybe, whether $\sigma = 1$.
+Typically, assume you observe a sample $\bv{x}=\{x_1,\dots,x_n\}$ where the $x_i$'s are i.i.d., of mean $\mu$ and variance $\sigma^2$ (these two parameters being unobseved). One may want to know whether $\mu=0$ or, maybe, whether $\sigma = 1$.
 
 The hypothesis the researcher wants to test is called the *null hypothesis*. It is often denoted by $H_0$. It is a conjecture about a given property of a population. Without loss of generality, it can be stated as:
 $$
@@ -15,36 +15,35 @@ $$
 
 The *alternative hypothesis*, often denoted $H_1$ is then defined by $H_1:\;\{\theta \in \Theta^c\}$.^[Note that researchers may want to find support for the null hypothesis $H_0$ as well as for the alternative hypothesis $H_1$.]
 
-The ingredients of a statistical are as follows:
+The ingredients of a statistical test are:
 
 * a vector of (unknown) parameters ($\theta$),
-* a **test statistic**, that is a function of the components of a sample ($S(\bv{x})$, where $\bv{x}=\{x_1,\dots,x_n\}$, say), and
+* a **test statistic**, that is a function of the sample components ($S(\bv{x})$, say), and
 * a **critical region** ($\Omega$, say), defined as a set of implausible values of $S$ under $H_0$.
 
-To implement a test statistic, we need to know the distribution of $S$ under the null hypothesis $H_0$. Equipped, with such a distribution, we compute $S(\bv{x})$ and we look at its location; more specifically, we look whether it lies within the critical region $\Omega$. The latter corresponds to "implausible" regions of this distribution (typically the tails). If $S \in \Omega$, then we reject the null hypothesis, which amounts to saying: if $H_0$ were true, it would have been unlikely to get such a large (or small) draw for $S$.
+To implement a test statistic, we need to know the distribution of $S$ under the null hypothesis $H_0$. Equipped, with such a distribution, we compute $S(\bv{x})$ and we look at its location; more specifically, we look whether it lies within the critical region $\Omega$. The latter corresponds to "implausible" regions of this distribution (typically the tails). If $S \in \Omega$, then we reject the null hypothesis. Looselly speaking; it amounts to saying: *if $H_0$ were true, it would have been unlikely to get such a large (or small) draw for $S$*.
 
 Hence, there are two possible outcomes for a statisitcal test:
 
 * $H_0$ is rejected if $S \in \Omega$;
 * $H_0$ is not rejected if $S \not\in \Omega$.
 
-This implies that there are two types of errors one can make in the context of a statistical test:
+Except in extreme cases, there is always a non-zero probability to reject $H_0$ while it is true (**Type I error**, or **false positive**), or to fail to reject it while it is false (**Type II error**, or **false negative**).
 
-* **Type I error**: Reject $H_0$ while it is true = False Positive (FP).
-* **Type II error**: Absence of rejection of $H_0$ while it is false = False Negative (FN).
+This vocabulary is widely used. For instance, the notions of false positive and false negative are used in the context of Early Warning Signals (see Example \@ref(FPFN)).
 
+:::{.example #FPFN name="Early Warning Signals"}
 
-:::{.example #FPFN name="Early Warning Signals (practical illustration of type-I and type-II errors)"}
+These are approaches that aim to detect the occurrence of crises in advance. See, e.g., [ECB (2014)](http://www.ecb.europa.eu/events/pdf/conferences/140623/Vasicek-et-al_Comparing-Different-Early-Warning-Systems.pdf?F96bbb525a26071ecf97f9154fb3cc73), for applications to financial crises.
 
-Early warning systems (EWS) are approaches designed to warn policy makers of potential future economic and financial crises. See, e.g., [ECB (2014)](http://www.ecb.europa.eu/events/pdf/conferences/140623/Vasicek-et-al_Comparing-Different-Early-Warning-Systems.pdf?F96bbb525a26071ecf97f9154fb3cc73)
-
-To implement such approaches, researchers look for signals/indices forecasting crises. Suppose one index ($W$, say) appears to be large before financial crises; one may define an EWS by saying that a crisis is coming when $W>a$, where $a$ is a given threshold. It is easliy seen that the lower (respectively higeher) $a$, the larger the fraction of FP (resp. of FN).
+To implement such approaches, researchers look for signals/indices forecasting crises. Suppose one index ($W$, say) tends to be large before financial crises; one may define an EWS by predicting a crisis when $W>a$, where $a$ is a given threshold. It is easliy seen that the lower (respectively higeher) $a$, the larger the fraction of FP (resp. of FN).
 :::
 
 
 ## Size and power of a test
 
 :::{.definition #sizepower name="Size and Power of a test"}
+
 For a given test,
 
 * the probability of type-I errors, denoted by $\alpha$, is called the **size**, or **significance level**, of the test,
@@ -57,7 +56,7 @@ Formally, the previous definitions can be written as follows:
 \beta &=& \mathbb{P}(S \not\in \Omega|H_1) \quad \mbox{(Proba. of a false negative)}.
 \end{eqnarray}
 
-The power is the probability that the test will lead to the rejection of the null hypothesis if the latter is false (almost ruling out false negatives). Therefore, for a given size, we prefer tests with high power.
+The power is the probability that the test will lead to the rejection of the null hypothesis if the latter is false. Therefore, for a given size, we prefer tests with high power.
 
 In most cases, there is a trade-off between size and power, whch is easily understood in the EWS context (Example \@ref(exm:FPFN)): increasing the threshold $a$ reduces the fraction of FP (thereby reducing the size of the test), but it increases the fraction of FN (thereby reducing the power of the test).
 
@@ -68,9 +67,9 @@ In most cases, there is a trade-off between size and power, whch is easily under
 
 How to determine the critical region? Loosely speaking, we want the critical region to be a set of "implausible" values of the test statistic $S$ under the null hypothesis $H_0$. The lower the size of the test ($\alpha$), the more implausible these values. Recall that, by definition of the size of the test, $\alpha = \mathbb{P}(S \in \Omega|H_0)$. That is, if $\alpha$ is small, there is only a small probability that $S$ lies in $\Omega$ under $H_0$.
 
-Consider the case where, under $H_0$, the distribution of the test statistic is symmetrical (as in the case of the normal distribution or of the Student-t distribution). In this case, the critical region is usually defined by the union of the two tails of the distribution. The test is then said to be a **two-tailed test** or a **two-sided test**. This situation is illustrated by Figures \@ref(fig:Illusttest1) and \@ref(fig:Illusttest2). (Use this [web interface](https://jrenne.shinyapps.io/tests/) to explore alternative situations.)
+Consider the case where, under $H_0$, the distribution of the test statistic is symmetrical (e.g., normal distribution or Student-t distribution). In this case, the critical region is usually defined by the union of the two tails of the distribution. The test is then said to be a **two-tailed test** or a **two-sided test**. This situation is illustrated by Figures \@ref(fig:Illusttest1) and \@ref(fig:Illusttest2). (Use this [web interface](https://jrenne.shinyapps.io/tests/) to explore alternative situations.)
 
-Figure \@ref(fig:Illusttest2) also illustrates the notion of *p-value* (in the case of a two-sided test). The p-value can be defined as the value of the size of the test $\alpha$ that is such that the computed test statistic, $S$, is at the "frontier" of the critical region. Given this definition, if the p-value is smaller (respoectively larger) than the size of the test, we reject (resp. cannot rejet) the null hypothesis at the $\alpha$ significance level.
+Figure \@ref(fig:Illusttest2) also illustrates the notion of *p-value* (in the case of a two-sided test). The p-value can be defined as the value of the size of the test $\alpha$ that is such that the computed test statistic, $S$, is at the "frontier" of the critical region. Given this definition, if the p-value is smaller (respectively larger) than the size of the test, we reject (resp. cannot rejet) the null hypothesis at the $\alpha$ significance level.
 
 
 ```{r Illusttest1, echo=FALSE, fig.cap="Two-sided test. Under $H_0$, $S \\sim t(5)$. $\\alpha$ is the size of the test.", fig.align = 'left-aligned'}
@@ -177,9 +176,7 @@ text(x = min.x + .8*(max.x-min.x),y=1.35*max.f,
 ```
 
 
-Figures \@ref(fig:IllusTestOneSided1) and \@ref(fig:IllusTestOneSided2) illustrate the **one-tailed**, or **one-sided** situation. These tests are tyxpically employed when the distribution of the test statistic under the null hypothesis has a support on $\mathbb{R}^+$ (e.g. $\chi^2$).
-
-Figure \@ref(fig:IllusTestOneSided2) also illustrates the notion of p-value associated with a one-sided statistical test.
+Figures \@ref(fig:IllusTestOneSided1) and \@ref(fig:IllusTestOneSided2) illustrate the **one-tailed**, or **one-sided** situation. These tests are typically employed when the distribution of the test statistic under the null hypothesis has a support on $\mathbb{R}^+$ (e.g., the chi-square distribution $\chi^2$, see Def. \@ref(def:chi2)). Figure \@ref(fig:IllusTestOneSided2) also illustrates the notion of p-value associated with a one-sided statistical test.
 
 ```{r IllusTestOneSided1, echo=FALSE, fig.cap="One-sided test. Under $H_0$, $S \\sim \\chi^2(5)$. $\\alpha$ is the size of the test.", fig.align = 'left-aligned'}
 
@@ -274,13 +271,11 @@ text(x = min.x + .8*(max.x-min.x),y=1.35*max.f,
 ```
 
 
-## A practical illustration of size and power
+:::{.example #Factory name="A practical illustration of size and power"}
 
-Consider a factory that produces metal cylinders whose diameter has to be equal to 1cm. The tolerance is $a=0.01cm$. That is, more than 90\% of the pieces have to satisfy the tolerance for the whole production (say 1.000.000 pieces) to be bought by the client.
+Consider a factory that produces metal cylinders whose diameter has to be equal to 1\,cm. The tolerance is $a=0.01$ cm. More precisely, more than 90\% of the pieces have to satisfy the tolerance for the whole production (say 1.000.000 pieces) to be bought by the client.
 
-The production technology is such that a proportion $\theta$ (imperfectly known) of the pieces does not satisfy the tolerance. (The parameter $\theta$ could be computed by measuring all the pieces but this would be costly.) Instead, it is decided that $n \ll 1.000.000$ pieces will be measured.
-
-In this ocntext, the null hypothesis $H_0$ is $\theta < 10\%$. The producing firm would like it to be true.
+The production technology is such that a proportion $\theta$ (imperfectly known) of the pieces does not satisfy the tolerance. The (population) parameter $\theta$ could be computed by measuring all the pieces but this would be costly. Instead, it is decided that $n \ll 1.000.000$ pieces will be measured. In this context, the null hypothesis $H_0$ is $\theta < 10\%$. The producing firm would like $H_0$ to be true.
 
 Let us denote by $d_i$ the binary indicator defined as:
 $$
@@ -294,20 +289,16 @@ $$
 
 We set $x_n=\sum_{i=1}^n d_i$. That is, $x_n$ is the number of measured pieces that do not satisfy the tolerance (out of $n$).
 
-A decision rule is: accept $H_0$ if $\dfrac{x_n}{n} \le b$, reject otherwise.
+The decision rule is: accept $H_0$ if $\dfrac{x_n}{n} \le b$, reject otherwise. A natural choice for $b$ is $b=0.1$. However, this would not be a conservative choice, since it remains likely that $x_n<0.1$ even if $\mathbb{E}(x_n)=\theta>0.1$ (especially if $n$ is small). Hence, if one chooses $b=0.1$, the probability of false negative may be high.
 
-In that case, the test statistic is $S_n=\frac{x_n}{n}$ and the critical region is $\Omega = [b,1]$. The probability to reject $H_0$ is:
+In this simple example, the size and the power of the test can be computed analytically. The test statistic is $S_n=\frac{x_n}{n}$ and the critical region is $\Omega = [b,1]$. The probability to reject $H_0$ is:
 \begin{eqnarray*}
 \mathbb{P}_\theta(S_n \in \Omega) = \sum_{i=b \times n+1}^{n}C_{n}^i\theta^i(1-\theta)^{n-i}.
 \end{eqnarray*}
 
-[web interface](https://jrenne.shinyapps.io/Factory/).
+When $\theta<0.1$, the previous expression gives the size of the test, while it gives the power of the test when $\theta>0.1$. Figure \@ref(FactoryR) shows how this probability depends on $\theta$ for two sample sizes: $n=100$ (upper plot) and $n=500$ (lower plot).
 
-
-
-
-
-```{r Factory, echo=FALSE, fig.cap="Factory example.", fig.align = 'left-aligned'}
+```{r FactoryR, echo=FALSE, fig.cap="Factory example.", fig.align = 'left-aligned'}
 size <- function(theta,N,critical){
   aux <- rep(theta,N+1)^(0:N) * rep(1-theta,N+1)^(seq(N,0,by=-1)) * choose(N,0:N)
   return(sum(aux[(0:N)>(critical*N)]))
@@ -381,6 +372,12 @@ for(N in all.N){
 }
 ```
 
+(Alternative situations can be explored by using this [web interface](https://jrenne.shinyapps.io/Factory/).)
+:::
+
+## Asymptotic properties of statistical tests
+
+In some cases, the distribution of the test statistic is known only asymptotically. For instance, it may be the case that the distribution of a given test statistic becomes normal only in large samples (e.g., related to the CLT, see Section \@ref(TCL)). The level of the test is then not know for small sample sizes, but only asymptotically, i.e., when $n$ becomes infinitely large. That defines the asymptotic level of the test:
 
 :::{.definition #asmyptlevel name="Asymptotic level"}
 An asymptotic test with critical region $\Omega_n$ has an asymptotic level equal to $\alpha$ if:
@@ -388,6 +385,24 @@ $$
 \underset{\theta \in \Theta}{\mbox{sup}} \quad \underset{n \rightarrow \infty}{\mbox{lim}} \mathbb{P}_\theta (S_n \in \Omega_n) = \alpha.
 $$
 :::
+
+:::{.example #FactAsymptlevel name="The factory example"}
+
+Let us come back to the factory example (Example \@ref(exm:Factory)). Because $S_n =\bar{d}_n$, and since $\mathbb{E}(d_i)=\theta$ and $\mathbb{V}ar(d_i)=\theta(1-\theta)$, the CLT (Theorem \@ref(thm:LindbergLevyCLT)) leads to:
+$$
+S_n \sim \mathcal{N}\left(\theta,\frac{1}{n}\theta(1-\theta)\right) \quad or \quad \frac{\sqrt{n}(S_n-\theta)}{\sqrt{\theta(1-\theta)}} \sim \mathcal{N}(0,1).
+$$
+
+Hence, $\mathbb{P}_\theta (S_n \in \Omega_n)=\mathbb{P}_\theta (S_n > b) \approx 1-\Phi\left(\frac{\sqrt{n}(b-\theta)}{\sqrt{\theta(1-\theta)}}\right)$. Since function $\theta \rightarrow 1-\Phi\left(\frac{\sqrt{n}(b-\theta)}{\sqrt{\theta(1-\theta)}}\right)$ increases w.r.t. $\theta$, we have:
+$$
+\underset{\theta \in \Theta=[0,0.1]}{\mbox{sup}} \quad \mathbb{P}_\theta (S_n > b_n) = \mathbb{P}_{\theta=0.1} (S_n \in \Omega_n)\approx$$
+$$
+1-\Phi\left(\frac{\sqrt{n}(b_n-0.1)}{0.3}\right).
+$$
+Hence, if we set $b_n = 0.1 + 0.3\Phi^{-1}(1-\alpha)/\sqrt{n}$, we have ${\mbox{sup}}_{\theta \in \Theta=[0,0.1]} \quad \mathbb{P}_\theta (S_n > b_n) \approx \alpha$ for large values of $n$.
+:::
+
+Let us now turn to the power of the test. Although it is often difficult to compute the power of the test, it is sometimes feasible to demonstrate that the power of the test converges to one when $n$ goes to $+\infty$. In that case, if $H_0$ is false, the probability to reject it tends to be close to one in large samples.
 
 :::{.definition #asmyptconsisttest name="Asymptotically consistent test"}
 An asymptotic test with critical region $\Omega_n$ is consistent if:
@@ -397,92 +412,86 @@ $$
 :::
 
 
-Back to the Factory example (Exmpl. \@ref(exm:factory)): Asymptotic level
+:::{.example #FactAsymptConsist name="The factory example"}
 
-Because $S_n =\bar{d}_n$, and since $\mathbb{E}(d_i)=\theta$ and $\mathbb{V}ar(d_i)=\theta(1-\theta)$, the CLT (Thm \ref{thm:LindbergLevyCLT}) leads to:
-	$$
-	S_n \sim \mathcal{N}\left(\theta,\frac{1}{n}\theta(1-\theta)\right) \quad or \quad \frac{\sqrt{n}(S_n-\theta)}{\sqrt{\theta(1-\theta)}} \sim \mathcal{N}(0,1)
-	$$
-
-Hence, $\mathbb{P}_\theta (S_n \in \Omega_n)=\mathbb{P}_\theta (S_n > b) \approx 1-\Phi\left(\frac{\sqrt{n}(b-\theta)}{\sqrt{\theta(1-\theta)}}\right)$.
-
-$\theta \rightarrow 1-\Phi\left(\frac{\sqrt{n}(b-\theta)}{\sqrt{\theta(1-\theta)}}\right)$ increases w.r.t. $\theta$, therefore:
-	$$
-	\underset{\theta \in \Theta=[0,0.1]}{\mbox{sup}} \quad \mathbb{P}_\theta (S_n > b_n) = \mathbb{P}_{\theta=0.1} (S_n \in \Omega_n)\approx$$
-	$$
-	1-\Phi\left(\frac{\sqrt{n}(b_n-0.1)}{0.3}\right).
-	$$
-Hence, if we set $b_n = 0.1 + 0.3\Phi^{-1}(1-\alpha)/\sqrt{n}$, then we have ${\mbox{sup}}_{\theta \in \Theta=[0,0.1]} \quad \mathbb{P}_\theta (S_n > b_n) \approx \alpha$ for large values of $n$.
-
-We proceed under the assumption that $\theta>0.1$ and we consider $b_n = b = 0.1$.
-
-We still have:
-	$$
-	\mathbb{P}_\theta (S_n \in \Omega_n)=\mathbb{P}_\theta (S_n > b) \approx 1-\Phi\left(\frac{\sqrt{n}(b-\theta)}{\sqrt{\theta(1-\theta)}}\right).
-	$$
+Let us come back to the factory example (Example \@ref(exm:Factory)). We proceed under the assumption that $\theta>0.1$ and we consider $b_n = b = 0.1$. We still have:
+$$
+\mathbb{P}_\theta (S_n \in \Omega_n)=\mathbb{P}_\theta (S_n > b) \approx 1-\Phi\left(\frac{\sqrt{n}(b-\theta)}{\sqrt{\theta(1-\theta)}}\right).
+$$
 
 Because $\frac{\sqrt{n}(b-\theta)}{\sqrt{\theta(1-\theta)}} \underset{n \rightarrow \infty}{\rightarrow} -\infty$, we have
-	$$
-	\mathbb{P}_\theta (S_n > b) \approx 1- \underbrace{\Phi\left(\frac{\sqrt{n}(b-\theta)}{\sqrt{\theta(1-\theta)}}\right)}_{\underset{n \rightarrow \infty}{\rightarrow} 0} \underset{n \rightarrow \infty}{\rightarrow} 1.
-	$$
+$$
+\mathbb{P}_\theta (S_n > b) \approx 1- \underbrace{\Phi\left(\frac{\sqrt{n}(b-\theta)}{\sqrt{\theta(1-\theta)}}\right)}_{\underset{n \rightarrow \infty}{\rightarrow} 0} \underset{n \rightarrow \infty}{\rightarrow} 1.
+$$
 Therefore, with $b_n=b=0.1$, the test is consistent.
+:::
 
 
-## Normality tests
+## Example: Normality tests
+
+Because many statistical results are valid only if the underlying data is normally distributed, researchers often have tu conduct normality tests. Under the null hypothesis, the data at hand ($\bv{y}=\{y_1,\dots,y_n\}$, say) are drawn from a Gaussian distribution. A popular normality test is the Jarque-Bera test. It consists in verifying that the sample skewness and kurtosis of the $y_i$'s are consistent with those of the normal distribution. Let us first define the skewness and kurtosis of a random variable.
 
 Let $f$ be the p.d.f. of $Y$. The $k^{th}$ **standardized moment** of $Y$ is defined as:
-	$$
-	\psi_k = \frac{\mu_k}{\left(\sqrt{\mathbb{V}ar(Y)}\right)^k},
-	$$
-	where $\mathbb{E}(Y)=\mu$ and
-	$$
-	\mu_k = \mathbb{E}[(Y-\mu)^k]= \int_{-\infty}^{\infty} (y-\mu)^k f(y) dy
-	$$
-	is the $k^{th}$ {\color{blue}central moment} of $Y$.
+$$
+\psi_k = \frac{\mu_k}{\left(\sqrt{\mathbb{V}ar(Y)}\right)^k},
+$$
+where $\mathbb{E}(Y)=\mu$ and
+$$
+\mu_k = \mathbb{E}[(Y-\mu)^k]= \int_{-\infty}^{\infty} (y-\mu)^k f(y) dy
+$$
+is the $k^{th}$ **central moment** of $Y$. In particular, $\mu_2 = \mathbb{V}ar(Y)$. Therefore:
+$$
+\psi_k = \frac{\mu_k}{\left(\mu_2^{1/2}\right)^k},
+$$
 
-In particular, $\mu_2 = \mathbb{V}ar(Y)=\sigma^2$, say. Therefore:
-	$$
-	\psi_k = \frac{\mu_k}{\left(\mu_2^{1/2}\right)^k},
-	$$
-
-The skewness corresponds to $\psi_3$ and the kurtosis to $\psi_4$ (Def. \@ref(def:skewnesskurtosis)).
+The **skewness** of $Y$ corresponds to $\psi_3$ and the **kurtosis** to $\psi_4$ (Def. \@ref(def:skewnesskurtosis)).
 
 :::{.proposition #normSkewKurt name="Skewness and kurtosis of the normal distribution"}
+
 For a Gaussian var., the skewness ($\psi_3$) is 0 and the kurtosis ($\psi_4$) is 3.
 :::
 :::{.proof}
-For a centered Gaussian distribution, $(-y)^3f(-y)=-y^3f(y)$. This implies that $\int_{-\infty}^{\infty}y^3f(y)dy=\int_{-\infty}^{0}y^3f(y)dy+\int_{0}^{\infty}y^3f(y)dy=-\int_{0}^{\infty}y^3f(y)dy+\int_{0}^{\infty}y^3f(y)dy=0$, which leads to the skewness result.
+For a centered Gaussian distribution, $(-y)^3f(-y)=-y^3f(y)$. This implies that
+\begin{eqnarray*}
+\int_{-\infty}^{\infty}y^3f(y)dy&=&\int_{-\infty}^{0}y^3f(y)dy+\int_{0}^{\infty}y^3f(y)dy\\
+&=&-\int_{0}^{\infty}y^3f(y)dy+\int_{0}^{\infty}y^3f(y)dy=0,
+\end{eqnarray*}
+which leads to the skewness result.
 
 Moreover, for a Gaussian distribution, $df(y)/dy=-yf(y)$ and therefore $\frac{d}{dy}(y^3f(y))=3y^2f(y)-y^4f(y)$. Partial integration leads to the kurtosis result.
 :::
 
-$k^{th}$ **central sample moment** of $Y$:
-	$$
-	m_k = \frac{1}{n}\sum_{i=1}^n(y_i - \bar{y})^k.
-	$$
-$k^{th}$ **standardized sample moment** of $Y$:
-	$$
-	g_k = \frac{m_k}{m_2^{k/2}}.
-	$$
+Let us now introduce the sample analog of standardized moments.  The $k^{th}$ **central sample moment** of $Y$ is given by:
+$$
+m_k = \frac{1}{n}\sum_{i=1}^n(y_i - \bar{y})^k,
+$$
+and the $k^{th}$ **standardized sample moment** of $Y$ is given by:
+$$
+g_k = \frac{m_k}{m_2^{k/2}}.
+$$
 
 :::{.proposition #conssitCentralMoments name="Consistency of central sample moments"}
-If the $k^{th}$ central moment of $Y$, exists, then the sample central moment $m_k$ is a consistent estimate of the central moment $\mu_k$.
+
+If the $k^{th}$ central moment of $Y$, exists and if the $y_i$'s are i.i.d., then the sample central moment $m_k$ is a consistent estimate of the central moment $\mu_k$.
 :::
 
 
 :::{.proposition #Asymptg3Normal name="Asymptotic distribution of 3rd-order sample central moment of a normal distribution"}
-If $Y\sim\mathcal{N}(\mu,\sigma^2)$, then $\sqrt{n}g_3 \overset{d}{\rightarrow} \mathcal{N}(0,6)$.
+
+If $y_i\sim\,i.i.d.\,\mathcal{N}(\mu,\sigma^2)$, then $\sqrt{n}g_3 \overset{d}{\rightarrow} \mathcal{N}(0,6)$.
 :::
 :::{.proof}
 See, e.g. [Lehmann (1999)](http://www.springer.com/la/book/9780387985954).
 :::
 
 :::{.proposition #Asymptg4Normal name="Asymptotic distribution of 4th-order sample central moment of a normal distribution"}
-If $Y\sim\mathcal{N}(\mu,\sigma^2)$, then $\sqrt{n}(g_4-3) \overset{d}{\rightarrow} \mathcal{N}(0,24)$.
+
+If $y_i\sim\,i.i.d.\,\mathcal{N}(\mu,\sigma^2)$, then $\sqrt{n}(g_4-3) \overset{d}{\rightarrow} \mathcal{N}(0,24)$.
 :::
 
 :::{.proposition #Asymptg3g4Normal name="Joint asymptotic distribution of 3rd and 4th-order sample central moments of a normal distribution"}
-Asymptotically, the vector $(\sqrt{n}g_3,\sqrt{n}(g_4-3))$ is bivariate Gaussian. Further its elements are uncorrelated and therefore independent.
+
+If $y_i\sim\,i.i.d.\,\mathcal{N}(\mu,\sigma^2)$, then the vector $(\sqrt{n}g_3,\sqrt{n}(g_4-3))$ is asymptotically bivariate Gaussian. Further its elements are uncorrelated and therefore independent.
 :::
 
 The Jarque-Bera statistic is defined by:
@@ -491,7 +500,8 @@ JB = n \left( \frac{g_3^2}{6}+\frac{(g_4-3)^2}{24} \right) = \frac{n}{6}\left(g_
 $$
 
 :::{.proposition #JB name="Jarque-Bera asympt. distri."}
-If $Y$ is Gaussian, $JB \overset{d}{\rightarrow} \chi^2(2)$.
+
+If $y_i\sim\,i.i.d.\,\mathcal{N}(\mu,\sigma^2)$, $JB \overset{d}{\rightarrow} \chi^2(2)$.
 :::
 :::{.proof}
 This directly derives from Proposition \@ref(prp:Asymptg3g4Normal).
@@ -502,15 +512,14 @@ This directly derives from Proposition \@ref(prp:Asymptg3g4Normal).
 
 This example illustrates the consistency of the JB test (see Def. \@ref(def:asmyptconsisttest)).
 
-First, let us write the function computing the JB test statistic:
+For each row of matrix `x`, the function `JB` (defined below) computes the Jarque-Bera test statistic. (That is, each row is considered as a given sample.)
 
 ```{r JBTest1}
 JB <- function(x){
-  x.1 <- dim(x)[1]
-  x.2 <- dim(x)[2]
-  n <- x.2
+  N <- dim(x)[1] # number of samples
+  n <- dim(x)[2] # sample size
   x.bar <- apply(x,1,mean)
-  x.x.bar <- x - matrix(x.bar,x.1,x.2)
+  x.x.bar <- x - matrix(x.bar,N,n)
   m.2 <- apply(x.x.bar,1,function(x){mean(x^2)})
   m.3 <- apply(x.x.bar,1,function(x){mean(x^3)})
   m.4 <- apply(x.x.bar,1,function(x){mean(x^4)})
@@ -521,7 +530,7 @@ JB <- function(x){
 ```
 
 
-Let us first consider the case where $H_0$ (normality of the $y_i$'s) is satisfied. Figure \@ref(fig:JBTest2) displays the distribution of the JB statistics when the $y_i$'s are normal, consistently with $H_0$. It appears that when $n$ grows, the distribution indeed converges to the $\chi^2(2)$ distribution.
+Let us first consider the case where $H_0$ is satisfied. Figure \@ref(fig:JBTest2) displays, for different sample sizes $n$, the distribution of the JB statistics when the $y_i$'s are normal, consistently with $H_0$. It appears that when $n$ grows, the distribution indeed converges to the $\chi^2(2)$ distribution (as stated by Proposition \@ref(prp:JB)).
 
 ```{r JBTest2, fig.cap="Distribution of the JB test statistic under $H_0$ (normality).", fig.align = 'left-aligned'}
 all.n <- c(5,10,20,100)
@@ -538,7 +547,7 @@ for(i in 1:length(all.n)){
 }
 ```
 
-Now, replace `rnorm` with `runif`. That is, let us now consider what happens for the distribution of the JB statistics when the $y_i$'s are drawn from a uniform distribution. Figure \@ref(fig:JBTest3) then shows that, when $n$ grows, the distributions shift to the right. This results in the consistency of the JB test (see Def. \@ref(def:asmyptconsisttest)).
+Now, replace `rnorm` with `runif`. The $y_i$'s are then drawn from a uniform distribution. $H_0$ is not satisfied. Figure \@ref(fig:JBTest3) then shows that, when $n$ grows, the distributions of the JB statistic shift to the right. This results in the consistency of the JB test (see Def. \@ref(def:asmyptconsisttest)).
 
 ```{r JBTest3, fig.cap="Distribution of the JB test statistic when the $y_i$'s are drawn from a uniform distribution (hence $H_0$ is not satisfied).", fig.align = 'left-aligned',echo=FALSE}
 y <- matrix(runif(nb.sim*max(all.n)),nb.sim,max(all.n))
@@ -553,67 +562,4 @@ for(i in 1:length(all.n)){
 ```
 
 :::
-
-
-<!-- \begin{frame}{} -->
-<!-- \begin{footnotesize} -->
-<!-- 		\begin{figure} -->
-<!-- 		\caption{The distr. of the JB stat. in small-sample ($Y\sim\mathcal{N}$).} -->
-<!-- 			\includegraphics[width=.9\linewidth]{../../figures/Figure_Tests_JB1.pdf} -->
-
-<!-- 		\tiny{10.000 samples of size $n$ are simulated (from a {\color{blue}normal distribution}). For each sample, the JB statistic is computed. The red line shows the $\chi^2(2)$ density. This figure illustrates the convergence of the JB statistic to the $\chi^2(2)$ distribution under $H_0$ (the null hypothesis of normality).} -->
-<!-- 		\end{figure} -->
-<!-- 		\begin{tiny} -->
-
-<!-- 		\end{tiny} -->
-<!-- \end{footnotesize} -->
-<!-- \end{frame} -->
-
-<!-- \begin{frame}{} -->
-<!-- \begin{footnotesize} -->
-<!-- 		\begin{figure} -->
-<!-- 		\caption{The distr. of the JB stat. in small-sample ($Y\sim\mathcal{U}$).} -->
-<!-- 			\includegraphics[width=.9\linewidth]{../../figures/Figure_Tests_JB2.pdf} -->
-
-<!-- 		\tiny{10.000 samples of size $n$ are simulated (from a {\color{blue}uniform distribution}). For each sample, the JB statistic is computed. The red line shows the $\chi^2(2)$ density.  This figure illustrates the absence of convergence of the JB statistic to the $\chi^2(2)$ distribution under $H_1$.} -->
-<!-- 		\end{figure} -->
-<!-- 		\begin{tiny} -->
-
-<!-- 		\end{tiny} -->
-<!-- \end{footnotesize} -->
-<!-- \end{frame} -->
-
-
-<!-- %\begin{frame}{} -->
-<!-- %\begin{footnotesize} -->
-<!-- %		\begin{figure} -->
-<!-- %		\caption{The distr. of the JB stat. in small-sample ($Y\sim t(7)$).} -->
-<!-- %			\includegraphics[width=.9\linewidth]{../../figures/Figure_Tests_JB3.pdf} -->
-<!-- % -->
-<!-- %		\tiny{10.000 samples of size $n$ are simulated (from a {\color{blue}uniform distribution}). For each sample, the JB statistic is computed. The red line shows the $\chi^2(2)$ density.} -->
-<!-- %		\end{figure} -->
-<!-- %		\begin{tiny} -->
-<!-- % -->
-<!-- %		\end{tiny} -->
-<!-- %\end{footnotesize} -->
-<!-- %\end{frame} -->
-<!-- % -->
-<!-- % -->
-<!-- %\begin{frame}{} -->
-<!-- %\begin{footnotesize} -->
-<!-- %		\begin{figure} -->
-<!-- %		\caption{The distr. of the JB stat. in small-sample ($Y\sim t(20)$).} -->
-<!-- %			\includegraphics[width=.9\linewidth]{../../figures/Figure_Tests_JB4.pdf} -->
-<!-- % -->
-<!-- %		\tiny{10.000 samples of size $n$ are simulated (from a {\color{blue}uniform distribution}). For each sample, the JB statistic is computed. The red line shows the $\chi^2(2)$ density.} -->
-<!-- %		\end{figure} -->
-<!-- %		\begin{tiny} -->
-<!-- % -->
-<!-- %		\end{tiny} -->
-<!-- %\end{footnotesize} -->
-<!-- %\end{frame} -->
-
-
-
-
 
